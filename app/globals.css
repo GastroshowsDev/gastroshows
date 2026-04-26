@@ -1,0 +1,170 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-gold: #C8A96E;
+  --color-gold-light: #E8D5A8;
+  --color-gold-dark: #9A7A45;
+  --color-gs-black: #0A0A0A;
+  --color-gs-dark: #111111;
+  --color-gs-dark2: #1A1A1A;
+  --color-gs-dark3: #242424;
+  --color-gs-mid: #444444;
+  --color-gs-light: #888888;
+  --color-off-white: #F5F0E8;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+}
+
+/* ── Public site palette (dark default) ── */
+:root {
+  --gs-bg: #0A0A0A;
+  --gs-bg2: #111111;
+  --gs-bg3: #0D0D0D;
+  --gs-text: #F5F0E8;
+  --gs-text-muted: rgba(245, 240, 232, 0.82);
+  --gs-text-sub: rgba(245, 240, 232, 0.75);
+  --gs-muted: #A8A49E;
+  --gs-gold: #C8A96E;
+  --gs-gold-hover: #E8D5A8;
+  --gs-border: rgba(200, 169, 110, 0.1);
+  --gs-border-hover: rgba(200, 169, 110, 0.3);
+  --gs-card-hover: rgba(200, 169, 110, 0.03);
+
+  /* ── Admin panel palette (light default) ── */
+  --color-admin-bg: #F4F6FA;
+  --color-admin-surface: #FFFFFF;
+  --color-admin-border: #EAEEF4;
+  --color-admin-accent: #875BF7;
+  --color-admin-accent-hover: #7347E8;
+  --color-admin-accent-light: #F0EBFE;
+  --color-admin-text: #1A1A2E;
+  --color-admin-muted: #6B7280;
+  --color-admin-sidebar: #FFFFFF;
+}
+
+/* ── Light mode (public site) ── */
+:root.light {
+  --gs-bg: #FAF8F3;
+  --gs-bg2: #EDE9E0;
+  --gs-bg3: #F3EFE6;
+  --gs-text: #100E0B;
+  --gs-text-muted: rgba(16, 14, 11, 0.78);
+  --gs-text-sub: rgba(16, 14, 11, 0.68);
+  --gs-muted: #3C3830;
+  --gs-gold: #7B5C22;
+  --gs-gold-hover: #5A3F10;
+  --gs-border: rgba(100, 74, 20, 0.28);
+  --gs-border-hover: rgba(100, 74, 20, 0.58);
+  --gs-card-hover: rgba(123, 92, 34, 0.07);
+
+  /* Admin stays light in light mode */
+  --color-admin-bg: #F4F6FA;
+  --color-admin-surface: #FFFFFF;
+  --color-admin-border: #EAEEF4;
+  --color-admin-accent: #875BF7;
+  --color-admin-accent-hover: #7347E8;
+  --color-admin-accent-light: #F0EBFE;
+  --color-admin-text: #1A1A2E;
+  --color-admin-muted: #6B7280;
+  --color-admin-sidebar: #FFFFFF;
+}
+
+/* ── Dark mode ── */
+:root.dark {
+  --gs-bg: #0A0A0A;
+  --gs-bg2: #111111;
+  --gs-bg3: #0D0D0D;
+  --gs-text: #F5F0E8;
+  --gs-text-muted: rgba(245, 240, 232, 0.82);
+  --gs-text-sub: rgba(245, 240, 232, 0.75);
+  --gs-muted: #A8A49E;
+  --gs-gold: #C8A96E;
+  --gs-gold-hover: #E8D5A8;
+  --gs-border: rgba(200, 169, 110, 0.1);
+  --gs-border-hover: rgba(200, 169, 110, 0.3);
+  --gs-card-hover: rgba(200, 169, 110, 0.03);
+
+  /* Admin dark mode */
+  --color-admin-bg: #0F1117;
+  --color-admin-surface: #1A1D27;
+  --color-admin-border: #252836;
+  --color-admin-accent: #875BF7;
+  --color-admin-accent-hover: #9B72FF;
+  --color-admin-accent-light: #2D1F5E;
+  --color-admin-text: #E8EAF0;
+  --color-admin-muted: #8B93A7;
+  --color-admin-sidebar: #141620;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--gs-bg);
+  color: var(--gs-text);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes letterReveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wipeRight {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes bounceLine {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes textShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.shows-shimmer {
+  animation: letterReveal 0.7s 0.55s both, textShimmer 5s 1.8s linear infinite !important;
+  background-size: 300% auto !important;
+}

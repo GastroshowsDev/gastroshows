@@ -1,0 +1,296 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  LIVE
+}
+
+enum Shift {
+  NOON
+  NIGHT
+}
+
+enum ReservationType {
+  NORMAL
+  GIFT
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  CANCELLED
+  PAYMENT_FAILED
+}
+
+enum VenueName {
+  BERTRAND @map("SARRIA")
+  URGELL
+}
+
+enum EventStatus {
+  OPEN
+  FULL
+  CLOSED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+}
+
+enum EmailQueueStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+enum BackupStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum CustomerType {
+  PARTICULAR
+  EMPRESA
+}
+
+model Customer {
+  id             String        @id @default(cuid())
+  name           String
+  phone          String
+  email          String
+  customerType   CustomerType  @default(PARTICULAR)
+  cif            String?
+  billingStreet  String?
+  billingZip     String?
+  billingCity    String?
+  allergies      String?
+  previousVisit  Boolean       @default(false)
+  newsletter     Boolean       @default(false)
+  source         String?
+  comments       String?
+  createdAt      DateTime      @default(now())
+  reservations   Reservation[]
+  giftVouchers   GiftVoucher[] @relation("VoucherPurchaser")
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([customerType])
+}
+
+model Venue {
+  id             String          @id @default(cuid())
+  name           VenueName       @unique
+  capacity       Int
+  rules          Json
+  reservations   Reservation[]
+  events         Event[]
+  emailTemplates EmailTemplate[]
+}
+
+model Event {
+  id           String        @id @default(cuid())
+  date         DateTime
+  shift        Shift
+  venueId      String?
+  venue        Venue?        @relation(fields: [venueId], references: [id], onDelete: SetNull)
+  totalGuests  Int           @default(0)
+  status       EventStatus   @default(OPEN)
+  reservations Reservation[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([date, shift])
+  @@index([venueId])
+  @@index([status, date])
+}
+
+model Reservation {
+  id            String            @id @default(cuid())
+  type          ReservationType
+  customerId    String
+  customer      Customer          @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  eventId       String
+  event         Event             @relation(fields: [eventId], references: [id], onDelete: Restrict)
+  venueId       String?
+  venue         Venue?            @relation(fields: [venueId], references: [id], onDelete: SetNull)
+  guests        Int
+  totalAmount   Decimal           @db.Decimal(10, 2)
+  paidAmount    Decimal           @default(0) @db.Decimal(10, 2)
+  status        ReservationStatus @default(PENDING)
+  groupRef      String?
+  mergedGroupId String?
+  isFirstVisit  Boolean           @default(true)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  giftVoucher   GiftVoucher?
+  paymentSplits PaymentSplit[]
+  emailQueue    EmailQueue[]
+
+  @@index([eventId, status])
+  @@index([venueId, createdAt])
+  @@index([groupRef])
+  @@index([mergedGroupId])
+}
+
+model GiftVoucher {
+  id                  String       @id @default(cuid())
+  token               String       @unique @default(uuid())
+  purchaserCustomerId String
+  purchaser           Customer     @relation("VoucherPurchaser", fields: [purchaserCustomerId], references: [id], onDelete: Restrict)
+  recipientEmail      String?
+  guests              Int
+  totalAmount         Decimal      @db.Decimal(10, 2)
+  expiresAt           DateTime
+  redeemedAt          DateTime?
+  reservationId       String?      @unique
+  reservation         Reservation? @relation(fields: [reservationId], references: [id], onDelete: SetNull)
+  createdAt           DateTime     @default(now())
+
+  @@index([expiresAt])
+  @@index([redeemedAt])
+}
+
+model PaymentSplit {
+  id            String        @id @default(cuid())
+  reservationId String
+  reservation   Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  method        PaymentMethod
+  amount        Decimal       @db.Decimal(10, 2)
+  paidAt        DateTime      @default(now())
+
+  @@index([reservationId, paidAt])
+}
+
+model EmailQueue {
+  id            String           @id @default(cuid())
+  reservationId String
+  reservation   Reservation      @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  templateKey   String
+  scheduledAt   DateTime
+  sentAt        DateTime?
+  status        EmailQueueStatus @default(PENDING)
+  attempts      Int              @default(0)
+  createdAt     DateTime         @default(now())
+
+  @@index([status, scheduledAt])
+  @@index([reservationId, status])
+}
+
+model EmailTemplate {
+  id          String    @id @default(cuid())
+  venueId     String?
+  venue       Venue?    @relation(fields: [venueId], references: [id], onDelete: SetNull)
+  templateKey String    @unique
+  htmlContent String
+  subject     String
+  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+
+  @@index([venueId])
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  passwordHash   String
+  role           UserRole  @default(LIVE)
+  defaultVenue   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([email])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  token     String    @unique @default(uuid())
+  email     String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([token])
+  @@index([email])
+}
+
+model Backup {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  triggeredBy String
+  status      BackupStatus @default(RUNNING)
+  sizeBytes   Int?
+  rowCount    Int?
+  data        Json?
+  error       String?
+
+  @@index([createdAt])
+}
+
+model SeoSettings {
+  id                     String   @id @default("default")
+  // Basic meta
+  siteTitle              String   @default("GastroShows · Barcelona")
+  metaDescription        String?
+  metaKeywords           String?
+  ogTitle                String?
+  ogDescription          String?
+  ogImage                String?
+  twitterCard            String   @default("summary_large_image")
+  twitterHandle          String?
+  canonicalUrl           String?
+  robots                 String   @default("index, follow")
+  // Verification
+  googleSiteVerification String?
+  bingSiteVerification   String?
+  // Analytics
+  googleAnalyticsId      String?
+  googleTagManagerId     String?
+  metaPixelId            String?
+  tiktokPixelId          String?
+  linkedinPartnerId      String?
+  hotjarId               String?
+  // Google Ads
+  googleAdsId            String?
+  googleAdsLabel         String?
+  // Custom code
+  customHeadScripts      String?
+  customBodyScripts      String?
+  // Structured data (JSON-LD)
+  schemaOrg              String?
+  updatedAt              DateTime @updatedAt
+}
+
+model LandingContent {
+  key       String   @id
+  value     String   @db.Text
+  type      String   @default("TEXT") // TEXT | TEXTAREA | IMAGE_URL | URL
+  label     String
+  section   String
+  order     Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@index([section, order])
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  startDate   DateTime
+  endDate     DateTime
+  discountPct Decimal  @db.Decimal(5, 2)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active, startDate, endDate])
+}
