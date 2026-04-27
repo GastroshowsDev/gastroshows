@@ -30,7 +30,7 @@ enum ReservationStatus {
 }
 
 enum VenueName {
-  BERTRAND @map("SARRIA")
+  BERTRAND
   URGELL
 }
 

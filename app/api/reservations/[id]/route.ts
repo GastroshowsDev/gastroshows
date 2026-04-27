@@ -87,7 +87,6 @@ export async function PATCH(request: Request, context: RouteContext) {
     const eventDate = reservation.event.date.toISOString().split("T")[0];
     const venueMap: Record<string, string> = {
       BERTRAND: "Sarrià-Sant Gervasi",
-      SARRIA: "Sarrià-Sant Gervasi",
       URGELL: "Eixample",
     };
     const localAsignado = reservation.venue?.name ? venueMap[reservation.venue.name] : "";
