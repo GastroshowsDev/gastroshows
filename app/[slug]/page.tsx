@@ -5,6 +5,9 @@ import { PageBlockList } from "@/components/blocks/BlockRenderer";
 import { PageLayout } from "@/components/PageLayout";
 import type { BlockData, BlockType, BlockContent } from "@/lib/blocks/types";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type Props = { params: Promise<{ slug: string }> };
 
 /**

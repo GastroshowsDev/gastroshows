@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -61,6 +62,11 @@ export async function PUT(req: Request, { params }: RouteContext) {
       where: { id },
       include: { blocks: { orderBy: { order: "asc" } } },
     });
+
+    if (updated?.slug) {
+      revalidatePath(`/${updated.slug}`);
+      revalidatePath("/"); // Also revalidate home in case this page affects it
+    }
 
     return NextResponse.json({ ok: true, data: updated });
   } catch (err) {

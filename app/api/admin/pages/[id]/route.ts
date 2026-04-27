@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
 type RouteContext = { params: Promise<{ id: string }> };
@@ -72,6 +73,11 @@ export async function PATCH(req: Request, { params }: RouteContext) {
         ...(body.ogImage !== undefined && { ogImage: body.ogImage }),
       },
     });
+
+    if (page.slug) {
+      revalidatePath(`/${page.slug}`);
+      revalidatePath("/");
+    }
 
     return NextResponse.json({ ok: true, data: page });
   } catch (err) {
