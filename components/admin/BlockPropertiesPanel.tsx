@@ -1,6 +1,6 @@
 "use client";
 
-import { BlockType, BlockContent, HeroContent, TextContent, ImageContent, GalleryContent, CtaContent, SpacerContent } from "@/lib/blocks/types";
+import { BlockType, BlockContent, HeroContent, TextContent, ImageContent, GalleryContent, CtaContent, SpacerContent, AvailabilityContent } from "@/lib/blocks/types";
 
 type Props = {
   type: BlockType;
