@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ReservationStatus, ReservationType, Shift, VenueName } from "@prisma/client";
+import { mailrelaySubscribe } from "@/lib/mailrelay";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
@@ -78,6 +79,22 @@ export async function PATCH(req: Request, { params }: RouteContext) {
         venue: { select: { id: true, name: true } },
       },
     });
+
+    // Sync with Mailrelay if confirmed
+    if (updated.status === "CONFIRMED") {
+      const eventDate = updated.event.date.toISOString().split("T")[0];
+      const venueMap: Record<string, string> = {
+        BERTRAND: "Sarrià-Sant Gervasi",
+        SARRIA: "Sarrià-Sant Gervasi",
+        URGELL: "Eixample",
+      };
+      const localAsignado = updated.venue?.name ? venueMap[updated.venue.name] : "";
+
+      void mailrelaySubscribe(updated.customer.email, updated.customer.name, {
+        fecha_evento: eventDate,
+        local_asignado: localAsignado,
+      });
+    }
 
     return NextResponse.json({ ok: true, data: updated });
   } catch (err) {

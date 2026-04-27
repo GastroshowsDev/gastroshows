@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
+import { mailrelaySubscribe } from "@/lib/mailrelay";
 
 const paramsSchema = z.object({ id: z.string().min(1) });
 
@@ -80,6 +81,22 @@ export async function PATCH(request: Request, context: RouteContext) {
       venue: true,
     },
   });
+
+  // Sync with Mailrelay if confirmed
+  if (reservation.status === "CONFIRMED") {
+    const eventDate = reservation.event.date.toISOString().split("T")[0];
+    const venueMap: Record<string, string> = {
+      BERTRAND: "Sarrià-Sant Gervasi",
+      SARRIA: "Sarrià-Sant Gervasi",
+      URGELL: "Eixample",
+    };
+    const localAsignado = reservation.venue?.name ? venueMap[reservation.venue.name] : "";
+
+    void mailrelaySubscribe(reservation.customer.email, reservation.customer.name, {
+      fecha_evento: eventDate,
+      local_asignado: localAsignado,
+    });
+  }
 
   return NextResponse.json({ ok: true, data: reservation });
 }

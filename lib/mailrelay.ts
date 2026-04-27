@@ -39,7 +39,11 @@ async function findByEmail(email: string): Promise<MailrelaySubscriber | null> {
  * Subscribe a contact to the default Mailrelay group.
  * Idempotent: reactivates if already unsubscribed; no-ops if already active.
  */
-export async function mailrelaySubscribe(email: string, name: string): Promise<void> {
+export async function mailrelaySubscribe(
+  email: string,
+  name: string,
+  customFields?: Record<string, any>
+): Promise<void> {
   if (!isConfigured()) {
     console.warn("[mailrelay] Not configured — skipping subscribe for", email);
     return;
@@ -51,7 +55,11 @@ export async function mailrelaySubscribe(email: string, name: string): Promise<v
         await fetch(`${BASE_URL}/api/v2/subscribers/${existing.id}`, {
           method: "PUT",
           headers: apiHeaders(),
-          body: JSON.stringify({ status: "active", packages_group_ids: [GROUP_ID] }),
+          body: JSON.stringify({
+            status: "active",
+            packages_group_ids: [GROUP_ID],
+            ...(customFields && { custom_fields: customFields }),
+          }),
         });
       }
       return;
@@ -64,6 +72,7 @@ export async function mailrelaySubscribe(email: string, name: string): Promise<v
         name,
         status: "active",
         packages_group_ids: [GROUP_ID],
+        ...(customFields && { custom_fields: customFields }),
       }),
     });
   } catch (err) {
