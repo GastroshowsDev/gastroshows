@@ -55,11 +55,12 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
     case "SECTION":
       return (
         <SectionBlock 
+          id={id}
           content={content as SectionContent} 
           isEditing={isEditing} 
           onUpdate={handleUpdate} 
           onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
-          selectedElement={selectedElementPath}
+          selectedElementPath={selectedElementPath}
         />
       );
     case "CTA":
