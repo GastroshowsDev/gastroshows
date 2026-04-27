@@ -24,6 +24,8 @@ export function ElementRenderer({ element, isEditing = false, onUpdate }: Props)
         return <TextElement element={element} isEditing={isEditing} onUpdate={onUpdate as any} />;
       case "IMAGE":
         return <ImageElement element={element} isEditing={isEditing} onUpdate={onUpdate as any} />;
+      case "SPACER":
+        return <div style={{ height: element.height }} />;
       default:
         return <div style={{ color: "red" }}>Unknown Element: {element.type}</div>;
     }

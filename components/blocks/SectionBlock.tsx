@@ -106,14 +106,19 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
     const type = e.dataTransfer.getData("elementType");
     if (!type) return;
 
-    // Create new element based on type
+    // Create new element based on type with all required properties
     let newEl: ElementData;
-    if (type === "HEADING") newEl = { type: "HEADING", text: "Nuevo Título", level: 2 };
-    else if (type === "BUTTON") newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#" };
-    else if (type === "TEXT") newEl = { type: "TEXT", text: "Nuevo bloque de texto" };
-    else if (type === "IMAGE") newEl = { type: "IMAGE", src: "", alt: "" };
-    else if (type === "SPACER") newEl = { type: "SPACER", height: 40 };
-    else return;
+    if (type === "HEADING") {
+      newEl = { type: "HEADING", text: "Nuevo Título", level: 2, styles: {} };
+    } else if (type === "BUTTON") {
+      newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#", variant: "primary", size: "md", styles: {} };
+    } else if (type === "TEXT") {
+      newEl = { type: "TEXT", body: "Nuevo bloque de texto", styles: {} };
+    } else if (type === "IMAGE") {
+      newEl = { type: "IMAGE", src: "", alt: "", styles: {} };
+    } else if (type === "SPACER") {
+      newEl = { type: "SPACER", height: 40, styles: {} };
+    } else return;
 
     const newCols = [...content.columns];
     newCols[colIdx].elements.push(newEl);
