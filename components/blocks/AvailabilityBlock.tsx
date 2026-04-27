@@ -1,9 +1,8 @@
 "use client";
 
 import { DisponibilidadSection } from "@/components/home/DisponibilidadSection";
-
+import { usePageActions } from "@/context/PageActionsContext";
 import type { AvailabilityContent } from "@/lib/blocks/types";
-
 import { InlineText } from "@/components/admin/InlineText";
 
 type Props = { 
@@ -13,6 +12,8 @@ type Props = {
 };
 
 export function AvailabilityBlock({ content, isEditing = false, onUpdate }: Props) {
+  const { openReservation } = usePageActions();
+
   const updateField = (field: keyof AvailabilityContent, value: string) => {
     if (onUpdate) {
       onUpdate({ ...content, [field]: value });
@@ -39,9 +40,7 @@ export function AvailabilityBlock({ content, isEditing = false, onUpdate }: Prop
           placeholder="SUBTÍTULO"
         />
       ) : content.subtitle}
-      onReservar={() => {
-        window.dispatchEvent(new CustomEvent("gs-open-reserva"));
-      }} 
+      onReservar={openReservation} 
     />
   );
 }

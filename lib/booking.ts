@@ -69,11 +69,11 @@ export function validateServiceDate(inputDate: Date, shift: Shift): string | nul
 
 export function calculateTotalAmountWithDiscounts(
   guests: number,
-  now: Date,
+  targetDate: Date,
   campaignPct: number,
 ): number {
-  const nowBarcelona = toZonedTime(now, BARCELONA_TZ);
-  const weekday = getDay(nowBarcelona);
+  const dateBarcelona = toZonedTime(targetDate, BARCELONA_TZ);
+  const weekday = getDay(dateBarcelona);
   const baseTotal = guests * BASE_PRICE_PER_GUEST;
 
   const dynamicDiscount = (weekday === 3 || weekday === 4 ? WED_THU_DISCOUNT_PCT : 0) + campaignPct;

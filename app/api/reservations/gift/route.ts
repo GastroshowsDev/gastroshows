@@ -29,7 +29,9 @@ export async function POST(request: Request) {
   });
 
   const campaignPct = activeCampaign ? Number(activeCampaign.discountPct) : 0;
-  const totalAmount = calculateTotalAmountWithDiscounts(guests, now, campaignPct);
+  // Use a neutral date (e.g. Sunday) to ensure no weekday discount is applied to gift vouchers
+  const neutralDate = new Date("2024-01-07"); // A Sunday
+  const totalAmount = calculateTotalAmountWithDiscounts(guests, neutralDate, campaignPct);
   const expiresAt = addMonths(now, 6);
 
   const created = await prisma.$transaction(async (tx) => {

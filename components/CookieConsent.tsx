@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /* ── Types ── */
 type Consent = { analytics: boolean; advertising: boolean };
@@ -35,16 +36,24 @@ function writeConsent(c: Consent) {
 /* ─────────────────────────────────────────────────────────────────────────── */
 
 export function CookieConsent(cfg: TrackingConfig) {
+  const pathname = usePathname();
   const [consent,  setConsentState] = useState<Consent | null>(null);
   const [visible,  setVisible]      = useState(false);
   const [managing, setManaging]     = useState(false);
   const [draft,    setDraft]        = useState<Consent>({ analytics: false, advertising: false });
 
+  // Hide in admin panel
+  const isAdmin = pathname?.startsWith("/admin");
+
   useEffect(() => {
     const stored = readConsent();
-    if (stored) { setConsentState(stored); }
-    else        { setVisible(true); }
-  }, []);
+    if (stored) { 
+      setConsentState(stored); 
+    } else if (!isAdmin) { 
+      // Only show banner on public routes if no choice made
+      setVisible(true); 
+    }
+  }, [isAdmin]);
 
   function save(c: Consent) {
     writeConsent(c);
@@ -56,7 +65,6 @@ export function CookieConsent(cfg: TrackingConfig) {
   const an = consent?.analytics    ?? false;
   const ad = consent?.advertising  ?? false;
 
-  /* Trigger re-render of Gestionar when opening */
   function openManage() {
     setDraft(consent ?? { analytics: false, advertising: false });
     setManaging(true);
@@ -65,7 +73,6 @@ export function CookieConsent(cfg: TrackingConfig) {
   return (
     <>
       {/* ── Analytics scripts ── */}
-      {/* GTM: load only when both categories accepted (contains all tags) */}
       {cfg.gtm && an && ad && (
         <Script id="gtm" strategy="afterInteractive">{`
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -75,7 +82,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${cfg.gtm}');`}
         </Script>
       )}
-      {/* GA4: only when no GTM and analytics accepted */}
       {cfg.ga4 && !cfg.gtm && an && (
         <>
           <Script id="ga4-lib" strategy="afterInteractive"
@@ -87,7 +93,6 @@ gtag('js',new Date());gtag('config','${cfg.ga4}');`}
           </Script>
         </>
       )}
-      {/* Hotjar */}
       {cfg.hotjarId && an && (
         <Script id="hotjar" strategy="afterInteractive">{`
 (function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -120,35 +125,9 @@ document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','${cfg.metaPixel}');fbq('track','PageView');`}
         </Script>
       )}
-      {cfg.tiktokPixel && ad && (
-        <Script id="tiktok-pixel" strategy="afterInteractive">{`
-!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
-ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
-ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
-ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
-ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;
-ttq._o=ttq._o||{};ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript";
-n.async=!0;n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];
-e.parentNode.insertBefore(n,e)};ttq.load('${cfg.tiktokPixel}');ttq.page();
-}(window,document,'ttq');`}
-        </Script>
-      )}
-      {cfg.linkedinPartner && ad && (
-        <Script id="linkedin-insight" strategy="afterInteractive">{`
-_linkedin_partner_id="${cfg.linkedinPartner}";
-window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];
-window._linkedin_data_partner_ids.push(_linkedin_partner_id);
-(function(l){if(!l){window.lintrk=function(a,b){window.lintrk.q.push([a,b])};window.lintrk.q=[];}
-var s=document.getElementsByTagName("script")[0];var b=document.createElement("script");
-b.type="text/javascript";b.async=true;b.src="https://snap.licdn.com/li.lms-analytics/insight.min.js";
-s.parentNode.insertBefore(b,s);})(window.lintrk);`}
-        </Script>
-      )}
 
       {/* ── Cookie Banner ── */}
-      {visible && (
+      {visible && !isAdmin && (
         <div
           role="dialog"
           aria-label="Preferencias de cookies"
@@ -177,8 +156,7 @@ s.parentNode.insertBefore(b,s);})(window.lintrk);`}
               </p>
               <p style={{ fontSize: "0.73rem", color: "rgba(245,240,232,0.55)", lineHeight: 1.6 }}>
                 Usamos cookies propias y de terceros para analizar el tráfico y mostrarte
-                publicidad relevante. Puedes aceptar todo, rechazar las no esenciales o
-                gestionar tus preferencias.{" "}
+                publicidad relevante.{" "}
                 <a href="/privacidad#cookies" style={{ color: "rgba(200,169,110,0.7)", textDecoration: "none" }}>
                   Más información
                 </a>
@@ -217,13 +195,13 @@ s.parentNode.insertBefore(b,s);})(window.lintrk);`}
             }}>
               <ToggleRow
                 label="Cookies analíticas"
-                description="Google Analytics y Hotjar — nos ayudan a entender cómo se usa la web."
+                description="Google Analytics y Hotjar."
                 checked={draft.analytics}
                 onChange={(v) => setDraft((d) => ({ ...d, analytics: v }))}
               />
               <ToggleRow
                 label="Cookies publicitarias"
-                description="Google Ads, Meta, TikTok y LinkedIn — miden la efectividad de nuestras campañas."
+                description="Google Ads, Meta, TikTok y LinkedIn."
                 checked={draft.advertising}
                 onChange={(v) => setDraft((d) => ({ ...d, advertising: v }))}
               />
@@ -240,8 +218,8 @@ s.parentNode.insertBefore(b,s);})(window.lintrk);`}
         </div>
       )}
 
-      {/* Gestionar cookies link (always visible after consent) */}
-      {!visible && consent !== null && (
+      {/* Gestionar cookies link (only public) */}
+      {!visible && consent !== null && !isAdmin && (
         <button
           onClick={() => { setManaging(true); setVisible(true); }}
           style={{
@@ -253,11 +231,7 @@ s.parentNode.insertBefore(b,s);})(window.lintrk);`}
             fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase",
             color: "rgba(200,169,110,0.6)", cursor: "pointer",
             backdropFilter: "blur(8px)",
-            transition: "all 0.2s",
           }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#C8A96E"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(200,169,110,0.6)"; }}
-          aria-label="Gestionar preferencias de cookies"
         >
           Cookies
         </button>
@@ -265,8 +239,6 @@ s.parentNode.insertBefore(b,s);})(window.lintrk);`}
     </>
   );
 }
-
-/* ── Sub-components ── */
 
 function ToggleRow({ label, description, checked, onChange }: {
   label: string; description: string; checked: boolean; onChange: (v: boolean) => void;
@@ -279,13 +251,10 @@ function ToggleRow({ label, description, checked, onChange }: {
       </div>
       <button
         onClick={() => onChange(!checked)}
-        role="switch"
-        aria-checked={checked}
         style={{
           width: "42px", height: "24px", borderRadius: "12px", border: "none",
           background: checked ? "#C8A96E" : "rgba(255,255,255,0.12)",
           cursor: "pointer", position: "relative", flexShrink: 0,
-          transition: "background 0.2s",
         }}
       >
         <span style={{
@@ -303,7 +272,7 @@ function btnStyle(variant: "gold" | "outline" | "ghost"): React.CSSProperties {
   const base: React.CSSProperties = {
     padding: "0.55rem 1.1rem", borderRadius: "4px",
     fontSize: "0.73rem", fontWeight: 600, letterSpacing: "0.06em",
-    cursor: "pointer", whiteSpace: "nowrap", transition: "all 0.15s",
+    cursor: "pointer", whiteSpace: "nowrap",
   };
   if (variant === "gold") return { ...base, background: "#C8A96E", color: "#0A0A0A", border: "none" };
   if (variant === "outline") return { ...base, background: "transparent", color: "#F5F0E8", border: "1px solid rgba(245,240,232,0.2)" };

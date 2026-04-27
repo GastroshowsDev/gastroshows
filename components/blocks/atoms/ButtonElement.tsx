@@ -1,0 +1,71 @@
+"use client";
+
+import { ButtonElement as ButtonType } from "@/lib/blocks/types";
+import { InlineText } from "@/components/admin/InlineText";
+import { SmartLink } from "../SmartLink";
+
+type Props = {
+  element: ButtonType;
+  isEditing?: boolean;
+  onUpdate?: (newElement: ButtonType) => void;
+};
+
+export function ButtonElement({ element, isEditing = false, onUpdate }: Props) {
+  const [hover, setHover] = useState(false);
+  const { styles = {} } = element;
+
+  const getVariantStyles = () => {
+    switch (element.variant) {
+      case "primary":
+        return {
+          background: hover ? "#E8D5A8" : "#C8A96E",
+          color: "#0A0A0A",
+          border: "none",
+        };
+      case "outline":
+        return {
+          background: hover ? "rgba(200,169,110,0.1)" : "transparent",
+          color: "var(--gs-gold)",
+          border: "1px solid var(--gs-gold)",
+        };
+      default:
+        return {
+          background: hover ? "#333" : "#222",
+          color: "white",
+          border: "none",
+        };
+    }
+  };
+
+  return (
+    <div style={{ textAlign: styles.textAlign as any || "left", margin: styles.margin || "1rem 0" }}>
+      <SmartLink
+        href={element.link}
+        isEditing={isEditing}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          display: "inline-block",
+          padding: element.size === "lg" ? "1rem 2.5rem" : "0.75rem 1.5rem",
+          fontSize: "0.75rem",
+          fontWeight: 600,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          textDecoration: "none",
+          borderRadius: styles.borderRadius || "2px",
+          transition: "all 0.3s ease",
+          cursor: "pointer",
+          ...getVariantStyles(),
+        }}
+      >
+        <InlineText
+          value={element.text}
+          onChange={(v) => onUpdate?.({ ...element, text: v })}
+          isEditing={isEditing}
+          tagName="span"
+          style={{ background: "transparent", border: "none", padding: 0 }}
+        />
+      </SmartLink>
+    </div>
+  );
+}

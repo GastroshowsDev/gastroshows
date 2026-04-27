@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { InlineText } from "@/components/admin/InlineText";
 import type { GalleryContent } from "@/lib/blocks/types";
 
 type Props = { 
@@ -22,6 +23,14 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+
+  const updateLabel = (index: number, label: string) => {
+    if (onUpdate) {
+      const newImages = [...(content.images || [])];
+      newImages[index] = { ...newImages[index], label };
+      onUpdate({ ...content, images: newImages });
+    }
+  };
 
   const cols = content.columns ?? 3;
 
@@ -45,6 +54,8 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
             src={img.src}
             alt={img.alt}
             label={img.label}
+            isEditing={isEditing}
+            onUpdateLabel={(val) => updateLabel(i, val)}
             delay={i * 0.08}
             visible={visible}
           />
@@ -55,9 +66,9 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
 }
 
 function GalleryCell({
-  src, alt, label, delay, visible,
+  src, alt, label, isEditing, onUpdateLabel, delay, visible,
 }: {
-  src: string; alt: string; label: string; delay: number; visible: boolean;
+  src: string; alt: string; label: string; isEditing: boolean; onUpdateLabel: (v: string) => void; delay: number; visible: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -76,6 +87,7 @@ function GalleryCell({
         transition: `opacity 0.7s ${delay}s, transform 0.7s ${delay}s`,
       }}
     >
+      {/* ... image remains same ... */}
       <Image
         src={src}
         alt={alt || label || ""}
@@ -96,22 +108,25 @@ function GalleryCell({
         }}
       />
       {/* Label */}
-      {label && (
-        <div style={{ position: "absolute", bottom: "1.1rem", left: "1.25rem", right: "1.25rem" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: "1.1rem",
-              fontWeight: 300,
-              color: "#F5F0E8",
-              transform: hovered ? "translateY(-3px)" : "translateY(0)",
-              transition: "transform 0.4s",
-            }}
-          >
-            {label}
-          </p>
-        </div>
-      )}
+      <div style={{ position: "absolute", bottom: "1.1rem", left: "1.25rem", right: "1.25rem" }}>
+        <p
+          style={{
+            fontFamily: "var(--font-cormorant), Georgia, serif",
+            fontSize: "1.1rem",
+            fontWeight: 300,
+            color: "#F5F0E8",
+            transform: hovered ? "translateY(-3px)" : "translateY(0)",
+            transition: "transform 0.4s",
+          }}
+        >
+          <InlineText
+            value={label || ""}
+            onChange={onUpdateLabel}
+            isEditing={isEditing}
+            placeholder="Etiqueta..."
+          />
+        </p>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { VenueSelectionModal } from "./VenueSelectionModal";
 
 type VenueName = "BERTRAND" | "SARRIA" | "URGELL";
 
@@ -26,6 +27,9 @@ export function PendingReservationsPanel() {
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [venueSelect, setVenueSelect] = useState<Partial<Record<string, VenueName>>>({});
+  
+  // State for the modal
+  const [modalReservation, setModalReservation] = useState<PendingRow | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -73,7 +77,23 @@ export function PendingReservationsPanel() {
   }
 
   function confirm(id: string) {
-    const venue = venueSelect[id] ?? null;
+    const row = rows.find(r => r.id === id);
+    if (!row) return;
+
+    const currentVenue = venueSelect[id] || (row.venue?.name as VenueName | undefined);
+    
+    if (!currentVenue) {
+      setModalReservation(row);
+      return;
+    }
+
+    void patchReservation(id, { status: "CONFIRMED", venueName: currentVenue });
+  }
+
+  function handleModalConfirm(venue: "BERTRAND" | "URGELL") {
+    if (!modalReservation) return;
+    const id = modalReservation.id;
+    setModalReservation(null);
     void patchReservation(id, { status: "CONFIRMED", venueName: venue });
   }
 
@@ -220,6 +240,14 @@ export function PendingReservationsPanel() {
           })}
         </ul>
       )}
+      {/* Venue Selection Modal */}
+      <VenueSelectionModal
+        isOpen={!!modalReservation}
+        onClose={() => setModalReservation(null)}
+        onConfirm={handleModalConfirm}
+        customerName={modalReservation?.customer.name ?? ""}
+        reservationDetails={modalReservation ? `${modalReservation.guests} pax · ${new Date(modalReservation.event.date).toLocaleDateString("es-ES", { day: "numeric", month: "long" })} ${modalReservation.event.shift === "NOON" ? "Mediodía" : "Noche"}` : ""}
+      />
     </section>
   );
 }

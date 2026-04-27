@@ -56,17 +56,18 @@ export function RecentActivityFeed({ initialItems }: Props) {
         ) : null}
         {items.map((r) => {
           const label =
+            r.status === "PENDING" ? "Nueva reserva" :
+            r.status === "CONFIRMED" ? "Confirmada" :
+            r.status === "CHECKED_IN" ? "Check-in" :
             r.status === "CANCELLED" ? "Cancelada" :
             r.status === "PAYMENT_FAILED" ? "Pago fallido" :
-            r.status === "CONFIRMED" ? (
-              Math.abs(new Date(r.updatedAt).getTime() - new Date(r.createdAt).getTime()) < 10_000
-                ? "Confirmada" : "Modificada"
-            ) :
-            "Nueva reserva";
+            "Actualizada";
           const dotColor =
             r.status === "CANCELLED" ? "#EF4444" :
             r.status === "PAYMENT_FAILED" ? "#EF4444" :
-            r.status === "CONFIRMED" ? "#10B981" : "#F59E0B";
+            r.status === "CONFIRMED" ? "#10B981" :
+            r.status === "CHECKED_IN" ? "#875BF7" : 
+            "#F59E0B"; // PENDING
           const venueName = r.venue
             ? (r.venue.name === "BERTRAND" || r.venue.name === "SARRIA" ? "Bertrand" : r.venue.name === "URGELL" ? "Urgell" : r.venue.name)
             : null;

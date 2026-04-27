@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { AllergyPicker } from "./AllergyPicker";
+import { PaymentButton } from "./PaymentButton";
 
 /* ─────────────────────────────────── types ── */
 
@@ -1295,9 +1296,33 @@ function SuccessScreen({
         ))}
       </div>
 
-      <button onClick={onClose} style={{ ...nextBtnStyle, margin: "0 auto" }}>
-        Cerrar
-      </button>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "2rem" }}>
+        <PaymentButton 
+          reservationId={success.id} 
+          amount={success.deposit} 
+        />
+        
+        <p style={{ fontSize: "0.65rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>
+          Para garantizar tu plaza, es necesario realizar el pago del depósito. 
+          Serás redirigido a la pasarela segura de Redsys.
+        </p>
+
+        <button 
+          onClick={onClose} 
+          style={{ 
+            background: "none", 
+            border: "none", 
+            color: LIGHT, 
+            fontSize: "0.65rem", 
+            textTransform: "uppercase", 
+            letterSpacing: "0.1em",
+            cursor: "pointer",
+            marginTop: "0.5rem"
+          }}
+        >
+          Cerrar y pagar más tarde
+        </button>
+      </div>
     </div>
   );
 }

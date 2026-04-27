@@ -31,24 +31,6 @@ const PAGES: PageCard[] = [
     fieldCount: 0,
     accent: "#F59E0B",
   },
-  {
-    href: "/admin/web/landing",
-    previewHref: "/",
-    icon: "◈",
-    title: "Landing antigua (Lectura)",
-    description: "Hero, experiencia, vale regalo y pie de página del sistema anterior.",
-    fieldCount: 40,
-    accent: "#875BF7",
-  },
-  {
-    href: "/admin/web/eventos",
-    previewHref: "/eventos",
-    icon: "◇",
-    title: "Eventos antiguos (Lectura)",
-    description: "Configuración de eventos del sistema anterior.",
-    fieldCount: 14,
-    accent: "#C8A96E",
-  },
 ];
 
 export function WebIndex() {

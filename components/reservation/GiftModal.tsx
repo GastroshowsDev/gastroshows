@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PaymentButton } from "./PaymentButton";
 
 const GOLD = "#C8A96E";
 const DARK2 = "#1A1A1A";
@@ -433,26 +434,39 @@ function SuccessScreen({ success, onClose }: { success: SuccessData; onClose: ()
         </div>
       )}
 
-      <button
-        onClick={onClose}
-        style={{
-          background: "transparent",
-          color: LIGHT,
-          border: "1px solid rgba(200,169,110,0.2)",
-          padding: "0.75rem 2rem",
-          fontFamily: "var(--font-montserrat), sans-serif",
-          fontSize: "0.65rem",
-          fontWeight: 600,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase" as const,
-          cursor: "pointer",
-          borderRadius: "2px",
-          margin: "0 auto",
-          display: "block",
-        }}
-      >
-        Cerrar
-      </button>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <PaymentButton 
+          reservationId={success.voucherId} 
+          amount={success.totalAmount} 
+        />
+        
+        <p style={{ fontSize: "0.65rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>
+          Para activar el vale regalo, es necesario realizar el pago. 
+          Serás redirigido a la pasarela segura de Redsys.
+        </p>
+
+        <button
+          onClick={onClose}
+          style={{
+            background: "transparent",
+            color: LIGHT,
+            border: "1px solid rgba(200,169,110,0.1)",
+            padding: "0.75rem 2rem",
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontSize: "0.65rem",
+            fontWeight: 500,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            borderRadius: "2px",
+            margin: "0 auto",
+            display: "block",
+            marginTop: "0.5rem"
+          }}
+        >
+          Cerrar
+        </button>
+      </div>
     </div>
   );
 }

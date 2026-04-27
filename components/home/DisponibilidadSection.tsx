@@ -130,11 +130,11 @@ export function DisponibilidadSection({
                 <>Semana <em style={{ color: "#E57373" }}>completa</em></>
               ) : (
                 <>
-                  Quedan{" "}
+                  Hay{" "}
                   <em style={{ color: urgency ? "#E57373" : "var(--gs-gold)" }}>
                     {data?.totalAvailable}
                   </em>{" "}
-                  plazas esta semana
+                  plazas libres esta semana
                 </>
               )}
             </h2>

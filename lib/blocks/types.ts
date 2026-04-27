@@ -1,25 +1,82 @@
 /**
- * Block type definitions for the Page Builder.
- *
- * Each block stored in `PageBlock.content` (JSON) follows one of these shapes.
+ * Block type definitions for the Next-Gen Page Builder.
  */
 
-// ── Block type identifiers ───────────────────────────────────────────────────
+// ── Common Styles ────────────────────────────────────────────────────────────
 
-export const BLOCK_TYPES = [
-  "HERO",
-  "TEXT",
-  "IMAGE",
-  "GALLERY",
-  "COLUMNS",
-  "CTA",
-  "SPACER",
-  "AVAILABILITY",
-] as const;
+export type CommonStyles = {
+  padding?: string; // e.g. "20px 0"
+  margin?: string;
+  backgroundColor?: string;
+  backgroundImage?: string;
+  backgroundSize?: "cover" | "contain" | "auto";
+  borderRadius?: string;
+  textAlign?: "left" | "center" | "right";
+  color?: string;
+  boxShadow?: string;
+  animation?: string;
+};
 
-export type BlockType = (typeof BLOCK_TYPES)[number];
+// ── Atomic Elements ─────────────────────────────────────────────────────────
 
-// ── Content shapes per block type ────────────────────────────────────────────
+export type HeadingElement = {
+  type: "HEADING";
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  text: string;
+  accentText?: string;
+  styles?: CommonStyles;
+};
+
+export type ButtonElement = {
+  type: "BUTTON";
+  text: string;
+  link: string;
+  variant: "primary" | "secondary" | "outline";
+  size: "sm" | "md" | "lg";
+  styles?: CommonStyles;
+};
+
+export type TextElement = {
+  type: "TEXT";
+  body: string; // HTML or Markdown
+  styles?: CommonStyles;
+};
+
+export type ImageElement = {
+  type: "IMAGE";
+  src: string;
+  alt: string;
+  width?: string;
+  height?: string;
+  styles?: CommonStyles;
+};
+
+export type SpacerElement = {
+  type: "SPACER";
+  height: number;
+};
+
+export type ElementData = 
+  | HeadingElement 
+  | ButtonElement 
+  | TextElement 
+  | ImageElement 
+  | SpacerElement;
+
+// ── Layout Blocks (Containers) ──────────────────────────────────────────────
+
+export type ColumnData = {
+  width: string; // e.g. "50%" or "33.33%"
+  elements: ElementData[];
+};
+
+export type SectionContent = {
+  columns: ColumnData[];
+  fullWidth?: boolean;
+  styles?: CommonStyles;
+};
+
+// ── Legacy / Preset Blocks (Maintained for compatibility) ─────────────────────
 
 export type HeroContent = {
   bgImage: string;
@@ -29,68 +86,39 @@ export type HeroContent = {
   subtitle: string;
   ctaPrimaryText: string;
   ctaPrimaryLink: string;
-  ctaSecondaryText: string;
-  ctaSecondaryLink: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryLink?: string;
   overlayOpacity: number;
-  animation?: "none" | "typewriter" | "fade" | "slide" | "zoom" | "bounce";
+  animation?: string;
+  eyebrowAnim?: string;
+  titleAnim?: string;
+  subtitleAnim?: string;
+  ctaPrimaryAnim?: string;
+  ctaSecondaryAnim?: string;
 };
 
 export type TextContent = {
-  eyebrow: string;
-  title: string;
-  titleAccent: string;
+  eyebrow?: string;
+  title?: string;
+  titleAccent?: string;
   body: string;
-  alignment: "left" | "center" | "right";
+  alignment?: "left" | "center" | "right";
   fontSize?: string;
   color?: string;
   bold?: boolean;
   italic?: boolean;
-  animation?: "none" | "typewriter" | "fade" | "slide" | "zoom" | "bounce";
+  animation?: string;
+  eyebrowAnim?: string;
+  titleAnim?: string;
+  bodyAnim?: string;
   hoverEffect?: "none" | "grow" | "glow" | "lift";
 };
 
-export type ImageContent = {
-  src: string;
-  alt: string;
-  caption: string;
-  fullWidth: boolean;
-};
-
-export type GalleryImage = {
-  src: string;
-  alt: string;
-  label: string;
-};
-
-export type GalleryContent = {
-  images: GalleryImage[];
-  columns: 2 | 3 | 4;
-};
-
-export type ColumnChild = {
-  id: string;
-  type: BlockType;
-  content: BlockContent;
-};
-
-export type ColumnsContent = {
-  columns: 2 | 3 | 4;
-  children: ColumnChild[][];  // Array of columns, each containing an array of blocks
-};
-
-export type CtaContent = {
+export type StepsContent = {
   eyebrow: string;
   title: string;
   titleAccent: string;
-  body: string;
-  buttonText: string;
-  buttonLink: string;
-  bgImage: string;
-};
-
-export type SpacerContent = {
-  height: number; // pixels
-  gradient: "none" | "dark-to-light" | "light-to-dark";
+  steps: { day: string; eyebrow: string; title: string; body: string }[];
 };
 
 export type AvailabilityContent = {
@@ -98,19 +126,40 @@ export type AvailabilityContent = {
   subtitle?: string;
 };
 
-// ── Union type ───────────────────────────────────────────────────────────────
+export type CtaContent = {
+  bgImage?: string;
+  eyebrow?: string;
+  title: string;
+  titleAccent?: string;
+  body?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  eyebrowAnim?: string;
+  titleAnim?: string;
+  bodyAnim?: string;
+  buttonAnim?: string;
+};
+
+// ── Core Block Data ──────────────────────────────────────────────────────────
+
+export type BlockType = 
+  | "SECTION"      // The new universal container
+  | "HERO"         // Legacy preset
+  | "STEPS"        // Legacy preset
+  | "AVAILABILITY" // Widget preset
+  | "TEXT"         // Legacy
+  | "IMAGE"        // Legacy
+  | "GALLERY"      // Legacy
+  | "CTA"          // Legacy
+  | "SPACER";      // Legacy
 
 export type BlockContent =
+  | SectionContent
   | HeroContent
-  | TextContent
-  | ImageContent
-  | GalleryContent
-  | ColumnsContent
   | CtaContent
-  | SpacerContent
-  | AvailabilityContent;
-
-// ── Block with metadata (as stored in DB) ────────────────────────────────────
+  | StepsContent
+  | AvailabilityContent
+  | any;
 
 export type BlockData = {
   id: string;
@@ -119,76 +168,32 @@ export type BlockData = {
   order: number;
 };
 
-// ── Default content per block type ───────────────────────────────────────────
+// ── Defaults & Labels ────────────────────────────────────────────────────────
 
-export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
-  HERO: {
-    bgImage: "",
-    title: "Tu título aquí",
-    titleAccent: "con estilo.",
-    subtitle: "Descripción del hero.",
-    ctaPrimaryText: "Reservar",
-    ctaPrimaryLink: "#reservar",
-    ctaSecondaryText: "Regalar",
-    ctaSecondaryLink: "#regalar",
-    overlayOpacity: 70,
-  } satisfies HeroContent,
-
-  TEXT: {
-    eyebrow: "Sección",
-    title: "Título de la sección",
-    titleAccent: "",
-    body: "Escribe aquí el contenido de esta sección.",
-    alignment: "center",
-  } satisfies TextContent,
-
-  IMAGE: {
-    src: "",
-    alt: "",
-    caption: "",
-    fullWidth: false,
-  } satisfies ImageContent,
-
-  GALLERY: {
-    images: [],
-    columns: 3,
-  } satisfies GalleryContent,
-
-  COLUMNS: {
-    columns: 2,
-    children: [[], []],
-  } satisfies ColumnsContent,
-
-  CTA: {
-    eyebrow: "",
-    title: "Llamada a la acción",
-    titleAccent: "",
-    body: "Descripción de la acción.",
-    buttonText: "Reservar",
-    buttonLink: "#reservar",
-    bgImage: "",
-  } satisfies CtaContent,
-
-  SPACER: {
-    height: 120,
-    gradient: "none",
-  } satisfies SpacerContent,
-
-  AVAILABILITY: {
-    title: "Quedan {total} plazas esta semana",
-    subtitle: "DISPONIBILIDAD",
-  } satisfies AvailabilityContent,
+export const BLOCK_DEFAULTS: Record<string, any> = {
+  SECTION: {
+    columns: [
+      { width: "100%", elements: [] }
+    ],
+    styles: { padding: "4rem 2rem" }
+  },
+  HEADING: { type: "HEADING", level: 2, text: "Tu Título Aquí", styles: {} },
+  BUTTON: { type: "BUTTON", text: "Clic Aquí", link: "#", variant: "primary", size: "md", styles: {} },
+  TEXT: { type: "TEXT", body: "Escribe tu contenido aquí.", styles: {} },
+  IMAGE: { type: "IMAGE", src: "", alt: "", styles: {} },
 };
 
-// ── Human-readable labels ────────────────────────────────────────────────────
+export const BLOCK_LABELS: Record<string, { label: string; icon: string; description: string }> = {
+  SECTION:      { label: "Sección (Layout)",     icon: "⏹",  description: "Contenedor de 1 a 4 columnas" },
+  COLUMNS:      { label: "Columnas (Antiguo)",   icon: "⫽",  description: "Bloque de columnas antiguo" },
+  HERO:         { label: "Hero (Preset)",        icon: "🏔",  description: "Cabecera clásica" },
+  STEPS:        { label: "Ritual (Preset)",      icon: "📧",  description: "Flujo de emails D-4" },
+  AVAILABILITY:{ label: "Disponibilidad",       icon: "📅",  description: "Calendario en vivo" },
+};
 
-export const BLOCK_LABELS: Record<BlockType, { label: string; icon: string; description: string }> = {
-  HERO:         { label: "Contenedor 1 (Principal)", icon: "🏔",  description: "Imagen de fondo con título y botones" },
-  TEXT:         { label: "Contenedor 2 (Texto)",     icon: "📝",  description: "Sección de texto con título y cuerpo" },
-  IMAGE:       { label: "Contenedor 3 (Imagen)",    icon: "🖼",   description: "Imagen única con pie de foto" },
-  GALLERY:     { label: "Contenedor 4 (Galería)",   icon: "🎨",  description: "Grid de imágenes con hover" },
-  COLUMNS:     { label: "Contenedor 5 (Columnas)",  icon: "📐",  description: "Layout de columnas con bloques dentro" },
-  CTA:         { label: "Contenedor 6 (Acción)",    icon: "📣", description: "Sección CTA con fondo y botón" },
-  SPACER:      { label: "Separador",               icon: "➖",   description: "Espacio o gradiente entre secciones" },
-  AVAILABILITY:{ label: "Disponibilidad",          icon: "📅",  description: "Calendario de disponibilidad en vivo" },
+export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
+  HEADING: { label: "Título", icon: "H" },
+  BUTTON:  { label: "Botón",  icon: "🔘" },
+  TEXT:    { label: "Texto",  icon: "T" },
+  IMAGE:   { label: "Imagen", icon: "🖼" },
 };

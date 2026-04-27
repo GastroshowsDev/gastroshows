@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { GiftModal } from "@/components/reservation/GiftModal";
-import { ReservationModal } from "@/components/reservation/ReservationModal";
+import { usePageActions } from "@/context/PageActionsContext";
 import { DisponibilidadSection } from "./DisponibilidadSection";
 import { HeroSection } from "./HeroSection";
 import { RegaloSection } from "./RegaloSection";
@@ -14,8 +13,7 @@ import { c } from "@/lib/landing-client";
 type Props = { content: LandingContentMap };
 
 export function LandingPage({ content }: Props) {
-  const [reservaOpen, setReservaOpen] = useState(false);
-  const [regalarOpen, setRegalarOpen] = useState(false);
+  const { openReservation, openGift } = usePageActions();
 
   // Always start at top — prevents browser scroll restoration from jumping mid-page
   useEffect(() => {
@@ -29,8 +27,8 @@ export function LandingPage({ content }: Props) {
 
       <HeroSection
         content={content}
-        onReservar={() => setReservaOpen(true)}
-        onRegalar={() => setRegalarOpen(true)}
+        onReservar={openReservation}
+        onRegalar={openGift}
       />
 
       {/* Hero → Ritual fade */}
@@ -43,7 +41,7 @@ export function LandingPage({ content }: Props) {
 
       <RitualSection content={content} />
 
-      <DisponibilidadSection onReservar={() => setReservaOpen(true)} />
+      <DisponibilidadSection onReservar={openReservation} />
 
       {/* Disponibilidad → Regalo fade */}
       <div style={{
@@ -53,11 +51,8 @@ export function LandingPage({ content }: Props) {
         flexShrink: 0,
       }} />
 
-      <RegaloSection content={content} onRegalar={() => setRegalarOpen(true)} />
+      <RegaloSection content={content} onRegalar={openGift} />
       <LandingFooter content={content} />
-
-      <ReservationModal open={reservaOpen} onClose={() => setReservaOpen(false)} />
-      <GiftModal open={regalarOpen} onClose={() => setRegalarOpen(false)} />
     </>
   );
 }

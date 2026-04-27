@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { type VenueName } from "@prisma/client";
 import type { ReservaRow } from "@/app/admin/reservas/page";
 import { ImportModal } from "@/components/admin/ImportModal";
+import { VenueSelectionModal } from "@/components/admin/VenueSelectionModal";
 
 type TimeFilter = "upcoming" | "today" | "week" | "month" | "next-month" | "all" | "past" | "past-2w";
 type VenueFilter = "all" | "URGELL" | "BERTRAND";
@@ -510,6 +511,10 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   const [editForm, setEditForm] = useState<ReservaForm>(FORM_DEFAULT);
   const [saving, setSaving] = useState(false);
 
+  // Modal for forced venue selection
+  const [modalReserva, setModalReserva] = useState<ReservaRow | null>(null);
+  const [modalPendingStatus, setModalPendingStatus] = useState<StatusKey | null>(null);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -594,7 +599,18 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
 
   // ── Inline status change ─────────────────────────────────────────────────────
   async function handleStatusChange(reservaId: string, status: StatusKey) {
-    const prev = reservas.find((r) => r.id === reservaId)?.status as StatusKey;
+    const row = reservas.find((r) => r.id === reservaId);
+    if (!row) return;
+
+    const prev = row.status as StatusKey;
+
+    // If confirming and no venue, show modal
+    if (status === "CONFIRMED" && !row.venue) {
+      setModalReserva(row);
+      setModalPendingStatus(status);
+      return;
+    }
+
     setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, status } : r));
     const res = await fetch(`/api/reservations/${reservaId}`, {
       method: "PATCH",
@@ -604,6 +620,23 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     if (!res.ok) {
       setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, status: prev } : r));
     }
+  }
+
+  async function handleModalConfirm(venueName: "BERTRAND" | "URGELL") {
+    if (!modalReserva) return;
+    const reservaId = modalReserva.id;
+    const status = modalPendingStatus || "CONFIRMED";
+    
+    setModalReserva(null);
+    setModalPendingStatus(null);
+
+    setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, status, venue: { id: "", name: venueName } } : r));
+    
+    await fetch(`/api/reservations/${reservaId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status, venueName }),
+    });
   }
 
   // ── Open edit modal ──────────────────────────────────────────────────────────
@@ -658,6 +691,18 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   async function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     if (saving || !editId) return;
+
+    // Prevent confirming without venue
+    if (editForm.status === "CONFIRMED" && !editForm.venueName) {
+      const row = reservas.find(r => r.id === editId);
+      if (row) {
+        setModalReserva(row);
+        setModalPendingStatus("CONFIRMED");
+        setEditId(null); // Close edit modal
+      }
+      return;
+    }
+
     setSaving(true);
     try {
       const res = await fetch(`/api/admin/reservations/${editId}`, {
@@ -754,6 +799,14 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         </button>
         <button style={S.btn} onClick={() => setCreateOpen(true)}>+ Nueva reserva</button>
       </div>
+
+      <VenueSelectionModal
+        isOpen={!!modalReserva}
+        onClose={() => { setModalReserva(null); setModalPendingStatus(null); }}
+        onConfirm={handleModalConfirm}
+        customerName={modalReserva?.customer.name ?? ""}
+        reservationDetails={modalReserva ? `${modalReserva.guests} pax · ${new Date(modalReserva.event.date).toLocaleDateString("es-ES", { day: "numeric", month: "long" })} ${modalReserva.event.shift === "NOON" ? "Mediodía" : "Noche"}` : ""}
+      />
 
       {/* ── Table ── */}
       <div style={S.tableWrap}>

@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { BlockType, BlockData, BLOCK_DEFAULTS, BLOCK_LABELS } from "@/lib/blocks/types";
+import { useState, useEffect, useRef } from "react";
+import { 
+  BlockType, 
+  BlockData, 
+  BLOCK_DEFAULTS, 
+  BLOCK_LABELS, 
+  ELEMENT_LABELS 
+} from "@/lib/blocks/types";
 import { BlockPropertiesPanel } from "./BlockPropertiesPanel";
 import { MediaGallery } from "./MediaGallery";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
@@ -35,28 +41,77 @@ type PageData = {
 
 export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [page, setPage] = useState<PageData | null>(null);
+  const [history, setHistory] = useState<PageData[]>([]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  const [selectedElementPath, setSelectedElementPath] = useState<{ col: number; el: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showMedia, setShowMedia] = useState(false);
   const [mediaCallback, setMediaCallback] = useState<((url: string) => void) | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5, // Lower distance for better responsiveness
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
+
+  // Helper to update state and history
+  const updatePageState = (newPage: PageData) => {
+    if (page) {
+      setHistory(prev => [JSON.parse(JSON.stringify(page)), ...prev].slice(0, 20));
+    }
+    setPage(newPage);
+  };
+
+  const undo = () => {
+    if (history.length === 0) return;
+    const [prevPage, ...rest] = history;
+    setPage(prevPage);
+    setHistory(rest);
+    setSelectedBlockId(null);
+    setSelectedElementPath(null);
+  };
 
   useEffect(() => {
     async function load() {
       const res = await fetch(`/api/admin/pages/${pageId}`);
       const json = await res.json();
-      if (json.ok) setPage(json.data);
+      if (json.ok) {
+        const pageData = json.data;
+        const migratedBlocks = pageData.blocks.map((block: any) => {
+          const content = block.content;
+          if (block.type === "COLUMNS" || (block.type === "SECTION" && !content.columns?.[0]?.elements)) {
+            const rawColumns = content.columns;
+            const oldColumns = Array.isArray(rawColumns) ? rawColumns : (rawColumns ? [rawColumns] : []);
+            const newColumns = oldColumns.map((col: any) => ({
+              width: col.width || `${100 / (oldColumns.length || 1)}%`,
+              elements: [
+                ...(col.title ? [{ type: "HEADING", level: 3, text: col.title }] : []),
+                ...(col.text ? [{ type: "TEXT", body: col.text }] : []),
+                ...(col.image ? [{ type: "IMAGE", src: col.image, alt: col.title || "" }] : [])
+              ]
+            }));
+            return { ...block, type: "SECTION", content: { columns: newColumns, styles: content.styles || { padding: "4rem 2rem" } } };
+          }
+          if (block.type === "TEXT" && !content.columns) {
+            return {
+              ...block,
+              type: "SECTION",
+              content: {
+                columns: [{
+                  width: "100%",
+                  elements: [
+                    ...(content.title ? [{ type: "HEADING", level: 2, text: content.title }] : []),
+                    ...(content.body ? [{ type: "TEXT", body: content.body }] : [])
+                  ]
+                }],
+                styles: content.styles || { padding: "4rem 2rem" }
+              }
+            };
+          }
+          return block;
+        });
+        setPage({ ...pageData, blocks: migratedBlocks });
+      }
       setLoading(false);
     }
     load();
@@ -66,7 +121,6 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     if (!page) return;
     setSaving(true);
     try {
-      // 1. Save metadata
       await fetch(`/api/admin/pages/${pageId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -79,7 +133,6 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         }),
       });
 
-      // 2. Save blocks
       await fetch(`/api/admin/pages/${pageId}/blocks`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -97,16 +150,17 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     const newBlock: BlockData = {
       id: Math.random().toString(36).substr(2, 9),
       type,
-      content: JSON.parse(JSON.stringify(BLOCK_DEFAULTS[type])),
+      content: JSON.parse(JSON.stringify(BLOCK_DEFAULTS[type] || {})),
       order: page.blocks.length,
     };
-    setPage({ ...page, blocks: [...page.blocks, newBlock] });
+    updatePageState({ ...page, blocks: [...page.blocks, newBlock] });
     setSelectedBlockId(newBlock.id);
+    setSelectedElementPath(null);
   }
 
   function updateBlockContent(id: string, content: any) {
     if (!page) return;
-    setPage({
+    updatePageState({
       ...page,
       blocks: page.blocks.map((b) => (b.id === id ? { ...b, content } : b)),
     });
@@ -123,14 +177,13 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     const targetIndex = direction === "up" ? index - 1 : index + 1;
     [newBlocks[index], newBlocks[targetIndex]] = [newBlocks[targetIndex], newBlocks[index]];
     
-    // Update order field
     const ordered = newBlocks.map((b, i) => ({ ...b, order: i }));
-    setPage({ ...page, blocks: ordered });
+    updatePageState({ ...page, blocks: ordered });
   }
 
   function deleteBlock(id: string) {
     if (!page || !confirm("¿Borrar este bloque?")) return;
-    setPage({
+    updatePageState({
       ...page,
       blocks: page.blocks.filter((b) => b.id !== id).map((b, i) => ({ ...b, order: i })),
     });
@@ -144,13 +197,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     if (active.id !== over.id) {
       const oldIndex = page.blocks.findIndex((b) => b.id === active.id);
       const newIndex = page.blocks.findIndex((b) => b.id === over.id);
-
-      const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({
-        ...b,
-        order: i,
-      }));
-
-      setPage({ ...page, blocks: reordered });
+      const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({ ...b, order: i }));
+      updatePageState({ ...page, blocks: reordered });
     }
   }
 
@@ -160,7 +208,6 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#F4F6FA" }}>
-      {/* Sidebar: Blocks & Structure */}
       <aside style={{ width: "280px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column" }}>
         <div style={{ padding: "1.5rem", borderBottom: "1px solid #EAEEF4" }}>
           <h2 style={{ fontSize: "1rem", fontWeight: 700, margin: 0 }}>Page Builder</h2>
@@ -168,9 +215,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         </div>
 
         <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
-          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>Bloques Disponibles</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "2rem" }}>
-            {Object.entries(BLOCK_LABELS).map(([type, info]) => (
+          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>1. Estructura / Layout</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            {Object.entries(BLOCK_LABELS).filter(([type]) => type === "SECTION" || type === "AVAILABILITY").map(([type, info]) => (
               <button
                 key={type}
                 onClick={() => addBlock(type as BlockType)}
@@ -179,11 +226,45 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                   display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", cursor: "pointer",
                   transition: "all 0.2s"
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#875BF7")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#E5E7EB")}
               >
                 <span style={{ fontSize: "1.2rem" }}>{info.icon}</span>
                 <span style={{ fontSize: "0.65rem", fontWeight: 600 }}>{info.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>2. Elementos (Arrastra a una columna)</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "2rem" }}>
+            {Object.entries(ELEMENT_LABELS).map(([type, info]) => (
+              <div
+                key={type}
+                draggable
+                onDragStart={(e) => e.dataTransfer.setData("elementType", type)}
+                style={{
+                  padding: "0.6rem 0.5rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "8px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "grab",
+                  transition: "all 0.2s"
+                }}
+              >
+                <span style={{ fontSize: "1rem" }}>{info.icon}</span>
+                <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>{info.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>3. Presets</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "2rem" }}>
+            {Object.entries(BLOCK_LABELS).filter(([type]) => type !== "SECTION" && type !== "AVAILABILITY" && type !== "COLUMNS").map(([type, info]) => (
+              <button
+                key={type}
+                onClick={() => addBlock(type as BlockType)}
+                style={{
+                  padding: "0.5rem", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "8px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "pointer",
+                }}
+              >
+                <span style={{ fontSize: "1rem" }}>{info.icon}</span>
+                <span style={{ fontSize: "0.6rem", fontWeight: 500 }}>{info.label}</span>
               </button>
             ))}
           </div>
@@ -201,7 +282,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 }}
               >
                 <span style={{ color: "#9CA3AF" }}>{i + 1}</span>
-                <span style={{ flex: 1, fontWeight: 500 }}>{BLOCK_LABELS[block.type].label}</span>
+                <span style={{ flex: 1, fontWeight: 500 }}>{BLOCK_LABELS[block.type]?.label || `Bloque (${block.type})`}</span>
                 <div style={{ display: "flex", gap: "2px" }}>
                   <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={{ border: "none", background: "none", cursor: "pointer" }}>▲</button>
                   <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={{ border: "none", background: "none", cursor: "pointer" }}>▼</button>
@@ -222,7 +303,6 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         </div>
       </aside>
 
-      {/* Main Canvas (Preview) */}
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "1rem 2rem", background: "white", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
@@ -230,29 +310,38 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
               value={page.title}
               onChange={(e) => setPage({ ...page, title: e.target.value })}
               style={{ fontSize: "1.1rem", fontWeight: 700, border: "none", outline: "none", width: "240px" }}
-              placeholder="Título de la página"
             />
             <span style={{ color: "#9CA3AF" }}>/</span>
             <input
               value={page.slug}
               onChange={(e) => setPage({ ...page, slug: e.target.value })}
               style={{ fontSize: "0.9rem", color: "#6B7280", border: "none", outline: "none", width: "160px" }}
-              placeholder="slug"
             />
+            
+            {/* UNDO BUTTON */}
+            <button 
+              onClick={undo} 
+              disabled={history.length === 0}
+              style={{ 
+                marginLeft: "2rem", padding: "0.4rem 0.8rem", background: "#F3F4F6", border: "1px solid #D1D5DB", 
+                borderRadius: "6px", fontSize: "0.75rem", cursor: history.length === 0 ? "not-allowed" : "pointer",
+                opacity: history.length === 0 ? 0.5 : 1, display: "flex", alignItems: "center", gap: "0.4rem"
+              }}
+            >
+              ↩ Deshacer
+            </button>
           </div>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
              <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer" }}>
                 <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} />
                 Publicada
              </label>
-             <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver al listado</a>
+             <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver</a>
           </div>
         </div>
 
-        {/* Real-time Preview Area */}
-        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "#050505" }}>
+        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "var(--gs-bg)" }}>
           <div style={{ flex: 1, position: "relative" }}>
-             {/* We wrap PageBlockList to capture clicks for selection */}
              <div style={{ position: "relative" }}>
                <DndContext
                  sensors={sensors}
@@ -265,61 +354,72 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                    strategy={verticalListSortingStrategy}
                  >
                    {page.blocks.map((block) => (
-                     <SortableBlock
-                       key={block.id}
-                       id={block.id}
-                       isSelected={selectedBlockId === block.id}
-                       label={BLOCK_LABELS[block.type].label}
-                       onClick={(e) => {
-                         setSelectedBlockId(block.id);
-                         
-                         // Smart Focus Logic
-                         const target = e.target as HTMLElement;
-                         const field = target.closest("[data-field]")?.getAttribute("data-field");
-                         if (field) {
-                           setTimeout(() => {
-                             const input = document.getElementById(`field-${field}`);
-                             if (input) {
-                               input.focus();
-                               input.scrollIntoView({ behavior: "smooth", block: "center" });
-                             }
-                           }, 50);
-                         }
-                       }}
-                     >
+                      <SortableBlock
+                        key={block.id}
+                        id={block.id}
+                        isSelected={selectedBlockId === block.id}
+                        label={BLOCK_LABELS[block.type]?.label || block.type}
+                        onClick={(e) => {
+                          setSelectedBlockId(block.id);
+                          const target = e.target as HTMLElement;
+                          const field = target.closest("[data-field]")?.getAttribute("data-field");
+                          if (field) {
+                            setTimeout(() => {
+                              const input = document.getElementById(`field-${field}`);
+                              if (input) {
+                                input.focus();
+                                input.scrollIntoView({ behavior: "smooth", block: "center" });
+                              }
+                            }, 50);
+                          }
+                        }}
+                      >
                         <PageBlockList 
                           blocks={[block]} 
                           isEditing={true} 
-                          onUpdateBlock={updateBlockContent} 
+                          onUpdateBlock={updateBlockContent}
+                          onSelectElement={(id, col, el) => {
+                            setSelectedBlockId(id);
+                            setSelectedElementPath({ col, el });
+                          }}
+                          selectedElementPath={selectedBlockId === block.id ? selectedElementPath : null}
                         />
-                     </SortableBlock>
-                   ))}
+                      </SortableBlock>
+                    ))}
                  </SortableContext>
                </DndContext>
-               
-               {page.blocks.length === 0 && (
-                 <div style={{ padding: "8rem 2rem", textAlign: "center", color: "rgba(245,240,232,0.3)" }}>
-                    <p style={{ fontSize: "1.5rem", fontFamily: "var(--font-cormorant), serif" }}>La página está vacía</p>
-                    <p style={{ fontSize: "0.9rem" }}>Añade bloques desde la barra lateral izquierda para empezar a diseñar.</p>
-                 </div>
-               )}
              </div>
           </div>
         </div>
       </main>
 
-      {/* Right Sidebar: Properties */}
       <aside style={{ width: "320px", background: "white", borderLeft: "1px solid #EAEEF4", overflowY: "auto" }}>
         {selectedBlock ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ padding: "1rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>Editor de Bloque</span>
+              <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>Propiedades</span>
               <button onClick={() => deleteBlock(selectedBlock.id)} style={{ padding: "0.3rem 0.6rem", background: "#FEE2E2", color: "#EF4444", border: "none", borderRadius: "4px", fontSize: "0.7rem", cursor: "pointer" }}>Borrar</button>
             </div>
             <BlockPropertiesPanel
               type={selectedBlock.type}
               content={selectedBlock.content}
               onChange={(content) => updateBlockContent(selectedBlock.id, content)}
+              element={selectedElementPath ? (selectedBlock.content as any).columns?.[selectedElementPath.col]?.elements?.[selectedElementPath.el] : null}
+              onElementChange={(newEl) => {
+                if (!selectedElementPath) return;
+                const newContent = JSON.parse(JSON.stringify(selectedBlock.content));
+                if (newEl === null) {
+                   setSelectedElementPath(null);
+                   return;
+                }
+                if (newEl === ("DELETE" as any)) {
+                  newContent.columns[selectedElementPath.col].elements.splice(selectedElementPath.el, 1);
+                  setSelectedElementPath(null);
+                } else {
+                  newContent.columns[selectedElementPath.col].elements[selectedElementPath.el] = newEl;
+                }
+                updateBlockContent(selectedBlock.id, newContent);
+              }}
               openMedia={(callback) => {
                 setMediaCallback(() => callback);
                 setShowMedia(true);
@@ -328,12 +428,11 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           </div>
         ) : (
           <div style={{ padding: "4rem 2rem", textAlign: "center", color: "#9CA3AF" }}>
-            Selecciona un bloque para editar sus propiedades.
+            Selecciona un bloque para editar.
           </div>
         )}
       </aside>
 
-      {/* Media Gallery Modal */}
       {showMedia && (
         <MediaGallery
           onSelect={(url) => {

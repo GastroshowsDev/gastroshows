@@ -10,6 +10,7 @@ type Props = {
   style?: React.CSSProperties;
   className?: string;
   placeholder?: string;
+  dataField?: string;
 };
 
 /**
@@ -20,10 +21,11 @@ export function InlineText({
   value,
   onChange,
   isEditing = false,
-  tagName = "div",
+  tagName = "span",
   style,
   className,
   placeholder,
+  dataField,
 }: Props) {
   const elementRef = useRef<HTMLElement>(null);
 
@@ -35,7 +37,7 @@ export function InlineText({
   }, [value]);
 
   if (!isEditing) {
-    return React.createElement(tagName, { style, className }, value || placeholder);
+    return React.createElement(tagName, { style, className, "data-field": dataField }, value || placeholder);
   }
 
   const handleBlur = () => {
@@ -72,5 +74,6 @@ export function InlineText({
     },
     className,
     "data-placeholder": placeholder,
+    "data-field": dataField,
   });
 }

@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   });
 
   const campaignPct = activeCampaign ? Number(activeCampaign.discountPct) : 0;
-  const totalAmount = calculateTotalAmountWithDiscounts(parsed.data.guests, now, campaignPct);
+  const totalAmount = calculateTotalAmountWithDiscounts(parsed.data.guests, serviceDate, campaignPct);
   const amountDue = amountDueNow30Pct(totalAmount);
 
   const created = await prisma.$transaction(async (tx) => {
