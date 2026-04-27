@@ -1,28 +1,64 @@
+import { withAuth } from "next-auth/middleware";
 import { NextResponse, type NextRequest } from "next/server";
+import type { NextRequestWithAuth } from "next-auth/middleware";
+import type { NextFetchEvent } from "next/server";
 
 /**
- * Middleware for handling 301 redirects from old URLs.
- *
- * Checks the `Redirect` table for matching paths and performs
- * permanent (301) or temporary (302) redirects accordingly.
- *
- * Note: We use a lightweight API call instead of importing Prisma directly
- * because Edge Middleware doesn't support Node.js-only modules.
+ * Combined Middleware:
+ * 1. Handles SEO 301/302 Redirects for public pages.
+ * 2. Handles Auth and Role-based access for /admin pages.
  */
-export async function middleware(request: NextRequest) {
+
+// ── Auth logic (from legacy proxy.ts) ──
+const authMiddleware = withAuth(
+  function middleware(req) {
+    const role = req.nextauth.token?.role ?? "LIVE";
+    const { pathname } = req.nextUrl;
+
+    // LIVE users cannot access Estadísticas or Usuarios
+    if (role === "LIVE") {
+      if (
+        pathname.startsWith("/admin/estadisticas") ||
+        pathname.startsWith("/admin/usuarios")
+      ) {
+        return NextResponse.redirect(new URL("/admin/live", req.url));
+      }
+    }
+
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized({ token }) {
+        return !!token;
+      },
+    },
+    pages: { signIn: "/admin/login" },
+  }
+);
+
+// ── Main Middleware Dispatcher ──
+export default async function middleware(request: NextRequest, event: NextFetchEvent) {
   const path = request.nextUrl.pathname;
 
-  // Skip static files, API routes, admin, and Next.js internals
+  // 1. If it's an ADMIN route, use the auth middleware
+  if (path.startsWith("/admin")) {
+    if (path.startsWith("/admin/login") || path.startsWith("/admin/reset-password")) {
+      return NextResponse.next();
+    }
+    return authMiddleware(request as NextRequestWithAuth, event);
+  }
+
+  // 2. Skip static files, API routes, and Next.js internals for SEO redirects
   if (
     path.startsWith("/_next") ||
     path.startsWith("/api") ||
-    path.startsWith("/admin") ||
     path.includes(".") // Static files like .ico, .png, etc.
   ) {
     return NextResponse.next();
   }
 
-  // Check for redirect via internal API
+  // 3. Check for SEO redirects via internal API
   try {
     const apiUrl = new URL("/api/public/redirect", request.url);
     apiUrl.searchParams.set("path", path);
@@ -47,7 +83,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all paths except static files and API
+    // Match admin routes and all public paths for SEO check
+    "/admin/:path*",
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };

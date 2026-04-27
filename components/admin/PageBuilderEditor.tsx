@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { BlockType, BlockData, BLOCK_DEFAULTS, BLOCK_LABELS } from "@/lib/blocks/types";
 import { BlockPropertiesPanel } from "./BlockPropertiesPanel";
 import { MediaGallery } from "./MediaGallery";
+import { PageBlockList } from "@/components/blocks/BlockRenderer";
 
 type PageData = {
   id: string;
@@ -203,14 +204,44 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           </div>
         </div>
 
-        {/* This would ideally be an iframe or a live preview area */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "2rem", display: "flex", justifyContent: "center", background: "#F1F5F9" }}>
-          <div style={{ width: "100%", maxWidth: "1000px", background: "white", boxShadow: "0 10px 25px rgba(0,0,0,0.05)", minHeight: "100%", padding: "0" }}>
-             <p style={{ textAlign: "center", padding: "1rem", fontSize: "0.7rem", color: "#9CA3AF", borderBottom: "1px solid #F3F4F6", margin: 0 }}>Previsualización del diseño</p>
-             {/* We can't easily put the real components here without more setup, so for now we show a placeholder or a mini-version */}
-             <div style={{ padding: "2rem", textAlign: "center", color: "#9CA3AF" }}>
-               Aquí aparecerá la previsualización en tiempo real.<br/>
-               Utiliza el panel lateral para añadir bloques y editarlos.
+        {/* Real-time Preview Area */}
+        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "#050505" }}>
+          <div style={{ flex: 1, position: "relative" }}>
+             {/* We wrap PageBlockList to capture clicks for selection */}
+             <div style={{ position: "relative" }}>
+               {page.blocks.map((block) => (
+                 <div
+                   key={block.id}
+                   onClick={() => setSelectedBlockId(block.id)}
+                   style={{
+                     position: "relative",
+                     cursor: "pointer",
+                     outline: selectedBlockId === block.id ? "3px solid #875BF7" : "none",
+                     outlineOffset: "-3px",
+                     zIndex: selectedBlockId === block.id ? 10 : 1,
+                   }}
+                 >
+                   <PageBlockList blocks={[block]} />
+                   
+                   {/* Selection Overlay */}
+                   {selectedBlockId === block.id && (
+                     <div style={{
+                       position: "absolute", top: 0, right: 0, padding: "0.5rem",
+                       background: "#875BF7", color: "white", fontSize: "0.6rem", fontWeight: 700,
+                       textTransform: "uppercase", pointerEvents: "none"
+                     }}>
+                       {BLOCK_LABELS[block.type].label}
+                     </div>
+                   )}
+                 </div>
+               ))}
+               
+               {page.blocks.length === 0 && (
+                 <div style={{ padding: "8rem 2rem", textAlign: "center", color: "rgba(245,240,232,0.3)" }}>
+                    <p style={{ fontSize: "1.5rem", fontFamily: "var(--font-cormorant), serif" }}>La página está vacía</p>
+                    <p style={{ fontSize: "0.9rem" }}>Añade bloques desde la barra lateral izquierda para empezar a diseñar.</p>
+                 </div>
+               )}
              </div>
           </div>
         </div>
