@@ -5,6 +5,21 @@ import { BlockType, BlockData, BLOCK_DEFAULTS, BLOCK_LABELS } from "@/lib/blocks
 import { BlockPropertiesPanel } from "./BlockPropertiesPanel";
 import { MediaGallery } from "./MediaGallery";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
+import { 
+  DndContext, 
+  closestCenter, 
+  PointerSensor, 
+  useSensor, 
+  useSensors,
+  DragEndEvent
+} from "@dnd-kit/core";
+import { 
+  arrayMove, 
+  SortableContext, 
+  verticalListSortingStrategy 
+} from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { SortableBlock } from "./SortableBlock";
 
 type PageData = {
   id: string;
@@ -23,6 +38,14 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [saving, setSaving] = useState(false);
   const [showMedia, setShowMedia] = useState(false);
   const [mediaCallback, setMediaCallback] = useState<((url: string) => void) | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Minimum distance before dragging starts
+      },
+    })
+  );
 
   useEffect(() => {
     async function load() {
@@ -107,6 +130,23 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       blocks: page.blocks.filter((b) => b.id !== id).map((b, i) => ({ ...b, order: i })),
     });
     if (selectedBlockId === id) setSelectedBlockId(null);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || !page) return;
+
+    if (active.id !== over.id) {
+      const oldIndex = page.blocks.findIndex((b) => b.id === active.id);
+      const newIndex = page.blocks.findIndex((b) => b.id === over.id);
+
+      const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({
+        ...b,
+        order: i,
+      }));
+
+      setPage({ ...page, blocks: reordered });
+    }
   }
 
   if (loading || !page) return <div style={{ padding: "4rem", textAlign: "center" }}>Cargando editor...</div>;
@@ -209,56 +249,48 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           <div style={{ flex: 1, position: "relative" }}>
              {/* We wrap PageBlockList to capture clicks for selection */}
              <div style={{ position: "relative" }}>
-               {page.blocks.map((block) => (
-                 <div
-                   key={block.id}
-                   onClick={(e) => {
-                     setSelectedBlockId(block.id);
-                     
-                     // Smart Focus Logic
-                     const target = e.target as HTMLElement;
-                     const field = target.closest("[data-field]")?.getAttribute("data-field");
-                     if (field) {
-                       // We use a small timeout to ensure the panel has rendered the new block's fields
-                       setTimeout(() => {
-                         const input = document.getElementById(`field-${field}`);
-                         if (input) {
-                           input.focus();
-                           input.scrollIntoView({ behavior: "smooth", block: "center" });
-                           // Highlight effect
-                           const originalBg = input.style.background;
-                           input.style.background = "#FEF3C7"; // Light yellow
-                           setTimeout(() => { input.style.background = originalBg; }, 1000);
-                         }
-                       }, 50);
-                     }
-                   }}
-                   style={{
-                     position: "relative",
-                     cursor: "pointer",
-                     outline: selectedBlockId === block.id ? "3px solid #875BF7" : "none",
-                     outlineOffset: "-3px",
-                     zIndex: selectedBlockId === block.id ? 10 : 1,
-                   }}
+               <DndContext
+                 sensors={sensors}
+                 collisionDetection={closestCenter}
+                 onDragEnd={handleDragEnd}
+                 modifiers={[restrictToVerticalAxis]}
+               >
+                 <SortableContext
+                   items={page.blocks.map((b) => b.id)}
+                   strategy={verticalListSortingStrategy}
                  >
-                    <PageBlockList 
-                      blocks={[block]} 
-                      isEditing={true} 
-                      onUpdateBlock={updateBlockContent} 
-                    />
-                    
-                    {/* Selection Overlay */}
-                    {selectedBlockId === block.id && (
-                      <div style={{
-                        position: "absolute", top: 0, right: 0, padding: "0.5rem",
-                        background: "#875BF7", color: "white", fontSize: "0.6rem", fontWeight: 700,
-                        textTransform: "uppercase", pointerEvents: "none"
-                      }}>
-                        {BLOCK_LABELS[block.type].label}
-                      </div>
-                    )}
-                 </div>
-               ))}
+                   {page.blocks.map((block) => (
+                     <SortableBlock
+                       key={block.id}
+                       id={block.id}
+                       isSelected={selectedBlockId === block.id}
+                       label={BLOCK_LABELS[block.type].label}
+                       onClick={(e) => {
+                         setSelectedBlockId(block.id);
+                         
+                         // Smart Focus Logic
+                         const target = e.target as HTMLElement;
+                         const field = target.closest("[data-field]")?.getAttribute("data-field");
+                         if (field) {
+                           setTimeout(() => {
+                             const input = document.getElementById(`field-${field}`);
+                             if (input) {
+                               input.focus();
+                               input.scrollIntoView({ behavior: "smooth", block: "center" });
+                             }
+                           }, 50);
+                         }
+                       }}
+                     >
+                        <PageBlockList 
+                          blocks={[block]} 
+                          isEditing={true} 
+                          onUpdateBlock={updateBlockContent} 
+                        />
+                     </SortableBlock>
+                   ))}
+                 </SortableContext>
+               </DndContext>
                
                {page.blocks.length === 0 && (
                  <div style={{ padding: "8rem 2rem", textAlign: "center", color: "rgba(245,240,232,0.3)" }}>
