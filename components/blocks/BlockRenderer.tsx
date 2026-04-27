@@ -10,6 +10,7 @@ import type {
   ColumnsContent,
   CtaContent,
   SpacerContent,
+  AvailabilityContent,
 } from "@/lib/blocks/types";
 
 import { HeroBlock } from "./HeroBlock";
@@ -48,7 +49,7 @@ export function BlockRenderer({ block }: Props) {
     case "SPACER":
       return <SpacerBlock content={content as SpacerContent} />;
     case "AVAILABILITY":
-      return <AvailabilityBlock />;
+      return <AvailabilityBlock content={content as AvailabilityContent} />;
     default:
       // Unknown block type — render nothing in production
       if (process.env.NODE_ENV === "development") {
