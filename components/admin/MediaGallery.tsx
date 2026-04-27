@@ -24,7 +24,7 @@ export function MediaGallery({ onSelect, onClose }: Props) {
   async function fetchMedia() {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/media");
+      const res = await fetch(`/api/admin/media?t=${Date.now()}`, { cache: "no-store" });
       const json = await res.json();
       if (json.ok) setAssets(json.data);
     } finally {
@@ -55,6 +55,27 @@ export function MediaGallery({ onSelect, onClose }: Props) {
       }
     } finally {
       setUploading(false);
+    }
+  }
+
+  async function handleDelete(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    if (!confirm("¿Estás seguro de que quieres borrar esta imagen?")) return;
+    
+    try {
+      const res = await fetch("/api/admin/media", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      });
+      if (res.ok) {
+        await fetchMedia();
+      } else {
+        alert("Error al borrar la imagen.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error de red al borrar la imagen.");
     }
   }
 
@@ -131,6 +152,22 @@ export function MediaGallery({ onSelect, onClose }: Props) {
                   }}>
                     {asset.filename}
                   </div>
+                  
+                  {/* Botón de Borrar */}
+                  <button
+                    onClick={(e) => handleDelete(asset.id, e)}
+                    title="Borrar imagen"
+                    style={{
+                      position: "absolute", top: "6px", right: "6px",
+                      background: "rgba(239, 68, 68, 0.9)", color: "white",
+                      border: "none", borderRadius: "4px", width: "24px", height: "24px",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      cursor: "pointer", fontSize: "1rem", zIndex: 10,
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                    }}
+                  >
+                    ×
+                  </button>
                 </div>
               ))}
             </div>

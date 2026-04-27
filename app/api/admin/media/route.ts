@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { uploadMedia, listMedia, deleteMedia } from "@/lib/supabase-storage";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/admin/media — List all media assets
  */
