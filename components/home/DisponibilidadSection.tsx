@@ -44,7 +44,15 @@ function isThisWeek(weekStr: string): boolean {
   return now >= monday && now <= sunday;
 }
 
-export function DisponibilidadSection({ onReservar }: { onReservar: () => void }) {
+export function DisponibilidadSection({ 
+  onReservar,
+  title,
+  subtitle 
+}: { 
+  onReservar: () => void,
+  title?: string,
+  subtitle?: string
+}) {
   const [week, setWeek]       = useState<string | null>(null);
   const [data, setData]       = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -90,7 +98,7 @@ export function DisponibilidadSection({ onReservar }: { onReservar: () => void }
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
           <div>
             <p style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "0.75rem" }}>
-              Disponibilidad
+              {subtitle || "Disponibilidad"}
             </p>
             <h2 style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -102,6 +110,8 @@ export function DisponibilidadSection({ onReservar }: { onReservar: () => void }
             }}>
               {loading ? (
                 <span style={{ opacity: 0.4 }}>Cargando…</span>
+              ) : title ? (
+                title.replace("{total}", data?.totalAvailable?.toString() || "0")
               ) : soldOut ? (
                 <>Semana <em style={{ color: "#E57373" }}>completa</em></>
               ) : (

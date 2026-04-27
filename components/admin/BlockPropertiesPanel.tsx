@@ -104,9 +104,14 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia }: Pro
             <input id="field-title" value={(content as TextContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
+            <label style={labelStyle}>Título acento (dorado/cursiva)</label>
+            <input id="field-titleAccent" value={(content as TextContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
             <label style={labelStyle}>Texto del cuerpo</label>
             <textarea id="field-body" value={(content as TextContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "120px" }} />
           </div>
+          {/* ... style controls remain ... */}
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
             <div>
@@ -235,22 +240,43 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia }: Pro
           <div style={rowStyle}>
             <label style={labelStyle}>Imagen de fondo</label>
             <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input value={(content as CtaContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+              <input id="field-bgImage" value={(content as CtaContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
               <button onClick={() => openMedia((url) => update({ bgImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
             </div>
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Título</label>
-            <input value={(content as CtaContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+            <input id="field-title" value={(content as CtaContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Título acento (dorado)</label>
+            <input id="field-titleAccent" value={(content as CtaContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Texto botón</label>
-            <input value={(content as CtaContent).buttonText} onChange={(e) => update({ buttonText: e.target.value })} style={inputStyle} />
+            <input id="field-buttonText" value={(content as CtaContent).buttonText} onChange={(e) => update({ buttonText: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>URL botón</label>
-            <input value={(content as CtaContent).buttonLink} onChange={(e) => update({ buttonLink: e.target.value })} style={inputStyle} />
+            <input id="field-buttonLink" value={(content as CtaContent).buttonLink} onChange={(e) => update({ buttonLink: e.target.value })} style={inputStyle} />
           </div>
+        </>
+      )}
+
+      {/* AVAILABILITY PROPERTIES */}
+      {type === "AVAILABILITY" && (
+        <>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Subtítulo (pequeño arriba)</label>
+            <input id="field-subtitle" value={(content as AvailabilityContent).subtitle} onChange={(e) => update({ subtitle: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Título principal</label>
+            <input id="field-title" value={(content as AvailabilityContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+          </div>
+          <p style={{ fontSize: "0.75rem", color: "#6B7280", fontStyle: "italic", marginTop: "1rem" }}>
+            * El calendario y las plazas se actualizan automáticamente desde la base de datos.
+          </p>
         </>
       )}
 

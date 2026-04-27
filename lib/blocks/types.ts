@@ -94,8 +94,8 @@ export type SpacerContent = {
 };
 
 export type AvailabilityContent = {
-  // No editable content — the component renders live availability data
-  _placeholder?: true;
+  title: string;
+  subtitle?: string;
 };
 
 // ── Union type ───────────────────────────────────────────────────────────────
@@ -175,7 +175,8 @@ export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
   } satisfies SpacerContent,
 
   AVAILABILITY: {
-    _placeholder: true,
+    title: "Quedan plazas esta semana",
+    subtitle: "DISPONIBILIDAD",
   } satisfies AvailabilityContent,
 };
 

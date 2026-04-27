@@ -2,11 +2,18 @@
 
 import { DisponibilidadSection } from "@/components/home/DisponibilidadSection";
 
-/**
- * Availability block — renders the live availability calendar.
- * This is a special block that doesn't have editable content;
- * it pulls data from the availability API automatically.
- */
-export function AvailabilityBlock() {
-  return <DisponibilidadSection onReservar={() => {/* TODO: open modal or navigate */}} />;
+import type { AvailabilityContent } from "@/lib/blocks/types";
+
+type Props = { content: AvailabilityContent };
+
+export function AvailabilityBlock({ content }: Props) {
+  return (
+    <DisponibilidadSection 
+      title={content.title}
+      subtitle={content.subtitle}
+      onReservar={() => {
+        window.dispatchEvent(new CustomEvent("gs-open-reserva"));
+      }} 
+    />
+  );
 }

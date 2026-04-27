@@ -82,7 +82,7 @@ export function CtaBlock({ content }: Props) {
           {content.titleAccent && (
             <>
               <br />
-              <em data-field="titleAccent" style={{ color: "#C8A96E" }}>{content.titleAccent}</em>
+              <em data-field="titleAccent" style={{ color: "#C8A96E", fontStyle: "italic" }}>{content.titleAccent}</em>
             </>
           )}
         </h2>
