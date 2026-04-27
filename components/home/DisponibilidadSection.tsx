@@ -50,8 +50,8 @@ export function DisponibilidadSection({
   subtitle 
 }: { 
   onReservar: () => void,
-  title?: string,
-  subtitle?: string
+  title?: React.ReactNode,
+  subtitle?: React.ReactNode
 }) {
   const [week, setWeek]       = useState<string | null>(null);
   const [data, setData]       = useState<ApiResponse | null>(null);
@@ -111,7 +111,9 @@ export function DisponibilidadSection({
               {loading ? (
                 <span style={{ opacity: 0.4 }}>Cargando…</span>
               ) : title ? (
-                title.replace("{total}", data?.totalAvailable?.toString() || "0")
+                typeof title === "string" 
+                  ? title.replace("{total}", data?.totalAvailable?.toString() || "0")
+                  : title
               ) : soldOut ? (
                 <>Semana <em style={{ color: "#E57373" }}>completa</em></>
               ) : (
