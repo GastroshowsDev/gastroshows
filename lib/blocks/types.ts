@@ -23,6 +23,7 @@ export type BlockType = (typeof BLOCK_TYPES)[number];
 
 export type HeroContent = {
   bgImage: string;
+  eyebrow?: string;
   title: string;
   titleAccent: string;
   subtitle: string;

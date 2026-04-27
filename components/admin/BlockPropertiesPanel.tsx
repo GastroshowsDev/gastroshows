@@ -35,6 +35,10 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia }: Pro
             </div>
           </div>
           <div style={rowStyle}>
+            <label style={labelStyle}>Texto superior (Eyebrow)</label>
+            <input id="field-eyebrow" placeholder="Ej: BARCELONA" value={(content as HeroContent).eyebrow || ""} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
             <label style={labelStyle}>Título principal</label>
             <input id="field-title" value={(content as HeroContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
           </div>

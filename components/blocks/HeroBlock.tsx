@@ -79,6 +79,34 @@ export function HeroBlock({ content }: Props) {
 
       {/* Content */}
       <div style={{ position: "relative", zIndex: 2, maxWidth: "740px", padding: "0 2rem" }}>
+        {content.eyebrow && (
+          <div 
+            data-field="eyebrow"
+            style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "center", 
+              gap: "1.5rem", 
+              marginBottom: "1.5rem",
+              opacity: ready ? 1 : 0,
+              transition: "opacity 1s 0.2s",
+            }}
+          >
+            <div style={{ height: "1px", width: "40px", background: "rgba(200,169,110,0.4)" }} />
+            <span style={{ 
+              fontSize: "0.75rem", 
+              letterSpacing: "0.4em", 
+              textTransform: "uppercase", 
+              color: "rgba(245,240,232,0.8)",
+              fontFamily: "var(--font-montserrat), sans-serif",
+              fontWeight: 500,
+            }}>
+              {content.eyebrow}
+            </span>
+            <div style={{ height: "1px", width: "40px", background: "rgba(200,169,110,0.4)" }} />
+          </div>
+        )}
+
         <h1
           data-field="title"
           style={{

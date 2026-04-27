@@ -43,7 +43,8 @@ async function migrate() {
       type: "HERO",
       content: {
         bgImage: contentMap["hero.bg_image"],
-        title: contentMap["hero.location"],
+        eyebrow: contentMap["hero.location"],
+        title: "GastroShows",
         titleAccent: "",
         subtitle: contentMap["hero.tagline"],
         ctaPrimaryText: contentMap["hero.cta_reservar"],
