@@ -53,18 +53,16 @@ export function TextBlock({ content }: Props) {
         )}
 
         {content.body && (
-          <p
-            style={{
-              fontSize: "1.05rem",
-              lineHeight: 1.85,
-              color: "var(--gs-text-sub)",
-              maxWidth: align === "center" ? "600px" : undefined,
-              margin: align === "center" ? "0 auto" : undefined,
-              transition: "color 0.3s",
-            }}
-          >
+          <div style={{
+            fontSize: "1.1rem",
+            lineHeight: "1.7",
+            color: "rgba(245,240,232,0.7)",
+            maxWidth: "800px",
+            margin: content.alignment === "center" ? "0 auto" : "0",
+            whiteSpace: "pre-wrap",
+          }}>
             {content.body}
-          </p>
+          </div>
         )}
       </div>
     </section>

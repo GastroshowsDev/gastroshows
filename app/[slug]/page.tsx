@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
+import { PageLayout } from "@/components/PageLayout";
 import type { BlockData, BlockType, BlockContent } from "@/lib/blocks/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -56,8 +57,10 @@ export default async function DynamicPage({ params }: Props) {
   }));
 
   return (
-    <main>
-      <PageBlockList blocks={blocks} />
-    </main>
+    <PageLayout>
+      <main>
+        <PageBlockList blocks={blocks} />
+      </main>
+    </PageLayout>
   );
 }
