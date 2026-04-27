@@ -39,7 +39,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
   return (
     <div style={{ padding: "1.5rem" }}>
       <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: "#111827", marginBottom: "1.5rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        Propiedades: {element ? `Elemento ${element.type}` : type}
+        Propiedades: {element ? `Elemento ${element.type}` : (type as any)}
       </h3>
 
       {/* ATOMIC ELEMENT PROPERTIES */}

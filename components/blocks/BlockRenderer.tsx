@@ -84,7 +84,7 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
               fontSize: "0.85rem",
             }}
           >
-            Unknown block type: <strong>{type}</strong>
+            Unknown block type: <strong>{(type as any)}</strong>
           </div>
         );
       }

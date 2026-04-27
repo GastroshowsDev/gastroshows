@@ -27,7 +27,7 @@ export function ElementRenderer({ element, isEditing = false, onUpdate }: Props)
       case "SPACER":
         return <div style={{ height: element.height }} />;
       default:
-        return <div style={{ color: "red" }}>Unknown Element: {element.type}</div>;
+        return <div style={{ color: "red" }}>Unknown Element: {(element as any).type}</div>;
     }
   };
 
