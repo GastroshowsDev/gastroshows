@@ -140,6 +140,23 @@ export type CtaContent = {
   buttonAnim?: string;
 };
 
+export type ImageContent = {
+  src: string;
+  alt: string;
+  caption?: string;
+  fullWidth?: boolean;
+};
+
+export type GalleryContent = {
+  columns: 2 | 3 | 4;
+  images: { src: string; alt: string; label?: string }[];
+};
+
+export type SpacerContent = {
+  height: number;
+  gradient?: "none" | "dark-to-light" | "light-to-dark";
+};
+
 // ── Core Block Data ──────────────────────────────────────────────────────────
 
 export type BlockType = 
@@ -159,6 +176,9 @@ export type BlockContent =
   | CtaContent
   | StepsContent
   | AvailabilityContent
+  | ImageContent
+  | GalleryContent
+  | SpacerContent
   | any;
 
 export type BlockData = {
