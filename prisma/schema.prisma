@@ -294,3 +294,56 @@ model Campaign {
 
   @@index([active, startDate, endDate])
 }
+
+// ── Page Builder ─────────────────────────────────────────────────────────────
+
+model Page {
+  id          String      @id @default(cuid())
+  title       String                           // Display name in admin
+  slug        String      @unique              // URL path: "home", "eventos", "mi-pagina"
+  published   Boolean     @default(false)
+  // SEO
+  seoTitle    String?
+  seoDesc     String?     @db.Text
+  ogImage     String?
+  // Timestamps
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  blocks      PageBlock[]
+}
+
+model PageBlock {
+  id        String   @id @default(cuid())
+  pageId    String
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  type      String                             // HERO, TEXT, IMAGE, GALLERY, COLUMNS, CTA, SPACER, AVAILABILITY
+  content   Json     @default("{}")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([pageId, order])
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  filename    String
+  url         String                            // Public URL from Supabase Storage
+  storagePath String                            // Internal path in bucket
+  mimeType    String
+  sizeBytes   Int
+  alt         String   @default("")
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Redirect {
+  id          String   @id @default(cuid())
+  fromPath    String   @unique                  // e.g. "/old-page-slug"
+  toPath      String                            // e.g. "/new-page-slug"
+  statusCode  Int      @default(301)            // 301 permanent, 302 temporary
+  createdAt   DateTime @default(now())
+
+  @@index([fromPath])
+}
