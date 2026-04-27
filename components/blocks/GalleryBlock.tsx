@@ -4,9 +4,13 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import type { GalleryContent } from "@/lib/blocks/types";
 
-type Props = { content: GalleryContent };
+type Props = { 
+  content: GalleryContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: GalleryContent) => void;
+};
 
-export function GalleryBlock({ content }: Props) {
+export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 

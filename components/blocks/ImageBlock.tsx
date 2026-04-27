@@ -3,9 +3,13 @@
 import Image from "next/image";
 import type { ImageContent } from "@/lib/blocks/types";
 
-type Props = { content: ImageContent };
+type Props = { 
+  content: ImageContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: ImageContent) => void;
+};
 
-export function ImageBlock({ content }: Props) {
+export function ImageBlock({ content, isEditing = false, onUpdate }: Props) {
   if (!content.src) return null;
 
   return (

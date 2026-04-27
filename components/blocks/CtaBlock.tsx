@@ -4,9 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import type { CtaContent } from "@/lib/blocks/types";
 
-type Props = { content: CtaContent };
+type Props = { 
+  content: CtaContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: CtaContent) => void;
+};
 
-export function CtaBlock({ content }: Props) {
+export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
   const [hovered, setHovered] = useState(false);
 
   return (

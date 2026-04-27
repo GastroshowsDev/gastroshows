@@ -2,7 +2,11 @@
 
 import type { SpacerContent } from "@/lib/blocks/types";
 
-type Props = { content: SpacerContent };
+type Props = { 
+  content: SpacerContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: SpacerContent) => void;
+};
 
 const GRADIENTS: Record<string, string> = {
   none: "transparent",
@@ -10,7 +14,7 @@ const GRADIENTS: Record<string, string> = {
   "light-to-dark": "linear-gradient(to bottom, var(--gs-bg) 0%, var(--gs-bg) 15%, #050505 100%)",
 };
 
-export function SpacerBlock({ content }: Props) {
+export function SpacerBlock({ content, isEditing = false, onUpdate }: Props) {
   const h = content.height ?? 120;
   const grad = content.gradient ?? "none";
 

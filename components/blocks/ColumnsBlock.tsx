@@ -3,9 +3,13 @@
 import type { ColumnsContent, BlockType, BlockContent } from "@/lib/blocks/types";
 import { BlockRenderer } from "./BlockRenderer";
 
-type Props = { content: ColumnsContent };
+type Props = { 
+  content: ColumnsContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: ColumnsContent) => void;
+};
 
-export function ColumnsBlock({ content }: Props) {
+export function ColumnsBlock({ content, isEditing = false, onUpdate }: Props) {
   const cols = content.columns ?? 2;
   const children = content.children ?? [];
 
@@ -25,6 +29,7 @@ export function ColumnsBlock({ content }: Props) {
             {(children[colIndex] ?? []).map((child) => (
               <BlockRenderer
                 key={child.id}
+                isEditing={isEditing}
                 block={{
                   id: child.id,
                   type: child.type as BlockType,
