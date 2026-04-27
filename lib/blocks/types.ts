@@ -24,13 +24,14 @@ export type BlockType = (typeof BLOCK_TYPES)[number];
 export type HeroContent = {
   bgImage: string;
   title: string;
-  titleAccent: string; // Second line in gold/italic
+  titleAccent: string;
   subtitle: string;
   ctaPrimaryText: string;
   ctaPrimaryLink: string;
   ctaSecondaryText: string;
   ctaSecondaryLink: string;
-  overlayOpacity: number; // 0-100
+  overlayOpacity: number;
+  animation?: "none" | "typewriter" | "fade" | "slide" | "zoom" | "bounce";
 };
 
 export type TextContent = {
@@ -39,6 +40,12 @@ export type TextContent = {
   titleAccent: string;
   body: string;
   alignment: "left" | "center" | "right";
+  fontSize?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
+  animation?: "none" | "typewriter" | "fade" | "slide" | "zoom" | "bounce";
+  hoverEffect?: "none" | "grow" | "glow" | "lift";
 };
 
 export type ImageContent = {
@@ -119,10 +126,10 @@ export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
     title: "Tu título aquí",
     titleAccent: "con estilo.",
     subtitle: "Descripción del hero.",
-    ctaPrimaryText: "Acción principal",
-    ctaPrimaryLink: "#",
-    ctaSecondaryText: "",
-    ctaSecondaryLink: "",
+    ctaPrimaryText: "Reservar",
+    ctaPrimaryLink: "#reservar",
+    ctaSecondaryText: "Regalar",
+    ctaSecondaryLink: "#regalar",
     overlayOpacity: 70,
   } satisfies HeroContent,
 
@@ -156,8 +163,8 @@ export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
     title: "Llamada a la acción",
     titleAccent: "",
     body: "Descripción de la acción.",
-    buttonText: "Contactar",
-    buttonLink: "#",
+    buttonText: "Reservar",
+    buttonLink: "#reservar",
     bgImage: "",
   } satisfies CtaContent,
 
@@ -174,12 +181,12 @@ export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
 // ── Human-readable labels ────────────────────────────────────────────────────
 
 export const BLOCK_LABELS: Record<BlockType, { label: string; icon: string; description: string }> = {
-  HERO:         { label: "Hero",           icon: "🏔",  description: "Imagen de fondo con título y botones" },
-  TEXT:         { label: "Texto",          icon: "📝",  description: "Sección de texto con título y cuerpo" },
-  IMAGE:       { label: "Imagen",         icon: "🖼",   description: "Imagen única con pie de foto" },
-  GALLERY:     { label: "Galería",        icon: "🎨",  description: "Grid de imágenes con hover" },
-  COLUMNS:     { label: "Columnas",       icon: "📐",  description: "Layout de columnas con bloques dentro" },
-  CTA:         { label: "Llamada a acción", icon: "📣", description: "Sección CTA con fondo y botón" },
-  SPACER:      { label: "Separador",      icon: "➖",   description: "Espacio o gradiente entre secciones" },
-  AVAILABILITY:{ label: "Disponibilidad", icon: "📅",  description: "Calendario de disponibilidad en vivo" },
+  HERO:         { label: "Contenedor 1 (Principal)", icon: "🏔",  description: "Imagen de fondo con título y botones" },
+  TEXT:         { label: "Contenedor 2 (Texto)",     icon: "📝",  description: "Sección de texto con título y cuerpo" },
+  IMAGE:       { label: "Contenedor 3 (Imagen)",    icon: "🖼",   description: "Imagen única con pie de foto" },
+  GALLERY:     { label: "Contenedor 4 (Galería)",   icon: "🎨",  description: "Grid de imágenes con hover" },
+  COLUMNS:     { label: "Contenedor 5 (Columnas)",  icon: "📐",  description: "Layout de columnas con bloques dentro" },
+  CTA:         { label: "Contenedor 6 (Acción)",    icon: "📣", description: "Sección CTA con fondo y botón" },
+  SPACER:      { label: "Separador",               icon: "➖",   description: "Espacio o gradiente entre secciones" },
+  AVAILABILITY:{ label: "Disponibilidad",          icon: "📅",  description: "Calendario de disponibilidad en vivo" },
 };

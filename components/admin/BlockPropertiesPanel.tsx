@@ -30,25 +30,60 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia }: Pro
           <div style={rowStyle}>
             <label style={labelStyle}>Imagen de fondo</label>
             <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input value={(content as HeroContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+              <input id="field-bgImage" value={(content as HeroContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
               <button onClick={() => openMedia((url) => update({ bgImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
             </div>
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Título principal</label>
-            <input value={(content as HeroContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+            <input id="field-title" value={(content as HeroContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Título acento (dorado)</label>
-            <input value={(content as HeroContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
+            <input id="field-titleAccent" value={(content as HeroContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Subtítulo</label>
-            <textarea value={(content as HeroContent).subtitle} onChange={(e) => update({ subtitle: e.target.value })} style={{ ...inputStyle, height: "80px" }} />
+            <textarea id="field-subtitle" value={(content as HeroContent).subtitle} onChange={(e) => update({ subtitle: e.target.value })} style={{ ...inputStyle, height: "80px" }} />
           </div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Texto Botón 1</label>
+              <input id="field-ctaPrimaryText" value={(content as HeroContent).ctaPrimaryText} onChange={(e) => update({ ctaPrimaryText: e.target.value })} style={inputStyle} />
+            </div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Link Botón 1</label>
+              <input id="field-ctaPrimaryLink" value={(content as HeroContent).ctaPrimaryLink} onChange={(e) => update({ ctaPrimaryLink: e.target.value })} style={inputStyle} />
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Texto Botón 2</label>
+              <input id="field-ctaSecondaryText" value={(content as HeroContent).ctaSecondaryText} onChange={(e) => update({ ctaSecondaryText: e.target.value })} style={inputStyle} />
+            </div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Link Botón 2</label>
+              <input id="field-ctaSecondaryLink" value={(content as HeroContent).ctaSecondaryLink} onChange={(e) => update({ ctaSecondaryLink: e.target.value })} style={inputStyle} />
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Efecto de animación</label>
+            <select id="field-animation" value={(content as HeroContent).animation || "none"} onChange={(e) => update({ animation: e.target.value as any })} style={inputStyle}>
+              <option value="none">Sin animación</option>
+              <option value="typewriter">Máquina de escribir</option>
+              <option value="fade">Fundido (Fade)</option>
+              <option value="slide">Deslizar</option>
+              <option value="zoom">Zoom</option>
+              <option value="bounce">Rebote</option>
+            </select>
+          </div>
+
           <div style={rowStyle}>
             <label style={labelStyle}>Opacidad fondo (0-100)</label>
-            <input type="number" value={(content as HeroContent).overlayOpacity} onChange={(e) => update({ overlayOpacity: Number(e.target.value) })} style={inputStyle} />
+            <input id="field-overlayOpacity" type="number" value={(content as HeroContent).overlayOpacity} onChange={(e) => update({ overlayOpacity: Number(e.target.value) })} style={inputStyle} />
           </div>
         </>
       )}
@@ -58,19 +93,63 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia }: Pro
         <>
           <div style={rowStyle}>
             <label style={labelStyle}>Eyebrow (pequeño arriba)</label>
-            <input value={(content as TextContent).eyebrow} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
+            <input id="field-eyebrow" value={(content as TextContent).eyebrow} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Título</label>
-            <input value={(content as TextContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+            <input id="field-title" value={(content as TextContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Texto del cuerpo</label>
-            <textarea value={(content as TextContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "120px" }} />
+            <textarea id="field-body" value={(content as TextContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "120px" }} />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+            <div>
+              <label style={labelStyle}>Tamaño fuente</label>
+              <input id="field-fontSize" placeholder="1.1rem" value={(content as TextContent).fontSize || ""} onChange={(e) => update({ fontSize: e.target.value })} style={{ ...inputStyle, marginBottom: 0 }} />
+            </div>
+            <div>
+              <label style={labelStyle}>Color texto</label>
+              <input id="field-color" type="color" value={(content as TextContent).color || "#F5F0E8"} onChange={(e) => update({ color: e.target.value })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.5rem" }}>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+              <input id="field-bold" type="checkbox" checked={(content as TextContent).bold || false} onChange={(e) => update({ bold: e.target.checked })} />
+              Negrita
+            </label>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+              <input id="field-italic" type="checkbox" checked={(content as TextContent).italic || false} onChange={(e) => update({ italic: e.target.checked })} />
+              Cursiva
+            </label>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Animación de entrada</label>
+            <select id="field-animation" value={(content as TextContent).animation || "none"} onChange={(e) => update({ animation: e.target.value as any })} style={inputStyle}>
+              <option value="none">Ninguna</option>
+              <option value="typewriter">Máquina de escribir</option>
+              <option value="fade">Fundido</option>
+              <option value="slide">Deslizar</option>
+              <option value="zoom">Zoom</option>
+              <option value="bounce">Rebote</option>
+            </select>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Efecto al pasar el ratón (Hover)</label>
+            <select id="field-hoverEffect" value={(content as TextContent).hoverEffect || "none"} onChange={(e) => update({ hoverEffect: e.target.value as any })} style={inputStyle}>
+              <option value="none">Sin efecto</option>
+              <option value="grow">Agrandar</option>
+              <option value="glow">Brillar</option>
+              <option value="lift">Elevar</option>
+            </select>
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Alineación</label>
-            <select value={(content as TextContent).alignment} onChange={(e) => update({ alignment: e.target.value as any })} style={inputStyle}>
+            <select id="field-alignment" value={(content as TextContent).alignment} onChange={(e) => update({ alignment: e.target.value as any })} style={inputStyle}>
               <option value="left">Izquierda</option>
               <option value="center">Centro</option>
               <option value="right">Derecha</option>

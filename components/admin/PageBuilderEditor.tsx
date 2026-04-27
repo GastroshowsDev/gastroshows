@@ -212,7 +212,27 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                {page.blocks.map((block) => (
                  <div
                    key={block.id}
-                   onClick={() => setSelectedBlockId(block.id)}
+                   onClick={(e) => {
+                     setSelectedBlockId(block.id);
+                     
+                     // Smart Focus Logic
+                     const target = e.target as HTMLElement;
+                     const field = target.closest("[data-field]")?.getAttribute("data-field");
+                     if (field) {
+                       // We use a small timeout to ensure the panel has rendered the new block's fields
+                       setTimeout(() => {
+                         const input = document.getElementById(`field-${field}`);
+                         if (input) {
+                           input.focus();
+                           input.scrollIntoView({ behavior: "smooth", block: "center" });
+                           // Highlight effect
+                           const originalBg = input.style.background;
+                           input.style.background = "#FEF3C7"; // Light yellow
+                           setTimeout(() => { input.style.background = originalBg; }, 1000);
+                         }
+                       }, 50);
+                     }
+                   }}
                    style={{
                      position: "relative",
                      cursor: "pointer",

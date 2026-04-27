@@ -4,11 +4,14 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import type { HeroContent } from "@/lib/blocks/types";
 
+import { getAnimationStyles } from "@/lib/blocks/animations";
+
 type Props = { content: HeroContent };
 
 export function HeroBlock({ content }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const [typedTitle, setTypedTitle] = useState("");
 
   useEffect(() => {
     setReady(true);
@@ -21,7 +24,23 @@ export function HeroBlock({ content }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (content.animation === "typewriter" && ready) {
+      let i = 0;
+      const fullText = content.title;
+      const interval = setInterval(() => {
+        setTypedTitle(fullText.slice(0, i));
+        i++;
+        if (i > fullText.length) clearInterval(interval);
+      }, 50);
+      return () => clearInterval(interval);
+    } else {
+      setTypedTitle(content.title);
+    }
+  }, [content.title, content.animation, ready]);
+
   const opacity = (content.overlayOpacity ?? 70) / 100;
+  const animStyles = getAnimationStyles(content.animation, ready);
 
   return (
     <section
@@ -36,28 +55,19 @@ export function HeroBlock({ content }: Props) {
         textAlign: "center",
       }}
     >
-      {/* Parallax background */}
-      {content.bgImage && (
-        <div
-          ref={parallaxRef}
-          style={{
-            position: "absolute",
-            inset: "-25% -5%",
-            zIndex: 0,
-            willChange: "transform",
-          }}
-        >
-          <Image
-            src={content.bgImage}
-            alt=""
-            fill
-            priority
-            style={{ objectFit: "cover", objectPosition: "center" }}
-          />
-        </div>
-      )}
+      {/* ... (background and overlay) */}
+      <div
+        ref={parallaxRef}
+        style={{
+          position: "absolute",
+          inset: "-25% -5%",
+          zIndex: 0,
+          willChange: "transform",
+        }}
+      >
+        <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+      </div>
 
-      {/* Overlay */}
       <div
         style={{
           position: "absolute",
@@ -70,6 +80,7 @@ export function HeroBlock({ content }: Props) {
       {/* Content */}
       <div style={{ position: "relative", zIndex: 2, maxWidth: "740px", padding: "0 2rem" }}>
         <h1
+          data-field="title"
           style={{
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "clamp(3rem, 8vw, 6rem)",
@@ -78,22 +89,21 @@ export function HeroBlock({ content }: Props) {
             lineHeight: 1.05,
             color: "#F5F0E8",
             marginBottom: "1.5rem",
-            opacity: ready ? 1 : 0,
-            transform: ready ? "translateY(0)" : "translateY(20px)",
-            transition: "opacity 0.8s, transform 0.8s",
+            ...animStyles,
           }}
         >
-          {content.title}
+          {typedTitle}
           {content.titleAccent && (
             <>
               <br />
-              <em style={{ color: "#C8A96E", fontStyle: "italic" }}>{content.titleAccent}</em>
+              <em data-field="titleAccent" style={{ color: "#C8A96E", fontStyle: "italic" }}>{content.titleAccent}</em>
             </>
           )}
         </h1>
 
         {content.subtitle && (
           <p
+            data-field="subtitle"
             style={{
               fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
               fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -102,8 +112,8 @@ export function HeroBlock({ content }: Props) {
               color: "rgba(245,240,232,0.8)",
               lineHeight: 1.6,
               marginBottom: "2.5rem",
-              opacity: ready ? 1 : 0,
-              transition: "opacity 0.8s 0.3s",
+              ...animStyles,
+              transitionDelay: "0.3s",
             }}
           >
             {content.subtitle}
@@ -122,14 +132,18 @@ export function HeroBlock({ content }: Props) {
           }}
         >
           {content.ctaPrimaryText && (
-            <HeroButton href={content.ctaPrimaryLink} primary>
-              {content.ctaPrimaryText}
-            </HeroButton>
+            <div data-field="ctaPrimaryText" style={{ display: "contents" }}>
+              <HeroButton href={content.ctaPrimaryLink} primary>
+                {content.ctaPrimaryText}
+              </HeroButton>
+            </div>
           )}
           {content.ctaSecondaryText && (
-            <HeroButton href={content.ctaSecondaryLink} primary={false}>
-              {content.ctaSecondaryText}
-            </HeroButton>
+            <div data-field="ctaSecondaryText" style={{ display: "contents" }}>
+              <HeroButton href={content.ctaSecondaryLink} primary={false}>
+                {content.ctaSecondaryText}
+              </HeroButton>
+            </div>
           )}
         </div>
       </div>

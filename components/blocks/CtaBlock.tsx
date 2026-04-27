@@ -54,6 +54,7 @@ export function CtaBlock({ content }: Props) {
       >
         {content.eyebrow && (
           <p
+            data-field="eyebrow"
             style={{
               fontSize: "0.68rem",
               letterSpacing: "0.3em",
@@ -67,6 +68,7 @@ export function CtaBlock({ content }: Props) {
         )}
 
         <h2
+          data-field="title"
           style={{
             fontFamily: "var(--font-cormorant), Georgia, serif",
             fontSize: "clamp(2rem, 4vw, 3.2rem)",
@@ -80,13 +82,14 @@ export function CtaBlock({ content }: Props) {
           {content.titleAccent && (
             <>
               <br />
-              <em style={{ color: "#C8A96E" }}>{content.titleAccent}</em>
+              <em data-field="titleAccent" style={{ color: "#C8A96E" }}>{content.titleAccent}</em>
             </>
           )}
         </h2>
 
         {content.body && (
           <p
+            data-field="body"
             style={{
               fontSize: "1.05rem",
               lineHeight: 1.85,
@@ -99,31 +102,33 @@ export function CtaBlock({ content }: Props) {
         )}
 
         {content.buttonText && (
-          <a
-            href={content.buttonLink || "#"}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{
-              display: "inline-block",
-              background: hovered ? "#E8D5A8" : "#C8A96E",
-              color: "#0A0A0A",
-              border: "none",
-              padding: "1.1rem 3rem",
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              cursor: "pointer",
-              borderRadius: "2px",
-              transform: hovered ? "translateY(-3px)" : "translateY(0)",
-              boxShadow: hovered ? "0 12px 36px rgba(200,169,110,0.4)" : "none",
-              transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
-            }}
-          >
-            {content.buttonText}
-          </a>
+          <div data-field="buttonText" style={{ display: "contents" }}>
+            <a
+              href={content.buttonLink || "#"}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              style={{
+                display: "inline-block",
+                background: hovered ? "#E8D5A8" : "#C8A96E",
+                color: "#0A0A0A",
+                border: "none",
+                padding: "1.1rem 3rem",
+                fontFamily: "var(--font-montserrat), sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                cursor: "pointer",
+                borderRadius: "2px",
+                transform: hovered ? "translateY(-3px)" : "translateY(0)",
+                boxShadow: hovered ? "0 12px 36px rgba(200,169,110,0.4)" : "none",
+                transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+              }}
+            >
+              {content.buttonText}
+            </a>
+          </div>
         )}
       </div>
     </section>
