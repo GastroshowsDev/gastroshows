@@ -1,14 +1,25 @@
 import { useState, useEffect } from "react";
 import type { TextContent } from "@/lib/blocks/types";
 import { getAnimationStyles, getHoverStyles } from "@/lib/blocks/animations";
+import { InlineText } from "@/components/admin/InlineText";
 
-type Props = { content: TextContent };
+type Props = { 
+  content: TextContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: TextContent) => void;
+};
 
-export function TextBlock({ content }: Props) {
+export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
   const align = content.alignment ?? "center";
   const [ready, setReady] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [typedBody, setTypedBody] = useState("");
+
+  const updateField = (field: keyof TextContent, value: any) => {
+    if (onUpdate) {
+      onUpdate({ ...content, [field]: value });
+    }
+  };
 
   useEffect(() => {
     setReady(true);
@@ -44,22 +55,26 @@ export function TextBlock({ content }: Props) {
       }}
     >
       <div style={{ maxWidth: "780px", margin: "0 auto", textAlign: align, ...animStyles }}>
-        {content.eyebrow && (
-          <p
-            data-field="eyebrow"
-            style={{
-              fontSize: "0.7rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "var(--gs-gold)",
-              marginBottom: "1rem",
-            }}
-          >
-            {content.eyebrow}
-          </p>
+        {(content.eyebrow || isEditing) && (
+          <div data-field="eyebrow">
+            <InlineText
+              tagName="p"
+              value={content.eyebrow || ""}
+              onChange={(v) => updateField("eyebrow", v)}
+              isEditing={isEditing}
+              placeholder="SECCIÓN"
+              style={{
+                fontSize: "0.7rem",
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+                color: "var(--gs-gold)",
+                marginBottom: "1rem",
+              }}
+            />
+          </div>
         )}
 
-        {content.title && (
+        {(content.title || isEditing) && (
           <h2
             data-field="title"
             style={{
@@ -71,17 +86,31 @@ export function TextBlock({ content }: Props) {
               marginBottom: content.body ? "1.5rem" : 0,
             }}
           >
-            {content.title}
-            {content.titleAccent && (
+            <InlineText
+              tagName="span"
+              value={content.title || ""}
+              onChange={(v) => updateField("title", v)}
+              isEditing={isEditing}
+              placeholder="Título"
+            />
+            {(content.titleAccent || isEditing) && (
               <>
                 <br />
-                <em data-field="titleAccent" style={{ color: "var(--gs-gold)" }}>{content.titleAccent}</em>
+                <InlineText
+                  tagName="em"
+                  data-field="titleAccent"
+                  value={content.titleAccent || ""}
+                  onChange={(v) => updateField("titleAccent", v)}
+                  isEditing={isEditing}
+                  placeholder="Acento"
+                  style={{ color: "var(--gs-gold)" }}
+                />
               </>
             )}
           </h2>
         )}
 
-        {content.body && (
+        {(content.body || isEditing) && (
           <div
             data-field="body"
             style={{
@@ -95,7 +124,13 @@ export function TextBlock({ content }: Props) {
               whiteSpace: "pre-wrap",
             }}
           >
-            {typedBody}
+            <InlineText
+              tagName="div"
+              value={typedBody}
+              onChange={(v) => updateField("body", v)}
+              isEditing={isEditing}
+              placeholder="Escribe el contenido aquí..."
+            />
           </div>
         )}
       </div>

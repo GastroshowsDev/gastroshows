@@ -197,8 +197,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           </div>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
              <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer" }}>
-               <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} />
-               Publicada
+                <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} />
+                Publicada
              </label>
              <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver al listado</a>
           </div>
@@ -241,18 +241,22 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                      zIndex: selectedBlockId === block.id ? 10 : 1,
                    }}
                  >
-                   <PageBlockList blocks={[block]} />
-                   
-                   {/* Selection Overlay */}
-                   {selectedBlockId === block.id && (
-                     <div style={{
-                       position: "absolute", top: 0, right: 0, padding: "0.5rem",
-                       background: "#875BF7", color: "white", fontSize: "0.6rem", fontWeight: 700,
-                       textTransform: "uppercase", pointerEvents: "none"
-                     }}>
-                       {BLOCK_LABELS[block.type].label}
-                     </div>
-                   )}
+                    <PageBlockList 
+                      blocks={[block]} 
+                      isEditing={true} 
+                      onUpdateBlock={updateBlockContent} 
+                    />
+                    
+                    {/* Selection Overlay */}
+                    {selectedBlockId === block.id && (
+                      <div style={{
+                        position: "absolute", top: 0, right: 0, padding: "0.5rem",
+                        background: "#875BF7", color: "white", fontSize: "0.6rem", fontWeight: 700,
+                        textTransform: "uppercase", pointerEvents: "none"
+                      }}>
+                        {BLOCK_LABELS[block.type].label}
+                      </div>
+                    )}
                  </div>
                ))}
                

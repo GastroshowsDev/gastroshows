@@ -6,12 +6,24 @@ import type { HeroContent } from "@/lib/blocks/types";
 
 import { getAnimationStyles } from "@/lib/blocks/animations";
 
-type Props = { content: HeroContent };
+import { InlineText } from "@/components/admin/InlineText";
 
-export function HeroBlock({ content }: Props) {
+type Props = { 
+  content: HeroContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: HeroContent) => void;
+};
+
+export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [typedTitle, setTypedTitle] = useState("");
+
+  const updateField = (field: keyof HeroContent, value: any) => {
+    if (onUpdate) {
+      onUpdate({ ...content, [field]: value });
+    }
+  };
 
   useEffect(() => {
     setReady(true);
@@ -79,7 +91,7 @@ export function HeroBlock({ content }: Props) {
 
       {/* Content */}
       <div style={{ position: "relative", zIndex: 2, maxWidth: "740px", padding: "0 2rem" }}>
-        {content.eyebrow && (
+        {(content.eyebrow || isEditing) && (
           <div 
             data-field="eyebrow"
             style={{ 
@@ -93,16 +105,21 @@ export function HeroBlock({ content }: Props) {
             }}
           >
             <div style={{ height: "1px", width: "40px", background: "rgba(200,169,110,0.4)" }} />
-            <span style={{ 
-              fontSize: "0.75rem", 
-              letterSpacing: "0.4em", 
-              textTransform: "uppercase", 
-              color: "rgba(245,240,232,0.8)",
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontWeight: 500,
-            }}>
-              {content.eyebrow}
-            </span>
+            <InlineText
+              tagName="span"
+              value={content.eyebrow || ""}
+              onChange={(v) => updateField("eyebrow", v)}
+              isEditing={isEditing}
+              placeholder="UBICACIÓN"
+              style={{ 
+                fontSize: "0.75rem", 
+                letterSpacing: "0.4em", 
+                textTransform: "uppercase", 
+                color: "rgba(245,240,232,0.8)",
+                fontFamily: "var(--font-montserrat), sans-serif",
+                fontWeight: 500,
+              }}
+            />
             <div style={{ height: "1px", width: "40px", background: "rgba(200,169,110,0.4)" }} />
           </div>
         )}
@@ -120,16 +137,30 @@ export function HeroBlock({ content }: Props) {
             ...animStyles,
           }}
         >
-          {typedTitle}
-          {content.titleAccent && (
+          <InlineText
+            tagName="span"
+            value={typedTitle}
+            onChange={(v) => updateField("title", v)}
+            isEditing={isEditing}
+            placeholder="Título principal"
+          />
+          {(content.titleAccent || isEditing) && (
             <>
               <br />
-              <em data-field="titleAccent" style={{ color: "#C8A96E", fontStyle: "italic" }}>{content.titleAccent}</em>
+              <InlineText
+                tagName="em"
+                data-field="titleAccent"
+                value={content.titleAccent || ""}
+                onChange={(v) => updateField("titleAccent", v)}
+                isEditing={isEditing}
+                placeholder="Acento"
+                style={{ color: "#C8A96E", fontStyle: "italic" }}
+              />
             </>
           )}
         </h1>
 
-        {content.subtitle && (
+        {(content.subtitle || isEditing) && (
           <p
             data-field="subtitle"
             style={{
@@ -144,7 +175,13 @@ export function HeroBlock({ content }: Props) {
               transitionDelay: "0.3s",
             }}
           >
-            {content.subtitle}
+            <InlineText
+              tagName="span"
+              value={content.subtitle || ""}
+              onChange={(v) => updateField("subtitle", v)}
+              isEditing={isEditing}
+              placeholder="Subtítulo o descripción corta"
+            />
           </p>
         )}
 

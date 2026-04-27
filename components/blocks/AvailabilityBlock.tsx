@@ -4,13 +4,41 @@ import { DisponibilidadSection } from "@/components/home/DisponibilidadSection";
 
 import type { AvailabilityContent } from "@/lib/blocks/types";
 
-type Props = { content: AvailabilityContent };
+import { InlineText } from "@/components/admin/InlineText";
 
-export function AvailabilityBlock({ content }: Props) {
+type Props = { 
+  content: AvailabilityContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: AvailabilityContent) => void;
+};
+
+export function AvailabilityBlock({ content, isEditing = false, onUpdate }: Props) {
+  const updateField = (field: keyof AvailabilityContent, value: string) => {
+    if (onUpdate) {
+      onUpdate({ ...content, [field]: value });
+    }
+  };
+
   return (
     <DisponibilidadSection 
-      title={content.title}
-      subtitle={content.subtitle}
+      title={isEditing ? (
+        <InlineText
+          tagName="span"
+          value={content.title}
+          onChange={(v) => updateField("title", v)}
+          isEditing={true}
+          placeholder="Título disponibilidad"
+        />
+      ) : content.title}
+      subtitle={isEditing ? (
+        <InlineText
+          tagName="span"
+          value={content.subtitle || ""}
+          onChange={(v) => updateField("subtitle", v)}
+          isEditing={true}
+          placeholder="SUBTÍTULO"
+        />
+      ) : content.subtitle}
       onReservar={() => {
         window.dispatchEvent(new CustomEvent("gs-open-reserva"));
       }} 

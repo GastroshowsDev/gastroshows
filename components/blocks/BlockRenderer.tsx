@@ -24,32 +24,38 @@ import { AvailabilityBlock } from "./AvailabilityBlock";
 
 type Props = {
   block: BlockData;
+  isEditing?: boolean;
+  onUpdateBlock?: (id: string, newContent: any) => void;
 };
 
 /**
  * Renders a single block based on its type.
  * This is the central dispatch component for the page builder.
  */
-export function BlockRenderer({ block }: Props) {
-  const { type, content } = block;
+export function BlockRenderer({ block, isEditing = false, onUpdateBlock }: Props) {
+  const { id, type, content } = block;
+
+  const handleUpdate = (newContent: any) => {
+    if (onUpdateBlock) onUpdateBlock(id, newContent);
+  };
 
   switch (type as BlockType) {
     case "HERO":
-      return <HeroBlock content={content as HeroContent} />;
+      return <HeroBlock content={content as HeroContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "TEXT":
-      return <TextBlock content={content as TextContent} />;
+      return <TextBlock content={content as TextContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "IMAGE":
-      return <ImageBlock content={content as ImageContent} />;
+      return <ImageBlock content={content as ImageContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "GALLERY":
-      return <GalleryBlock content={content as GalleryContent} />;
+      return <GalleryBlock content={content as GalleryContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "COLUMNS":
-      return <ColumnsBlock content={content as ColumnsContent} />;
+      return <ColumnsBlock content={content as ColumnsContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "CTA":
-      return <CtaBlock content={content as CtaContent} />;
+      return <CtaBlock content={content as CtaContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "SPACER":
-      return <SpacerBlock content={content as SpacerContent} />;
+      return <SpacerBlock content={content as SpacerContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "AVAILABILITY":
-      return <AvailabilityBlock content={content as AvailabilityContent} />;
+      return <AvailabilityBlock content={content as AvailabilityContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     default:
       // Unknown block type — render nothing in production
       if (process.env.NODE_ENV === "development") {
@@ -75,11 +81,19 @@ export function BlockRenderer({ block }: Props) {
  * Renders an array of blocks in order.
  * Used by the dynamic page route.
  */
-export function PageBlockList({ blocks }: { blocks: BlockData[] }) {
+export function PageBlockList({ 
+  blocks, 
+  isEditing = false, 
+  onUpdateBlock 
+}: { 
+  blocks: BlockData[], 
+  isEditing?: boolean,
+  onUpdateBlock?: (id: string, newContent: any) => void
+}) {
   return (
     <>
       {blocks.map((block) => (
-        <BlockRenderer key={block.id} block={block} />
+        <BlockRenderer key={block.id} block={block} isEditing={isEditing} onUpdateBlock={onUpdateBlock} />
       ))}
     </>
   );
