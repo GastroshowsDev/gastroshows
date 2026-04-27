@@ -39,26 +39,33 @@ export function SortableBlock({ id, children, isSelected, onClick, label }: Prop
       <div 
         {...attributes} 
         {...listeners}
+        onClick={(e) => e.stopPropagation()} // Don't deselect when clicking handle
         style={{
           position: "absolute",
-          top: "10px",
+          top: "15px",
           left: "50%",
           transform: "translateX(-50%)",
-          padding: "4px 12px",
-          background: "rgba(135, 91, 247, 0.9)",
+          padding: "6px 16px",
+          background: "#875BF7",
           color: "white",
-          borderRadius: "20px",
-          fontSize: "0.6rem",
+          borderRadius: "30px",
+          fontSize: "0.7rem",
           fontWeight: 700,
           textTransform: "uppercase",
+          boxShadow: "0 4px 15px rgba(135,91,247,0.4)",
           opacity: isDragging || isSelected ? 1 : 0,
-          transition: "opacity 0.2s",
+          visibility: isDragging || isSelected ? "visible" : "hidden",
+          transition: "all 0.2s",
           cursor: "grab",
-          zIndex: 20,
+          zIndex: 100,
           pointerEvents: "auto",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
         }}
       >
-        {isDragging ? "Soltar para reordenar" : "Arrastrar"}
+        <span>🖐️</span>
+        {isDragging ? "Soltando..." : "Mover bloque"}
       </div>
 
       {children}

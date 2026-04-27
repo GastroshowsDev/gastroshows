@@ -57,20 +57,20 @@ export function InlineText({
     suppressContentEditableWarning: true,
     onBlur: handleBlur,
     onKeyDown: handleKeyDown,
+    // Prevent the block selection/smart focus from firing when we want to edit text
+    onClick: (e: React.MouseEvent) => e.stopPropagation(),
     style: {
       ...style,
       outline: "none",
       minWidth: "20px",
       minHeight: "1em",
       cursor: "text",
-      background: "rgba(135, 91, 247, 0.05)",
+      background: "rgba(135, 91, 247, 0.15)", // More visible highlight
       borderRadius: "2px",
-      padding: "0 2px",
+      padding: "0 4px",
+      border: "1px dashed rgba(135, 91, 247, 0.3)",
     },
     className,
     "data-placeholder": placeholder,
-    onInput: (e: React.FormEvent<HTMLElement>) => {
-      // Optional: live sync if needed, but blur is safer for state stability
-    }
   });
 }

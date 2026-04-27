@@ -9,6 +9,7 @@ import {
   DndContext, 
   closestCenter, 
   PointerSensor, 
+  KeyboardSensor,
   useSensor, 
   useSensors,
   DragEndEvent
@@ -16,7 +17,8 @@ import {
 import { 
   arrayMove, 
   SortableContext, 
-  verticalListSortingStrategy 
+  verticalListSortingStrategy,
+  sortableKeyboardCoordinates 
 } from "@dnd-kit/sortable";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { SortableBlock } from "./SortableBlock";
@@ -42,8 +44,11 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // Minimum distance before dragging starts
+        distance: 5, // Lower distance for better responsiveness
       },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
     })
   );
 
