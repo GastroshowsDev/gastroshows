@@ -68,7 +68,7 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
 function GalleryCell({
   src, alt, label, isEditing, onUpdateLabel, delay, visible,
 }: {
-  src: string; alt: string; label: string; isEditing: boolean; onUpdateLabel: (v: string) => void; delay: number; visible: boolean;
+  src: string; alt: string; label?: string; isEditing: boolean; onUpdateLabel: (v: string) => void; delay: number; visible: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
 
