@@ -54,12 +54,19 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  const emitStatus = (status: "idle" | "unsaved" | "saving" | "saved") => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("page-builder-status", { detail: status }));
+    }
+  };
+
   // Helper to update state and history
   const updatePageState = (newPage: PageData) => {
     if (page) {
       setHistory(prev => [JSON.parse(JSON.stringify(page)), ...prev].slice(0, 20));
     }
     setPage(newPage);
+    emitStatus("unsaved");
   };
 
   const undo = () => {
@@ -69,6 +76,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     setHistory(rest);
     setSelectedBlockId(null);
     setSelectedElementPath(null);
+    emitStatus("unsaved");
   };
 
   useEffect(() => {
@@ -120,6 +128,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   async function save() {
     if (!page) return;
     setSaving(true);
+    emitStatus("saving");
     try {
       await fetch(`/api/admin/pages/${pageId}`, {
         method: "PATCH",
@@ -139,7 +148,10 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         body: JSON.stringify({ blocks: page.blocks }),
       });
 
-      alert("Cambios guardados con éxito");
+      emitStatus("saved");
+      
+      // Auto-revert to idle after 3 seconds
+      setTimeout(() => emitStatus("idle"), 3000);
     } finally {
       setSaving(false);
     }
@@ -308,13 +320,19 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <input
               value={page.title}
-              onChange={(e) => setPage({ ...page, title: e.target.value })}
+              onChange={(e) => {
+                setPage({ ...page, title: e.target.value });
+                emitStatus("unsaved");
+              }}
               style={{ fontSize: "1.1rem", fontWeight: 700, border: "none", outline: "none", width: "240px" }}
             />
             <span style={{ color: "#9CA3AF" }}>/</span>
             <input
               value={page.slug}
-              onChange={(e) => setPage({ ...page, slug: e.target.value })}
+              onChange={(e) => {
+                setPage({ ...page, slug: e.target.value });
+                emitStatus("unsaved");
+              }}
               style={{ fontSize: "0.9rem", color: "#6B7280", border: "none", outline: "none", width: "160px" }}
             />
             
@@ -333,7 +351,14 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           </div>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
              <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer" }}>
-                <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} />
+                <input 
+                  type="checkbox" 
+                  checked={page.published} 
+                  onChange={(e) => {
+                    setPage({ ...page, published: e.target.checked });
+                    emitStatus("unsaved");
+                  }} 
+                />
                 Publicada
              </label>
              <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver</a>
