@@ -87,7 +87,38 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
-  // ... handlers ...
+  // --- Drag & Drop Handlers ---
+  const handleDragEnd = (event: DragEndEvent, colIdx: number) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = parseInt((active.id as string).split("-").pop() || "0");
+    const newIndex = parseInt((over.id as string).split("-").pop() || "0");
+
+    const newCols = [...content.columns];
+    newCols[colIdx].elements = arrayMove(newCols[colIdx].elements, oldIndex, newIndex);
+    onUpdate?.({ ...content, columns: newCols });
+  };
+
+  const onDrop = (e: React.DragEvent, colIdx: number) => {
+    e.preventDefault();
+    setDragOverCol(null);
+    const type = e.dataTransfer.getData("elementType");
+    if (!type) return;
+
+    // Create new element based on type
+    let newEl: ElementData;
+    if (type === "HEADING") newEl = { type: "HEADING", text: "Nuevo Título", level: 2 };
+    else if (type === "BUTTON") newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#" };
+    else if (type === "TEXT") newEl = { type: "TEXT", text: "Nuevo bloque de texto" };
+    else if (type === "IMAGE") newEl = { type: "IMAGE", src: "", alt: "" };
+    else if (type === "SPACER") newEl = { type: "SPACER", height: 40 };
+    else return;
+
+    const newCols = [...content.columns];
+    newCols[colIdx].elements.push(newEl);
+    onUpdate?.({ ...content, columns: newCols });
+  };
 
   const { styles = {} } = content;
 
