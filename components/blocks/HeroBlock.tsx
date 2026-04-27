@@ -8,6 +8,12 @@ import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 import { SmartLink } from "./SmartLink";
 
+type Props = {
+  content: HeroContent;
+  isEditing?: boolean;
+  onUpdate?: (newContent: HeroContent) => void;
+};
+
 export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
