@@ -97,6 +97,7 @@ export function TextBlock({ content }: Props) {
           >
             {typedBody}
           </div>
-        )}
+      </div>
+    </section>
   );
 }
