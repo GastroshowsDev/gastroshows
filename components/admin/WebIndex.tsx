@@ -14,6 +14,15 @@ type PageCard = {
 
 const PAGES: PageCard[] = [
   {
+    href: "/admin/web/pages",
+    previewHref: "/",
+    icon: "🏗",
+    title: "Page Builder (Nuevo)",
+    description: "Crea y diseña páginas personalizadas con bloques arrastrables.",
+    fieldCount: 0,
+    accent: "#10B981",
+  },
+  {
     href: "/admin/web/landing",
     previewHref: "/",
     icon: "◈",
