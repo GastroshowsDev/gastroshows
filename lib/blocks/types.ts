@@ -54,6 +54,7 @@ export type ImageElement = {
 export type SpacerElement = {
   type: "SPACER";
   height: number;
+  styles?: CommonStyles;
 };
 
 export type ElementData = 
