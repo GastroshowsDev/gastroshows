@@ -110,10 +110,22 @@ export function DisponibilidadSection({
             }}>
               {loading ? (
                 <span style={{ opacity: 0.4 }}>Cargando…</span>
+              ) : title && typeof title === "string" ? (
+                // Lógica de sustitución dinámica del {total}
+                title.includes("{total}") ? (
+                  <>
+                    {title.split("{total}")[0]}
+                    <em style={{ color: urgency ? "#E57373" : "var(--gs-gold)", fontStyle: "normal", fontWeight: 600 }}>
+                      {data?.totalAvailable}
+                    </em>
+                    {title.split("{total}")[1]}
+                  </>
+                ) : (
+                  title
+                )
               ) : title ? (
-                typeof title === "string" 
-                  ? title.replace("{total}", data?.totalAvailable?.toString() || "0")
-                  : title
+                // Si es un componente (InlineText), lo renderizamos tal cual
+                title
               ) : soldOut ? (
                 <>Semana <em style={{ color: "#E57373" }}>completa</em></>
               ) : (

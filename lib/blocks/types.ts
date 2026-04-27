@@ -175,7 +175,7 @@ export const BLOCK_DEFAULTS: Record<BlockType, BlockContent> = {
   } satisfies SpacerContent,
 
   AVAILABILITY: {
-    title: "Quedan plazas esta semana",
+    title: "Quedan {total} plazas esta semana",
     subtitle: "DISPONIBILIDAD",
   } satisfies AvailabilityContent,
 };

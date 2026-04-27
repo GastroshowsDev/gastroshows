@@ -27,7 +27,7 @@ export function AvailabilityBlock({ content, isEditing = false, onUpdate }: Prop
           value={content.title}
           onChange={(v) => updateField("title", v)}
           isEditing={true}
-          placeholder="Título disponibilidad"
+          placeholder="Ej: Quedan {total} plazas"
         />
       ) : content.title}
       subtitle={isEditing ? (
