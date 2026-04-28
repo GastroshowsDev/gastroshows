@@ -53,7 +53,12 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
+        marginTop: (content as any).marginTop || "0px",
+        marginBottom: (content as any).marginBottom || "0px",
+        paddingTop: (content as any).paddingTop || "0px",
+        paddingBottom: (content as any).paddingBottom || "0px",
       }}
+
     >
       {/* ... parallax and overlay ... */}
       <div
@@ -146,7 +151,12 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   isEditing={isEditing}
                   dataField="titleAccent"
                   placeholder="Acento"
-                  style={{ color: "#daa520", fontStyle: "italic" }}
+                  style={{ 
+                    color: "#daa520", 
+                    fontStyle: "italic",
+                    textShadow: "0 0 15px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+                  }}
+
                 />
               </>
             )}

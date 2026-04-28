@@ -32,7 +32,12 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
         display: "flex",
         alignItems: "center",
         background: content.bgImage ? "transparent" : "var(--gs-bg)",
+        marginTop: (content as any).marginTop || "0px",
+        marginBottom: (content as any).marginBottom || "0px",
+        paddingTop: (content as any).paddingTop || "0px",
+        paddingBottom: (content as any).paddingBottom || "0px",
       }}
+
     >
       {content.bgImage && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
@@ -112,7 +117,12 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             {(content.titleAccent || isEditing) && (
               <>
                 <br />
-                <em style={{ color: "var(--gs-gold)", fontStyle: "italic" }}>
+                <em style={{ 
+                  color: "var(--gs-gold)", 
+                  fontStyle: "italic",
+                  textShadow: "0 0 15px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+                }}>
+
                   <InlineText
                     tagName="span"
                     value={content.titleAccent || ""}

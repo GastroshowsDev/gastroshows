@@ -50,7 +50,12 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             value={content.titleAccent}
             onChange={(v) => updateField("titleAccent", v)}
             isEditing={isEditing}
-            style={{ color: primaryColor, fontStyle: "italic" }}
+            style={{ 
+              color: primaryColor, 
+              fontStyle: "italic",
+              textShadow: "0 0 15px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+            }}
+
           />
         </h2>
       </div>
