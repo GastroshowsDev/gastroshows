@@ -680,6 +680,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         setReservas((rs) => [{
           id: d.id, type: d.type, status: d.status, guests: d.guests,
           totalAmount: Number(d.totalAmount), paidAmount: Number(d.paidAmount),
+          groupRef: d.groupRef, mergedGroupId: d.mergedGroupId,
           createdAt: d.createdAt, customer: d.customer,
           event: { id: d.event.id, date: d.event.date, shift: d.event.shift },
           venue: d.venue,
