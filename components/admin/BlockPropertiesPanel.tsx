@@ -132,7 +132,23 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                   />
                 </div>
               </div>
+
+              <div style={rowStyle}>
+                <label style={labelStyle}>Posición de Imagen</label>
+                <select 
+                  value={element.styles?.backgroundPosition || "center"} 
+                  onChange={(e) => updateStyles(element, { backgroundPosition: e.target.value })} 
+                  style={inputStyle}
+                >
+                  <option value="center">Centro</option>
+                  <option value="top">Arriba</option>
+                  <option value="bottom">Abajo</option>
+                  <option value="left">Izquierda</option>
+                  <option value="right">Derecha</option>
+                </select>
+              </div>
             </>
+
           )}
 
 
@@ -289,7 +305,25 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 />
               </div>
             </div>
+
+            <div style={rowStyle}>
+              <label style={labelStyle}>Posición Fondo</label>
+              <select 
+                value={(content as SectionContent).styles?.backgroundPosition || "center"} 
+                onChange={(e) => updateStyles(content, { backgroundPosition: e.target.value })} 
+                style={inputStyle}
+              >
+                <option value="center">Centro</option>
+                <option value="top">Arriba</option>
+                <option value="bottom">Abajo</option>
+                <option value="left">Izquierda</option>
+                <option value="right">Derecha</option>
+                <option value="center top">Centro Arriba</option>
+                <option value="center bottom">Centro Abajo</option>
+              </select>
+            </div>
           </div>
+
 
         </>
       )}
@@ -409,6 +443,18 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               <input type="range" min="0" max="3" step="0.05" value={(content as any).brightness ?? 1} onChange={(e) => update({ brightness: parseFloat(e.target.value) })} style={{ width: "100%" }} />
             </div>
           </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Posición Fondo</label>
+            <select value={(content as HeroContent).bgPosition || "center"} onChange={(e) => update({ bgPosition: e.target.value })} style={inputStyle}>
+              <option value="center">Centro</option>
+              <option value="top">Arriba</option>
+              <option value="bottom">Abajo</option>
+              <option value="center 20%">Arriba (20%)</option>
+              <option value="center 80%">Abajo (80%)</option>
+            </select>
+          </div>
+
 
         </>
       )}
@@ -558,6 +604,18 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               />
             </div>
           </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Posición Fondo</label>
+            <select value={(content as CtaContent).bgPosition || "center"} onChange={(e) => update({ bgPosition: e.target.value })} style={inputStyle}>
+              <option value="center">Centro</option>
+              <option value="top">Arriba</option>
+              <option value="bottom">Abajo</option>
+              <option value="center 30%">Arriba (30%)</option>
+              <option value="center 70%">Abajo (70%)</option>
+            </select>
+          </div>
+
 
           
           <div style={{ padding: "1rem", background: "#F3F4F6", borderRadius: "8px", marginTop: "1rem" }}>

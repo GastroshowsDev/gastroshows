@@ -134,10 +134,12 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         backgroundColor: styles.backgroundColor || "transparent",
         backgroundImage: styles.backgroundImage ? `url(${styles.backgroundImage})` : "none",
         backgroundSize: styles.backgroundSize || "cover",
+        backgroundPosition: styles.backgroundPosition || "center",
         position: "relative",
         opacity: styles.opacity ?? 1,
         filter: styles.brightness ? `brightness(${styles.brightness})` : "none"
       }}>
+
         <div 
           style={{
             maxWidth: content.fullWidth ? "100%" : "1200px",

@@ -17,7 +17,9 @@ export type CommonStyles = {
   animation?: string;
   opacity?: number;
   brightness?: number;
+  backgroundPosition?: string;
 };
+
 
 
 // ── Atomic Elements ─────────────────────────────────────────────────────────
@@ -99,7 +101,9 @@ export type HeroContent = {
   subtitleAnim?: string;
   ctaPrimaryAnim?: string;
   ctaSecondaryAnim?: string;
+  bgPosition?: string;
 };
+
 
 export type TextContent = {
   eyebrow?: string;
@@ -145,7 +149,9 @@ export type CtaContent = {
   titleAnim?: string;
   bodyAnim?: string;
   buttonAnim?: string;
+  bgPosition?: string;
 };
+
 
 export type ImageContent = {
   src: string;

@@ -29,9 +29,11 @@ export function ImageElement({ element, isEditing = false, onUpdate }: Props) {
               borderRadius: styles.borderRadius || "4px",
               display: "block",
               opacity: styles.opacity ?? 1,
-              filter: styles.brightness ? `brightness(${styles.brightness})` : "none"
+              filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
+              objectPosition: styles.backgroundPosition || "center"
             }} 
           />
+
 
         </div>
       ) : (

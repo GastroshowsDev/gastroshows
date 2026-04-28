@@ -41,9 +41,10 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             alt=""
             fill
             loading="lazy"
-            style={{ objectFit: "cover", objectPosition: "center 30%", filter: `brightness(${brightness})` }}
+            style={{ objectFit: "cover", objectPosition: content.bgPosition || "center 30%", filter: `brightness(${brightness})` }}
             sizes="100vw"
           />
+
           <div
             style={{
               position: "absolute",

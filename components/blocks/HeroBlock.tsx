@@ -66,8 +66,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         }}
       >
         {content.bgImage && (
-          <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center", filter: `brightness(${brightness})` }} />
+          <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: content.bgPosition || "center", filter: `brightness(${brightness})` }} />
         )}
+
 
       </div>
 
