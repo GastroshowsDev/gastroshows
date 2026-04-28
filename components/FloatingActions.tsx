@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { usePageActions } from "@/context/PageActionsContext";
 
 const GOLD = "#C8A96E";
 
 export function FloatingActions() {
+  const pathname = usePathname();
   const { openReservation } = usePageActions();
   const [config, setConfig] = useState<{ wedThuActive: boolean; hasCampaign: boolean; campaignName?: string } | null>(null);
   const [visible, setVisible] = useState(false);
@@ -34,7 +36,8 @@ export function FloatingActions() {
     checkPromos();
   }, []);
 
-  if (!visible) return null;
+  if (!visible || pathname?.startsWith("/admin")) return null;
+
 
   const hasPromo = config?.wedThuActive || config?.hasCampaign;
 
