@@ -56,7 +56,8 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             style={{ 
               color: primaryColor, 
               fontStyle: "italic",
-              textShadow: "0 0 15px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+              textShadow: "0 0 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.4)"
+
             }}
           />
         </h2>
