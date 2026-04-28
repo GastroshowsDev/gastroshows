@@ -43,8 +43,8 @@
   --color-admin-sidebar: #FFFFFF;
 }
 
-/* ── Light mode (public site) ── */
-:root.light {
+/* ── Clandestino mode (public site) ── */
+:root.revelado {
   --gs-bg: #FAF8F3;
   --gs-bg2: #EDE9E0;
   --gs-bg3: #F3EFE6;
@@ -70,8 +70,8 @@
   --color-admin-sidebar: #FFFFFF;
 }
 
-/* ── Dark mode ── */
-:root.dark {
+/* ── Dark mode (Clandestino) ── */
+:root.clandestino {
   --gs-bg: #0A0A0A;
   --gs-bg2: #111111;
   --gs-bg3: #0D0D0D;
@@ -113,7 +113,7 @@ body {
   transition: background 0.8s ease, color 0.8s ease;
 }
 
-/* ── Image blur in Clandestino (dark) mode ── */
+/* ── Image blur in Clandestino mode ── */
 :root {
   --img-brightness: 1;
 }
@@ -123,27 +123,28 @@ img:not(.no-blur),
   transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
 }
 
-:root.dark img:not(.no-blur),
-:root.dark .gs-bg-image {
+:root.clandestino img:not(.no-blur),
+:root.clandestino .gs-bg-image {
   filter: blur(20px) grayscale(0.3) brightness(calc(0.65 * var(--img-brightness)));
   opacity: 0.55;
 }
 
-:root.light img,
-:root.light .gs-bg-image {
+:root.revelado img,
+:root.revelado .gs-bg-image {
   filter: blur(0) grayscale(0) brightness(calc(1.15 * var(--img-brightness))) contrast(1.05);
   opacity: 1;
 }
 
 
-/* ── UX Readability enhancement for light mode ── */
-:root.light h1, 
-:root.light h2, 
-:root.light h3,
-:root.light p {
+/* ── UX Readability enhancement for Revelado mode ── */
+:root.revelado h1, 
+:root.revelado h2, 
+:root.revelado h3,
+:root.revelado p {
   text-shadow: 0 1px 2px rgba(255,255,255,0.5);
-  letter-spacing: -0.01em; /* Tighter letter spacing for better definition in light backgrounds */
+  letter-spacing: -0.01em; 
 }
+
 
 
 

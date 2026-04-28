@@ -11,12 +11,12 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = mounted ? theme === "dark" : false;
+  const isDark = mounted ? theme === "clandestino" : true; // Default to true for Clandestino
 
   if (variant === "admin") {
     return (
       <button
-        onClick={() => setTheme(isDark ? "light" : "dark")}
+        onClick={() => setTheme(isDark ? "revelado" : "clandestino")}
         title={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
         style={{
           width: "100%", padding: "0.5rem", borderRadius: "6px",
@@ -67,10 +67,11 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
       }}
     >
       {([
-        { value: "dark",  emoji: "🕯", label: "Clandestino" },
-        { value: "light", emoji: "☀", label: "Revelado" },
+        { value: "clandestino",  emoji: "🕯", label: "Clandestino" },
+        { value: "revelado", emoji: "☀", label: "Revelado" },
       ] as const).map(({ value, emoji, label }) => {
         const active = theme === value;
+
         return (
           <button
             key={value}
