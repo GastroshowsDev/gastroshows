@@ -458,9 +458,9 @@ function Step1({
           {form.shift === "PRIVATE" ? (
             <div style={{ gridColumn: "1 / -1", marginTop: "1rem", background: "rgba(200,169,110,0.05)", padding: "1.5rem", borderRadius: "4px", border: "1px solid rgba(200,169,110,0.2)" }}>
               <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem", textAlign: "center" }}>🍽️</div>
-              <h3 style={{ fontSize: "1.1rem", color: GOLD, textAlign: "center", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>Exclusivo: Cena Privada</h3>
+              <h3 style={{ fontSize: "1.1rem", color: GOLD, textAlign: "center", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>Reserva el Restaurante en Exclusiva</h3>
               <p style={{ color: "rgba(245,240,232,0.8)", fontSize: "0.9rem", lineHeight: 1.6, textAlign: "center", marginBottom: "1rem" }}>
-                De domingo a martes el restaurante está cerrado al público general, pero abrimos nuestras puertas en exclusiva para ti y tus invitados. Diseña un menú a medida con nuestro chef.
+                De domingo a martes estamos cerrados al público general, pero puedes reservar el espacio entero de forma privada para ti y tus invitados. Solícitanos información y diseñaremos juntos un menú a medida con nuestro chef.
               </p>
             </div>
           ) : (
