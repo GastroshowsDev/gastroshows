@@ -17,7 +17,18 @@ export type AnimationType =
   | "reveal-up"
   | "float"
   | "pulse"
-  | "glitch";
+  | "glitch"
+  | "vortex"
+  | "celestial"
+  | "swing"
+  | "jello"
+  | "unfold"
+  | "zoom-spin"
+  | "skew-reveal"
+  | "letter-spacing"
+  | "tilt-3d"
+  | "focus-in";
+
 
 export function getAnimationStyles(type: AnimationType | string | undefined, active: boolean) {
   if (!type || type === "none") return {};
@@ -118,6 +129,80 @@ export function getAnimationStyles(type: AnimationType | string | undefined, act
         ...base
       };
 
+    case "vortex":
+      return {
+        ...base,
+        transform: active ? "scale(1) rotate(0)" : "scale(0) rotate(720deg)",
+        filter: active ? "blur(0)" : "blur(20px)",
+        transitionDuration: "1.2s"
+      };
+
+    case "celestial":
+      return {
+        ...base,
+        animation: active ? "gs-celestial 4s linear infinite" : "none",
+        textShadow: active ? "0 0 20px rgba(200,169,110,0.4)" : "none"
+      };
+
+    case "swing":
+      return {
+        ...base,
+        transformOrigin: "top center",
+        transform: active ? "rotate(0)" : "rotate(-90deg)",
+        transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+      };
+
+    case "jello":
+      return {
+        ...base,
+        animation: active ? "gs-jello 0.9s both" : "none"
+      };
+
+    case "unfold":
+      return {
+        ...base,
+        transformOrigin: "top",
+        transform: active ? "rotateX(0)" : "rotateX(-90deg)",
+        perspective: "1000px"
+      };
+
+    case "zoom-spin":
+      return {
+        ...base,
+        transform: active ? "scale(1) rotate(0)" : "scale(3) rotate(-180deg)",
+        filter: active ? "opacity(1)" : "opacity(0)",
+        transitionDuration: "1s"
+      };
+
+    case "skew-reveal":
+      return {
+        ...base,
+        transform: active ? "skew(0) translateX(0)" : "skew(-20deg) translateX(-50px)",
+        clipPath: active ? "inset(0 0 0 0)" : "inset(0 0 0 100%)"
+      };
+
+    case "letter-spacing":
+      return {
+        ...base,
+        letterSpacing: active ? "normal" : "1em",
+        filter: active ? "blur(0)" : "blur(5px)"
+      };
+
+    case "tilt-3d":
+      return {
+        ...base,
+        transform: active ? "perspective(1000px) rotateX(0) rotateY(0)" : "perspective(1000px) rotateX(45deg) rotateY(-45deg)",
+      };
+
+    case "focus-in":
+      return {
+        ...base,
+        filter: active ? "blur(0) brightness(1)" : "blur(20px) brightness(2)",
+        letterSpacing: active ? "0px" : "-10px",
+        transform: active ? "scale(1)" : "scale(1.2)"
+      };
+
+
     case "shimmer":
       return {
         background: active ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)" : "none",
@@ -183,4 +268,21 @@ export const ANIMATION_KEYFRAMES = `
     80% { transform: translate(2px, -2px); }
     100% { transform: translate(0); }
   }
+  @keyframes gs-celestial {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    50% { filter: hue-rotate(15deg) brightness(1.2); }
+    100% { filter: hue-rotate(0deg) brightness(1); }
+  }
+  @keyframes gs-jello {
+    11.1% { transform: none; }
+    22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); }
+    33.3% { transform: skewX(6.25deg) skewY(6.25deg); }
+    44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); }
+    55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); }
+    66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); }
+    77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); }
+    88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
+    100% { transform: none; }
+  }
 `;
+

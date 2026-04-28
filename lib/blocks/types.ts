@@ -71,12 +71,19 @@ export type SpacerElement = {
   styles?: CommonStyles;
 };
 
+export type CalendarElement = {
+  type: "CALENDAR";
+  styles?: CommonStyles;
+};
+
 export type ElementData = 
   | HeadingElement 
   | ButtonElement 
   | TextElement 
   | ImageElement 
-  | SpacerElement;
+  | SpacerElement
+  | CalendarElement;
+
 
 // ── Layout Blocks (Containers) ──────────────────────────────────────────────
 
@@ -223,7 +230,16 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
   BUTTON: { type: "BUTTON", text: "Clic Aquí", link: "#", variant: "primary", size: "md", styles: {} },
   TEXT: { type: "TEXT", body: "Escribe tu contenido aquí.", styles: {} },
   IMAGE: { type: "IMAGE", src: "", alt: "", styles: {} },
+  AVAILABILITY: {
+    title: "Hay {total} plazas libres esta semana",
+    subtitle: "DISPONIBILIDAD",
+    buttonText: "Reservar ahora",
+    buttonColor: ""
+  },
+  CALENDAR: { type: "CALENDAR", styles: {} },
 };
+
+
 
 export const BLOCK_LABELS: Record<string, { label: string; icon: string; description: string }> = {
   SECTION:      { label: "Sección (Layout)",     icon: "⏹",  description: "Contenedor de 1 a 4 columnas" },
@@ -238,4 +254,6 @@ export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
   BUTTON:  { label: "Botón",  icon: "🔘" },
   TEXT:    { label: "Texto",  icon: "T" },
   IMAGE:   { label: "Imagen", icon: "🖼" },
+  CALENDAR: { label: "Calendario", icon: "📅" },
 };
+

@@ -118,7 +118,10 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
       newEl = { type: "IMAGE", src: "", alt: "", styles: {} };
     } else if (type === "SPACER") {
       newEl = { type: "SPACER", height: 40, styles: {} };
+    } else if (type === "CALENDAR") {
+      newEl = { type: "CALENDAR", styles: {} };
     } else return;
+
 
     const newCols = [...content.columns];
     newCols[colIdx].elements.push(newEl);

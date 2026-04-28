@@ -6,6 +6,7 @@ import { ButtonElement } from "./atoms/ButtonElement";
 import { TextElement } from "./atoms/TextElement";
 import { ImageElement } from "./atoms/ImageElement";
 import { AnimatedWrapper } from "./AnimatedWrapper";
+import { CalendarWidget } from "./CalendarWidget";
 
 type Props = {
   element: ElementData;
@@ -26,10 +27,13 @@ export function ElementRenderer({ element, isEditing = false, onUpdate }: Props)
         return <ImageElement element={element} isEditing={isEditing} onUpdate={onUpdate as any} />;
       case "SPACER":
         return <div style={{ height: element.height }} />;
+      case "CALENDAR":
+        return <CalendarWidget />;
       default:
         return <div style={{ color: "red" }}>Unknown Element: {(element as any).type}</div>;
     }
   };
+
 
   return (
     <AnimatedWrapper animation={element.styles?.animation}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { usePageActions } from "@/context/PageActionsContext";
 
@@ -39,6 +39,10 @@ export function FloatingActions() {
   }, []);
 
   const [isMobile, setIsMobile] = useState(false);
+  const [yPos, setYPos] = useState(25); // percentage from bottom
+  const [isDragging, setIsDragging] = useState(false);
+  const dragTimeout = useRef<NodeJS.Timeout | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
@@ -56,6 +60,50 @@ export function FloatingActions() {
     };
   }, []);
 
+  // --- Draggable & Collision Logic ---
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    dragTimeout.current = setTimeout(() => {
+      setIsDragging(true);
+      if (navigator.vibrate) navigator.vibrate(10); // Haptic feedback
+    }, 400); // More than a quick tap
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const touchY = e.touches[0].clientY;
+    const windowH = window.innerHeight;
+    const newY = ((windowH - touchY) / windowH) * 100;
+    setYPos(Math.min(Math.max(newY, 5), 85)); // Keep within 5% - 85%
+  };
+
+  const handleTouchEnd = () => {
+    if (dragTimeout.current) clearTimeout(dragTimeout.current);
+    if (isDragging) {
+      setIsDragging(false);
+      autoAvoidCollision();
+    }
+  };
+
+  const autoAvoidCollision = () => {
+    if (!menuRef.current) return;
+    const rect = menuRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Check elements under the menu
+    const elements = document.elementsFromPoint(centerX, centerY);
+    const hasTextBelow = elements.some(el => 
+      ["P", "H1", "H2", "H3", "H4", "H5", "H6", "SPAN", "BLOCKQUOTE"].includes(el.tagName) ||
+      (el instanceof HTMLElement && el.innerText.trim().length > 0 && el.children.length === 0)
+    );
+
+    if (hasTextBelow) {
+      // If covering text, jump slightly up or down
+      setYPos(prev => (prev > 50 ? prev + 10 : prev - 10));
+    }
+  };
+
   const isAdmin = pathname?.startsWith("/admin");
   const shouldHide = isAdmin;
 
@@ -64,18 +112,27 @@ export function FloatingActions() {
   const hasPromo = config?.wedThuActive || config?.hasCampaign;
 
   return (
-    <div style={{
-      position: "fixed", 
-      bottom: isMobile ? "25%" : "2rem", 
-      right: isMobile ? "0.75rem" : "2rem", 
-      zIndex: 9000,
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "flex-end", 
-      gap: "0.75rem",
-      fontFamily: "var(--font-montserrat), sans-serif",
-      transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-    }}>
+    <div 
+      ref={menuRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{
+        position: "fixed", 
+        bottom: isMobile ? `${yPos}%` : "2rem", 
+        right: isMobile ? "0.75rem" : "2rem", 
+        zIndex: 9000,
+        display: "flex", 
+        flexDirection: "column", 
+        alignItems: "flex-end", 
+        gap: "0.75rem",
+        fontFamily: "var(--font-montserrat), sans-serif",
+        transition: isDragging ? "none" : "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+        touchAction: "none", // Prevent scroll while dragging
+        opacity: isDragging ? 0.8 : 1,
+        transform: isDragging ? "scale(1.05)" : "scale(1)",
+      }}
+    >
       
       {/* Promo Bubble (WA style) */}
       {showNotification && hasPromo && (
@@ -88,6 +145,7 @@ export function FloatingActions() {
             animation: "waPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both",
             position: "relative", border: "1px solid #C8A96E",
             marginBottom: isMobile ? "0.5rem" : "0",
+            pointerEvents: isDragging ? "none" : "auto",
           }}
         >
           <p style={{ margin: 0, lineHeight: 1.4 }}>
@@ -106,8 +164,8 @@ export function FloatingActions() {
         backdropFilter: "blur(12px)",
         padding: isMobile ? "0.35rem" : "0.6rem",
         borderRadius: "100px",
-        border: `1px solid ${GOLD}`,
-        boxShadow: "0 15px 45px rgba(0,0,0,0.6)",
+        border: `1px solid ${isDragging ? "#FFF" : GOLD}`,
+        boxShadow: isDragging ? "0 25px 60px rgba(0,0,0,0.8)" : "0 15px 45px rgba(0,0,0,0.6)",
         animation: "waPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both"
       }}>
         
@@ -118,7 +176,7 @@ export function FloatingActions() {
             onClick={openGift}
             onMouseEnter={() => { setActiveTooltip("gift"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
           >
             <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 12 20 22 4 22 4 12"></polyline>
@@ -139,7 +197,7 @@ export function FloatingActions() {
             onClick={openReservation}
             onMouseEnter={() => { setActiveTooltip("reserve"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
           >
             <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -168,7 +226,7 @@ export function FloatingActions() {
             rel="noreferrer"
             onMouseEnter={() => { setActiveTooltip("wa"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
           >
             <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"></path>
@@ -177,7 +235,6 @@ export function FloatingActions() {
         </div>
 
       </div>
-
 
       <style jsx global>{`
         @keyframes waPop {
@@ -215,4 +272,3 @@ const btnStylePill = {
   cursor: "pointer", transition: "all 0.3s ease", textDecoration: "none",
   position: "relative" as const
 };
-

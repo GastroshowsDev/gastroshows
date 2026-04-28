@@ -191,10 +191,21 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               <option value="bounce-in">Rebote (Bounce)</option>
               <option value="reveal-up">Revelar (Clip)</option>
               <option value="flip-x">Giro 3D</option>
+              <option value="vortex">Vórtice (Efecto Loco)</option>
+              <option value="celestial">Resplandor Celestial</option>
+              <option value="swing">Balanceo</option>
+              <option value="jello">Gelatina (Jello)</option>
+              <option value="unfold">Desplegar</option>
+              <option value="zoom-spin">Zoom + Giro</option>
+              <option value="skew-reveal">Corte Inclinado</option>
+              <option value="letter-spacing">Expansión Letras</option>
+              <option value="tilt-3d">Perspectiva 3D</option>
+              <option value="focus-in">Enfoque (Cámara)</option>
               <option value="float">Flotante (Bucle)</option>
               <option value="pulse">Pulso (Bucle)</option>
               <option value="glitch">Glitch (Efecto Error)</option>
               <option value="shimmer">Shimmer (Brillo)</option>
+
             </select>
           </div>
 
