@@ -82,13 +82,11 @@ export function PendingReservationsPanel() {
 
     const currentVenue = venueSelect[id] || (row.venue?.name as VenueName | undefined);
     
-    if (!currentVenue) {
-      setModalReservation(row);
-      return;
-    }
-
-    void patchReservation(id, { status: "CONFIRMED", venueName: currentVenue });
+    // We now allow confirming without venue. 
+    // The venue will be assigned later (5 days before).
+    void patchReservation(id, { status: "CONFIRMED", venueName: currentVenue || null });
   }
+
 
   function handleModalConfirm(venue: "BERTRAND" | "URGELL") {
     if (!modalReservation) return;

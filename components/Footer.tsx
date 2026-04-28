@@ -17,8 +17,9 @@ export function Footer() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isEditor = pathname?.includes("/editor") && pathname?.startsWith("/admin");
-  const shouldHide = pathname?.startsWith("/admin") && (isHideableAdmin || isEditor);
+  const isAdmin = pathname?.startsWith("/admin");
+  const shouldHide = isAdmin;
+
 
   if (shouldHide) return null;
 

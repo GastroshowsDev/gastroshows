@@ -613,12 +613,15 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
 
     const prev = row.status as StatusKey;
 
-    // If confirming and no venue, show modal
+    // Skip blocking modal for venue — confirmed without venue is now allowed
+    /*
     if (status === "CONFIRMED" && !row.venue) {
       setModalReserva(row);
       setModalPendingStatus(status);
       return;
     }
+    */
+
 
     setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, status } : r));
     const res = await fetch(`/api/reservations/${reservaId}`, {
@@ -702,7 +705,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     e.preventDefault();
     if (saving || !editId) return;
 
-    // Prevent confirming without venue
+    // Skip blocking modal for venue
+    /*
     if (editForm.status === "CONFIRMED" && !editForm.venueName) {
       const row = reservas.find(r => r.id === editId);
       if (row) {
@@ -712,6 +716,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
       }
       return;
     }
+    */
+
 
     setSaving(true);
     try {
@@ -945,22 +951,28 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                     </td>
                     <td style={{ ...S.td, color: "var(--color-admin-muted)" }}>{r.guests}</td>
                     <td style={{ ...S.td, padding: "0.4rem 0.9rem" }} onClick={(e) => e.stopPropagation()}>
-                      <select
-                        value={r.venue?.name ?? ""}
-                        onChange={(e) => void handleVenueChange(r.id, e.target.value)}
-                        style={{
-                          padding: "2px 6px",
-                          borderRadius: "14px",
-                          border: `1px solid ${r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-border)") : "var(--color-admin-border)"}`,
-                          background: r.venue ? (VENUE_COLOR[r.venue.name]?.bg ?? "transparent") : "transparent",
-                          color: r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-muted)") : "var(--color-admin-muted)",
-                          fontSize: "0.72rem", fontWeight: 600, cursor: "pointer", outline: "none",
-                        }}
-                      >
-                        <option value="">— Sin local</option>
-                        <option value="BERTRAND">Bertrand</option>
-                        <option value="URGELL">Urgell</option>
-                      </select>
+                      <div style={{ position: "relative" }}>
+                        <select
+                          value={r.venue?.name ?? ""}
+                          onChange={(e) => void handleVenueChange(r.id, e.target.value)}
+                          style={{
+                            padding: "2px 6px",
+                            borderRadius: "14px",
+                            border: `1px solid ${r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-border)") : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-border)"}`,
+                            background: r.venue ? (VENUE_COLOR[r.venue.name]?.bg ?? "transparent") : r.status === "CONFIRMED" ? "#FFFBEB" : "transparent",
+                            color: r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-muted)") : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-muted)",
+                            fontSize: "0.72rem", fontWeight: 600, cursor: "pointer", outline: "none",
+                          }}
+                        >
+                          <option value="">— Sin local</option>
+                          <option value="BERTRAND">Bertrand</option>
+                          <option value="URGELL">Urgell</option>
+                        </select>
+                        {r.status === "CONFIRMED" && !r.venue && (
+                          <div style={{ position: "absolute", top: "-8px", right: "-4px", background: "#D97706", width: "14px", height: "14px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.6rem", fontWeight: 800, border: "1px solid #fff" }} title="Local pendiente de asignar">!</div>
+                        )}
+                      </div>
+
                     </td>
                     <td style={{ ...S.td, fontWeight: 500 }}>{r.totalAmount.toFixed(0)}€</td>
                     <td style={{ ...S.td, padding: "0.4rem 0.9rem" }}>

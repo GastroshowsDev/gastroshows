@@ -57,10 +57,11 @@ export function FloatingActions() {
   }, []);
 
 
-  const isEditor = pathname?.includes("/editor") && pathname?.startsWith("/admin");
-  const shouldHide = pathname?.startsWith("/admin") && (isHideableAdmin || isEditor);
+  const isAdmin = pathname?.startsWith("/admin");
+  const shouldHide = isAdmin;
 
   if (!visible || shouldHide) return null;
+
 
 
   const hasPromo = config?.wedThuActive || config?.hasCampaign;
