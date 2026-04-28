@@ -193,12 +193,11 @@ export function InlineText({
           cursor: "text",
           borderRadius: "2px",
           padding: "0 4px",
-          border: "1px dashed transparent",
           transition: "background 0.2s, border 0.2s",
-          ...(isEditing && {
-             background: showPlus ? "rgba(135, 91, 247, 0.08)" : "transparent",
-             border: showPlus ? "1px dashed rgba(135, 91, 247, 0.3)" : "1px dashed transparent",
-          }),
+          background: (isEditing && showPlus) ? "rgba(135, 91, 247, 0.08)" : "transparent",
+          border: (isEditing && showPlus) ? "1px dashed rgba(135, 91, 247, 0.3)" : "1px dashed transparent",
+
+
           ...styles, 
           fontWeight: styles.bold ? 700 : (styles.fontWeight || style?.fontWeight),
           fontStyle: styles.italic ? "italic" : (styles.fontStyle || style?.fontStyle),
