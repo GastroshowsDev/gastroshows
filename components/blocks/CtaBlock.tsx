@@ -128,8 +128,11 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                     value={content.titleAccent || ""}
                     onChange={(v) => handleUpdate("titleAccent", v)}
                     isEditing={isEditing}
+                    styles={content}
+                    onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
                     dataField="titleAccent"
                   />
+
                 </em>
               </>
             )}

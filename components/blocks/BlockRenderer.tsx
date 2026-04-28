@@ -14,15 +14,18 @@ import type {
   StepsContent,
 } from "@/lib/blocks/types";
 
-import { HeroBlock } from "./HeroBlock";
-import { TextBlock } from "./TextBlock";
-import { ImageBlock } from "./ImageBlock";
-import { GalleryBlock } from "./GalleryBlock";
-import { SectionBlock } from "./SectionBlock";
-import { CtaBlock } from "./CtaBlock";
-import { SpacerBlock } from "./SpacerBlock";
-import { AvailabilityBlock } from "./AvailabilityBlock";
-import { StepsBlock } from "./StepsBlock";
+import dynamic from "next/dynamic";
+
+const HeroBlock = dynamic(() => import("./HeroBlock").then(mod => mod.HeroBlock));
+const TextBlock = dynamic(() => import("./TextBlock").then(mod => mod.TextBlock));
+const ImageBlock = dynamic(() => import("./ImageBlock").then(mod => mod.ImageBlock));
+const GalleryBlock = dynamic(() => import("./GalleryBlock").then(mod => mod.GalleryBlock));
+const SectionBlock = dynamic(() => import("./SectionBlock").then(mod => mod.SectionBlock));
+const CtaBlock = dynamic(() => import("./CtaBlock").then(mod => mod.CtaBlock));
+const SpacerBlock = dynamic(() => import("./SpacerBlock").then(mod => mod.SpacerBlock));
+const AvailabilityBlock = dynamic(() => import("./AvailabilityBlock").then(mod => mod.AvailabilityBlock));
+const StepsBlock = dynamic(() => import("./StepsBlock").then(mod => mod.StepsBlock));
+
 
 type Props = {
   block: BlockData;

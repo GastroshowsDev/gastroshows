@@ -41,13 +41,21 @@ export function FloatingActions() {
   const [isHideableAdmin, setIsHideableAdmin] = useState(false);
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
-      setIsHideableAdmin(window.innerWidth < 1024);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsHideableAdmin(window.innerWidth < 1024);
+      }, 150);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
+
 
   const isEditor = pathname?.includes("/editor") && pathname?.startsWith("/admin");
   const shouldHide = pathname?.startsWith("/admin") && (isHideableAdmin || isEditor);

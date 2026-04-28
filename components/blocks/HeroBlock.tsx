@@ -105,6 +105,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.eyebrow || ""}
                 onChange={(v) => updateField("eyebrow", v)}
                 isEditing={isEditing}
+                styles={content}
+                onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
                 dataField="eyebrow"
                 placeholder="UBICACIÓN"
                 style={{ 
@@ -138,9 +140,12 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               value={typedTitle}
               onChange={(v) => updateField("title", v)}
               isEditing={isEditing}
+              styles={content}
+              onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
               dataField="title"
               placeholder="Título principal"
             />
+
             {(content.titleAccent || isEditing) && (
               <>
                 <br />
@@ -149,6 +154,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   value={content.titleAccent || ""}
                   onChange={(v) => updateField("titleAccent", v)}
                   isEditing={isEditing}
+                  styles={content}
+                  onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
                   dataField="titleAccent"
                   placeholder="Acento"
                   style={{ 
@@ -181,6 +188,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.subtitle || ""}
                 onChange={(v) => updateField("subtitle", v)}
                 isEditing={isEditing}
+                styles={content}
+                onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
                 dataField="subtitle"
                 placeholder="Subtítulo o descripción corta"
               />
