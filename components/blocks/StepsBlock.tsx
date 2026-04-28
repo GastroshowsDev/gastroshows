@@ -119,7 +119,7 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
       onMouseEnter={handleInteraction}
       style={{
         position: "relative",
-        height: "420px",
+        height: "360px",
         borderRadius: "4px",
         cursor: "pointer",
         transition: `all ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -132,7 +132,7 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
         position: "absolute",
         inset: 0,
         background: "#FFFBF2",
-        padding: "3rem 2.2rem",
+        padding: "2.5rem 2.2rem",
         zIndex: isOpen ? 10 : 1,
         opacity: isOpen ? 1 : 0,
         transform: isOpen ? "scale(1)" : "scale(0.98)",
@@ -144,22 +144,22 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
         flexDirection: "column",
         justifyContent: "center"
       }}>
-        <div style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: color35, marginBottom: "1rem" }}>0{index + 1}</div>
+        <div style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: color35, marginBottom: "0.8rem" }}>0{index + 1}</div>
         
-        <div style={{ marginBottom: "1.5rem" }}>
+        <div style={{ marginBottom: "1rem" }}>
           <span style={{
              display: "inline-block", background: "rgba(200,169,110,0.1)", border: `1px solid rgba(200,169,110,0.2)`, borderRadius: "2px",
-             padding: "0.4rem 1rem", fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: primaryColor,
+             padding: "0.3rem 0.8rem", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: primaryColor,
           }}>{step.day}</span>
         </div>
 
-        <p style={{ fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.6rem" }}>{step.eyebrow}</p>
+        <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.4rem" }}>{step.eyebrow}</p>
 
-        <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.9rem", fontWeight: 400, color: "#111", lineHeight: 1.2, marginBottom: "1.5rem" }}>
+        <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.7rem", fontWeight: 400, color: "#111", lineHeight: 1.2, marginBottom: "1.2rem" }}>
           {step.title}
         </h3>
 
-        <p style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "#444", fontFamily: "var(--font-montserrat), sans-serif" }}>
+        <p style={{ fontSize: "0.98rem", lineHeight: 1.6, color: "#444", fontFamily: "var(--font-montserrat), sans-serif" }}>
           {step.body}
         </p>
 
@@ -183,7 +183,8 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
           left: "50%", 
           transform: "translate(-50%, -50%)",
           fontFamily: "var(--font-cormorant), Georgia, serif",
-          fontSize: "13rem",
+          fontSize: "10rem",
+
           color: primaryColor,
           opacity: 0.15,
           pointerEvents: "none",
