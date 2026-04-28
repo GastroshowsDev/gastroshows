@@ -18,13 +18,14 @@ export async function POST(request: Request) {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { date, name } = await request.json();
+    const { date, name, recurring } = await request.json();
     if (!date) return NextResponse.json({ error: "Missing date" }, { status: 400 });
 
     const holiday = await prisma.holiday.create({
       data: {
         date: new Date(date),
         name: name || null,
+        recurring: !!recurring,
       },
     });
 

@@ -48,6 +48,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [saving, setSaving] = useState(false);
   const [showMedia, setShowMedia] = useState(false);
   const [mediaCallback, setMediaCallback] = useState<((url: string) => void) | null>(null);
+  const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -220,100 +221,98 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#F4F6FA" }}>
-      <aside style={{ width: "280px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column" }}>
-        <div style={{ padding: "1.5rem", borderBottom: "1px solid #EAEEF4" }}>
-          <h2 style={{ fontSize: "1rem", fontWeight: 700, margin: 0 }}>Page Builder</h2>
-          <p style={{ fontSize: "0.75rem", color: "#8B94A8", margin: "0.25rem 0 0" }}>Añade y organiza bloques.</p>
+      <aside style={{ width: "210px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        <div style={{ padding: "1rem", borderBottom: "1px solid #EAEEF4" }}>
+          <h2 style={{ fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>Page Builder</h2>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
-          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>1. Estructura / Layout</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+        <div style={{ flex: 1, overflowY: "auto", padding: "0.8rem" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>1. Layout</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
             {Object.entries(BLOCK_LABELS).filter(([type]) => type === "SECTION" || type === "AVAILABILITY").map(([type, info]) => (
               <button
                 key={type}
                 onClick={() => addBlock(type as BlockType)}
                 style={{
-                  padding: "0.75rem 0.5rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "8px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", cursor: "pointer",
-                  transition: "all 0.2s"
+                  padding: "0.4rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "4px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "pointer",
                 }}
               >
-                <span style={{ fontSize: "1.2rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.65rem", fontWeight: 600 }}>{info.label}</span>
+                <span style={{ fontSize: "0.9rem" }}>{info.icon}</span>
+                <span style={{ fontSize: "0.5rem", fontWeight: 600 }}>{info.label}</span>
               </button>
             ))}
           </div>
 
-          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>2. Elementos (Arrastra a una columna)</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "2rem" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>2. Elementos</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
             {Object.entries(ELEMENT_LABELS).map(([type, info]) => (
               <div
                 key={type}
                 draggable
                 onDragStart={(e) => e.dataTransfer.setData("elementType", type)}
                 style={{
-                  padding: "0.6rem 0.5rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "8px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "grab",
-                  transition: "all 0.2s"
+                  padding: "0.4rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "4px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.1rem", cursor: "grab",
                 }}
               >
-                <span style={{ fontSize: "1rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>{info.label}</span>
+                <span style={{ fontSize: "0.8rem" }}>{info.icon}</span>
+                <span style={{ fontSize: "0.5rem", fontWeight: 600 }}>{info.label}</span>
               </div>
             ))}
           </div>
 
-          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>3. Presets</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "2rem" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>3. Presets</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
             {Object.entries(BLOCK_LABELS).filter(([type]) => type !== "SECTION" && type !== "AVAILABILITY" && type !== "COLUMNS").map(([type, info]) => (
               <button
                 key={type}
                 onClick={() => addBlock(type as BlockType)}
                 style={{
-                  padding: "0.5rem", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "8px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "pointer",
+                  padding: "0.4rem", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "4px",
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.1rem", cursor: "pointer",
                 }}
               >
-                <span style={{ fontSize: "1rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.6rem", fontWeight: 500 }}>{info.label}</span>
+                <span style={{ fontSize: "0.8rem" }}>{info.icon}</span>
+                <span style={{ fontSize: "0.5rem", fontWeight: 500 }}>{info.label}</span>
               </button>
             ))}
           </div>
 
-          <p style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.75rem", letterSpacing: "0.05em" }}>Estructura de la página</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>Estructura</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             {page.blocks.map((block, i) => (
               <div
                 key={block.id}
                 onClick={() => setSelectedBlockId(block.id)}
                 style={{
-                  padding: "0.6rem 0.8rem", borderRadius: "8px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
+                  padding: "0.4rem 0.6rem", borderRadius: "4px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
                   background: selectedBlockId === block.id ? "#F0EBFE" : "white", cursor: "pointer",
-                  display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.8rem"
+                  display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.65rem"
                 }}
               >
-                <span style={{ color: "#9CA3AF" }}>{i + 1}</span>
-                <span style={{ flex: 1, fontWeight: 500 }}>{BLOCK_LABELS[block.type]?.label || `Bloque (${block.type})`}</span>
+                <span style={{ color: "#9CA3AF", fontSize: "0.55rem" }}>{i + 1}</span>
+                <span style={{ flex: 1, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
                 <div style={{ display: "flex", gap: "2px" }}>
-                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={{ border: "none", background: "none", cursor: "pointer" }}>▲</button>
-                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={{ border: "none", background: "none", cursor: "pointer" }}>▼</button>
+                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "0.55rem" }}>▲</button>
+                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "0.55rem" }}>▼</button>
                 </div>
               </div>
             ))}
           </div>
         </div>
         
-        <div style={{ padding: "1rem", borderTop: "1px solid #EAEEF4" }}>
+        <div style={{ padding: "0.8rem", borderTop: "1px solid #EAEEF4" }}>
           <button
             onClick={save}
             disabled={saving}
-            style={{ width: "100%", padding: "0.75rem", background: "#875BF7", color: "white", border: "none", borderRadius: "8px", fontWeight: 600, cursor: "pointer" }}
+            style={{ width: "100%", padding: "0.6rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", fontWeight: 600, cursor: "pointer", fontSize: "0.7rem" }}
           >
-            {saving ? "Guardando..." : "Guardar Página"}
+            {saving ? "..." : "Guardar"}
           </button>
         </div>
       </aside>
+
 
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "1rem 2rem", background: "white", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -324,7 +323,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 setPage({ ...page, title: e.target.value });
                 emitStatus("unsaved");
               }}
-              style={{ fontSize: "1.1rem", fontWeight: 700, border: "none", outline: "none", width: "240px" }}
+              style={{ fontSize: "1.1rem", fontWeight: 700, border: "none", outline: "none", width: "160px" }}
             />
             <span style={{ color: "#9CA3AF" }}>/</span>
             <input
@@ -333,7 +332,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 setPage({ ...page, slug: e.target.value });
                 emitStatus("unsaved");
               }}
-              style={{ fontSize: "0.9rem", color: "#6B7280", border: "none", outline: "none", width: "160px" }}
+              style={{ fontSize: "0.8rem", color: "#6B7280", border: "none", outline: "none", width: "120px" }}
             />
             
             {/* UNDO BUTTON */}
@@ -350,7 +349,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             </button>
           </div>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-             <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer" }}>
+             <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", marginRight: "1rem" }}>
                 <input 
                   type="checkbox" 
                   checked={page.published} 
@@ -361,12 +360,34 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 />
                 Publicada
              </label>
+             <div style={{ display: "flex", background: "#f3f4f6", borderRadius: "6px", padding: "0.2rem", marginRight: "1rem" }}>
+               <button 
+                 onClick={() => setPreviewMode("desktop")}
+                 style={{ padding: "0.3rem 0.6rem", background: previewMode === "desktop" ? "white" : "transparent", boxShadow: previewMode === "desktop" ? "0 1px 2px rgba(0,0,0,0.1)" : "none", border: "none", borderRadius: "4px", fontSize: "0.8rem", cursor: "pointer", color: previewMode === "desktop" ? "black" : "#6b7280" }}
+               >💻 Escritorio</button>
+               <button 
+                 onClick={() => setPreviewMode("mobile")}
+                 style={{ padding: "0.3rem 0.6rem", background: previewMode === "mobile" ? "white" : "transparent", boxShadow: previewMode === "mobile" ? "0 1px 2px rgba(0,0,0,0.1)" : "none", border: "none", borderRadius: "4px", fontSize: "0.8rem", cursor: "pointer", color: previewMode === "mobile" ? "black" : "#6b7280" }}
+               >📱 Móvil</button>
+             </div>
              <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver</a>
           </div>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "var(--gs-bg)" }}>
-          <div style={{ flex: 1, position: "relative" }}>
+        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "var(--gs-bg)", alignItems: "center" }}>
+          <div 
+            className={previewMode === "mobile" ? "gs-mobile-preview" : ""}
+            style={{ 
+              flex: 1, 
+              position: "relative", 
+              width: previewMode === "mobile" ? "414px" : "100%",
+              transition: "width 0.3s ease",
+              margin: "0 auto",
+              backgroundColor: "white",
+              boxShadow: previewMode === "mobile" ? "0 0 20px rgba(0,0,0,0.05)" : "none",
+              minHeight: "100%",
+            }}
+          >
              <div style={{ position: "relative" }}>
                <DndContext
                  sensors={sensors}
@@ -418,12 +439,12 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         </div>
       </main>
 
-      <aside style={{ width: "320px", background: "white", borderLeft: "1px solid #EAEEF4", overflowY: "auto" }}>
+      <aside style={{ width: "210px", background: "white", borderLeft: "1px solid #EAEEF4", overflowY: "auto" }}>
         {selectedBlock ? (
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ padding: "1rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: "0.85rem", fontWeight: 600 }}>Propiedades</span>
-              <button onClick={() => deleteBlock(selectedBlock.id)} style={{ padding: "0.3rem 0.6rem", background: "#FEE2E2", color: "#EF4444", border: "none", borderRadius: "4px", fontSize: "0.7rem", cursor: "pointer" }}>Borrar</button>
+            <div style={{ padding: "0.8rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>Propiedades</span>
+              <button onClick={() => deleteBlock(selectedBlock.id)} style={{ padding: "0.2rem 0.4rem", background: "#FEE2E2", color: "#EF4444", border: "none", borderRadius: "4px", fontSize: "0.6rem", cursor: "pointer" }}>Borrar</button>
             </div>
             <BlockPropertiesPanel
               type={selectedBlock.type}
@@ -452,11 +473,12 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             />
           </div>
         ) : (
-          <div style={{ padding: "4rem 2rem", textAlign: "center", color: "#9CA3AF" }}>
+          <div style={{ padding: "2rem 1rem", textAlign: "center", color: "#9CA3AF", fontSize: "0.7rem" }}>
             Selecciona un bloque para editar.
           </div>
         )}
       </aside>
+
 
       {showMedia && (
         <MediaGallery

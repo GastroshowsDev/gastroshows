@@ -64,11 +64,27 @@ const S = {
 function venueStyle(venueName: string | null) {
   if (venueName === "URGELL") return { letter: "U", bg: "#EDE9FE", color: "#7C3AED" };
   if (venueName === "BERTRAND" || venueName === "SARRIA") return { letter: "B", bg: "#CFFAFE", color: "#0891B2" };
+  if (venueName === "VISIT") return { letter: "V", bg: "#FFFBEB", color: "#B45309" }; // Gold/Amber
   return { letter: "?", bg: "var(--color-admin-bg)", color: "var(--color-admin-muted)" };
 }
 
 function EventChip({ ev }: { ev: CalendarEvent }) {
   const vs = venueStyle(ev.venueName);
+  
+  if (ev.isVisit) {
+    return (
+      <div style={{
+        borderRadius: 5, padding: "3px 7px",
+        fontSize: "0.72rem", fontWeight: 700,
+        display: "inline-flex", alignItems: "center", gap: "2px",
+        background: vs.bg, color: vs.color, whiteSpace: "nowrap",
+        border: `1px solid ${vs.color}40`
+      }} title={`Visita: ${ev.customerName} a las ${ev.shift}`}>
+        📍 {ev.shift}
+      </div>
+    );
+  }
+
   const emoji = ev.shift === "NOON" ? "☀️" : "🌙";
   const isFull = ev.status === "FULL";
   const bg = isFull ? "#FEE2E2" : vs.bg;
@@ -270,6 +286,10 @@ export function CalendarBoard({
         <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
           <div style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-admin-bg)", border: "1px solid var(--color-admin-border)" }} />
           Sin reservas
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#FFFBEB", border: "1px solid #B45309" }} />
+          Visitas
         </div>
       </div>
     </div>

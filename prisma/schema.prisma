@@ -6,6 +6,328 @@ datasource db {
   provider = "postgresql"
 }
 
+model Customer {
+  id            String        @id @default(cuid())
+  name          String
+  phone         String
+  email         String
+  customerType  CustomerType  @default(PARTICULAR)
+  cif           String?
+  billingStreet String?
+  billingZip    String?
+  billingCity   String?
+  allergies     String?
+  previousVisit Boolean       @default(false)
+  newsletter    Boolean       @default(false)
+  source        String?
+  comments      String?
+  createdAt     DateTime      @default(now())
+  giftVouchers  GiftVoucher[] @relation("VoucherPurchaser")
+  reservations  Reservation[]
+
+  @@index([email])
+  @@index([createdAt])
+  @@index([customerType])
+}
+
+model Venue {
+  id             String          @id @default(cuid())
+  name           VenueName       @unique
+  capacity       Int
+  rules          Json
+  emailTemplates EmailTemplate[]
+  events         Event[]
+  reservations   Reservation[]
+}
+
+model Event {
+  id           String        @id @default(cuid())
+  date         DateTime
+  shift        Shift
+  venueId      String?
+  totalGuests  Int           @default(0)
+  status       EventStatus   @default(OPEN)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  venue        Venue?        @relation(fields: [venueId], references: [id])
+  reservations Reservation[]
+
+  @@unique([date, shift])
+  @@index([venueId])
+  @@index([status, date])
+}
+
+model Reservation {
+  id            String            @id @default(cuid())
+  type          ReservationType
+  customerId    String
+  eventId       String?
+  venueId       String?
+  guests        Int
+  totalAmount   Decimal           @db.Decimal(10, 2)
+  paidAmount    Decimal           @default(0) @db.Decimal(10, 2)
+  status        ReservationStatus @default(PENDING)
+  groupRef      String?
+  mergedGroupId String?
+  isFirstVisit  Boolean           @default(true)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  visitDate     DateTime?
+  visitTime     String?
+  emailQueue    EmailQueue[]
+  giftVoucher   GiftVoucher?
+  paymentSplits PaymentSplit[]
+  customer      Customer          @relation(fields: [customerId], references: [id])
+  event         Event?            @relation(fields: [eventId], references: [id], onDelete: Restrict)
+  venue         Venue?            @relation(fields: [venueId], references: [id])
+
+  @@index([eventId, status])
+  @@index([venueId, createdAt])
+  @@index([groupRef])
+  @@index([mergedGroupId])
+  @@index([visitDate])
+}
+
+model GiftVoucher {
+  id                  String       @id @default(cuid())
+  token               String       @unique @default(uuid())
+  purchaserCustomerId String
+  recipientEmail      String?
+  guests              Int
+  totalAmount         Decimal      @db.Decimal(10, 2)
+  expiresAt           DateTime
+  redeemedAt          DateTime?
+  reservationId       String?      @unique
+  createdAt           DateTime     @default(now())
+  emailSent           Boolean      @default(false)
+  sendDate            DateTime?
+  purchaser           Customer     @relation("VoucherPurchaser", fields: [purchaserCustomerId], references: [id])
+  reservation         Reservation? @relation(fields: [reservationId], references: [id])
+
+  @@index([expiresAt])
+  @@index([redeemedAt])
+}
+
+model PaymentSplit {
+  id            String        @id @default(cuid())
+  reservationId String
+  method        PaymentMethod
+  amount        Decimal       @db.Decimal(10, 2)
+  paidAt        DateTime      @default(now())
+  reservation   Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  @@index([reservationId, paidAt])
+}
+
+model EmailQueue {
+  id            String           @id @default(cuid())
+  reservationId String
+  templateKey   String
+  scheduledAt   DateTime
+  sentAt        DateTime?
+  status        EmailQueueStatus @default(PENDING)
+  attempts      Int              @default(0)
+  createdAt     DateTime         @default(now())
+  reservation   Reservation      @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  @@index([status, scheduledAt])
+  @@index([reservationId, status])
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  venueId     String?
+  templateKey String   @unique
+  htmlContent String
+  subject     String
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  venue       Venue?   @relation(fields: [venueId], references: [id])
+
+  @@index([venueId])
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(LIVE)
+  defaultVenue String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  token     String    @unique @default(uuid())
+  email     String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([token])
+  @@index([email])
+}
+
+model Backup {
+  id          String       @id @default(cuid())
+  createdAt   DateTime     @default(now())
+  triggeredBy String
+  status      BackupStatus @default(RUNNING)
+  sizeBytes   Int?
+  rowCount    Int?
+  data        Json?
+  error       String?
+
+  @@index([createdAt])
+}
+
+model SeoSettings {
+  id                     String   @id @default("default")
+  siteTitle              String   @default("GastroShows · Barcelona")
+  metaDescription        String?
+  metaKeywords           String?
+  ogTitle                String?
+  ogDescription          String?
+  ogImage                String?
+  twitterCard            String   @default("summary_large_image")
+  twitterHandle          String?
+  canonicalUrl           String?
+  robots                 String   @default("index, follow")
+  googleSiteVerification String?
+  bingSiteVerification   String?
+  googleAnalyticsId      String?
+  googleTagManagerId     String?
+  metaPixelId            String?
+  tiktokPixelId          String?
+  linkedinPartnerId      String?
+  hotjarId               String?
+  googleAdsId            String?
+  googleAdsLabel         String?
+  customHeadScripts      String?
+  customBodyScripts      String?
+  schemaOrg              String?
+  updatedAt              DateTime @updatedAt
+}
+
+model LandingContent {
+  key       String   @id
+  value     String
+  type      String   @default("TEXT")
+  label     String
+  section   String
+  order     Int      @default(0)
+  updatedAt DateTime @updatedAt
+
+  @@index([section, order])
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  startDate   DateTime
+  endDate     DateTime
+  discountPct Decimal  @db.Decimal(5, 2)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active, startDate, endDate])
+}
+
+model Page {
+  id        String      @id @default(cuid())
+  title     String
+  slug      String      @unique
+  published Boolean     @default(false)
+  seoTitle  String?
+  seoDesc   String?
+  ogImage   String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  blocks    PageBlock[]
+}
+
+model PageBlock {
+  id        String   @id @default(cuid())
+  pageId    String
+  type      String
+  content   Json     @default("{}")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId, order])
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  filename    String
+  url         String
+  storagePath String
+  mimeType    String
+  sizeBytes   Int
+  alt         String   @default("")
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Redirect {
+  id         String   @id @default(cuid())
+  fromPath   String   @unique
+  toPath     String
+  statusCode Int      @default(301)
+  createdAt  DateTime @default(now())
+
+  @@index([fromPath])
+}
+
+model Employee {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  pin       String    @unique
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  timeLogs  TimeLog[]
+
+  @@index([pin])
+}
+
+model TimeLog {
+  id             String    @id @default(cuid())
+  employeeId     String
+  clockIn        DateTime
+  clockOut       DateTime?
+  autoClockedOut Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  employee       Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId, clockIn])
+}
+
+model Holiday {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  name      String?
+  createdAt DateTime @default(now())
+  recurring Boolean  @default(false)
+}
+
+model PromotionConfig {
+  id           String   @id @default("default")
+  wedThuActive Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
+}
+
 enum UserRole {
   ADMIN
   LIVE
@@ -19,6 +341,7 @@ enum Shift {
 enum ReservationType {
   NORMAL
   GIFT
+  VISIT
 }
 
 enum ReservationStatus {
@@ -61,328 +384,3 @@ enum CustomerType {
   PARTICULAR
   EMPRESA
 }
-
-model Customer {
-  id             String        @id @default(cuid())
-  name           String
-  phone          String
-  email          String
-  customerType   CustomerType  @default(PARTICULAR)
-  cif            String?
-  billingStreet  String?
-  billingZip     String?
-  billingCity    String?
-  allergies      String?
-  previousVisit  Boolean       @default(false)
-  newsletter     Boolean       @default(false)
-  source         String?
-  comments       String?
-  createdAt      DateTime      @default(now())
-  reservations   Reservation[]
-  giftVouchers   GiftVoucher[] @relation("VoucherPurchaser")
-
-  @@index([email])
-  @@index([createdAt])
-  @@index([customerType])
-}
-
-model Venue {
-  id             String          @id @default(cuid())
-  name           VenueName       @unique
-  capacity       Int
-  rules          Json
-  reservations   Reservation[]
-  events         Event[]
-  emailTemplates EmailTemplate[]
-}
-
-model Event {
-  id           String        @id @default(cuid())
-  date         DateTime
-  shift        Shift
-  venueId      String?
-  venue        Venue?        @relation(fields: [venueId], references: [id], onDelete: SetNull)
-  totalGuests  Int           @default(0)
-  status       EventStatus   @default(OPEN)
-  reservations Reservation[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-
-  @@unique([date, shift])
-  @@index([venueId])
-  @@index([status, date])
-}
-
-model Reservation {
-  id            String            @id @default(cuid())
-  type          ReservationType
-  customerId    String
-  customer      Customer          @relation(fields: [customerId], references: [id], onDelete: Restrict)
-  eventId       String
-  event         Event             @relation(fields: [eventId], references: [id], onDelete: Restrict)
-  venueId       String?
-  venue         Venue?            @relation(fields: [venueId], references: [id], onDelete: SetNull)
-  guests        Int
-  totalAmount   Decimal           @db.Decimal(10, 2)
-  paidAmount    Decimal           @default(0) @db.Decimal(10, 2)
-  status        ReservationStatus @default(PENDING)
-  groupRef      String?
-  mergedGroupId String?
-  isFirstVisit  Boolean           @default(true)
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  giftVoucher   GiftVoucher?
-  paymentSplits PaymentSplit[]
-  emailQueue    EmailQueue[]
-
-  @@index([eventId, status])
-  @@index([venueId, createdAt])
-  @@index([groupRef])
-  @@index([mergedGroupId])
-}
-
-model GiftVoucher {
-  id                  String       @id @default(cuid())
-  token               String       @unique @default(uuid())
-  purchaserCustomerId String
-  purchaser           Customer     @relation("VoucherPurchaser", fields: [purchaserCustomerId], references: [id], onDelete: Restrict)
-  recipientEmail      String?
-  guests              Int
-  totalAmount         Decimal      @db.Decimal(10, 2)
-  sendDate            DateTime?
-  emailSent           Boolean      @default(false)
-  expiresAt           DateTime
-  redeemedAt          DateTime?
-  reservationId       String?      @unique
-  reservation         Reservation? @relation(fields: [reservationId], references: [id], onDelete: SetNull)
-  createdAt           DateTime     @default(now())
-
-  @@index([expiresAt])
-  @@index([redeemedAt])
-}
-
-model PaymentSplit {
-  id            String        @id @default(cuid())
-  reservationId String
-  reservation   Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
-  method        PaymentMethod
-  amount        Decimal       @db.Decimal(10, 2)
-  paidAt        DateTime      @default(now())
-
-  @@index([reservationId, paidAt])
-}
-
-model EmailQueue {
-  id            String           @id @default(cuid())
-  reservationId String
-  reservation   Reservation      @relation(fields: [reservationId], references: [id], onDelete: Cascade)
-  templateKey   String
-  scheduledAt   DateTime
-  sentAt        DateTime?
-  status        EmailQueueStatus @default(PENDING)
-  attempts      Int              @default(0)
-  createdAt     DateTime         @default(now())
-
-  @@index([status, scheduledAt])
-  @@index([reservationId, status])
-}
-
-model EmailTemplate {
-  id          String    @id @default(cuid())
-  venueId     String?
-  venue       Venue?    @relation(fields: [venueId], references: [id], onDelete: SetNull)
-  templateKey String    @unique
-  htmlContent String
-  subject     String
-  updatedAt   DateTime  @updatedAt
-  createdAt   DateTime  @default(now())
-
-  @@index([venueId])
-}
-
-model User {
-  id             String    @id @default(cuid())
-  name           String
-  email          String    @unique
-  passwordHash   String
-  role           UserRole  @default(LIVE)
-  defaultVenue   String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
-  @@index([email])
-}
-
-model PasswordResetToken {
-  id        String    @id @default(cuid())
-  token     String    @unique @default(uuid())
-  email     String
-  expiresAt DateTime
-  usedAt    DateTime?
-  createdAt DateTime  @default(now())
-
-  @@index([token])
-  @@index([email])
-}
-
-model Backup {
-  id          String       @id @default(cuid())
-  createdAt   DateTime     @default(now())
-  triggeredBy String
-  status      BackupStatus @default(RUNNING)
-  sizeBytes   Int?
-  rowCount    Int?
-  data        Json?
-  error       String?
-
-  @@index([createdAt])
-}
-
-model SeoSettings {
-  id                     String   @id @default("default")
-  // Basic meta
-  siteTitle              String   @default("GastroShows · Barcelona")
-  metaDescription        String?
-  metaKeywords           String?
-  ogTitle                String?
-  ogDescription          String?
-  ogImage                String?
-  twitterCard            String   @default("summary_large_image")
-  twitterHandle          String?
-  canonicalUrl           String?
-  robots                 String   @default("index, follow")
-  // Verification
-  googleSiteVerification String?
-  bingSiteVerification   String?
-  // Analytics
-  googleAnalyticsId      String?
-  googleTagManagerId     String?
-  metaPixelId            String?
-  tiktokPixelId          String?
-  linkedinPartnerId      String?
-  hotjarId               String?
-  // Google Ads
-  googleAdsId            String?
-  googleAdsLabel         String?
-  // Custom code
-  customHeadScripts      String?
-  customBodyScripts      String?
-  // Structured data (JSON-LD)
-  schemaOrg              String?
-  updatedAt              DateTime @updatedAt
-}
-
-model LandingContent {
-  key       String   @id
-  value     String   @db.Text
-  type      String   @default("TEXT") // TEXT | TEXTAREA | IMAGE_URL | URL
-  label     String
-  section   String
-  order     Int      @default(0)
-  updatedAt DateTime @updatedAt
-
-  @@index([section, order])
-}
-
-model Campaign {
-  id          String   @id @default(cuid())
-  name        String
-  startDate   DateTime
-  endDate     DateTime
-  discountPct Decimal  @db.Decimal(5, 2)
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([active, startDate, endDate])
-}
-
-// ── Page Builder ─────────────────────────────────────────────────────────────
-
-model Page {
-  id          String      @id @default(cuid())
-  title       String                           // Display name in admin
-  slug        String      @unique              // URL path: "home", "eventos", "mi-pagina"
-  published   Boolean     @default(false)
-  // SEO
-  seoTitle    String?
-  seoDesc     String?     @db.Text
-  ogImage     String?
-  // Timestamps
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  blocks      PageBlock[]
-}
-
-model PageBlock {
-  id        String   @id @default(cuid())
-  pageId    String
-  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  type      String                             // HERO, TEXT, IMAGE, GALLERY, COLUMNS, CTA, SPACER, AVAILABILITY
-  content   Json     @default("{}")
-  order     Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([pageId, order])
-}
-
-model MediaAsset {
-  id          String   @id @default(cuid())
-  filename    String
-  url         String                            // Public URL from Supabase Storage
-  storagePath String                            // Internal path in bucket
-  mimeType    String
-  sizeBytes   Int
-  alt         String   @default("")
-  createdAt   DateTime @default(now())
-
-  @@index([createdAt])
-}
-
-model Redirect {
-  id          String   @id @default(cuid())
-  fromPath    String   @unique                  // e.g. "/old-page-slug"
-  toPath      String                            // e.g. "/new-page-slug"
-  statusCode  Int      @default(301)            // 301 permanent, 302 temporary
-  createdAt   DateTime @default(now())
-
-  @@index([fromPath])
-}
-
-// ── HR & Holidays ────────────────────────────────────────────────────────────
-
-model Employee {
-  id        String    @id @default(cuid())
-  name      String
-  email     String?
-  phone     String?
-  pin       String    @unique // 4 digits
-  active    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  timeLogs  TimeLog[]
-
-  @@index([pin])
-}
-
-model TimeLog {
-  id             String    @id @default(cuid())
-  employeeId     String
-  employee       Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  clockIn        DateTime
-  clockOut       DateTime?
-  autoClockedOut Boolean   @default(false)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
-  @@index([employeeId, clockIn])
-}
-
-model Holiday {
-  id        String   @id @default(cuid())
-  date      DateTime @unique
-  name      String?
-  createdAt DateTime @default(now())
-}
-

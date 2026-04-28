@@ -39,20 +39,23 @@ async function getCalendarData() {
     venueName: string | null;
     reservationCount: number;
     totalGuests: number;
+    isVisit?: boolean;
+    customerName?: string;
   }>();
 
   for (const r of reservations) {
     const venueName = r.venue?.name ?? null;
-    const key = `${r.event.id}:${venueName ?? "?"}`;
+    const key = `${r.event?.id ?? "no-event"}:${venueName ?? "?"}`;
     if (!grouped.has(key)) {
       grouped.set(key, {
         id: key,
-        date: r.event.date.toISOString(),
-        shift: r.event.shift,
-        status: r.event.status,
+        date: r.event?.date.toISOString() ?? "",
+        shift: r.event?.shift ?? "",
+        status: r.event?.status ?? "",
         venueName,
         reservationCount: 0,
         totalGuests: 0,
+        isVisit: false,
       });
     }
     const g = grouped.get(key)!;
@@ -60,7 +63,33 @@ async function getCalendarData() {
     g.totalGuests += r.guests;
   }
 
-  return [...grouped.values()];
+  const visits = await prisma.reservation.findMany({
+    where: {
+      type: "VISIT",
+      status: { notIn: ["CANCELLED"] },
+      visitDate: { gte: from, lte: to },
+    },
+    select: {
+      id: true,
+      visitDate: true,
+      visitTime: true,
+      customer: { select: { name: true } },
+    },
+  });
+
+  const visitEvents = visits.map(v => ({
+    id: `visit:${v.id}`,
+    date: v.visitDate!.toISOString(),
+    shift: v.visitTime!, // Use visitTime as shift for visits
+    status: "CONFIRMED",
+    venueName: "VISIT",
+    reservationCount: 1,
+    totalGuests: 1,
+    isVisit: true,
+    customerName: v.customer.name,
+  }));
+
+  return [...grouped.values(), ...visitEvents];
 }
 
 export type CalendarEvent = Awaited<ReturnType<typeof getCalendarData>>[number];

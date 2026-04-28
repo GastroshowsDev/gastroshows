@@ -34,24 +34,19 @@ type SuccessData = {
   deposit: number;
 };
 
-/* ─────────────────────────────────── constants ── */
+const GOLD = "var(--gs-gold)";
+const DARK2 = "var(--gs-bg)";
+const OFFWHITE = "var(--gs-text)";
+const LIGHT = "var(--gs-muted)";
 
-const GOLD = "#daa520";
-const DARK2 = "#1A1A1A";
-const OFFWHITE = "#F5F0E8";
-const LIGHT = "#888888";
-const BASE_PRICE = 130;
+
 const DISCOUNT_DAYS = [3, 4]; // Wed, Thu
+const INITIAL_BASE_PRICE = 130;
 
 /* ─────────────────────────────────── helpers ── */
 
-function getPrice(dateStr: string | null): number {
-  if (!dateStr) return BASE_PRICE;
-  const day = new Date(dateStr + "T12:00:00").getDay();
-  return DISCOUNT_DAYS.includes(day) ? Math.round(BASE_PRICE * 0.8) : BASE_PRICE;
-}
-
 function isSaturday(dateStr: string): boolean {
+
   return new Date(dateStr + "T12:00:00").getDay() === 6;
 }
 
@@ -106,7 +101,38 @@ export function ReservationModal({ open, onClose }: Props) {
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
-  const [holidays, setHolidays] = useState<string[]>([]);
+
+  const [basePrice, setBasePrice] = useState(INITIAL_BASE_PRICE);
+  const [wedThuActive, setWedThuActive] = useState(false);
+  const [campaignDiscount, setCampaignDiscount] = useState(0);
+  const [campaignName, setCampaignName] = useState("");
+
+
+  // Sync pricing config
+  useEffect(() => {
+    const storedPrice = localStorage.getItem("baseMenuPrice");
+    if (storedPrice) setBasePrice(parseInt(storedPrice, 10));
+
+    fetch("/api/public/config")
+      .then(res => res.json())
+      .then(data => {
+        if (data.wedThuActive !== undefined) setWedThuActive(data.wedThuActive);
+        if (data.campaignDiscount !== undefined) setCampaignDiscount(data.campaignDiscount);
+        if (data.campaignName) setCampaignName(data.campaignName);
+      })
+      .catch(() => {});
+  }, [open]); // Re-fetch when opened to be fresh
+
+  const getPrice = (dateStr: string | null): number => {
+    if (!dateStr) return basePrice;
+    const day = new Date(dateStr + "T12:00:00").getDay();
+    const wedThuDiscount = (wedThuActive && DISCOUNT_DAYS.includes(day)) ? 20 : 0;
+    const totalDiscount = wedThuDiscount + campaignDiscount;
+    return Math.round(basePrice * (1 - totalDiscount / 100));
+  };
+
+
+  const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
 
   // Fetch holidays
   useEffect(() => {
@@ -291,13 +317,23 @@ export function ReservationModal({ open, onClose }: Props) {
                   holidays={holidays}
                 />
               )}
-              {step === 2 && <Step2 form={form} setForm={setForm} />}
+              {step === 2 && (
+            <Step2 
+              form={form} 
+              setForm={setForm} 
+              getPrice={getPrice} 
+              basePrice={basePrice} 
+              wedThuActive={wedThuActive} 
+            />
+          )}
+
               {step === 3 && (
                 <Step3
                   form={form}
                   setForm={setForm}
                   errors={errors}
                   serverError={serverError}
+                  getPrice={getPrice}
                 />
               )}
             </div>
@@ -369,7 +405,7 @@ function Stepper({ step }: { step: number }) {
                 borderRadius: "50%",
                 border: step >= s.num ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.3)",
                 background: step === s.num ? GOLD : "transparent",
-                color: step === s.num ? "#0A0A0A" : step > s.num ? GOLD : LIGHT,
+                color: step === s.num ? "var(--gs-bg)" : step > s.num ? GOLD : LIGHT,
                 fontSize: "0.72rem",
                 display: "flex",
                 alignItems: "center",
@@ -425,7 +461,7 @@ function Step1({
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   errors: FieldErrors;
   setErrors: React.Dispatch<React.SetStateAction<FieldErrors>>;
-  holidays: string[];
+  holidays: { date: string; recurring: boolean }[];
 }) {
   function handleDateSelect(date: string) {
     if (!isValidDay(date)) {
@@ -541,7 +577,7 @@ function BookingCalendar({
   onChange,
 }: {
   value: string | null;
-  holidays: string[];
+  holidays: { date: string; recurring: boolean }[];
   onChange: (date: string) => void;
 }) {
   const today = new Date();
@@ -582,10 +618,15 @@ function BookingCalendar({
 
   function dayStatus(day: number): "selected" | "available" | "past" | "unavailable" | "holiday" | "private_dinner" {
     const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const monthDay = dateStr.substring(5); // e.g. "12-25"
+    
     if (value === dateStr) return "selected";
     if (isPast(dateStr)) return "past";
     if (isTooFar(dateStr)) return "unavailable";
-    if (holidays.includes(dateStr)) return "holiday";
+    
+    const isHoliday = holidays.some(h => h.date === dateStr || (h.recurring && h.date.endsWith(monthDay)));
+    if (isHoliday) return "holiday";
+    
     if (!isValidDay(dateStr)) return "private_dinner";
     return "available";
   }
@@ -692,13 +733,13 @@ function BookingCalendar({
                     : "1px solid transparent",
                 background: 
                   status === "selected" 
-                    ? GOLD 
+                    ? "var(--gs-gold)" 
                     : status === "available"
                     ? "rgba(255,255,255,0.03)"
                     : "transparent",
                 color:
                   status === "selected"
-                    ? "#0A0A0A"
+                    ? "var(--gs-bg)"
                     : status === "private_dinner"
                     ? "rgba(200,169,110,0.7)"
                     : status === "available"
@@ -755,14 +796,22 @@ function calNavBtnStyle(disabled: boolean): React.CSSProperties {
 function Step2({
   form,
   setForm,
+  getPrice,
+  basePrice,
+  wedThuActive
 }: {
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
+  getPrice: (d: string | null) => number;
+  basePrice: number;
+  wedThuActive: boolean;
 }) {
   const price = getPrice(form.date);
-  const hasDiscount = form.date ? DISCOUNT_DAYS.includes(new Date(form.date + "T12:00:00").getDay()) : false;
+  const day = form.date ? new Date(form.date + "T12:00:00").getDay() : -1;
+  const hasDiscount = wedThuActive && DISCOUNT_DAYS.includes(day);
   const total = price * form.guests;
   const deposit = Math.round(total * 0.3);
+
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
@@ -841,9 +890,10 @@ function Step2({
         <div>
           {hasDiscount && (
             <span style={{ color: LIGHT, textDecoration: "line-through", fontSize: "1.08rem", marginRight: "0.5rem" }}>
-              {BASE_PRICE} €
+              {basePrice} €
             </span>
           )}
+
           <span
             style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -895,11 +945,13 @@ function Step3({
   setForm,
   errors,
   serverError,
+  getPrice,
 }: {
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   errors: FieldErrors;
   serverError: string | null;
+  getPrice: (d: string | null) => number;
 }) {
   const [allergyPickerOpen, setAllergyPickerOpen] = useState(false);
   const price = getPrice(form.date);

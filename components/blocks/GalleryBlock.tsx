@@ -44,9 +44,9 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
           maxWidth: "1100px",
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: `repeat(${cols}, 1fr)`,
-          gap: "0.75rem",
-        }}
+          gridTemplateColumns: `var(--gs-stack, repeat(${cols}, 1fr))`,
+          gap: "var(--gs-gap, 0.75rem)",
+        } as React.CSSProperties}
       >
         {content.images.map((img, i) => (
           <GalleryCell

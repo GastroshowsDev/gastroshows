@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePageActions } from "@/context/PageActionsContext";
 import type { LandingContentMap } from "@/lib/landing-client";
 import { c } from "@/lib/landing-client";
 
@@ -200,36 +201,61 @@ function FeatureCard({ title, body }: { title: string; body: string }) {
   );
 }
 
+const GOLD = "var(--gs-gold)";
+
 // ── CTA button (reusable) ─────────────────────────────────────────────────────
 function CtaButton({ content, small }: { content: LandingContentMap; small?: boolean }) {
+
   const [hovered, setHovered] = useState(false);
+  const { openVisit } = usePageActions();
   const phone = c(content, "ev.cta.whatsapp").replace(/\D/g, "");
   const waUrl = `https://wa.me/${phone}`;
 
   return (
-    <a
-      href={waUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        display: "inline-flex", alignItems: "center", gap: "0.75rem",
-        padding: small ? "0.9rem 2.2rem" : "1.1rem 3rem",
-        background: hovered ? "#E8D5A8" : "#daa520",
-        color: "#0A0A0A",
-        fontFamily: "var(--font-montserrat), sans-serif",
-        fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
-        textDecoration: "none",
-        borderRadius: "2px",
-        transform: hovered ? "translateY(-3px)" : "translateY(0)",
-        boxShadow: hovered ? "0 12px 36px rgba(200,169,110,0.4)" : "none",
-        transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
-      }}
-    >
-      <WhatsAppIcon />
-      {c(content, "ev.cta.button")}
-    </a>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: small ? "flex-start" : "center" }}>
+      <button
+        onClick={openVisit}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: "inline-flex", alignItems: "center", gap: "0.75rem",
+          padding: small ? "0.9rem 2.2rem" : "1.1rem 3rem",
+          background: hovered ? "rgba(200,169,110,0.15)" : "transparent",
+          color: GOLD,
+          border: `1px solid ${GOLD}`,
+          fontFamily: "var(--font-montserrat), sans-serif",
+          fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
+          textDecoration: "none",
+          borderRadius: "2px",
+          transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+          cursor: "pointer",
+        }}
+      >
+        Reserva una visita
+      </button>
+
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "inline-flex", alignItems: "center", gap: "0.75rem",
+          padding: small ? "0.9rem 2.2rem" : "1.1rem 3rem",
+          background: "#daa520",
+          color: "#0A0A0A",
+          fontFamily: "var(--font-montserrat), sans-serif",
+          fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
+          textDecoration: "none",
+          borderRadius: "2px",
+          transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#E8D5A8")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "#daa520")}
+      >
+        <WhatsAppIcon />
+        {c(content, "ev.cta.button")}
+      </a>
+    </div>
   );
 }
 

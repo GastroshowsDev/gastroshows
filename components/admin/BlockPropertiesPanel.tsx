@@ -32,14 +32,15 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
     }
   }
 
-  const labelStyle = { display: "block", fontSize: "0.75rem", fontWeight: 600, color: "#4B5563", marginBottom: "0.4rem" };
-  const inputStyle = { width: "100%", padding: "0.5rem", borderRadius: "6px", border: "1px solid #D1D5DB", fontSize: "0.85rem", marginBottom: "1rem" };
-  const rowStyle = { marginBottom: "1rem" };
+  const labelStyle = { display: "block", fontSize: "0.6rem", fontWeight: 600, color: "#4B5563", marginBottom: "0.3rem" };
+  const inputStyle = { width: "100%", padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem", marginBottom: "0.8rem" };
+  const rowStyle = { marginBottom: "0.8rem" };
+
 
   return (
     <div style={{ padding: "1.5rem" }}>
-      <h3 style={{ fontSize: "0.9rem", fontWeight: 700, color: "#111827", marginBottom: "1.5rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        Propiedades: {element ? `Elemento ${element.type}` : (type as any)}
+      <h3 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#111827", marginBottom: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        Propiedades: {element ? `${element.type}` : (type as any)}
       </h3>
 
       {/* ATOMIC ELEMENT PROPERTIES */}

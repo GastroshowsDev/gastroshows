@@ -5,10 +5,13 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 type PageActionsContextType = {
   openReservation: () => void;
   openGift: () => void;
+  openVisit: () => void;
   closeReservation: () => void;
   closeGift: () => void;
+  closeVisit: () => void;
   reservationOpen: boolean;
   giftOpen: boolean;
+  visitOpen: boolean;
   isActionValid: (action: string) => boolean;
 };
 
@@ -17,27 +20,35 @@ const PageActionsContext = createContext<PageActionsContextType | undefined>(und
 export function PageActionsProvider({ children }: { children: ReactNode }) {
   const [reservationOpen, setReservationOpen] = useState(false);
   const [giftOpen, setGiftOpen] = useState(false);
+  const [visitOpen, setVisitOpen] = useState(false);
 
   const openReservation = () => setReservationOpen(true);
   const openGift = () => setGiftOpen(true);
+  const openVisit = () => setVisitOpen(true);
   const closeReservation = () => setReservationOpen(false);
   const closeGift = () => setGiftOpen(false);
+  const closeVisit = () => setVisitOpen(false);
 
   const isActionValid = (action: string | undefined) => {
     if (!action) return false;
     const normalized = action.toLowerCase().trim().replace("#", "");
-    return ["reservar", "reserbar", "regalar"].includes(normalized) || action.startsWith("/") || action.startsWith("http");
+    const keywords = ["reservar", "reserbar", "regalar", "visita", "eventos"];
+    return keywords.includes(normalized) || action.startsWith("/") || action.startsWith("http") || action.startsWith("#");
   };
+
 
   return (
     <PageActionsContext.Provider 
       value={{ 
         openReservation, 
         openGift, 
+        openVisit,
         closeReservation, 
         closeGift, 
+        closeVisit,
         reservationOpen, 
         giftOpen, 
+        visitOpen,
         isActionValid 
       }}
     >

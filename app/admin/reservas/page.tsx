@@ -34,10 +34,14 @@ async function getReservas() {
       comments: r.customer.comments ?? "",
       previousVisit: r.customer.previousVisit,
     },
-    event: {
+    event: r.event ? {
       id: r.event.id,
       date: r.event.date.toISOString(),
       shift: r.event.shift,
+    } : {
+      id: "visit",
+      date: r.visitDate?.toISOString() ?? "",
+      shift: r.visitTime ?? "VISIT",
     },
     venue: r.venue ? { id: r.venue.id, name: r.venue.name } : null,
   }));

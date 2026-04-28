@@ -24,22 +24,13 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         />
       )}
 
+      {/* Sidebar Hover Zone */}
+      <div className="sidebar-hover-zone" />
+
       {/* Sidebar */}
-      <div style={{
-        position: "fixed" as const,
-        top: 0, left: 0, bottom: 0,
-        zIndex: 50,
-        transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.25s ease",
-        // On desktop: always visible via media query handled below
-      }}
-        className="admin-sidebar-wrapper"
-      >
+      <div className={`admin-sidebar-wrapper ${sidebarOpen ? "is-open" : ""}`}>
         <AdminSidebar onClose={() => setSidebarOpen(false)} />
       </div>
-
-      {/* Desktop sidebar spacer */}
-      <div className="admin-sidebar-spacer" />
 
       {/* Main content */}
       <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
@@ -50,22 +41,28 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       <style>{`
-        @media (min-width: 1024px) {
-          .admin-sidebar-wrapper {
-            position: sticky !important;
-            transform: translateX(0) !important;
-            top: 0;
-            height: 100vh;
-            align-self: flex-start;
-          }
-          .admin-sidebar-spacer {
-            display: none;
-          }
+        .sidebar-hover-zone {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 25px;
+          z-index: 49;
         }
-        @media (max-width: 1023px) {
-          .admin-sidebar-spacer {
-            display: none;
-          }
+        .admin-sidebar-wrapper {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          z-index: 50;
+          transform: translateX(-100%);
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-hover-zone:hover + .admin-sidebar-wrapper,
+        .admin-sidebar-wrapper:hover,
+        .admin-sidebar-wrapper.is-open {
+          transform: translateX(0);
+          box-shadow: 4px 0 20px rgba(0,0,0,0.1);
         }
       `}</style>
     </div>

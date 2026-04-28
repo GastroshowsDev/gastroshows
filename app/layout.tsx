@@ -55,6 +55,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import { Footer } from "@/components/Footer";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -73,9 +75,13 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <SeoBodyScripts />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Footer />
+        </Providers>
         <CookieConsent {...tracking} />
       </body>
     </html>
   );
 }
+

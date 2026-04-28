@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { PageActionsProvider } from "@/context/PageActionsContext";
 import { GlobalModals } from "./GlobalModals";
+import { FloatingActions } from "./FloatingActions";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,8 +13,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {children}
           <GlobalModals />
+          <FloatingActions />
         </ThemeProvider>
       </PageActionsProvider>
     </SessionProvider>
   );
 }
+

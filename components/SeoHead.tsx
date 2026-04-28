@@ -13,26 +13,37 @@ import { getSeoSettings } from "@/lib/seo";
 export async function SeoHead() {
   const s = await getSeoSettings();
 
-  const parts: string[] = [];
-
-  // JSON-LD structured data (no consent required)
-  if (s.schemaOrg?.trim()) {
-    parts.push(`<script type="application/ld+json">${s.schemaOrg}</script>`);
-  }
-
-  // Custom head scripts — user's responsibility re: consent
-  if (s.customHeadScripts?.trim()) {
-    parts.push(s.customHeadScripts.trim());
-  }
-
-  if (parts.length === 0) return null;
-
   return (
     <>
-      {parts.map((html, i) => (
-        // eslint-disable-next-line react/no-danger
-        <div key={i} dangerouslySetInnerHTML={{ __html: html }} />
-      ))}
+      {s.schemaOrg?.trim() && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: s.schemaOrg }}
+        />
+      )}
+      {s.customHeadScripts?.trim() && (
+        <script
+          id="custom-head-scripts"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const div = document.createElement('div');
+                div.innerHTML = \`${s.customHeadScripts.replace(/`/g, '\\`').replace(/\${/g, '\\${')}\`;
+                while (div.firstChild) {
+                  if (div.firstChild.tagName === 'SCRIPT') {
+                    const s = document.createElement('script');
+                    Array.from(div.firstChild.attributes).forEach(a => s.setAttribute(a.name, a.value));
+                    s.appendChild(document.createTextNode(div.firstChild.innerHTML));
+                    document.head.appendChild(s);
+                  } else {
+                    document.head.appendChild(div.firstChild);
+                  }
+                }
+              })();
+            `
+          }}
+        />
+      )}
     </>
   );
 }
@@ -63,7 +74,26 @@ export async function SeoBodyScripts() {
   if (!s.customBodyScripts?.trim()) return null;
 
   return (
-    // eslint-disable-next-line react/no-danger
-    <div dangerouslySetInnerHTML={{ __html: s.customBodyScripts.trim() }} />
+    <script
+      id="custom-body-scripts"
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function() {
+            const div = document.createElement('div');
+            div.innerHTML = \`${s.customBodyScripts.trim().replace(/`/g, '\\`').replace(/\${/g, '\\${')}\`;
+            while (div.firstChild) {
+              if (div.firstChild.tagName === 'SCRIPT') {
+                const s = document.createElement('script');
+                Array.from(div.firstChild.attributes).forEach(a => s.setAttribute(a.name, a.value));
+                s.appendChild(document.createTextNode(div.firstChild.innerHTML));
+                document.body.appendChild(s);
+              } else {
+                document.body.appendChild(div.firstChild);
+              }
+            }
+          })();
+        `
+      }}
+    />
   );
 }

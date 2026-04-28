@@ -2,6 +2,7 @@
 
 import { usePageActions } from "@/context/PageActionsContext";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   href?: string;
@@ -14,8 +15,9 @@ type Props = {
 };
 
 export function SmartLink({ href, children, className, style, onMouseEnter, onMouseLeave, isEditing }: Props) {
-  const { openReservation, openGift, isActionValid } = usePageActions();
+  const { openReservation, openGift, openVisit, isActionValid } = usePageActions();
   const [showWarning, setShowWarning] = useState(false);
+  const router = useRouter();
 
   const handleClick = (e: React.MouseEvent) => {
     const normalizedHref = href?.toLowerCase().trim().replace("#", "");
@@ -31,6 +33,18 @@ export function SmartLink({ href, children, className, style, onMouseEnter, onMo
       openGift();
       return;
     }
+    if (normalizedHref === "visita") {
+      e.preventDefault();
+      openVisit();
+      return;
+    }
+    if (normalizedHref === "eventos") {
+      e.preventDefault();
+      router.push("/eventos");
+      return;
+    }
+
+
 
     if (isEditing) {
       e.preventDefault();
@@ -40,12 +54,13 @@ export function SmartLink({ href, children, className, style, onMouseEnter, onMo
 
   // Integrity Check: Show a visual warning in editing mode if the link is suspicious
   const normalizedAction = href?.toLowerCase().trim().replace("#", "");
-  const isActionKeyword = normalizedAction === "reservar" || normalizedAction === "reserbar" || normalizedAction === "regalar";
+  const isActionKeyword = ["reservar", "reserbar", "regalar", "visita"].includes(normalizedAction || "");
   const isValid = !href || isActionKeyword || isActionValid(href);
 
   return (
     <a
-      href={isEditing ? undefined : (href || "#")}
+      href={isEditing ? undefined : (normalizedAction === "eventos" ? "/eventos" : (href || "#"))}
+
       onClick={handleClick}
       onMouseEnter={() => {
         onMouseEnter?.();

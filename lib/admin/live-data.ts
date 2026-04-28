@@ -52,12 +52,13 @@ export function toLiveReservationRow(row: ReservationLivePayload): LiveReservati
     updatedAt: row.updatedAt.toISOString(),
     createdAt: row.createdAt.toISOString(),
     customer: row.customer,
-    event: {
+    event: row.event ? {
       id: row.event.id,
       date: row.event.date.toISOString(),
       shift: row.event.shift,
-    },
+    } : null,
     venue: row.venue ? { id: row.venue.id, name: row.venue.name } : null,
+
   };
 }
 

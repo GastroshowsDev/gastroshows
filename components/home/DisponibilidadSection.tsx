@@ -100,7 +100,7 @@ export function DisponibilidadSection({
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
-          <div>
+          <div style={{ flex: "1 1 300px" }}>
             <p style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "0.75rem" }}>
               {subtitle || "Disponibilidad"}
             </p>
@@ -178,12 +178,14 @@ export function DisponibilidadSection({
 
         {/* Day grid */}
         {!loading && data && (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
-            gap: "1rem",
-            marginBottom: "3rem",
-          }}>
+          <div 
+            style={{
+              display: "grid",
+              gridTemplateColumns: "var(--gs-stack, repeat(auto-fit, minmax(190px, 1fr)))",
+              gap: "var(--gs-gap, 1rem)",
+              marginBottom: "3rem",
+            } as any}
+          >
             {data.days.map((day) => (
               <DayCard key={day.date} day={day} />
             ))}

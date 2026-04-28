@@ -53,8 +53,8 @@ export async function PATCH(req: Request, { params }: RouteContext) {
 
     // Update event date/shift if changed
     if (body.date || body.shift) {
-      const newDate = body.date ? new Date(body.date) : reservation.event.date;
-      const newShift = body.shift ?? reservation.event.shift;
+      const newDate = body.date ? new Date(body.date) : (reservation.event?.date ?? new Date());
+      const newShift = body.shift ?? (reservation.event?.shift ?? "NIGHT");
       const event = await prisma.event.upsert({
         where: { date_shift: { date: newDate, shift: newShift } },
         update: {},
@@ -82,7 +82,7 @@ export async function PATCH(req: Request, { params }: RouteContext) {
 
     // Sync with Mailrelay if confirmed
     if (updated.status === "CONFIRMED") {
-      const eventDate = updated.event.date.toISOString().split("T")[0];
+      const eventDate = updated.event?.date.toISOString().split("T")[0] ?? "";
       const venueMap: Record<string, string> = {
         BERTRAND: "Sarrià-Sant Gervasi",
         URGELL: "Eixample",

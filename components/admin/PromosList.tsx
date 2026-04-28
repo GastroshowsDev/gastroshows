@@ -57,8 +57,16 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
-export function PromosList({ campaigns }: { campaigns: CampaignRow[] }) {
+export function PromosList({ 
+  campaigns, 
+  initialConfig 
+}: { 
+  campaigns: CampaignRow[]; 
+  initialConfig: { wedThuActive: boolean };
+}) {
   const [localCampaigns, setLocalCampaigns] = useState(campaigns);
+  const [wedThuActive, setWedThuActive] = useState(initialConfig.wedThuActive);
+
   const [showNew, setShowNew] = useState(false);
   const [newName, setNewName] = useState("");
   const [newDiscount, setNewDiscount] = useState("");
@@ -127,6 +135,15 @@ export function PromosList({ campaigns }: { campaigns: CampaignRow[] }) {
     setSaving(false);
   }
 
+  async function toggleWedThu(active: boolean) {
+    setWedThuActive(active);
+    await fetch("/api/admin/config/promos", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wedThuActive: active }),
+    });
+  }
+
   async function deleteCampaign(id: string) {
     if (!confirm("¿Eliminar esta promoción?")) return;
     await fetch(`/api/admin/campaigns/${id}`, { method: "DELETE" });
@@ -137,11 +154,9 @@ export function PromosList({ campaigns }: { campaigns: CampaignRow[] }) {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", padding: "1.5rem" }}>
-      {/* ── Base price ── */}
-      <div style={{ marginBottom: "1.5rem" }}>
-        <h2 style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--color-admin-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.75rem" }}>
-          Precio base
-        </h2>
+      {/* ── Base price & Special Promos ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+        {/* Price */}
         <div style={{
           background: "var(--color-admin-surface)",
           border: "1px solid var(--color-admin-border)",
@@ -154,7 +169,7 @@ export function PromosList({ campaigns }: { campaigns: CampaignRow[] }) {
           <div style={{ flex: 1 }}>
             <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--color-admin-text)" }}>Menú degustación</div>
             <div style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.2rem", lineHeight: 1.5 }}>
-              Precio por persona · Experiencia gastronómica completa
+              Precio base por persona
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
@@ -168,30 +183,48 @@ export function PromosList({ campaigns }: { campaigns: CampaignRow[] }) {
                   onKeyDown={(e) => { if (e.key === "Enter") commitPrice(); if (e.key === "Escape") { setPriceInput(String(basePrice)); setEditingPrice(false); } }}
                   autoFocus
                   style={{
-                    fontFamily: "DM Mono, monospace", fontSize: "1.5rem", fontWeight: 500,
-                    width: "90px", textAlign: "right",
+                    fontFamily: "DM Mono, monospace", fontSize: "1.2rem", fontWeight: 500,
+                    width: "70px", textAlign: "right",
                     border: "1px solid var(--color-admin-accent)", borderRadius: 6,
                     padding: "0.1rem 0.4rem", outline: "none",
                     color: "var(--color-admin-text)", background: "var(--color-admin-bg)",
                   }}
                 />
-                <span style={{ fontFamily: "DM Mono, monospace", fontSize: "1.8rem", fontWeight: 500, color: "var(--color-admin-text)" }}>€</span>
-                <button onClick={commitPrice} style={{ padding: "0.25rem 0.6rem", borderRadius: 6, background: "var(--color-admin-accent)", color: "#fff", border: "none", fontSize: "0.78rem", fontWeight: 600, cursor: "pointer" }}>✓</button>
-                <button onClick={() => { setPriceInput(String(basePrice)); setEditingPrice(false); }} style={{ padding: "0.25rem 0.6rem", borderRadius: 6, background: "var(--color-admin-border)", color: "var(--color-admin-muted)", border: "none", fontSize: "0.78rem", cursor: "pointer" }}>✕</button>
+                <button onClick={commitPrice} style={{ padding: "0.25rem 0.4rem", borderRadius: 6, background: "var(--color-admin-accent)", color: "#fff", border: "none", fontSize: "0.7rem", cursor: "pointer" }}>✓</button>
               </div>
             ) : (
               <button
                 onClick={() => setEditingPrice(true)}
-                title="Editar precio"
                 style={{ display: "flex", alignItems: "baseline", gap: "0.1rem", background: "none", border: "none", cursor: "pointer", padding: "0.2rem 0.4rem", borderRadius: 6 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-admin-bg)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
               >
-                <span style={{ fontFamily: "DM Mono, monospace", fontSize: "1.8rem", fontWeight: 500, color: "var(--color-admin-text)" }}>{basePrice}€</span>
-                <span style={{ fontSize: "0.7rem", color: "var(--color-admin-muted)", marginLeft: 4 }}>✎</span>
+                <span style={{ fontFamily: "DM Mono, monospace", fontSize: "1.2rem", fontWeight: 500, color: "var(--color-admin-text)" }}>{basePrice}€</span>
               </button>
             )}
           </div>
+        </div>
+
+        {/* Wed/Thu Toggle */}
+        <div style={{
+          background: "var(--color-admin-surface)",
+          border: `1px solid ${wedThuActive ? "var(--color-admin-accent)" : "var(--color-admin-border)"}`,
+          borderRadius: 12, padding: "1.25rem",
+          display: "flex", alignItems: "flex-start", gap: "1rem",
+          transition: "all 0.2s",
+        }}>
+          <div style={{ 
+            width: 42, height: 42, borderRadius: 10, 
+            background: wedThuActive ? "var(--color-admin-accent-light)" : "var(--color-admin-bg)", 
+            display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3rem", flexShrink: 0 
+          }}>
+            🗓️
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--color-admin-text)" }}>Promo Mie/Jue (20% dto)</div>
+            <div style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.2rem", lineHeight: 1.5 }}>
+              Activa el descuento fijo de los miércoles y jueves
+            </div>
+          </div>
+          <Toggle on={wedThuActive} onChange={toggleWedThu} />
         </div>
       </div>
 

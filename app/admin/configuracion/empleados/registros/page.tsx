@@ -1,35 +1,54 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { TimeLogFilters } from "./TimeLogFilters";
 
 export const dynamic = "force-dynamic";
 
 export default async function TimeLogsPage({
   searchParams,
 }: {
-  searchParams: { month?: string };
+  searchParams: { period?: string; date?: string; employeeId?: string };
 }) {
-  const today = new Date();
-  const currentMonthStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
-  const monthFilter = searchParams.month || currentMonthStr;
+  const period = (searchParams.period as "day" | "week" | "month") || "month";
+  const dateParam = searchParams.date || new Date().toISOString().split("T")[0];
+  const employeeId = searchParams.employeeId || "all";
 
-  const [year, month] = monthFilter.split("-").map(Number);
-  
-  // Date boundaries
-  const startOfMonth = new Date(year, month - 1, 1);
-  const endOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
+  const referenceDate = new Date(dateParam);
+  let start: Date;
+  let end: Date;
+
+  if (period === "day") {
+    start = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate(), 0, 0, 0);
+    end = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate(), 23, 59, 59, 999);
+  } else if (period === "week") {
+    // get start of week (Monday)
+    const day = referenceDate.getDay() || 7; // 1-7
+    referenceDate.setDate(referenceDate.getDate() - day + 1);
+    start = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate(), 0, 0, 0);
+    end = new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000);
+    end.setHours(23, 59, 59, 999);
+  } else {
+    // month
+    start = new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 1);
+    end = new Date(referenceDate.getFullYear(), referenceDate.getMonth() + 1, 0, 23, 59, 59, 999);
+  }
+
+  const where: any = {
+    clockIn: { gte: start, lte: end }
+  };
+  if (employeeId !== "all") {
+    where.employeeId = employeeId;
+  }
 
   const logs = await prisma.timeLog.findMany({
-    where: {
-      clockIn: {
-        gte: startOfMonth,
-        lte: endOfMonth,
-      },
-    },
+    where,
     include: {
       employee: { select: { name: true, pin: true } },
     },
     orderBy: { clockIn: "desc" },
   });
+
+  const employeesList = await prisma.employee.findMany({ select: { id: true, name: true } });
 
   // Calculate total hours per employee
   const employeeStats: Record<string, { name: string; totalMinutes: number }> = {};
@@ -70,8 +89,17 @@ export default async function TimeLogsPage({
         </Link>
       </div>
 
+      <TimeLogFilters 
+        employees={employeesList}
+        defaultPeriod={period}
+        defaultDate={dateParam}
+        defaultEmployeeId={employeeId}
+      />
+
       <div style={{ background: "var(--color-admin-surface)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-admin-border)", marginBottom: "2rem" }}>
-        <h2 style={{ fontSize: "1rem", marginBottom: "1rem", color: "var(--color-admin-text)" }}>Resumen del mes ({monthFilter})</h2>
+        <h2 style={{ fontSize: "1rem", marginBottom: "1rem", color: "var(--color-admin-text)" }}>
+          Resumen {period === "day" ? "del día" : period === "week" ? "de la semana" : "del mes"}
+        </h2>
         {Object.keys(employeeStats).length === 0 ? (
           <p style={{ color: "var(--color-admin-muted)", fontSize: "0.9rem" }}>No hay registros completados este mes.</p>
         ) : (

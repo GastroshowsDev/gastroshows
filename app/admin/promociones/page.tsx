@@ -18,10 +18,28 @@ async function getCampaigns() {
   }));
 }
 
+async function getPromotionConfig() {
+  let config = await prisma.promotionConfig.findUnique({
+    where: { id: "default" },
+  });
+  if (!config) {
+    config = await prisma.promotionConfig.create({
+      data: { id: "default", wedThuActive: false },
+    });
+  }
+  return {
+    wedThuActive: config.wedThuActive,
+  };
+}
+
 export type CampaignRow = Awaited<ReturnType<typeof getCampaigns>>[number];
 
 export default async function PromocionesPage() {
-  const campaigns = await getCampaigns();
+  const [campaigns, promoConfig] = await Promise.all([
+    getCampaigns(),
+    getPromotionConfig(),
+  ]);
+
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--color-admin-bg)" }}>
@@ -42,7 +60,7 @@ export default async function PromocionesPage() {
         </div>
       </div>
 
-      <PromosList campaigns={campaigns} />
+      <PromosList campaigns={campaigns} initialConfig={promoConfig} />
     </div>
   );
 }

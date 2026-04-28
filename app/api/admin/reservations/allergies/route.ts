@@ -52,8 +52,9 @@ export async function GET(request: Request) {
         status: r.status,
         allergies: r.customer.allergies?.trim() || null,
         comments: r.customer.comments?.trim() || null,
-        eventDate: r.event.date.toISOString(),
-        shift: r.event.shift,
+        eventDate: r.event?.date.toISOString() ?? "",
+        shift: r.event?.shift ?? "",
+
         venueName: r.venue?.name ?? null,
       }));
 

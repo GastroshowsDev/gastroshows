@@ -72,12 +72,15 @@ export function calculateTotalAmountWithDiscounts(
   guests: number,
   targetDate: Date,
   campaignPct: number,
+  wedThuActive: boolean = false,
 ): number {
+
   const dateBarcelona = toZonedTime(targetDate, BARCELONA_TZ);
   const weekday = getDay(dateBarcelona);
   const baseTotal = guests * BASE_PRICE_PER_GUEST;
 
-  const dynamicDiscount = (weekday === 3 || weekday === 4 ? WED_THU_DISCOUNT_PCT : 0) + campaignPct;
+  const dynamicDiscount = (wedThuActive && (weekday === 3 || weekday === 4) ? WED_THU_DISCOUNT_PCT : 0) + campaignPct;
+
   const finalTotal = baseTotal * (1 - dynamicDiscount / 100);
   return Number(finalTotal.toFixed(2));
 }

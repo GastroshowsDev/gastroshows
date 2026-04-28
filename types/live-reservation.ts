@@ -8,6 +8,7 @@ export type LiveReservationRow = {
   updatedAt: string;
   createdAt: string;
   customer: { id: string; name: string; phone: string; email: string };
-  event: { id: string; date: string; shift: string };
+  event: { id: string; date: string; shift: string } | null;
+
   venue: { id: string; name: string } | null;
 };

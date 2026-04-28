@@ -136,13 +136,15 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         backgroundSize: styles.backgroundSize || "cover",
         position: "relative"
       }}>
-        <div style={{
-          maxWidth: content.fullWidth ? "100%" : "1200px",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: `repeat(${content.columns.length}, 1fr)`,
-          gap: "2rem"
-        }}>
+        <div 
+          style={{
+            maxWidth: content.fullWidth ? "100%" : "1200px",
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: `var(--gs-stack, repeat(${content.columns.length}, 1fr))`,
+            gap: "var(--gs-gap, 2rem)"
+          } as React.CSSProperties}
+        >
           {content.columns.map((col, colIdx) => (
             <div
               key={colIdx}

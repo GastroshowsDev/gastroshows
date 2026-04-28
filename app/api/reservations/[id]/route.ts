@@ -84,7 +84,7 @@ export async function PATCH(request: Request, context: RouteContext) {
 
   // Sync with Mailrelay if confirmed
   if (reservation.status === "CONFIRMED") {
-    const eventDate = reservation.event.date.toISOString().split("T")[0];
+    const eventDate = reservation.event?.date.toISOString().split("T")[0] ?? "";
     const venueMap: Record<string, string> = {
       BERTRAND: "Sarrià-Sant Gervasi",
       URGELL: "Eixample",
@@ -117,10 +117,12 @@ export async function DELETE(_: Request, context: RouteContext) {
 
   await prisma.$transaction(async (tx) => {
     await tx.reservation.delete({ where: { id: maybeParams.data.id } });
-    await tx.event.update({
-      where: { id: existing.eventId },
-      data: { totalGuests: { decrement: existing.guests } },
-    });
+    if (existing.eventId) {
+      await tx.event.update({
+        where: { id: existing.eventId },
+        data: { totalGuests: { decrement: existing.guests } },
+      });
+    }
   });
 
   return NextResponse.json({ ok: true });

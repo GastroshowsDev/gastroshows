@@ -99,9 +99,9 @@ async function getDashboardStats() {
       email: r.customer.email,
     },
     event: {
-      id: r.event.id,
-      date: r.event.date.toISOString(),
-      shift: r.event.shift,
+      id: r.event?.id ?? "",
+      date: r.event?.date.toISOString() ?? "",
+      shift: r.event?.shift ?? "",
     },
     venue: r.venue
       ? {
@@ -380,13 +380,9 @@ export default async function AdminDashboard() {
                   recentReservations.map((r, i) => {
                     const statusColor = STATUS_COLOR[r.status] ?? "#94A3B8";
                     const statusLabel = STATUS_LABEL[r.status] ?? r.status;
-                    const eventDate = new Date(r.event.date).toLocaleDateString(
-                      "es-ES",
-                      {
-                        day: "numeric",
-                        month: "short",
-                      }
-                    );
+                    const eventDate = r.event 
+                      ? new Date(r.event.date).toLocaleDateString("es-ES", { day: "numeric", month: "short" })
+                      : "—";
 
                     return (
                       <tr

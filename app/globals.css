@@ -110,8 +110,35 @@ body {
   font-weight: 300;
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.8s ease, color 0.8s ease;
 }
+
+/* ── Image blur in Clandestino (dark) mode ── */
+/* We target content images, avoiding logos or small icons if possible, 
+   but the request is general: "las imágenes apenas se identifiquen" */
+:root.dark img:not(.no-blur) {
+  filter: blur(35px) grayscale(0.5) brightness(0.7);
+  opacity: 0.6;
+  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+}
+
+:root.light img {
+  filter: blur(0) grayscale(0) brightness(1.25) contrast(1.1);
+  opacity: 1;
+  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+}
+
+/* ── UX Readability enhancement for light mode ── */
+:root.light h1, 
+:root.light h2, 
+:root.light h3,
+:root.light p {
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+  letter-spacing: -0.01em; /* Tighter letter spacing for better definition in light backgrounds */
+}
+
+
+
 
 /* Noise texture overlay */
 body::before {
@@ -168,3 +195,18 @@ body::before {
   animation: letterReveal 0.7s 0.55s both, textShimmer 5s 1.8s linear infinite !important;
   background-size: 300% auto !important;
 }
+
+/* ── Page Builder Responsive Grid ── */
+/* This variable approach allows blocks to keep their custom desktop grids while forcing 1col on mobile */
+@media (max-width: 768px) {
+  :root {
+    --gs-stack: 1fr !important;
+    --gs-gap: 1.5rem !important;
+  }
+}
+
+.gs-mobile-preview {
+  --gs-stack: 1fr !important;
+  --gs-gap: 1.5rem !important;
+}
+

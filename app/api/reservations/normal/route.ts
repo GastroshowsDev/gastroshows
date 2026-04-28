@@ -27,17 +27,22 @@ export async function POST(request: Request) {
   }
 
   const now = new Date();
-  const activeCampaign = await prisma.campaign.findFirst({
-    where: {
-      active: true,
-      startDate: { lte: now },
-      endDate: { gte: now },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const [activeCampaign, promoConfig] = await Promise.all([
+    prisma.campaign.findFirst({
+      where: {
+        active: true,
+        startDate: { lte: now },
+        endDate: { gte: now },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.promotionConfig.findUnique({ where: { id: "default" } }),
+  ]);
 
   const campaignPct = activeCampaign ? Number(activeCampaign.discountPct) : 0;
-  const totalAmount = calculateTotalAmountWithDiscounts(parsed.data.guests, serviceDate, campaignPct);
+  const wedThuActive = promoConfig?.wedThuActive ?? false;
+  const totalAmount = calculateTotalAmountWithDiscounts(parsed.data.guests, serviceDate, campaignPct, wedThuActive);
+
   const amountDue = amountDueNow30Pct(totalAmount);
 
   const created = await prisma.$transaction(async (tx) => {
