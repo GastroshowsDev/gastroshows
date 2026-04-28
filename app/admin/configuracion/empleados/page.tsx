@@ -22,6 +22,24 @@ export default async function EmpleadosPage() {
         </div>
         <div style={{ display: "flex", gap: "1rem" }}>
           <Link
+            href="/fichaje"
+            target="_blank"
+            style={{
+              padding: "0.5rem 1rem",
+              background: "var(--color-admin-accent)",
+              color: "#0A0A0A",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontSize: "0.85rem",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+            }}
+          >
+            <span>🔗</span> Abrir Fichaje Público
+          </Link>
+          <Link
             href="/admin/configuracion/empleados/registros"
             style={{
               padding: "0.5rem 1rem",
