@@ -133,6 +133,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 </div>
               </div>
             </>
+          )}
 
 
           <div style={rowStyle}>
