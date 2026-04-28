@@ -69,21 +69,22 @@ export function FloatingActions() {
         <div 
           onClick={openReservation}
           style={{
-            background: "#fff", color: "#1A1A1A", padding: "0.8rem 1.2rem",
-            borderRadius: "18px 18px 4px 18px", fontSize: "0.82rem", fontWeight: 500,
+            background: "#daa520", color: "#000", padding: "0.8rem 1.2rem",
+            borderRadius: "18px 18px 4px 18px", fontSize: "0.82rem", fontWeight: 600,
             boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: "240px", cursor: "pointer",
             animation: "waPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both",
-            position: "relative", border: "1px solid rgba(0,0,0,0.05)",
+            position: "relative", border: "1px solid #C8A96E",
           }}
         >
           <p style={{ margin: 0, lineHeight: 1.4 }}>
-            ¡Hola! Tenemos una <strong style={{ color: "#daa520" }}>oferta especial</strong> disponible. ✨
+            ¡Hola! Tenemos una <strong style={{ textDecoration: "underline" }}>oferta especial</strong> disponible. ✨
           </p>
-          <div style={{ position: "absolute", bottom: "4px", right: "8px", fontSize: "0.6rem", color: "#999", display: "flex", alignItems: "center", gap: "2px" }}>
-            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} <span style={{ color: "#daa520" }}>✓✓</span>
+          <div style={{ position: "absolute", bottom: "4px", right: "8px", fontSize: "0.6rem", color: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", gap: "2px" }}>
+            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} <span>✓✓</span>
           </div>
         </div>
       )}
+
 
       {/* Horizontal Pill Container */}
       <div style={{ 

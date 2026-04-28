@@ -5,6 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { PageActionsProvider } from "@/context/PageActionsContext";
 import { GlobalModals } from "./GlobalModals";
 import { FloatingActions } from "./FloatingActions";
+import { PageTransition } from "./PageTransition";
+import { Suspense } from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +16,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
           {children}
           <GlobalModals />
           <FloatingActions />
+          <Suspense fallback={null}>
+            <PageTransition />
+          </Suspense>
         </ThemeProvider>
       </PageActionsProvider>
     </SessionProvider>
   );
 }
+
 

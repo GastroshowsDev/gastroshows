@@ -2,10 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export function Footer() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/admin")) return null;
+  const [isHideableAdmin, setIsHideableAdmin] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsHideableAdmin(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isEditor = pathname?.includes("/editor") && pathname?.startsWith("/admin");
+  const shouldHide = pathname?.startsWith("/admin") && (isHideableAdmin || isEditor);
+
+  if (shouldHide) return null;
+
+
 
   const currentYear = new Date().getFullYear();
 
