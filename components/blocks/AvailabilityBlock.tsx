@@ -40,7 +40,9 @@ export function AvailabilityBlock({ content, isEditing = false, onUpdate }: Prop
           placeholder="SUBTÍTULO"
         />
       ) : content.subtitle}
-      onReservar={openReservation} 
+      buttonText={content.buttonText}
+      buttonColor={content.buttonColor}
+      onReservar={isEditing ? undefined : openReservation} 
     />
   );
 }

@@ -200,6 +200,8 @@ type ReservaForm = {
   guests: number; type: "NORMAL" | "GIFT";
   pricePerPax: number; paidAmount: number;
   status: StatusKey;
+  groupRef?: string | null;
+  mergedGroupId?: string | null;
 };
 
 const FORM_DEFAULT: ReservaForm = {
@@ -515,6 +517,13 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   const [modalReserva, setModalReserva] = useState<ReservaRow | null>(null);
   const [modalPendingStatus, setModalPendingStatus] = useState<StatusKey | null>(null);
 
+  // Modal for group view
+  const [groupViewId, setGroupViewId] = useState<string | null>(null);
+  const groupReservations = useMemo(() => {
+    if (!groupViewId) return [];
+    return reservas.filter(r => r.mergedGroupId === groupViewId);
+  }, [groupViewId, reservas]);
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -741,6 +750,31 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     }
   }
 
+  // ── Merge ───────────────────────────────────────────────────────────────────
+  const [merging, setMerging] = useState(false);
+  async function handleMerge() {
+    if (selectedIds.size < 2 || merging) return;
+    setMerging(true);
+    try {
+      const res = await fetch("/api/admin/reservations/merge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reservationIds: Array.from(selectedIds) }),
+      });
+      const json = await res.json();
+      if (json.ok && json.mergedGroupId) {
+        setReservas(rs => rs.map(r => selectedIds.has(r.id) ? { ...r, mergedGroupId: json.mergedGroupId } : r));
+        setSelectedIds(new Set());
+      } else {
+        alert("Error al fusionar reservas: " + (json.error || "Desconocido"));
+      }
+    } catch (e) {
+      alert("Error de red al fusionar reservas.");
+    } finally {
+      setMerging(false);
+    }
+  }
+
   return (
     <>
       {/* ── Bulk action bar ── */}
@@ -761,6 +795,15 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           >
             Deseleccionar
           </button>
+          {selectedCount > 1 && (
+            <button
+              onClick={handleMerge}
+              disabled={merging}
+              style={{ marginLeft: "auto", padding: "0.3rem 1rem", borderRadius: 6, border: "none", background: "var(--color-admin-accent)", color: "#fff", fontSize: "0.76rem", cursor: merging ? "not-allowed" : "pointer", opacity: merging ? 0.7 : 1, fontWeight: 600 }}
+            >
+              {merging ? "Fusionando..." : "Fusionar reservas"}
+            </button>
+          )}
         </div>
       )}
 
@@ -878,6 +921,20 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                           ⚠ {r.customer.allergies}
                         </div>
                       )}
+                      {r.groupRef && !r.mergedGroupId && (
+                        <div style={{ fontSize: "0.7rem", color: "#D97706", marginTop: "0.2rem", fontWeight: 500, display: "inline-block", background: "#FEF3C7", padding: "2px 6px", borderRadius: "4px" }}>
+                          Relacionada: {r.groupRef}
+                        </div>
+                      )}
+                      {r.mergedGroupId && (
+                        <div 
+                          onClick={(e) => { e.stopPropagation(); setGroupViewId(r.mergedGroupId!); }}
+                          style={{ fontSize: "0.7rem", color: "#0891B2", marginTop: "0.2rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem", background: "#CFFAFE", padding: "2px 6px", borderRadius: "4px", cursor: "pointer" }}
+                          title="Ver grupo"
+                        >
+                          🔗 Grupo Fusionado
+                        </div>
+                      )}
                       {r.customer.comments && (
                         <div style={{ fontSize: "0.72rem", color: "var(--color-admin-muted)", marginTop: "0.1rem", fontStyle: "italic" }}>
                           {r.customer.comments}
@@ -976,6 +1033,44 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           mode="reservations"
           onClose={() => setImportOpen(false)}
         />
+      )}
+
+      {/* ── Group View Modal ── */}
+      {groupViewId && (
+        <div style={S.overlay} onClick={() => setGroupViewId(null)}>
+          <div style={{ ...S.modal, maxWidth: "700px" }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+              <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>Grupo de Reservas</h2>
+              <button onClick={() => setGroupViewId(null)} style={{ background: "none", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "var(--color-admin-muted)" }}>✕</button>
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {groupReservations.map(r => (
+                <div key={r.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.75rem 1rem", border: "1px solid var(--color-admin-border)", borderRadius: "8px", background: "var(--color-admin-bg)" }}>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "var(--color-admin-text)" }}>
+                      {r.customer.name}
+                      <span style={{ marginLeft: "0.5rem", fontSize: "0.75rem", fontWeight: 400, color: "var(--color-admin-muted)" }}>{r.guests} pax</span>
+                    </div>
+                    <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)", marginTop: "0.2rem" }}>
+                      {fmtDate(r.event.date)} · {r.event.shift === "NOON" ? "Mediodía" : "Noche"} · {r.venue ? r.venue.name : "Sin local"}
+                    </div>
+                  </div>
+                  <div>
+                    <span style={{ padding: "2px 8px", borderRadius: 14, fontSize: "0.72rem", fontWeight: 600, background: STATUS_COLOR[r.status as StatusKey]?.bg ?? "#F1F5F9", color: STATUS_COLOR[r.status as StatusKey]?.color ?? "#6B7280" }}>
+                      {STATUS_LABEL[r.status as StatusKey]}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: "1.5rem", textAlign: "right" }}>
+              <button onClick={() => setGroupViewId(null)} style={{ ...S.btn, background: "var(--color-admin-border)", color: "var(--color-admin-text)" }}>
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

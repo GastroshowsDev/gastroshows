@@ -24,6 +24,11 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
     }
   };
 
+  const primaryColor = content.accentColor || "var(--gs-gold)";
+  const color35 = `color-mix(in srgb, ${primaryColor} 35%, transparent)`;
+  const color08 = `color-mix(in srgb, ${primaryColor} 8%, transparent)`;
+  const color20 = `color-mix(in srgb, ${primaryColor} 20%, transparent)`;
+
   return (
     <section style={{ padding: "5rem 2rem 6rem", background: "var(--gs-bg)", position: "relative" }}>
       {/* Section header */}
@@ -35,7 +40,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             onChange={(v) => updateField("eyebrow", v)}
             isEditing={isEditing}
             dataField="eyebrow"
-            style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "1rem" }}
+            style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: primaryColor, marginBottom: "1rem" }}
           />
         </div>
         <h2 style={{
@@ -44,7 +49,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
           fontWeight: 300,
           color: "var(--gs-text)",
           lineHeight: 1.2,
-          maxWidth: "700px",
+          maxWidth: "1000px",
           margin: "0 auto",
         }}>
           <InlineText
@@ -61,7 +66,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             onChange={(v) => updateField("titleAccent", v)}
             isEditing={isEditing}
             dataField="titleAccent"
-            style={{ color: "var(--gs-gold)", fontStyle: "italic" }}
+            style={{ color: primaryColor, fontStyle: "italic" }}
           />
         </h2>
       </div>
@@ -89,7 +94,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
               fontWeight: 700,
               letterSpacing: "0.25em",
               textTransform: "uppercase",
-              color: "rgba(200,169,110,0.35)",
+              color: color35,
               marginBottom: "0.75rem",
             }}>
               0{i + 1}
@@ -104,15 +109,15 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 style={{
                   display: "inline-block",
-                  background: "rgba(200,169,110,0.08)",
-                  border: "1px solid rgba(200,169,110,0.2)",
+                  background: color08,
+                  border: `1px solid ${color20}`,
                   borderRadius: "2px",
                   padding: "0.28rem 0.65rem",
                   fontSize: "0.6rem",
                   fontWeight: 700,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "var(--gs-gold)",
+                  color: primaryColor,
                 }}
               />
             </div>
@@ -166,7 +171,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
               position: "absolute",
               bottom: 0, left: 0, right: 0,
               height: "2px",
-              background: "linear-gradient(to right, var(--gs-gold), transparent)",
+              background: `linear-gradient(to right, ${primaryColor}, transparent)`,
               opacity: 0.35,
             }} />
           </div>

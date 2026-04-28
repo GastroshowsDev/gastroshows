@@ -17,26 +17,35 @@ export function ButtonElement({ element, isEditing = false, onUpdate }: Props) {
   const { styles = {} } = element;
 
   const getVariantStyles = () => {
-    switch (element.variant) {
-      case "primary":
-        return {
-          background: hover ? "#E8D5A8" : "#C8A96E",
-          color: "#0A0A0A",
-          border: "none",
-        };
-      case "outline":
-        return {
-          background: hover ? "rgba(200,169,110,0.1)" : "transparent",
-          color: "var(--gs-gold)",
-          border: "1px solid var(--gs-gold)",
-        };
-      default:
-        return {
-          background: hover ? "#333" : "#222",
-          color: "white",
-          border: "none",
-        };
+    const baseVariant = (() => {
+      switch (element.variant) {
+        case "primary":
+          return {
+            background: hover ? "var(--gs-gold-hover)" : "var(--gs-gold)",
+            color: "#0A0A0A",
+            border: "none",
+          };
+        case "outline":
+          return {
+            background: hover ? "rgba(218,165,32,0.1)" : "transparent",
+            color: "var(--gs-gold)",
+            border: "1px solid var(--gs-gold)",
+          };
+        default:
+          return {
+            background: hover ? "#333" : "#222",
+            color: "white",
+            border: "none",
+          };
+      }
+    })();
+
+    // Override text color if specifically set
+    if (styles.color) {
+      baseVariant.color = styles.color;
     }
+
+    return baseVariant;
   };
 
   return (

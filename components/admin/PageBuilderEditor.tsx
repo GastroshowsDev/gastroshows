@@ -150,8 +150,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
       emitStatus("saved");
       
-      // Auto-revert to idle after 3 seconds
-      setTimeout(() => emitStatus("idle"), 3000);
+      // Auto-revert to idle after 8 seconds
+      setTimeout(() => emitStatus("idle"), 8000);
     } finally {
       setSaving(false);
     }

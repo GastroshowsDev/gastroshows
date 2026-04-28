@@ -78,7 +78,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
       />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "740px", padding: "0 2rem" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", padding: "0 2rem" }}>
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <div 
@@ -142,7 +142,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   isEditing={isEditing}
                   dataField="titleAccent"
                   placeholder="Acento"
-                  style={{ color: "#C8A96E", fontStyle: "italic" }}
+                  style={{ color: "#daa520", fontStyle: "italic" }}
                 />
               </>
             )}
@@ -233,7 +233,7 @@ function HeroButton({
   const [hovered, setHovered] = useState(false);
 
   const bg = primary
-    ? hovered ? "#E8D5A8" : "#C8A96E"
+    ? hovered ? "#E8D5A8" : "#daa520"
     : hovered ? "rgba(200,169,110,0.18)" : "rgba(200,169,110,0.06)";
 
   return (

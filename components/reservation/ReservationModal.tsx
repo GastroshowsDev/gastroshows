@@ -6,7 +6,7 @@ import { PaymentButton } from "./PaymentButton";
 
 /* ─────────────────────────────────── types ── */
 
-type Shift = "NOON" | "NIGHT";
+type Shift = "NOON" | "NIGHT" | "PRIVATE";
 
 type PreviousBarrio = "EIXAMPLE" | "SARRIA";
 
@@ -23,6 +23,7 @@ type FormState = {
   comments: string;
   privacyConsent: boolean;
   marketingConsent: boolean;
+  groupRef: string;
 };
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -35,7 +36,7 @@ type SuccessData = {
 
 /* ─────────────────────────────────── constants ── */
 
-const GOLD = "#C8A96E";
+const GOLD = "#daa520";
 const DARK2 = "#1A1A1A";
 const OFFWHITE = "#F5F0E8";
 const LIGHT = "#888888";
@@ -93,6 +94,7 @@ const INITIAL: FormState = {
   comments: "",
   privacyConsent: false,
   marketingConsent: false,
+  groupRef: "",
 };
 
 type Props = { open: boolean; onClose: () => void };
@@ -104,6 +106,22 @@ export function ReservationModal({ open, onClose }: Props) {
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
+  const [holidays, setHolidays] = useState<string[]>([]);
+
+  // Fetch holidays
+  useEffect(() => {
+    if (open) {
+      fetch("/api/public/holidays")
+        .then(async (res) => {
+          if (!res.ok) throw new Error("Failed to fetch holidays");
+          const text = await res.text();
+          if (!text) return [];
+          return JSON.parse(text);
+        })
+        .then(data => setHolidays(data || []))
+        .catch(console.error);
+    }
+  }, [open]);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -150,7 +168,10 @@ export function ReservationModal({ open, onClose }: Props) {
     try {
       const hour = form.shift === "NOON" ? "14:00:00" : "21:00:00";
       const isoDate = `${form.date}T${hour}.000Z`;
-      const res = await fetch("/api/reservations/normal", {
+      const isPrivate = form.shift === "PRIVATE";
+      const endpoint = isPrivate ? "/api/reservations/private" : "/api/reservations/normal";
+      
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -163,6 +184,7 @@ export function ReservationModal({ open, onClose }: Props) {
           allergies: form.allergies.trim() || undefined,
           previousVisit: form.previousVisit ?? false,
           newsletter: form.marketingConsent,
+          groupRef: form.groupRef.trim() || undefined,
           comments:
             (form.previousVisit && form.previousBarrio
               ? `Visita previa: ${form.previousBarrio === "EIXAMPLE" ? "Barrio del Eixample" : "Barrio de Sarrià-Sant Gervasi"}. `
@@ -180,7 +202,12 @@ export function ReservationModal({ open, onClose }: Props) {
         setServerError(json.error ?? "Error al crear la reserva. Inténtalo de nuevo.");
         return;
       }
-      setSuccess({ id: json.reservationId!, total: json.totalAmount!, deposit: json.amountDue! });
+      
+      if (isPrivate) {
+        setSuccess({ id: "PRIVATE", total: 0, deposit: 0 });
+      } else {
+        setSuccess({ id: json.reservationId!, total: json.totalAmount!, deposit: json.amountDue! });
+      }
     } catch {
       setServerError("Error de conexión. Inténtalo de nuevo.");
     } finally {
@@ -261,6 +288,7 @@ export function ReservationModal({ open, onClose }: Props) {
                   setForm={setForm}
                   errors={errors}
                   setErrors={setErrors}
+                  holidays={holidays}
                 />
               )}
               {step === 2 && <Step2 form={form} setForm={setForm} />}
@@ -310,7 +338,7 @@ export function ReservationModal({ open, onClose }: Props) {
                   disabled={loading}
                   style={{ ...nextBtnStyle, opacity: loading ? 0.5 : 1, cursor: loading ? "not-allowed" : "pointer" }}
                 >
-                  {loading ? "Enviando…" : "Confirmar reserva"}
+                  {loading ? "Enviando…" : (form.shift === "PRIVATE" ? "Solicitar información" : "Confirmar reserva")}
                 </button>
               )}
             </div>
@@ -342,7 +370,7 @@ function Stepper({ step }: { step: number }) {
                 border: step >= s.num ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.3)",
                 background: step === s.num ? GOLD : "transparent",
                 color: step === s.num ? "#0A0A0A" : step > s.num ? GOLD : LIGHT,
-                fontSize: "0.65rem",
+                fontSize: "0.72rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -356,7 +384,7 @@ function Stepper({ step }: { step: number }) {
             {step === s.num && (
               <span
                 style={{
-                  fontSize: "0.6rem",
+                  fontSize: "0.72rem",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   color: GOLD,
@@ -391,15 +419,21 @@ function Step1({
   setForm,
   errors,
   setErrors,
+  holidays,
 }: {
   form: FormState;
   setForm: React.Dispatch<React.SetStateAction<FormState>>;
   errors: FieldErrors;
   setErrors: React.Dispatch<React.SetStateAction<FieldErrors>>;
+  holidays: string[];
 }) {
   function handleDateSelect(date: string) {
-    const sat = isSaturday(date);
-    setForm((f) => ({ ...f, date, shift: sat ? f.shift : "NIGHT" }));
+    if (!isValidDay(date)) {
+      setForm((f) => ({ ...f, date, shift: "PRIVATE" }));
+    } else {
+      const sat = isSaturday(date);
+      setForm((f) => ({ ...f, date, shift: f.shift === "PRIVATE" ? "NIGHT" : (sat ? f.shift : "NIGHT") }));
+    }
     setErrors((e) => ({ ...e, date: undefined }));
   }
 
@@ -407,9 +441,9 @@ function Step1({
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
-      <BookingCalendar value={form.date} onChange={handleDateSelect} />
+      <BookingCalendar value={form.date} holidays={holidays} onChange={handleDateSelect} />
       {errors.date && (
-        <p style={{ fontSize: "0.7rem", color: "#C0392B", marginTop: "0.5rem" }}>{errors.date}</p>
+        <p style={{ fontSize: "0.84rem", color: "#C0392B", marginTop: "0.5rem" }}>{errors.date}</p>
       )}
 
       {form.date && (
@@ -421,24 +455,36 @@ function Step1({
             marginTop: "1.5rem",
           }}
         >
-          {showNoon && (
-            <ShiftCard
-              shift="NOON"
-              icon="☀"
-              name="Mediodía"
-              time="14:00 h"
-              selected={form.shift === "NOON"}
-              onClick={() => setForm((f) => ({ ...f, shift: "NOON" }))}
-            />
+          {form.shift === "PRIVATE" ? (
+            <div style={{ gridColumn: "1 / -1", marginTop: "1rem", background: "rgba(200,169,110,0.05)", padding: "1.5rem", borderRadius: "4px", border: "1px solid rgba(200,169,110,0.2)" }}>
+              <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem", textAlign: "center" }}>🍽️</div>
+              <h3 style={{ fontSize: "1.1rem", color: GOLD, textAlign: "center", marginBottom: "0.5rem", fontWeight: 600, letterSpacing: "0.05em" }}>Exclusivo: Cena Privada</h3>
+              <p style={{ color: "rgba(245,240,232,0.8)", fontSize: "0.9rem", lineHeight: 1.6, textAlign: "center", marginBottom: "1rem" }}>
+                De domingo a martes el restaurante está cerrado al público general, pero abrimos nuestras puertas en exclusiva para ti y tus invitados. Diseña un menú a medida con nuestro chef.
+              </p>
+            </div>
+          ) : (
+            <>
+              {showNoon && (
+                <ShiftCard
+                  shift="NOON"
+                  icon="☀"
+                  name="Mediodía"
+                  time="14:00 h"
+                  selected={form.shift === "NOON"}
+                  onClick={() => setForm((f) => ({ ...f, shift: "NOON" }))}
+                />
+              )}
+              <ShiftCard
+                shift="NIGHT"
+                icon="✦"
+                name="Noche"
+                time="21:00 h"
+                selected={form.shift === "NIGHT"}
+                onClick={() => setForm((f) => ({ ...f, shift: "NIGHT" }))}
+              />
+            </>
           )}
-          <ShiftCard
-            shift="NIGHT"
-            icon="✦"
-            name="Noche"
-            time="21:00 h"
-            selected={form.shift === "NIGHT"}
-            onClick={() => setForm((f) => ({ ...f, shift: "NIGHT" }))}
-          />
         </div>
       )}
     </div>
@@ -473,10 +519,10 @@ function ShiftCard({
       }}
     >
       <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{icon}</div>
-      <div style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: "0.2rem" }}>
+      <div style={{ fontSize: "0.84rem", letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: "0.2rem" }}>
         {name}
       </div>
-      <div style={{ fontSize: "0.8rem", color: LIGHT }}>{time}</div>
+      <div style={{ fontSize: "0.96rem", color: LIGHT }}>{time}</div>
     </div>
   );
 }
@@ -491,9 +537,11 @@ const DAY_NAMES = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
 
 function BookingCalendar({
   value,
+  holidays,
   onChange,
 }: {
   value: string | null;
+  holidays: string[];
   onChange: (date: string) => void;
 }) {
   const today = new Date();
@@ -532,12 +580,13 @@ function BookingCalendar({
   const offset = (firstDayOfWeek + 6) % 7; // Mon=0
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
-  function dayStatus(day: number): "selected" | "available" | "past" | "unavailable" {
+  function dayStatus(day: number): "selected" | "available" | "past" | "unavailable" | "holiday" | "private_dinner" {
     const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     if (value === dateStr) return "selected";
     if (isPast(dateStr)) return "past";
     if (isTooFar(dateStr)) return "unavailable";
-    if (!isValidDay(dateStr)) return "unavailable";
+    if (holidays.includes(dateStr)) return "holiday";
+    if (!isValidDay(dateStr)) return "private_dinner";
     return "available";
   }
 
@@ -586,7 +635,7 @@ function BookingCalendar({
           <div
             key={d}
             style={{
-              fontSize: "0.6rem",
+              fontSize: "0.72rem",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: LIGHT,
@@ -605,7 +654,7 @@ function BookingCalendar({
         {Array.from({ length: daysInMonth }, (_, i) => {
           const day = i + 1;
           const status = dayStatus(day);
-          const clickable = status === "available" || status === "selected";
+          const clickable = status === "available" || status === "selected" || status === "private_dinner";
           return (
             <div
               key={day}
@@ -615,8 +664,12 @@ function BookingCalendar({
                 onChange(dateStr);
               }}
               title={
-                status === "unavailable"
-                  ? "Solo disponible miércoles a sábado"
+                status === "holiday"
+                  ? "Festivo / Cerrado"
+                  : status === "unavailable"
+                  ? "Cerrado"
+                  : status === "private_dinner"
+                  ? "Cena Privada Exclusiva"
                   : status === "past"
                   ? "Fecha pasada"
                   : undefined
@@ -626,17 +679,28 @@ function BookingCalendar({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "0.8rem",
+                fontSize: "0.96rem",
                 borderRadius: "2px",
                 cursor: clickable ? "pointer" : "not-allowed",
                 border:
                   status === "selected"
                     ? `1px solid ${GOLD}`
+                    : status === "private_dinner"
+                    ? `1px dashed rgba(200,169,110,0.4)`
+                    : status === "available"
+                    ? `1px solid rgba(255,255,255,0.1)`
                     : "1px solid transparent",
-                background: status === "selected" ? GOLD : "transparent",
+                background: 
+                  status === "selected" 
+                    ? GOLD 
+                    : status === "available"
+                    ? "rgba(255,255,255,0.03)"
+                    : "transparent",
                 color:
                   status === "selected"
                     ? "#0A0A0A"
+                    : status === "private_dinner"
+                    ? "rgba(200,169,110,0.7)"
                     : status === "available"
                     ? OFFWHITE
                     : "rgba(245,240,232,0.15)",
@@ -653,9 +717,11 @@ function BookingCalendar({
               onMouseLeave={(e) => {
                 if (!clickable || status === "selected") return;
                 const el = e.currentTarget as HTMLDivElement;
-                el.style.background = "transparent";
-                el.style.borderColor = "transparent";
-                el.style.color = OFFWHITE;
+                
+                el.style.background = status === "available" ? "rgba(255,255,255,0.03)" : "transparent";
+                el.style.borderColor = status === "private_dinner" ? "rgba(200,169,110,0.4)" : (status === "available" ? "rgba(255,255,255,0.1)" : "transparent");
+                el.style.borderStyle = status === "private_dinner" ? "dashed" : "solid";
+                el.style.color = status === "private_dinner" ? "rgba(200,169,110,0.7)" : OFFWHITE;
               }}
             >
               {day}
@@ -732,7 +798,7 @@ function Step2({
           </div>
           <div
             style={{
-              fontSize: "0.6rem",
+              fontSize: "0.72rem",
               letterSpacing: "0.15em",
               textTransform: "uppercase",
               color: LIGHT,
@@ -763,7 +829,7 @@ function Step2({
       >
         <div
           style={{
-            fontSize: "0.65rem",
+            fontSize: "0.78rem",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
             color: LIGHT,
@@ -774,7 +840,7 @@ function Step2({
         </div>
         <div>
           {hasDiscount && (
-            <span style={{ color: LIGHT, textDecoration: "line-through", fontSize: "0.9rem", marginRight: "0.5rem" }}>
+            <span style={{ color: LIGHT, textDecoration: "line-through", fontSize: "1.08rem", marginRight: "0.5rem" }}>
               {BASE_PRICE} €
             </span>
           )}
@@ -790,14 +856,14 @@ function Step2({
           </span>
         </div>
         {hasDiscount && (
-          <div style={{ fontSize: "0.65rem", color: GOLD, marginTop: "0.2rem" }}>
+          <div style={{ fontSize: "0.78rem", color: GOLD, marginTop: "0.2rem" }}>
             20% dto. miércoles y jueves
           </div>
         )}
-        <div style={{ fontSize: "0.75rem", color: OFFWHITE, marginTop: "0.5rem" }}>
+        <div style={{ fontSize: "0.9rem", color: OFFWHITE, marginTop: "0.5rem" }}>
           Total: <strong>{total} €</strong>
         </div>
-        <div style={{ fontSize: "0.65rem", color: LIGHT, marginTop: "0.3rem" }}>
+        <div style={{ fontSize: "0.78rem", color: LIGHT, marginTop: "0.3rem" }}>
           Depósito (30%): {deposit} €
         </div>
       </div>
@@ -850,16 +916,18 @@ function Step3({
             borderRadius: "2px",
             padding: "0.8rem 1rem",
             marginBottom: "1.5rem",
-            fontSize: "0.8rem",
+            fontSize: "0.84rem",
             color: LIGHT,
           }}
         >
           <span style={{ color: OFFWHITE, textTransform: "capitalize" }}>
             {formatDate(form.date)}
           </span>{" "}
-          · {form.shift === "NOON" ? "Mediodía" : "Noche"} ·{" "}
-          {form.guests} {form.guests === 1 ? "persona" : "personas"} ·{" "}
-          <span style={{ color: GOLD }}>{total} €</span>
+          · {form.shift === "NOON" ? "Mediodía" : form.shift === "NIGHT" ? "Noche" : "Cena Privada"} ·{" "}
+          {form.guests} {form.guests === 1 ? "persona" : "personas"}{" "}
+          {form.shift !== "PRIVATE" && (
+            <>· <span style={{ color: GOLD }}>{total} €</span></>
+          )}
         </div>
       )}
 
@@ -929,6 +997,19 @@ function Step3({
         />
       </div>
 
+      {/* Related Reservations */}
+      <div style={{ marginBottom: "1.2rem" }}>
+        <FormField label="Reservas relacionadas">
+          <input
+            type="text"
+            value={form.groupRef}
+            onChange={(e) => setForm((f) => ({ ...f, groupRef: e.target.value }))}
+            placeholder="Nombre del titular de la otra reserva (Opcional)"
+            style={inputStyle}
+          />
+        </FormField>
+      </div>
+
       {/* Previous visit */}
       <div style={{ marginBottom: "1.2rem" }}>
         <div style={smallLabelStyle}>¿Has venido alguna vez?</div>
@@ -962,7 +1043,7 @@ function Step3({
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                fontSize: "0.8rem",
+                fontSize: "0.96rem",
                 color: form.previousVisit === val ? OFFWHITE : LIGHT,
                 transition: "all 0.2s",
               }}
@@ -1011,7 +1092,7 @@ function Step3({
                   display: "flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  fontSize: "0.75rem",
+                  fontSize: "0.9rem",
                   color: form.previousBarrio === val ? OFFWHITE : LIGHT,
                   transition: "all 0.2s",
                 }}
@@ -1064,7 +1145,7 @@ function Step3({
             onChange={(e) => setForm((f) => ({ ...f, privacyConsent: e.target.checked }))}
             style={{ marginTop: "2px", accentColor: GOLD, flexShrink: 0 }}
           />
-          <span style={{ fontSize: "0.74rem", color: "rgba(245,240,232,0.7)", lineHeight: 1.6 }}>
+          <span style={{ fontSize: "0.88rem", color: "rgba(245,240,232,0.7)", lineHeight: 1.6 }}>
             He leído y acepto la{" "}
             <a
               href="/privacidad"
@@ -1079,7 +1160,7 @@ function Step3({
           </span>
         </label>
         {errors.privacyConsent && (
-          <p style={{ fontSize: "0.7rem", color: "#C0392B", marginTop: "-0.4rem", paddingLeft: "1.5rem" }}>
+          <p style={{ fontSize: "0.84rem", color: "#C0392B", marginTop: "-0.4rem", paddingLeft: "1.5rem" }}>
             {errors.privacyConsent}
           </p>
         )}
@@ -1092,7 +1173,7 @@ function Step3({
             onChange={(e) => setForm((f) => ({ ...f, marketingConsent: e.target.checked }))}
             style={{ marginTop: "2px", accentColor: GOLD, flexShrink: 0 }}
           />
-          <span style={{ fontSize: "0.74rem", color: "rgba(245,240,232,0.55)", lineHeight: 1.6 }}>
+          <span style={{ fontSize: "0.88rem", color: "rgba(245,240,232,0.55)", lineHeight: 1.6 }}>
             Acepto recibir comunicaciones de marketing sobre futuras experiencias,
             descuentos y novedades. (Opcional)
           </span>
@@ -1107,7 +1188,7 @@ function Step3({
             background: "rgba(192,57,43,0.1)",
             border: "1px solid rgba(192,57,43,0.4)",
             borderRadius: "2px",
-            fontSize: "0.8rem",
+            fontSize: "0.84rem",
             color: "#E74C3C",
           }}
         >
@@ -1137,7 +1218,7 @@ function FormField({
       </div>
       {children}
       {error && (
-        <p style={{ fontSize: "0.7rem", color: "#C0392B", marginTop: "0.3rem" }}>{error}</p>
+        <p style={{ fontSize: "0.8rem", color: "#C0392B", marginTop: "0.3rem" }}>{error}</p>
       )}
     </div>
   );
@@ -1156,6 +1237,19 @@ function SuccessScreen({
   shift: Shift;
   onClose: () => void;
 }) {
+  if (success.id === "PRIVATE") {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center", animation: "fadeIn 0.5s ease" }}>
+        <div style={{ width: "64px", height: "64px", border: `1px solid ${GOLD}`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: "1.5rem" }}>✓</div>
+        <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "2rem", fontWeight: 300, marginBottom: "0.5rem", color: OFFWHITE }}>Solicitud enviada</div>
+        <p style={{ fontSize: "1.1rem", color: LIGHT, lineHeight: 1.8, maxWidth: "380px", margin: "0 auto 2rem" }}>
+          Hemos recibido tu solicitud de cena privada. Nuestro equipo se pondrá en contacto contigo muy pronto para organizar los detalles y preparar tu menú.
+        </p>
+        <button onClick={onClose} style={{ background: "none", border: "1px solid rgba(200,169,110,0.5)", color: LIGHT, padding: "0.8rem 2rem", fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "0.1em", cursor: "pointer", borderRadius: "2px" }}>Cerrar</button>
+      </div>
+    );
+  }
+
   const today = new Date();
   const d = new Date(date + "T12:00:00");
   const diffDays = Math.ceil((d.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
@@ -1213,7 +1307,7 @@ function SuccessScreen({
       >
         Reserva recibida
       </div>
-      <p style={{ fontSize: "0.8rem", color: LIGHT, lineHeight: 1.8, maxWidth: "380px", margin: "0 auto 2rem" }}>
+      <p style={{ fontSize: "1.1rem", color: LIGHT, lineHeight: 1.8, maxWidth: "380px", margin: "0 auto 2rem" }}>
         Confirmaremos tu plaza en breve. Recibirás los emails de pistas a partir de 4 días antes del evento.
       </p>
 
@@ -1241,7 +1335,7 @@ function SuccessScreen({
               justifyContent: "space-between",
               padding: "0.5rem 0",
               borderBottom: "1px solid rgba(200,169,110,0.08)",
-              fontSize: "0.82rem",
+              fontSize: "1.05rem",
             }}
           >
             <span style={{ color: LIGHT }}>{key}</span>
@@ -1271,7 +1365,7 @@ function SuccessScreen({
               gap: "1rem",
               padding: "0.6rem 0",
               borderBottom: "1px solid rgba(200,169,110,0.06)",
-              fontSize: "0.8rem",
+              fontSize: "1rem",
             }}
           >
             <div
@@ -1283,7 +1377,7 @@ function SuccessScreen({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "0.6rem",
+                fontSize: "0.95rem",
                 color: GOLD,
                 flexShrink: 0,
               }}
@@ -1291,7 +1385,7 @@ function SuccessScreen({
               {label}
             </div>
             <span style={{ color: LIGHT, flex: 1 }}>{desc}</span>
-            <span style={{ color: OFFWHITE, fontSize: "0.75rem" }}>{emailDate}</span>
+            <span style={{ color: OFFWHITE, fontSize: "0.9rem" }}>{emailDate}</span>
           </div>
         ))}
       </div>
@@ -1302,7 +1396,7 @@ function SuccessScreen({
           amount={success.deposit} 
         />
         
-        <p style={{ fontSize: "0.65rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>
+        <p style={{ fontSize: "0.9rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>
           Para garantizar tu plaza, es necesario realizar el pago del depósito. 
           Serás redirigido a la pasarela segura de Redsys.
         </p>
@@ -1313,7 +1407,7 @@ function SuccessScreen({
             background: "none", 
             border: "none", 
             color: LIGHT, 
-            fontSize: "0.65rem", 
+            fontSize: "0.8rem", 
             textTransform: "uppercase", 
             letterSpacing: "0.1em",
             cursor: "pointer",
@@ -1336,7 +1430,7 @@ const inputStyle: React.CSSProperties = {
   color: OFFWHITE,
   padding: "0.8rem 1rem",
   fontFamily: "var(--font-montserrat), sans-serif",
-  fontSize: "0.85rem",
+  fontSize: "0.9rem",
   fontWeight: 300,
   borderRadius: "2px",
   outline: "none",
@@ -1344,7 +1438,7 @@ const inputStyle: React.CSSProperties = {
 };
 
 const smallLabelStyle: React.CSSProperties = {
-  fontSize: "0.6rem",
+  fontSize: "0.8rem",
   letterSpacing: "0.18em",
   textTransform: "uppercase" as const,
   color: GOLD,
@@ -1372,7 +1466,7 @@ const backBtnStyle: React.CSSProperties = {
   color: LIGHT,
   padding: "0.8rem 1.5rem",
   fontFamily: "var(--font-montserrat), sans-serif",
-  fontSize: "0.65rem",
+  fontSize: "0.8rem",
   fontWeight: 500,
   letterSpacing: "0.15em",
   textTransform: "uppercase",
@@ -1387,7 +1481,7 @@ const nextBtnStyle: React.CSSProperties = {
   border: "none",
   padding: "0.9rem 2rem",
   fontFamily: "var(--font-montserrat), sans-serif",
-  fontSize: "0.65rem",
+  fontSize: "0.8rem",
   fontWeight: 600,
   letterSpacing: "0.18em",
   textTransform: "uppercase",

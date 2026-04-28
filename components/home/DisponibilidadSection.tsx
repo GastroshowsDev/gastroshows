@@ -47,11 +47,15 @@ function isThisWeek(weekStr: string): boolean {
 export function DisponibilidadSection({ 
   onReservar,
   title,
-  subtitle 
+  subtitle,
+  buttonText,
+  buttonColor
 }: { 
-  onReservar: () => void,
+  onReservar?: () => void,
   title?: React.ReactNode,
-  subtitle?: React.ReactNode
+  subtitle?: React.ReactNode,
+  buttonText?: string,
+  buttonColor?: string
 }) {
   const [week, setWeek]       = useState<string | null>(null);
   const [data, setData]       = useState<ApiResponse | null>(null);
@@ -92,7 +96,7 @@ export function DisponibilidadSection({
         transition: "background 0.3s",
       }}
     >
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
@@ -205,8 +209,8 @@ export function DisponibilidadSection({
           <button
             onClick={onReservar}
             style={{
-              background: "var(--gs-gold)",
-              color: "#0A0A0A",
+              background: buttonColor || "var(--gs-gold)",
+              color: buttonColor ? "#fff" : "#0A0A0A", // white text if custom color, otherwise dark
               border: "none",
               padding: "1rem 3rem",
               fontFamily: "var(--font-montserrat), sans-serif",
@@ -220,18 +224,20 @@ export function DisponibilidadSection({
             }}
             onMouseEnter={(e) => {
               const b = e.currentTarget;
-              b.style.background = "var(--gs-gold-hover)";
+              b.style.background = buttonColor ? buttonColor : "var(--gs-gold-hover)";
               b.style.transform = "translateY(-2px)";
-              b.style.boxShadow = "0 10px 30px rgba(200,169,110,0.3)";
+              b.style.boxShadow = "0 10px 30px rgba(218,165,32,0.3)";
+              if (buttonColor) b.style.opacity = "0.9";
             }}
             onMouseLeave={(e) => {
               const b = e.currentTarget;
-              b.style.background = "var(--gs-gold)";
+              b.style.background = buttonColor || "var(--gs-gold)";
               b.style.transform = "translateY(0)";
               b.style.boxShadow = "none";
+              if (buttonColor) b.style.opacity = "1";
             }}
           >
-            Reservar ahora
+            {buttonText || "Reservar ahora"}
           </button>
           {urgency && !soldOut && (
             <p style={{ fontSize: "0.72rem", color: "#E57373", marginTop: "0.75rem", letterSpacing: "0.05em" }}>
@@ -308,7 +314,7 @@ function DayCard({ day }: { day: DayData }) {
           {/* Bar */}
           <div style={{
             height: "3px",
-            background: "rgba(200,169,110,0.12)",
+            background: "rgba(218,165,32,0.12)",
             borderRadius: "3px",
             overflow: "hidden",
           }}>

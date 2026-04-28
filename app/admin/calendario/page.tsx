@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CalendarBoard } from "@/components/admin/CalendarBoard";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,21 @@ export default async function CalendarioPage() {
             Vista de ocupación por local
           </p>
         </div>
+        <Link
+          href="/admin/calendario/festivos"
+          style={{
+            background: "var(--color-admin-accent)",
+            color: "#0A0A0A",
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            textDecoration: "none",
+            transition: "opacity 0.2s",
+          }}
+        >
+          Días Festivos
+        </Link>
       </div>
 
       <CalendarBoard events={events} />

@@ -119,12 +119,15 @@ export type StepsContent = {
   eyebrow: string;
   title: string;
   titleAccent: string;
+  accentColor?: string;
   steps: { day: string; eyebrow: string; title: string; body: string }[];
 };
 
 export type AvailabilityContent = {
   title: string;
   subtitle?: string;
+  buttonText?: string;
+  buttonColor?: string;
 };
 
 export type CtaContent = {

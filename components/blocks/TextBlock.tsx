@@ -49,7 +49,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
         ...hoverStyles,
       }}
     >
-      <div style={{ maxWidth: "780px", margin: "0 auto", textAlign: align }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: align }}>
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <InlineText
@@ -117,7 +117,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 color: content.color || "rgba(245,240,232,0.7)",
                 fontWeight: content.bold ? "bold" : "normal",
                 fontStyle: content.italic ? "italic" : "normal",
-                maxWidth: "800px",
+                maxWidth: "1100px",
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
               }}

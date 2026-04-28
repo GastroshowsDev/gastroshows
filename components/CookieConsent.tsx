@@ -253,7 +253,7 @@ function ToggleRow({ label, description, checked, onChange }: {
         onClick={() => onChange(!checked)}
         style={{
           width: "42px", height: "24px", borderRadius: "12px", border: "none",
-          background: checked ? "#C8A96E" : "rgba(255,255,255,0.12)",
+          background: checked ? "#daa520" : "rgba(255,255,255,0.12)",
           cursor: "pointer", position: "relative", flexShrink: 0,
         }}
       >
@@ -274,7 +274,7 @@ function btnStyle(variant: "gold" | "outline" | "ghost"): React.CSSProperties {
     fontSize: "0.73rem", fontWeight: 600, letterSpacing: "0.06em",
     cursor: "pointer", whiteSpace: "nowrap",
   };
-  if (variant === "gold") return { ...base, background: "#C8A96E", color: "#0A0A0A", border: "none" };
+  if (variant === "gold") return { ...base, background: "#daa520", color: "#0A0A0A", border: "none" };
   if (variant === "outline") return { ...base, background: "transparent", color: "#F5F0E8", border: "1px solid rgba(245,240,232,0.2)" };
   return { ...base, background: "transparent", color: "rgba(245,240,232,0.45)", border: "none" };
 }

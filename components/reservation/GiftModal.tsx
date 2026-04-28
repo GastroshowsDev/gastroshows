@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PaymentButton } from "./PaymentButton";
 
-const GOLD = "#C8A96E";
+const GOLD = "#daa520";
 const DARK2 = "#1A1A1A";
 const DARK = "#111111";
 const OFFWHITE = "#F5F0E8";
@@ -34,6 +34,7 @@ export function GiftModal({ open, onClose }: Props) {
   const [purchaserEmail, setPurchaserEmail] = useState("");
   const [deliveryMode, setDeliveryMode] = useState<DeliveryMode>("later");
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [sendDate, setSendDate] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -51,6 +52,7 @@ export function GiftModal({ open, onClose }: Props) {
     setPurchaserEmail("");
     setDeliveryMode("later");
     setRecipientEmail("");
+    setSendDate("");
     setErrors({});
     setServerError(null);
     setSuccess(null);
@@ -65,6 +67,9 @@ export function GiftModal({ open, onClose }: Props) {
     if (deliveryMode === "now") {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail.trim())) {
         e.recipientEmail = "Email del destinatario no válido";
+      }
+      if (!sendDate) {
+        e.sendDate = "Selecciona una fecha de envío";
       }
     }
     setErrors(e);
@@ -86,6 +91,7 @@ export function GiftModal({ open, onClose }: Props) {
           purchaserEmail: purchaserEmail.trim(),
           deliveryMode,
           recipientEmail: deliveryMode === "now" ? recipientEmail.trim() : undefined,
+          sendDate: deliveryMode === "now" && sendDate ? new Date(sendDate).toISOString() : undefined,
         }),
       });
       const json = (await res.json()) as {
@@ -234,7 +240,7 @@ export function GiftModal({ open, onClose }: Props) {
                 <div style={{ ...smallLabel, marginBottom: "0.75rem" }}>¿Cómo quieres enviar el vale?</div>
                 <div style={{ display: "flex", gap: "0.75rem" }}>
                   {([
-                    { value: "later" as DeliveryMode, label: "Me lo quedo yo", desc: "Recibes el código aquí" },
+                    { value: "later" as DeliveryMode, label: "Enviádmelo a mí y yo lo reenvío", desc: "Recibes el código aquí" },
                     { value: "now" as DeliveryMode, label: "Enviarlo al destinatario", desc: "Se envía por email" },
                   ] as const).map(({ value, label, desc }) => {
                     const active = deliveryMode === value;
@@ -264,16 +270,29 @@ export function GiftModal({ open, onClose }: Props) {
 
               {/* Recipient email (only when "now") */}
               {deliveryMode === "now" && (
-                <div style={{ marginBottom: "1.5rem" }}>
-                  <div style={{ ...smallLabel, marginBottom: "0.5rem" }}>Email del destinatario</div>
-                  <input
-                    type="email"
-                    value={recipientEmail}
-                    onChange={(e) => setRecipientEmail(e.target.value)}
-                    placeholder="destinatario@email.com"
-                    style={inputStyle(!!errors.recipientEmail)}
-                  />
-                  {errors.recipientEmail && <p style={errorText}>{errors.recipientEmail}</p>}
+                <div style={{ marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  <div>
+                    <div style={{ ...smallLabel, marginBottom: "0.5rem" }}>Email del destinatario</div>
+                    <input
+                      type="email"
+                      value={recipientEmail}
+                      onChange={(e) => setRecipientEmail(e.target.value)}
+                      placeholder="destinatario@email.com"
+                      style={inputStyle(!!errors.recipientEmail)}
+                    />
+                    {errors.recipientEmail && <p style={errorText}>{errors.recipientEmail}</p>}
+                  </div>
+                  <div>
+                    <div style={{ ...smallLabel, marginBottom: "0.5rem" }}>Fecha de envío</div>
+                    <input
+                      type="date"
+                      value={sendDate}
+                      onChange={(e) => setSendDate(e.target.value)}
+                      min={new Date().toISOString().split("T")[0]}
+                      style={inputStyle(!!errors.sendDate)}
+                    />
+                    {errors.sendDate && <p style={errorText}>{errors.sendDate}</p>}
+                  </div>
                 </div>
               )}
 

@@ -63,7 +63,7 @@ export function PaymentButton({ reservationId, amount, onLoading }: Props) {
       onClick={handlePayment}
       disabled={loading}
       style={{
-        background: "#C8A96E",
+        background: "#daa520",
         color: "#0A0A0A",
         border: "none",
         padding: "1rem 2.5rem",

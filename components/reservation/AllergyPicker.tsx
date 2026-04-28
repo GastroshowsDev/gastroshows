@@ -65,7 +65,7 @@ function deserialize(text: string): { selected: Selected; custom: string } {
   return { selected, custom: remaining };
 }
 
-const GOLD  = "#C8A96E";
+const GOLD  = "#daa520";
 const DARK  = "#222222";
 const DARK2 = "#1A1A1A";
 const LIGHT = "#888888";

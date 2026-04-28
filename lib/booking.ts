@@ -28,6 +28,7 @@ export const giftPurchaseSchema = z.object({
   purchaserEmail: z.string().email(),
   deliveryMode: z.enum(["now", "later"]),
   recipientEmail: z.string().email().optional(),
+  sendDate: z.string().datetime().optional(),
 });
 
 export const giftRedeemSchema = z.object({

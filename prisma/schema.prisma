@@ -149,6 +149,8 @@ model GiftVoucher {
   recipientEmail      String?
   guests              Int
   totalAmount         Decimal      @db.Decimal(10, 2)
+  sendDate            DateTime?
+  emailSent           Boolean      @default(false)
   expiresAt           DateTime
   redeemedAt          DateTime?
   reservationId       String?      @unique
@@ -347,3 +349,40 @@ model Redirect {
 
   @@index([fromPath])
 }
+
+// ── HR & Holidays ────────────────────────────────────────────────────────────
+
+model Employee {
+  id        String    @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  pin       String    @unique // 4 digits
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  timeLogs  TimeLog[]
+
+  @@index([pin])
+}
+
+model TimeLog {
+  id             String    @id @default(cuid())
+  employeeId     String
+  employee       Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  clockIn        DateTime
+  clockOut       DateTime?
+  autoClockedOut Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([employeeId, clockIn])
+}
+
+model Holiday {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  name      String?
+  createdAt DateTime @default(now())
+}
+

@@ -114,6 +114,31 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           )}
 
           <div style={rowStyle}>
+            <label style={labelStyle}>Color Principal (Opcional)</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input 
+                type="color" 
+                value={element.styles?.color || "#000000"} 
+                onChange={(e) => updateStyles(element, { color: e.target.value })} 
+                style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
+              />
+              <input 
+                value={element.styles?.color || ""} 
+                onChange={(e) => updateStyles(element, { color: e.target.value })} 
+                style={{ ...inputStyle, flex: 1, marginBottom: 0 }} 
+                placeholder="Por defecto"
+              />
+              <button 
+                onClick={() => updateStyles(element, { color: "" })} 
+                style={{ padding: "0.5rem", background: "#F3F4F6", color: "#4B5563", border: "1px solid #D1D5DB", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center" }}
+                title="Limpiar color"
+              >
+                ↺
+              </button>
+            </div>
+          </div>
+
+          <div style={rowStyle}>
             <label style={labelStyle}>Efecto de Animación</label>
             <select value={element.styles?.animation || "none"} onChange={(e) => updateStyles(element, { animation: e.target.value })} style={inputStyle}>
               <option value="none">Sin animación</option>
@@ -558,6 +583,39 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
         </>
       )}
 
+      {/* STEPS PROPERTIES */}
+      {type === "STEPS" && (
+        <>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Color de Acento (Opcional)</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input 
+                type="color" 
+                value={(content as StepsContent).accentColor || "#daa520"} 
+                onChange={(e) => update({ accentColor: e.target.value })} 
+                style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
+              />
+              <input 
+                value={(content as StepsContent).accentColor || ""} 
+                onChange={(e) => update({ accentColor: e.target.value })} 
+                style={{ ...inputStyle, flex: 1, marginBottom: 0 }} 
+                placeholder="Por defecto (Dorado)"
+              />
+              <button 
+                onClick={() => update({ accentColor: "" })} 
+                style={{ padding: "0.5rem", background: "#F3F4F6", color: "#4B5563", border: "1px solid #D1D5DB", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center" }}
+                title="Limpiar color"
+              >
+                ↺
+              </button>
+            </div>
+          </div>
+          <p style={{ fontSize: "0.75rem", color: "#6B7280", fontStyle: "italic", marginTop: "1rem" }}>
+            * El texto de este bloque se edita directamente haciendo clic sobre él en la vista previa.
+          </p>
+        </>
+      )}
+
       {/* AVAILABILITY PROPERTIES */}
       {type === "AVAILABILITY" && (
         <>
@@ -568,6 +626,34 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           <div style={rowStyle}>
             <label style={labelStyle}>Título principal</label>
             <input id="field-title" value={(content as AvailabilityContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Texto del botón</label>
+            <input id="field-buttonText" value={(content as AvailabilityContent).buttonText || "Reservar ahora"} onChange={(e) => update({ buttonText: e.target.value })} style={inputStyle} />
+          </div>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Color del botón (Opcional)</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input 
+                type="color" 
+                value={(content as AvailabilityContent).buttonColor || "#daa520"} 
+                onChange={(e) => update({ buttonColor: e.target.value })} 
+                style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
+              />
+              <input 
+                value={(content as AvailabilityContent).buttonColor || ""} 
+                onChange={(e) => update({ buttonColor: e.target.value })} 
+                style={{ ...inputStyle, flex: 1, marginBottom: 0 }} 
+                placeholder="Por defecto (Dorado)"
+              />
+              <button 
+                onClick={() => update({ buttonColor: "" })} 
+                style={{ padding: "0.5rem", background: "#F3F4F6", color: "#4B5563", border: "1px solid #D1D5DB", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center" }}
+                title="Limpiar color"
+              >
+                ↺
+              </button>
+            </div>
           </div>
           <p style={{ fontSize: "0.75rem", color: "#6B7280", fontStyle: "italic", marginTop: "1rem" }}>
             * El calendario y las plazas se actualizan automáticamente desde la base de datos.

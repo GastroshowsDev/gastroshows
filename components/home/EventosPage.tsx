@@ -33,7 +33,7 @@ export function EventosPage({ content }: Props) {
             color: "rgba(200,169,110,0.7)", textDecoration: "none",
             transition: "color 0.2s",
           }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C8A96E"; }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#daa520"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(200,169,110,0.7)"; }}
         >
           ← Inicio
@@ -79,7 +79,7 @@ export function EventosPage({ content }: Props) {
             marginBottom: "1.75rem",
           }}>
             {c(content, "ev.hero.title_line1")}<br />
-            <em style={{ color: "#C8A96E", fontStyle: "italic" }}>
+            <em style={{ color: "#daa520", fontStyle: "italic" }}>
               {c(content, "ev.hero.title_em")}
             </em>
           </h1>
@@ -175,7 +175,7 @@ function FeatureCard({ title, body }: { title: string; body: string }) {
       <div style={{
         width: hovered ? "48px" : "28px",
         height: "2px",
-        background: "#C8A96E",
+        background: "#daa520",
         marginBottom: "1.5rem",
         transition: "width 0.3s",
       }} />
@@ -216,7 +216,7 @@ function CtaButton({ content, small }: { content: LandingContentMap; small?: boo
       style={{
         display: "inline-flex", alignItems: "center", gap: "0.75rem",
         padding: small ? "0.9rem 2.2rem" : "1.1rem 3rem",
-        background: hovered ? "#E8D5A8" : "#C8A96E",
+        background: hovered ? "#E8D5A8" : "#daa520",
         color: "#0A0A0A",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",

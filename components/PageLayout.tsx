@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { PageActionsProvider } from "@/context/PageActionsContext";
+
 
 type Props = {
   children: React.ReactNode;
@@ -13,9 +13,9 @@ type Props = {
  */
 export function PageLayout({ children }: Props) {
   return (
-    <PageActionsProvider>
+    <>
       <ThemeToggle variant="public" />
       {children}
-    </PageActionsProvider>
+    </>
   );
 }

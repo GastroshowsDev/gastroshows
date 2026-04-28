@@ -2,7 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-gold: #C8A96E;
+  --color-gold: #daa520;
   --color-gold-light: #E8D5A8;
   --color-gold-dark: #9A7A45;
   --color-gs-black: #0A0A0A;
@@ -25,7 +25,7 @@
   --gs-text-muted: rgba(245, 240, 232, 0.82);
   --gs-text-sub: rgba(245, 240, 232, 0.75);
   --gs-muted: #A8A49E;
-  --gs-gold: #C8A96E;
+  --gs-gold: #daa520;
   --gs-gold-hover: #E8D5A8;
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);
@@ -52,11 +52,11 @@
   --gs-text-muted: rgba(16, 14, 11, 0.78);
   --gs-text-sub: rgba(16, 14, 11, 0.68);
   --gs-muted: #3C3830;
-  --gs-gold: #7B5C22;
-  --gs-gold-hover: #5A3F10;
-  --gs-border: rgba(100, 74, 20, 0.28);
-  --gs-border-hover: rgba(100, 74, 20, 0.58);
-  --gs-card-hover: rgba(123, 92, 34, 0.07);
+  --gs-gold: #daa520;
+  --gs-gold-hover: #b8860b;
+  --gs-border: rgba(218, 165, 32, 0.28);
+  --gs-border-hover: rgba(218, 165, 32, 0.58);
+  --gs-card-hover: rgba(218, 165, 32, 0.07);
 
   /* Admin stays light in light mode */
   --color-admin-bg: #F4F6FA;
@@ -79,7 +79,7 @@
   --gs-text-muted: rgba(245, 240, 232, 0.82);
   --gs-text-sub: rgba(245, 240, 232, 0.75);
   --gs-muted: #A8A49E;
-  --gs-gold: #C8A96E;
+  --gs-gold: #daa520;
   --gs-gold-hover: #E8D5A8;
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);

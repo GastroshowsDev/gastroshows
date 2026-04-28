@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { guests, purchaserName, purchaserPhone, purchaserEmail, deliveryMode, recipientEmail } =
+  const { guests, purchaserName, purchaserPhone, purchaserEmail, deliveryMode, recipientEmail, sendDate } =
     parsed.data;
 
   const now = new Date();
@@ -55,6 +55,7 @@ export async function POST(request: Request) {
       data: {
         purchaserCustomerId: purchaser.id,
         recipientEmail: deliveryMode === "now" ? recipientEmail : undefined,
+        sendDate: deliveryMode === "now" && sendDate ? new Date(sendDate) : undefined,
         guests,
         totalAmount,
         expiresAt,
@@ -64,21 +65,32 @@ export async function POST(request: Request) {
     return voucher;
   });
 
-  // If deliveryMode === "now" and recipientEmail provided, send gift email immediately
+  // If deliveryMode === "now" and recipientEmail provided, check if we need to send it now
   let emailSent = false;
+  
   if (deliveryMode === "now" && recipientEmail) {
-    try {
-      await sendGiftEmail({
-        token: created.token,
-        recipientEmail,
-        purchaserName,
-        guests,
-        totalAmount,
-        expiresAt,
-      });
-      emailSent = true;
-    } catch (err) {
-      console.error("[gift] Failed to send gift email:", err);
+    const shouldSendNow = !sendDate || new Date(sendDate).getTime() <= now.getTime();
+    
+    if (shouldSendNow) {
+      try {
+        await sendGiftEmail({
+          token: created.token,
+          recipientEmail,
+          purchaserName,
+          guests,
+          totalAmount,
+          expiresAt,
+        });
+        emailSent = true;
+        
+        // Update voucher to mark email as sent
+        await prisma.giftVoucher.update({
+          where: { id: created.id },
+          data: { emailSent: true }
+        });
+      } catch (err) {
+        console.error("[gift] Failed to send gift email:", err);
+      }
     }
   }
 
@@ -157,8 +169,8 @@ function buildGiftEmailHtml({
           <!-- Ornament top -->
           <tr>
             <td align="center" style="padding-bottom:32px;">
-              <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C8A96E);margin:0 auto 16px;"></div>
-              <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#C8A96E;">GastroShows</span>
+              <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#daa520);margin:0 auto 16px;"></div>
+              <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#daa520;">GastroShows</span>
             </td>
           </tr>
 
@@ -240,7 +252,7 @@ function buildGiftEmailHtml({
                 <!-- CTA -->
                 <tr>
                   <td align="center" style="padding-bottom:32px;">
-                    <a href="${redeemUrl}" style="display:inline-block;background:#C8A96E;color:#0A0A0A;text-decoration:none;padding:16px 40px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-radius:2px;">
+                    <a href="${redeemUrl}" style="display:inline-block;background:#daa520;color:#0A0A0A;text-decoration:none;padding:16px 40px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-radius:2px;">
                       Seleccionar fecha
                     </a>
                   </td>
@@ -251,7 +263,7 @@ function buildGiftEmailHtml({
                   <td align="center" style="padding-bottom:0;">
                     <p style="margin:0;font-size:11px;color:#555555;line-height:1.8;font-family:Arial,sans-serif;">
                       O copia este enlace en tu navegador:<br/>
-                      <span style="color:#C8A96E;">${redeemUrl}</span>
+                      <span style="color:#daa520;">${redeemUrl}</span>
                     </p>
                   </td>
                 </tr>

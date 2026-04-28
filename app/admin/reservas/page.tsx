@@ -22,6 +22,8 @@ async function getReservas() {
     guests: r.guests,
     totalAmount: Number(r.totalAmount),
     paidAmount: Number(r.paidAmount),
+    groupRef: r.groupRef,
+    mergedGroupId: r.mergedGroupId,
     createdAt: r.createdAt.toISOString(),
     customer: {
       id: r.customer.id,

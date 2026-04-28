@@ -150,7 +150,7 @@ export function HeroSection({ onReservar, onRegalar, content }: Props) {
               fontStyle: "italic",
               opacity: 0,
               animation: ready ? "letterReveal 0.7s 0.55s both" : "none",
-              background: "linear-gradient(90deg, #9A7040 0%, #C8A96E 20%, #EDE0C4 40%, #FFFFFF 50%, #EDE0C4 60%, #C8A96E 80%, #9A7040 100%)",
+              background: "linear-gradient(90deg, #9A7040 0%, #daa520 20%, #EDE0C4 40%, #FFFFFF 50%, #EDE0C4 60%, #daa520 80%, #9A7040 100%)",
               backgroundSize: "300% auto",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
@@ -221,7 +221,7 @@ function HeroButton({ children, onClick, primary }: { children: React.ReactNode;
   const [hovered, setHovered] = useState(false);
 
   const bg = primary
-    ? hovered ? "#E8D5A8" : "#C8A96E"
+    ? hovered ? "#E8D5A8" : "#daa520"
     : hovered ? "rgba(200,169,110,0.18)" : "rgba(200,169,110,0.06)";
 
   const border = primary
