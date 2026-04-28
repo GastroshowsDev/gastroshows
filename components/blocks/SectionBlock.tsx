@@ -134,7 +134,9 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         backgroundColor: styles.backgroundColor || "transparent",
         backgroundImage: styles.backgroundImage ? `url(${styles.backgroundImage})` : "none",
         backgroundSize: styles.backgroundSize || "cover",
-        position: "relative"
+        position: "relative",
+        opacity: styles.opacity ?? 1,
+        filter: styles.brightness ? `brightness(${styles.brightness})` : "none"
       }}>
         <div 
           style={{
@@ -145,6 +147,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
             gap: "var(--gs-gap, 2rem)"
           } as React.CSSProperties}
         >
+
           {content.columns.map((col, colIdx) => (
             <div
               key={colIdx}

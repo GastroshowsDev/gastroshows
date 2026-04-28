@@ -15,7 +15,10 @@ export type CommonStyles = {
   color?: string;
   boxShadow?: string;
   animation?: string;
+  opacity?: number;
+  brightness?: number;
 };
+
 
 // ── Atomic Elements ─────────────────────────────────────────────────────────
 

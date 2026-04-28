@@ -27,9 +27,12 @@ export function ImageElement({ element, isEditing = false, onUpdate }: Props) {
               maxWidth: "100%", 
               height: "auto", 
               borderRadius: styles.borderRadius || "4px",
-              display: "block"
+              display: "block",
+              opacity: styles.opacity ?? 1,
+              filter: styles.brightness ? `brightness(${styles.brightness})` : "none"
             }} 
           />
+
         </div>
       ) : (
         <div style={{ 

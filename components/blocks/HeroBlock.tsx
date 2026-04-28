@@ -39,6 +39,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
   }, [content.title, content.animation, ready]);
 
   const opacity = (content.overlayOpacity ?? 70) / 100;
+  const brightness = (content as any).brightness ?? 1;
+
 
   return (
     <section
@@ -64,8 +66,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         }}
       >
         {content.bgImage && (
-          <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+          <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center", filter: `brightness(${brightness})` }} />
         )}
+
       </div>
 
       <div

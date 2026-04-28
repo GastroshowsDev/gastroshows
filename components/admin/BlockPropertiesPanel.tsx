@@ -111,8 +111,29 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                   <option value="right">Derecha</option>
                 </select>
               </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Opacidad ({Math.round((element.styles?.opacity ?? 1) * 100)}%)</label>
+                  <input 
+                    type="range" min="0" max="1" step="0.01" 
+                    value={element.styles?.opacity ?? 1} 
+                    onChange={(e) => updateStyles(element, { opacity: parseFloat(e.target.value) })} 
+                    style={{ width: "100%" }} 
+                  />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Brillo ({Math.round((element.styles?.brightness ?? 1) * 100)}%)</label>
+                  <input 
+                    type="range" min="0" max="3" step="0.05" 
+                    value={element.styles?.brightness ?? 1} 
+                    onChange={(e) => updateStyles(element, { brightness: parseFloat(e.target.value) })} 
+                    style={{ width: "100%" }} 
+                  />
+                </div>
+              </div>
             </>
-          )}
+
 
           <div style={rowStyle}>
             <label style={labelStyle}>Color Principal (Opcional)</label>
@@ -245,7 +266,30 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 <button onClick={() => openMedia((url) => updateStyles(content, { backgroundImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
               </div>
             </div>
+
+            {/* Section Effects */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Opacidad ({Math.round(((content as SectionContent).styles?.opacity ?? 1) * 100)}%)</label>
+                <input 
+                  type="range" min="0" max="1" step="0.01" 
+                  value={(content as SectionContent).styles?.opacity ?? 1} 
+                  onChange={(e) => updateStyles(content, { opacity: parseFloat(e.target.value) })} 
+                  style={{ width: "100%" }} 
+                />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Brillo ({Math.round(((content as SectionContent).styles?.brightness ?? 1) * 100)}%)</label>
+                <input 
+                  type="range" min="0" max="3" step="0.05" 
+                  value={(content as SectionContent).styles?.brightness ?? 1} 
+                  onChange={(e) => updateStyles(content, { brightness: parseFloat(e.target.value) })} 
+                  style={{ width: "100%" }} 
+                />
+              </div>
+            </div>
           </div>
+
         </>
       )}
 
@@ -354,10 +398,17 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             </div>
           </div>
 
-          <div style={rowStyle}>
-            <label style={labelStyle}>Opacidad fondo (0-100)</label>
-            <input id="field-overlayOpacity" type="number" value={(content as HeroContent).overlayOpacity} onChange={(e) => update({ overlayOpacity: Number(e.target.value) })} style={inputStyle} />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Opacidad Fondo ({Math.round(((content as HeroContent).overlayOpacity || 100))}%)</label>
+              <input id="field-overlayOpacity" type="range" min="0" max="100" value={(content as HeroContent).overlayOpacity} onChange={(e) => update({ overlayOpacity: Number(e.target.value) })} style={{ width: "100%" }} />
+            </div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Brillo ({Math.round(((content as any).brightness ?? 1) * 100)}%)</label>
+              <input type="range" min="0" max="3" step="0.05" value={(content as any).brightness ?? 1} onChange={(e) => update({ brightness: parseFloat(e.target.value) })} style={{ width: "100%" }} />
+            </div>
           </div>
+
         </>
       )}
 
@@ -485,6 +536,28 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             <label style={labelStyle}>Cuerpo del texto</label>
             <textarea value={(content as CtaContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "80px" }} />
           </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Opacidad Fondo ({Math.round(((content as any).overlayOpacity ?? 1) * 100)}%)</label>
+              <input 
+                type="range" min="0" max="1" step="0.01" 
+                value={(content as any).overlayOpacity ?? 1} 
+                onChange={(e) => update({ overlayOpacity: parseFloat(e.target.value) })} 
+                style={{ width: "100%" }} 
+              />
+            </div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Brillo ({Math.round(((content as any).brightness ?? 1) * 100)}%)</label>
+              <input 
+                type="range" min="0" max="3" step="0.05" 
+                value={(content as any).brightness ?? 1} 
+                onChange={(e) => update({ brightness: parseFloat(e.target.value) })} 
+                style={{ width: "100%" }} 
+              />
+            </div>
+          </div>
+
           
           <div style={{ padding: "1rem", background: "#F3F4F6", borderRadius: "8px", marginTop: "1rem" }}>
             <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "0.75rem" }}>Animaciones</p>

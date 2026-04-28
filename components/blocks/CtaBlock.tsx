@@ -20,6 +20,9 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
     if (onUpdate) onUpdate({ ...content, [field]: value });
   };
 
+  const overlayOpacity = (content as any).overlayOpacity ?? 1;
+  const brightness = (content as any).brightness ?? 1;
+
   return (
     <section
       style={{
@@ -38,18 +41,19 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             alt=""
             fill
             loading="lazy"
-            style={{ objectFit: "cover", objectPosition: "center 30%" }}
+            style={{ objectFit: "cover", objectPosition: "center 30%", filter: `brightness(${brightness})` }}
             sizes="100vw"
           />
           <div
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(105deg, rgba(5,5,5,0.92) 0%, rgba(5,5,5,0.75) 50%, rgba(5,5,5,0.55) 100%)",
+              background: `linear-gradient(105deg, rgba(5,5,5,${0.92 * overlayOpacity}) 0%, rgba(5,5,5,${0.75 * overlayOpacity}) 50%, rgba(5,5,5,${0.55 * overlayOpacity}) 100%)`,
             }}
           />
         </div>
       )}
+
 
       <div
         style={{
