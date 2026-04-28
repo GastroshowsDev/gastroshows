@@ -322,7 +322,42 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 <option value="center bottom">Centro Abajo</option>
               </select>
             </div>
+
+            <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+              <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado (p.ej. 2rem o 20px)</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Margin Top</label>
+                  <input value={(content as SectionContent).styles?.marginTop || ""} onChange={(e) => updateStyles(content, { marginTop: e.target.value })} style={inputStyle} placeholder="0" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Margin Bottom</label>
+                  <input value={(content as SectionContent).styles?.marginBottom || ""} onChange={(e) => updateStyles(content, { marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Top</label>
+                  <input value={(content as SectionContent).styles?.paddingTop || ""} onChange={(e) => updateStyles(content, { paddingTop: e.target.value })} style={inputStyle} placeholder="6rem" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Bottom</label>
+                  <input value={(content as SectionContent).styles?.paddingBottom || ""} onChange={(e) => updateStyles(content, { paddingBottom: e.target.value })} style={inputStyle} placeholder="8rem" />
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Left</label>
+                  <input value={(content as SectionContent).styles?.paddingLeft || ""} onChange={(e) => updateStyles(content, { paddingLeft: e.target.value })} style={inputStyle} placeholder="2rem" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Right</label>
+                  <input value={(content as SectionContent).styles?.paddingRight || ""} onChange={(e) => updateStyles(content, { paddingRight: e.target.value })} style={inputStyle} placeholder="2rem" />
+                </div>
+              </div>
+            </div>
           </div>
+
 
 
         </>
@@ -454,6 +489,31 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               <option value="center 80%">Abajo (80%)</option>
             </select>
           </div>
+
+          <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Margin Top</label>
+                <input value={(content as any).marginTop || ""} onChange={(e) => update({ marginTop: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Margin Bottom</label>
+                <input value={(content as any).marginBottom || ""} onChange={(e) => update({ marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Padding Top</label>
+                <input value={(content as any).paddingTop || ""} onChange={(e) => update({ paddingTop: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Padding Bottom</label>
+                <input value={(content as any).paddingBottom || ""} onChange={(e) => update({ paddingBottom: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+            </div>
+          </div>
+
 
 
         </>
@@ -615,6 +675,31 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               <option value="center 70%">Abajo (70%)</option>
             </select>
           </div>
+
+          <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Margin Top</label>
+                <input value={(content as any).marginTop || ""} onChange={(e) => update({ marginTop: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Margin Bottom</label>
+                <input value={(content as any).marginBottom || ""} onChange={(e) => update({ marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Padding Top</label>
+                <input value={(content as any).paddingTop || ""} onChange={(e) => update({ paddingTop: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Padding Bottom</label>
+                <input value={(content as any).paddingBottom || ""} onChange={(e) => update({ paddingBottom: e.target.value })} style={inputStyle} placeholder="0" />
+              </div>
+            </div>
+          </div>
+
 
 
           

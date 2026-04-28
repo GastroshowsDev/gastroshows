@@ -71,8 +71,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         }}
       >
         {content.bgImage && (
-          <Image src={content.bgImage} alt="" fill priority style={{ objectFit: "cover", objectPosition: content.bgPosition || "center", filter: `brightness(${brightness})` }} />
+          <Image src={content.bgImage} alt="" fill priority className="gs-bg-image" style={{ objectFit: "cover", objectPosition: content.bgPosition || "center", "--img-brightness": brightness } as any} />
         )}
+
 
 
       </div>
@@ -127,7 +128,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
           <h1
             style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: "clamp(3rem, 8vw, 6rem)",
+              fontSize: "clamp(1.5rem, 8vw, 6rem)",
+
+
               fontWeight: 300,
               letterSpacing: "0.04em",
               lineHeight: 1.05,
@@ -161,7 +164,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   style={{ 
                     color: "#daa520", 
                     fontStyle: "italic",
-                    textShadow: "0 0 15px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+                    textShadow: "0 0 20px rgba(218, 165, 32, 0.6), 0 0 10px rgba(218, 165, 32, 0.4), 0 0 5px rgba(218, 165, 32, 0.2)"
+
                   }}
 
                 />
@@ -172,7 +176,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
 
         {(content.subtitle || isEditing) && (
           <AnimatedWrapper animation={content.subtitleAnim || "fade-in"} delay={0.2}>
-            <p
+            <div
               style={{
                 fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
                 fontFamily: "var(--font-cormorant), Georgia, serif",
@@ -193,8 +197,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                 dataField="subtitle"
                 placeholder="Subtítulo o descripción corta"
               />
-            </p>
+            </div>
           </AnimatedWrapper>
+
         )}
 
         {/* CTAs */}

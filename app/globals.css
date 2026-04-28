@@ -114,19 +114,27 @@ body {
 }
 
 /* ── Image blur in Clandestino (dark) mode ── */
-/* We target content images, avoiding logos or small icons if possible, 
-   but the request is general: "las imágenes apenas se identifiquen" */
-:root.dark img:not(.no-blur) {
-  filter: blur(35px) grayscale(0.5) brightness(0.7);
-  opacity: 0.6;
+:root {
+  --img-brightness: 1;
+}
+
+img:not(.no-blur), 
+.gs-bg-image {
   transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
 }
 
-:root.light img {
-  filter: blur(0) grayscale(0) brightness(1.25) contrast(1.1);
-  opacity: 1;
-  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+:root.dark img:not(.no-blur),
+:root.dark .gs-bg-image {
+  filter: blur(20px) grayscale(0.3) brightness(calc(0.65 * var(--img-brightness)));
+  opacity: 0.55;
 }
+
+:root.light img,
+:root.light .gs-bg-image {
+  filter: blur(0) grayscale(0) brightness(calc(1.15 * var(--img-brightness))) contrast(1.05);
+  opacity: 1;
+}
+
 
 /* ── UX Readability enhancement for light mode ── */
 :root.light h1, 

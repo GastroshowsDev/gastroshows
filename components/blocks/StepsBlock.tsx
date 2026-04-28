@@ -23,12 +23,13 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
     <section style={{ padding: "6rem 2rem 8rem", background: "var(--gs-bg)", position: "relative" }}>
       <div style={{ textAlign: "center", marginBottom: "5rem" }}>
         <InlineText
-          tagName="p"
+          tagName="div"
           value={content.eyebrow}
           onChange={(v) => updateField("eyebrow", v)}
           isEditing={isEditing}
           style={{ fontSize: "0.75rem", letterSpacing: "0.4em", textTransform: "uppercase", color: primaryColor, marginBottom: "1.2rem" }}
         />
+
         <h2 style={{
           fontFamily: "var(--font-cormorant), Georgia, serif",
           fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
@@ -159,15 +160,17 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
           }}>{step.day}</span>
         </div>
 
-        <p style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.2rem" }}>{step.eyebrow}</p>
+        <div style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.2rem" }}>{step.eyebrow}</div>
+
 
         <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.7rem", fontWeight: 400, color: "#111", lineHeight: 1.2, marginBottom: "0.6rem" }}>
           {step.title}
         </h3>
 
-        <p style={{ fontSize: "0.98rem", lineHeight: 1.6, color: "#444", fontFamily: "var(--font-montserrat), sans-serif" }}>
+        <div style={{ fontSize: "0.98rem", lineHeight: 1.6, color: "#444", fontFamily: "var(--font-montserrat), sans-serif" }}>
           {step.body}
-        </p>
+        </div>
+
 
         {/* Decorative elements */}
         <div style={{ position: "absolute", bottom: 0, right: 0, width: "60px", height: "60px", background: "linear-gradient(135deg, transparent 60%, rgba(200,169,110,0.08) 60%)" }} />

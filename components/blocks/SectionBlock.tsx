@@ -137,8 +137,17 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         backgroundPosition: styles.backgroundPosition || "center",
         position: "relative",
         opacity: styles.opacity ?? 1,
-        filter: styles.brightness ? `brightness(${styles.brightness})` : "none"
+        filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
+        marginTop: styles.marginTop || "0px",
+        marginBottom: styles.marginBottom || "0px",
+        marginLeft: styles.marginLeft || "0px",
+        marginRight: styles.marginRight || "0px",
+        paddingTop: styles.paddingTop || "6rem",
+        paddingBottom: styles.paddingBottom || "8rem",
+        paddingLeft: styles.paddingLeft || "2rem",
+        paddingRight: styles.paddingRight || "2rem",
       }}>
+
 
         <div 
           style={{

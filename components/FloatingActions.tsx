@@ -38,14 +38,14 @@ export function FloatingActions() {
     checkPromos();
   }, []);
 
-  const [isHideableAdmin, setIsHideableAdmin] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        setIsHideableAdmin(window.innerWidth < 1024);
+        setIsMobile(window.innerWidth < 768);
       }, 150);
     };
     handleResize();
@@ -56,21 +56,25 @@ export function FloatingActions() {
     };
   }, []);
 
-
   const isAdmin = pathname?.startsWith("/admin");
   const shouldHide = isAdmin;
 
   if (!visible || shouldHide) return null;
 
-
-
   const hasPromo = config?.wedThuActive || config?.hasCampaign;
 
   return (
     <div style={{
-      position: "fixed", bottom: "2rem", right: "2rem", zIndex: 9000,
-      display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "1rem",
+      position: "fixed", 
+      bottom: isMobile ? "25%" : "2rem", 
+      right: isMobile ? "0.75rem" : "2rem", 
+      zIndex: 9000,
+      display: "flex", 
+      flexDirection: "column", 
+      alignItems: "flex-end", 
+      gap: "0.75rem",
       fontFamily: "var(--font-montserrat), sans-serif",
+      transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
     }}>
       
       {/* Promo Bubble (WA style) */}
@@ -78,47 +82,45 @@ export function FloatingActions() {
         <div 
           onClick={openReservation}
           style={{
-            background: "#daa520", color: "#000", padding: "0.8rem 1.2rem",
-            borderRadius: "18px 18px 4px 18px", fontSize: "0.82rem", fontWeight: 600,
-            boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: "240px", cursor: "pointer",
+            background: "#daa520", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
+            borderRadius: "18px 18px 4px 18px", fontSize: isMobile ? "0.75rem" : "0.82rem", fontWeight: 600,
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: isMobile ? "180px" : "240px", cursor: "pointer",
             animation: "waPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both",
             position: "relative", border: "1px solid #C8A96E",
+            marginBottom: isMobile ? "0.5rem" : "0",
           }}
         >
           <p style={{ margin: 0, lineHeight: 1.4 }}>
-            ¡Hola! Tenemos una <strong style={{ textDecoration: "underline" }}>oferta especial</strong> disponible. ✨
+            ¡Hola! Tenemos una <strong style={{ textDecoration: "underline" }}>oferta especial</strong>. ✨
           </p>
-          <div style={{ position: "absolute", bottom: "4px", right: "8px", fontSize: "0.6rem", color: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", gap: "2px" }}>
-            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} <span>✓✓</span>
-          </div>
         </div>
       )}
 
-
-      {/* Horizontal Pill Container */}
+      {/* Pill Container (Vertical on Mobile, Horizontal on Desktop) */}
       <div style={{ 
         display: "flex", 
-        gap: "0.5rem", 
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? "0.25rem" : "0.5rem", 
         alignItems: "center",
-        background: "rgba(10, 10, 10, 0.9)",
-        backdropFilter: "blur(10px)",
-        padding: "0.6rem",
+        background: "rgba(10, 10, 10, 0.92)",
+        backdropFilter: "blur(12px)",
+        padding: isMobile ? "0.35rem" : "0.6rem",
         borderRadius: "100px",
         border: `1px solid ${GOLD}`,
-        boxShadow: "0 15px 35px rgba(0,0,0,0.5)",
+        boxShadow: "0 15px 45px rgba(0,0,0,0.6)",
         animation: "waPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both"
       }}>
         
         {/* 1. Gift Icon */}
         <div style={{ position: "relative" }}>
-          <Tooltip text="Regalar" visible={activeTooltip === "gift"} />
+          {!isMobile && <Tooltip text="Regalar" visible={activeTooltip === "gift"} />}
           <button
             onClick={openGift}
             onMouseEnter={() => { setActiveTooltip("gift"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={btnStylePill}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 12 20 22 4 22 4 12"></polyline>
               <rect x="2" y="7" width="20" height="5"></rect>
               <line x1="12" y1="22" x2="12" y2="7"></line>
@@ -128,18 +130,18 @@ export function FloatingActions() {
           </button>
         </div>
 
-        <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />
+        {!isMobile && <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />}
 
         {/* 2. Reservation Icon */}
         <div style={{ position: "relative" }}>
-          <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />
+          {!isMobile && <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />}
           <button
             onClick={openReservation}
             onMouseEnter={() => { setActiveTooltip("reserve"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={btnStylePill}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
               <line x1="16" y1="2" x2="16" y2="6"></line>
               <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -147,34 +149,35 @@ export function FloatingActions() {
             </svg>
             {hasPromo && (
               <div style={{
-                position: "absolute", top: "-5px", right: "-5px", background: "#daa520", color: "#000",
-                width: "18px", height: "18px", borderRadius: "50%", fontSize: "0.65rem", fontWeight: 800,
-                display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #0A0A0A"
+                position: "absolute", top: "-3px", right: "-3px", background: "#daa520", color: "#000",
+                width: "16px", height: "16px", borderRadius: "50%", fontSize: "0.6rem", fontWeight: 800,
+                display: "flex", alignItems: "center", justifyContent: "center", border: "1.5px solid #0A0A0A"
               }}>!</div>
             )}
           </button>
         </div>
 
-        <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />
+        {!isMobile && <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />}
 
         {/* 3. WhatsApp Icon */}
         <div style={{ position: "relative" }}>
-          <Tooltip text="Contacto" visible={activeTooltip === "wa"} />
+          {!isMobile && <Tooltip text="Contacto" visible={activeTooltip === "wa"} />}
           <a 
             href="https://wa.me/34600000000" 
             target="_blank" 
             rel="noreferrer"
             onMouseEnter={() => { setActiveTooltip("wa"); }}
             onMouseLeave={() => setActiveTooltip(null)}
-            style={btnStylePill}
+            style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px"}}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width={isMobile ? "18" : "20"} height={isMobile ? "18" : "20"} viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"></path>
             </svg>
           </a>
         </div>
 
       </div>
+
 
       <style jsx global>{`
         @keyframes waPop {

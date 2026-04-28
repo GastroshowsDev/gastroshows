@@ -46,9 +46,11 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             alt=""
             fill
             loading="lazy"
-            style={{ objectFit: "cover", objectPosition: content.bgPosition || "center 30%", filter: `brightness(${brightness})` }}
+            className="gs-bg-image"
+            style={{ objectFit: "cover", objectPosition: content.bgPosition || "center 30%", "--img-brightness": brightness } as any}
             sizes="100vw"
           />
+
 
           <div
             style={{
@@ -74,7 +76,7 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
       >
         {content.eyebrow !== undefined && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
-            <p
+            <div
               style={{
                 fontSize: "0.68rem",
                 letterSpacing: "0.3em",
@@ -92,8 +94,9 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 dataField="eyebrow"
               />
-            </p>
+            </div>
           </AnimatedWrapper>
+
         )}
 
         <AnimatedWrapper animation={content.titleAnim || "fade-in"}>
@@ -141,7 +144,7 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
 
         {content.body !== undefined && (
           <AnimatedWrapper animation={content.bodyAnim || "fade-in"} delay={0.2}>
-            <p
+            <div
               style={{
                 fontSize: "1.05rem",
                 lineHeight: 1.85,
@@ -156,8 +159,9 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 dataField="body"
               />
-            </p>
+            </div>
           </AnimatedWrapper>
+
         )}
 
         {(content.buttonText || isEditing) && (
