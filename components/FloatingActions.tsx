@@ -8,10 +8,11 @@ const GOLD = "#C8A96E";
 
 export function FloatingActions() {
   const pathname = usePathname();
-  const { openReservation } = usePageActions();
+  const { openReservation, openGift } = usePageActions();
   const [config, setConfig] = useState<{ wedThuActive: boolean; hasCampaign: boolean; campaignName?: string } | null>(null);
   const [visible, setVisible] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   useEffect(() => {
     async function checkPromos() {
@@ -20,14 +21,15 @@ export function FloatingActions() {
         const data = await res.json();
         setConfig(data);
         
-        // Appear after 4 seconds
+        // Appear after 2 seconds
         const timer = setTimeout(() => {
           setVisible(true);
           // If there's a promo, show the bubble 0.5s later
           if (data.wedThuActive || data.hasCampaign) {
              setTimeout(() => setShowNotification(true), 500);
           }
-        }, 4000);
+        }, 2000);
+
         return () => clearTimeout(timer);
       } catch (err) {
         console.error("Error checking promos:", err);
@@ -36,7 +38,21 @@ export function FloatingActions() {
     checkPromos();
   }, []);
 
-  if (!visible || pathname?.startsWith("/admin")) return null;
+  const [isHideableAdmin, setIsHideableAdmin] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsHideableAdmin(window.innerWidth < 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isEditor = pathname?.includes("/editor") && pathname?.startsWith("/admin");
+  const shouldHide = pathname?.startsWith("/admin") && (isHideableAdmin || isEditor);
+
+  if (!visible || shouldHide) return null;
 
 
   const hasPromo = config?.wedThuActive || config?.hasCampaign;
@@ -61,71 +77,129 @@ export function FloatingActions() {
           }}
         >
           <p style={{ margin: 0, lineHeight: 1.4 }}>
-            ¡Hola! Tenemos una <strong style={{ color: "#25D366" }}>oferta especial</strong> disponible. ✨
+            ¡Hola! Tenemos una <strong style={{ color: "#daa520" }}>oferta especial</strong> disponible. ✨
           </p>
           <div style={{ position: "absolute", bottom: "4px", right: "8px", fontSize: "0.6rem", color: "#999", display: "flex", alignItems: "center", gap: "2px" }}>
-            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} <span style={{ color: "#34B7F1" }}>✓✓</span>
+            {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} <span style={{ color: "#daa520" }}>✓✓</span>
           </div>
         </div>
       )}
 
-      {/* Action Row */}
-      <div style={{ display: "flex", gap: "0.85rem", alignItems: "center" }}>
+      {/* Horizontal Pill Container */}
+      <div style={{ 
+        display: "flex", 
+        gap: "0.5rem", 
+        alignItems: "center",
+        background: "rgba(10, 10, 10, 0.9)",
+        backdropFilter: "blur(10px)",
+        padding: "0.6rem",
+        borderRadius: "100px",
+        border: `1px solid ${GOLD}`,
+        boxShadow: "0 15px 35px rgba(0,0,0,0.5)",
+        animation: "waPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both"
+      }}>
         
-        {/* 1. Reservation Icon */}
-        <button
-          onClick={openReservation}
-          style={{
-            width: "56px", height: "56px", background: "#0A0A0A", border: `1px solid ${GOLD}`,
-            borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", boxShadow: "0 8px 24px rgba(0,0,0,0.4)", position: "relative",
-            transition: "all 0.3s ease",
-          }}
-          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
-          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          {hasPromo && (
-            <div style={{
-              position: "absolute", top: "-2px", right: "-2px", background: "#25D366", color: "#fff",
-              width: "20px", height: "20px", borderRadius: "50%", fontSize: "0.7rem", fontWeight: 700,
-              display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #0A0A0A"
-            }}>1</div>
-          )}
-        </button>
+        {/* 1. Gift Icon */}
+        <div style={{ position: "relative" }}>
+          <Tooltip text="Regalar" visible={activeTooltip === "gift"} />
+          <button
+            onClick={openGift}
+            onMouseEnter={() => { setActiveTooltip("gift"); }}
+            onMouseLeave={() => setActiveTooltip(null)}
+            style={btnStylePill}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"></polyline>
+              <rect x="2" y="7" width="20" height="5"></rect>
+              <line x1="12" y1="22" x2="12" y2="7"></line>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+            </svg>
+          </button>
+        </div>
 
+        <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />
 
-        {/* 2. WhatsApp Icon */}
-        <a 
-          href="https://wa.me/34600000000" 
-          target="_blank" 
-          rel="noreferrer"
-          style={{
-            width: "56px", height: "56px", background: "#25D366", border: "none",
-            borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", boxShadow: "0 8px 24px rgba(0,0,0,0.3)", transition: "all 0.3s ease",
-          }}
-          onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
-          onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"></path>
-          </svg>
-        </a>
+        {/* 2. Reservation Icon */}
+        <div style={{ position: "relative" }}>
+          <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />
+          <button
+            onClick={openReservation}
+            onMouseEnter={() => { setActiveTooltip("reserve"); }}
+            onMouseLeave={() => setActiveTooltip(null)}
+            style={btnStylePill}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            {hasPromo && (
+              <div style={{
+                position: "absolute", top: "-5px", right: "-5px", background: "#daa520", color: "#000",
+                width: "18px", height: "18px", borderRadius: "50%", fontSize: "0.65rem", fontWeight: 800,
+                display: "flex", alignItems: "center", justifyContent: "center", border: "2px solid #0A0A0A"
+              }}>!</div>
+            )}
+          </button>
+        </div>
+
+        <div style={{ width: "1px", height: "24px", background: "rgba(200, 169, 110, 0.2)" }} />
+
+        {/* 3. WhatsApp Icon */}
+        <div style={{ position: "relative" }}>
+          <Tooltip text="Contacto" visible={activeTooltip === "wa"} />
+          <a 
+            href="https://wa.me/34600000000" 
+            target="_blank" 
+            rel="noreferrer"
+            onMouseEnter={() => { setActiveTooltip("wa"); }}
+            onMouseLeave={() => setActiveTooltip(null)}
+            style={btnStylePill}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"></path>
+            </svg>
+          </a>
+        </div>
 
       </div>
 
       <style jsx global>{`
         @keyframes waPop {
-          0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+          0% { opacity: 0; transform: scale(0.8) translateY(20px); }
           100% { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
     </div>
   );
 }
+
+function Tooltip({ text, visible }: { text: string, visible: boolean }) {
+  return (
+    <div style={{
+      position: "absolute", bottom: "100%", left: "50%", transform: "translateX(-50%)",
+      marginBottom: "1.2rem", padding: "0.5rem 0.9rem", background: "#0A0A0A", color: "#fff",
+      fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase",
+      borderRadius: "4px", whiteSpace: "nowrap", pointerEvents: "none",
+      opacity: visible ? 1 : 0, transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+      boxShadow: "0 10px 25px rgba(0,0,0,0.4)", border: `1px solid ${GOLD}`
+    }}>
+      {text}
+      <div style={{
+        position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)",
+        borderLeft: "6px solid transparent", borderRight: "6px solid transparent",
+        borderTop: `6px solid ${GOLD}`
+      }} />
+    </div>
+  );
+}
+
+const btnStylePill = {
+  width: "48px", height: "48px", background: "transparent", border: "none",
+  borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+  cursor: "pointer", transition: "all 0.3s ease", textDecoration: "none",
+  position: "relative" as const
+};
+
