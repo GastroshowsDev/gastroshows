@@ -2,11 +2,17 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { ReservasTable } from "@/components/admin/ReservasTable";
+import { getCalendarData } from "@/lib/admin/calendar-utils";
+import { CalendarBoard } from "@/components/admin/CalendarBoard";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
 async function getReservas() {
   const reservations = await prisma.reservation.findMany({
+    where: {
+      type: { notIn: ["VISIT", "GIFT"] }
+    },
     orderBy: { createdAt: "desc" },
     include: {
       customer: { select: { id: true, name: true, email: true, phone: true, allergies: true, comments: true, previousVisit: true } },
@@ -49,8 +55,15 @@ async function getReservas() {
 
 export type ReservaRow = Awaited<ReturnType<typeof getReservas>>[number];
 
-export default async function ReservasPage() {
-  const [reservas, session] = await Promise.all([getReservas(), getServerSession(authOptions)]);
+export default async function ReservasPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const { view } = await searchParams;
+  const isCalendar = view === "calendar";
+
+  const [reservas, calendarEvents, session] = await Promise.all([
+    getReservas(),
+    isCalendar ? getCalendarData("NORMAL") : Promise.resolve([]),
+    getServerSession(authOptions)
+  ]);
   const role = ((session?.user as { role?: string } | undefined)?.role ?? "LIVE") as "ADMIN" | "LIVE";
 
   return (
@@ -74,9 +87,38 @@ export default async function ReservasPage() {
             {reservas.length} reserva{reservas.length !== 1 ? "s" : ""} en total
           </p>
         </div>
+
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <Link 
+            href="/admin/reservas" 
+            style={{ 
+              padding: "0.4rem 0.8rem", borderRadius: "6px", fontSize: "0.75rem", fontWeight: 600,
+              background: !isCalendar ? "var(--color-admin-accent)" : "transparent",
+              color: !isCalendar ? "#fff" : "var(--color-admin-text)",
+              textDecoration: "none", border: "1px solid var(--color-admin-border)"
+            }}
+          >
+            Tabla
+          </Link>
+          <Link 
+            href="/admin/reservas?view=calendar" 
+            style={{ 
+              padding: "0.4rem 0.8rem", borderRadius: "6px", fontSize: "0.75rem", fontWeight: 600,
+              background: isCalendar ? "var(--color-admin-accent)" : "transparent",
+              color: isCalendar ? "#fff" : "var(--color-admin-text)",
+              textDecoration: "none", border: "1px solid var(--color-admin-border)"
+            }}
+          >
+            Calendario
+          </Link>
+        </div>
       </div>
 
-      <ReservasTable reservas={reservas} role={role} />
+      {isCalendar ? (
+        <CalendarBoard events={calendarEvents} />
+      ) : (
+        <ReservasTable reservas={reservas} role={role} />
+      )}
     </div>
   );
 }

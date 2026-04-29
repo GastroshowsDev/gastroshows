@@ -16,6 +16,8 @@ export async function PATCH(req: Request, { params }: RouteContext) {
       guests?: number; type?: ReservationType;
       totalAmount?: number; paidAmount?: number;
       status?: ReservationStatus;
+      visitDate?: string;
+      visitTime?: string;
     };
 
     const reservation = await prisma.reservation.findUnique({
@@ -72,6 +74,8 @@ export async function PATCH(req: Request, { params }: RouteContext) {
         ...(body.paidAmount !== undefined && { paidAmount: body.paidAmount }),
         ...(body.status !== undefined && { status: body.status }),
         ...(venueId !== undefined && { venueId }),
+        ...(body.visitDate !== undefined && { visitDate: body.visitDate ? new Date(body.visitDate) : null }),
+        ...(body.visitTime !== undefined && { visitTime: body.visitTime }),
       },
       include: {
         customer: { select: { id: true, name: true, email: true, phone: true, allergies: true } },
