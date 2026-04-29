@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 export async function GET() {
   try {
     const reservations = await prisma.reservation.findMany({
-      where: { status: ReservationStatus.PENDING },
+      where: { status: ReservationStatus.PENDING, type: "VISIT" },
       orderBy: { createdAt: "desc" },
       include: {
         customer: {

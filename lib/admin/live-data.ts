@@ -17,7 +17,10 @@ export type ReservationLivePayload = Prisma.ReservationGetPayload<{
 
 export async function getRecentReservationsForLive(limit: number) {
   return prisma.reservation.findMany({
-    where: { status: { notIn: ["CHECKED_IN"] } },
+    where: {
+      status: { notIn: ["CHECKED_IN"] },
+      NOT: { status: "PENDING", type: { not: "VISIT" } },
+    },
     orderBy: { updatedAt: "desc" },
     take: limit,
     include: includeBlock,
