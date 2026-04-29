@@ -11,6 +11,7 @@ type PendingRow = {
   totalAmount: string;
   createdAt: string;
   isFirstVisit: boolean;
+  type: "NORMAL" | "GIFT" | "VISIT";
   customer: { name: string; phone: string; email: string; comments: string | null };
   event: { date: string; shift: string };
   venue: { name: string } | null;
@@ -133,7 +134,7 @@ export function PendingReservationsPanel() {
           No hay reservas pendientes de confirmar.
         </p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {rows.map((r) => {
             const isBusy = busyId === r.id;
             const eventDate = new Date(r.event.date).toLocaleDateString("es-ES", {
@@ -145,24 +146,34 @@ export function PendingReservationsPanel() {
             const total = parseFloat(r.totalAmount);
             const deposit = (total * 0.3).toFixed(2);
 
+            const isVisit = r.type === "VISIT";
+            const borderColor = isVisit ? "border-l-amber-500" : "border-l-blue-500";
+
             return (
               <li
                 key={r.id}
-                className="rounded-lg border border-zinc-100 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900"
+                className={`rounded-lg border border-zinc-100 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900 border-l-[10px] ${borderColor} flex flex-col`}
               >
                 {/* Header row */}
-                <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
-                  <div>
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-50">
+                <div className="mb-2 flex flex-wrap items-start justify-between gap-1">
+                  <div className="min-w-0 flex-1">
+                    <span className="block truncate font-semibold text-zinc-900 dark:text-zinc-50">
                       {r.customer.name}
                     </span>
-                    {r.isFirstVisit && (
-                      <span className="ml-2 rounded bg-blue-100 px-1.5 py-0.5 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                        Primera visita
-                      </span>
-                    )}
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {isVisit && (
+                        <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 uppercase tracking-wider">
+                          VISITA
+                        </span>
+                      )}
+                      {r.isFirstVisit && (
+                        <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                          1ª Visita
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <span className="text-xs text-zinc-400">
+                  <span className="text-[10px] text-zinc-400 whitespace-nowrap">
                     {new Date(r.createdAt).toLocaleString("es-ES", {
                       day: "numeric",
                       month: "short",
@@ -173,10 +184,10 @@ export function PendingReservationsPanel() {
                 </div>
 
                 {/* Details grid */}
-                <dl className="mb-3 grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3">
+                <dl className="mb-3 grid grid-cols-2 gap-x-2 gap-y-1.5 text-xs">
                   <Detail label="Fecha" value={`${eventDate} · ${shift}`} wide />
                   <Detail label="Personas" value={`${r.guests} pax`} />
-                  <Detail label="Total" value={`${total.toFixed(2)} € (depósito ${deposit} €)`} />
+                  <Detail label="Total" value={`${total.toFixed(0)}€ (${deposit}€ dep)`} />
                   <Detail label="Teléfono" value={r.customer.phone} />
                   <Detail label="Email" value={r.customer.email} />
                   {r.customer.comments && (
