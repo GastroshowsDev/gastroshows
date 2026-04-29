@@ -7,11 +7,18 @@ type Props = {
   reservationId: string;
   amount: number;
   onLoading?: (loading: boolean) => void;
+  autoTrigger?: boolean;
 };
 
-export function PaymentButton({ reservationId, amount, onLoading }: Props) {
+export function PaymentButton({ reservationId, amount, onLoading, autoTrigger }: Props) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (autoTrigger) {
+      handlePayment();
+    }
+  }, [autoTrigger]);
 
   async function handlePayment() {
     setLoading(true);

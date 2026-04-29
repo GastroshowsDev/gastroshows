@@ -27,7 +27,7 @@ export function DemoModeToggle() {
   };
 
   const requiredWord = isDemo ? "Live" : "Demo";
-  const isMatch = confirmText === requiredWord;
+  const isMatch = confirmText.trim().toLowerCase() === requiredWord.toLowerCase();
 
   const confirmChange = async () => {
     if (!isMatch || updating) return;
@@ -107,7 +107,7 @@ export function DemoModeToggle() {
             
             <p style={{ color: "rgba(245,240,232,0.7)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "2rem" }}>
               Estás a punto de cambiar el sistema de pagos a modo <strong>{isDemo ? "REAL (Redsys)" : "SIMULADO"}</strong>.<br/>
-              Para confirmar, escribe exactamente <span style={{ color: GOLD, fontWeight: 700 }}>"{requiredWord}"</span> (respetando la mayúscula) a continuación.
+              Para confirmar, escribe <span style={{ color: GOLD, fontWeight: 700 }}>"{requiredWord}"</span> a continuación.
             </p>
 
             <div style={{ position: "relative", marginBottom: "2rem" }}>

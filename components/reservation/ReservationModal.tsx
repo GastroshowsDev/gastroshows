@@ -377,7 +377,7 @@ export function ReservationModal({ open, onClose }: Props) {
                   disabled={loading}
                   style={{ ...nextBtnStyle, opacity: loading ? 0.5 : 1, cursor: loading ? "not-allowed" : "pointer" }}
                 >
-                  {loading ? "Enviando…" : (form.shift === "PRIVATE" ? "Solicitar información" : "Confirmar reserva")}
+                  {loading ? "Enviando…" : (form.shift === "PRIVATE" ? "Solicitar información" : "Confirmar y pagar")}
                 </button>
               )}
             </div>
@@ -1225,6 +1225,7 @@ function SuccessScreen({
         <PaymentButton 
           reservationId={success.id} 
           amount={success.deposit} 
+          autoTrigger={true}
         />
         
         <p style={{ fontSize: "0.9rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>

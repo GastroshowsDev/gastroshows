@@ -329,7 +329,7 @@ export function GiftModal({ open, onClose }: Props) {
                 transition: "all 0.2s",
               }}
             >
-              {loading ? "Generando…" : "Crear vale regalo"}
+              {loading ? "Generando…" : "Confirmar y pagar"}
             </button>
           </div>
         )}
@@ -459,6 +459,7 @@ function SuccessScreen({ success, onClose }: { success: SuccessData; onClose: ()
         <PaymentButton 
           reservationId={success.voucherId} 
           amount={success.totalAmount} 
+          autoTrigger={true}
         />
         
         <p style={{ fontSize: "0.65rem", color: LIGHT, maxWidth: "300px", margin: "0 auto" }}>

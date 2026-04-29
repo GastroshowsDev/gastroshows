@@ -106,7 +106,7 @@ export function AdminTopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) 
       </button>
 
       <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginLeft: "0.5rem", fontSize: "0.85rem", color: "var(--color-admin-muted)" }}>
-        <Link href="/admin" style={{ color: "var(--color-admin-text)", textDecoration: "none", fontWeight: 500 }}>Admin</Link>
+        <Link href="/admin/live" style={{ color: "var(--color-admin-text)", textDecoration: "none", fontWeight: 500 }}>Admin</Link>
         {breadcrumbs.map((segment, i) => {
           const path = `/admin/${breadcrumbs.slice(0, i + 1).join("/")}`;
           const isLast = i === breadcrumbs.length - 1;

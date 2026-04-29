@@ -7,7 +7,7 @@ export async function GET() {
     const config = settings.reduce((acc, curr) => ({
       ...acc,
       [curr.key]: curr.value
-    }), {});
+    }), { demo_mode: "true" }); // Default to true
     
     return NextResponse.json(config);
   } catch (error) {
