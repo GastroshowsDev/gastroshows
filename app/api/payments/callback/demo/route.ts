@@ -15,10 +15,7 @@ export async function POST(req: Request) {
     await prisma.reservation.update({
       where: { id: reservationId },
       data: { 
-        status: "PAID",
-        comments: {
-          append: "\n[PAGO SIMULADO EN MODO DEMO]"
-        }
+        status: "CONFIRMED",
       }
     });
 
