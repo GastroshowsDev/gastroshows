@@ -12,7 +12,7 @@ export function DemoModeToggle() {
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    fetch("/api/admin/settings")
+    fetch("/api/admin/settings", { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setIsDemo(data.demo_mode === "true");
