@@ -8,6 +8,7 @@ import {
   validateServiceDate,
 } from "@/lib/reservations";
 import { prisma } from "@/lib/prisma";
+import { buildRedsysFormData, reservationToOrderId } from "@/lib/redsys";
 
 export async function GET() {
   const reservations = await prisma.reservation.findMany({
@@ -88,13 +89,18 @@ export async function POST(request: Request) {
     return { customer, event, reservation };
   });
 
+  const amountDue = getAmountDueNow(totalAmount);
+  const orderId = reservationToOrderId(result.reservation.id);
+  const redsysData = buildRedsysFormData(amountDue, orderId);
+
   return NextResponse.json(
     {
       ok: true,
       reservationId: result.reservation.id,
       eventId: result.event.id,
       totalAmount,
-      amountDue: getAmountDueNow(totalAmount),
+      amountDue,
+      redsysData,
     },
     { status: 201 },
   );

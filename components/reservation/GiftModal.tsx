@@ -97,25 +97,28 @@ export function GiftModal({ open, onClose }: Props) {
       const json = (await res.json()) as {
         ok: boolean;
         error?: string;
-        voucherId?: string;
-        token?: string;
-        totalAmount?: number;
         expiresAt?: string;
+        redsysData?: any;
       };
       if (!res.ok || !json.ok) {
         setServerError(json.error ?? "Error al crear el vale regalo.");
         return;
       }
-      setSuccess({
-        voucherId: json.voucherId!,
-        token: json.token!,
-        totalAmount: json.totalAmount!,
-        expiresAt: json.expiresAt!,
-        deliveryMode,
-        recipientEmail: recipientEmail.trim(),
-        purchaserName: purchaserName.trim(),
-        guests,
-      });
+
+      if (json.redsysData) {
+        submitRedsysForm(json.redsysData);
+      } else {
+        setSuccess({
+          voucherId: json.voucherId!,
+          token: json.token!,
+          totalAmount: json.totalAmount!,
+          expiresAt: json.expiresAt!,
+          deliveryMode,
+          recipientEmail: recipientEmail.trim(),
+          purchaserName: purchaserName.trim(),
+          guests,
+        });
+      }
     } catch {
       setServerError("Error de conexión. Inténtalo de nuevo.");
     } finally {
@@ -561,4 +564,28 @@ function guestBtn(disabled: boolean): React.CSSProperties {
     alignItems: "center",
     justifyContent: "center",
   };
+}
+
+/** Redsys direct redirection helper */
+function submitRedsysForm(data: any) {
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = data.url;
+  
+  const params = {
+    Ds_SignatureVersion: data.Ds_SignatureVersion,
+    Ds_MerchantParameters: data.Ds_MerchantParameters,
+    Ds_Signature: data.Ds_Signature,
+  };
+
+  for (const [key, value] of Object.entries(params)) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = value as string;
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
 }

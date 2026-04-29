@@ -34,8 +34,8 @@ export async function GET(req: NextRequest) {
   const params = verifyRedsysCallback(fields);
   const success = params && isRedsysSuccess(params.Ds_Response);
   return success
-    ? redirect(req, `/reserva/confirmada?orden=${params.Ds_Order}`)
-    : redirect(req, "/reserva/error-pago");
+    ? redirect(req, `/booking-confirmation?order=${params.Ds_Order}`)
+    : redirect(req, `/booking-payment-failed?order=${params?.Ds_Order ?? ""}`);
 }
 
 export async function POST(req: NextRequest) {
@@ -43,11 +43,11 @@ export async function POST(req: NextRequest) {
   try {
     fields = extractFields(await req.formData());
   } catch {
-    return redirect(req, "/reserva/error-pago");
+    return redirect(req, "/booking-payment-failed");
   }
   const params = verifyRedsysCallback(fields);
   const success = params && isRedsysSuccess(params.Ds_Response);
   return success
-    ? redirect(req, `/reserva/confirmada?orden=${params?.Ds_Order ?? ""}`)
-    : redirect(req, "/reserva/error-pago");
+    ? redirect(req, `/booking-confirmation?order=${params?.Ds_Order ?? ""}`)
+    : redirect(req, `/booking-payment-failed?order=${params?.Ds_Order ?? ""}`);
 }

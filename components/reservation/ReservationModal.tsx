@@ -232,6 +232,9 @@ export function ReservationModal({ open, onClose }: Props) {
       
       if (isPrivate) {
         setSuccess({ id: "PRIVATE", total: 0, deposit: 0 });
+      } else if (json.redsysData) {
+        // Direct redirection to Redsys
+        submitRedsysForm(json.redsysData);
       } else {
         setSuccess({ id: json.reservationId!, total: json.totalAmount!, deposit: json.amountDue! });
       }
@@ -1324,3 +1327,27 @@ const nextBtnStyle: React.CSSProperties = {
   display: "block",
   transition: "all 0.2s",
 };
+
+/** Redsys direct redirection helper */
+function submitRedsysForm(data: any) {
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = data.url;
+  
+  const params = {
+    Ds_SignatureVersion: data.Ds_SignatureVersion,
+    Ds_MerchantParameters: data.Ds_MerchantParameters,
+    Ds_Signature: data.Ds_Signature,
+  };
+
+  for (const [key, value] of Object.entries(params)) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = value as string;
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { calculateTotalAmountWithDiscounts, giftPurchaseSchema } from "@/lib/booking";
 import { sendMail } from "@/lib/mail";
 import { prisma } from "@/lib/prisma";
+import { buildRedsysFormData, reservationToOrderId } from "@/lib/redsys";
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null);
@@ -94,6 +95,9 @@ export async function POST(request: Request) {
     }
   }
 
+  const orderId = reservationToOrderId(created.id);
+  const redsysData = buildRedsysFormData(totalAmount, orderId);
+
   return NextResponse.json(
     {
       ok: true,
@@ -102,6 +106,7 @@ export async function POST(request: Request) {
       totalAmount,
       expiresAt: created.expiresAt.toISOString(),
       emailSent,
+      redsysData,
     },
     { status: 201 },
   );
