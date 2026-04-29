@@ -215,11 +215,6 @@ model SeoSettings {
   updatedAt              DateTime @updatedAt
 }
 
-model Setting {
-  key   String @id
-  value String
-}
-
 model LandingContent {
   key       String   @id
   value     String
