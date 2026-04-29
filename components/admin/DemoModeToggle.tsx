@@ -12,7 +12,7 @@ export function DemoModeToggle() {
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    fetch("/api/admin/settings", { cache: 'no-store' })
+    fetch("/api/admin/settings?t=" + Date.now(), { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setIsDemo(data.demo_mode === "true");
@@ -45,9 +45,14 @@ export function DemoModeToggle() {
         setIsDemo(newValue);
         window.dispatchEvent(new CustomEvent("gs-demo-mode-changed", { detail: newValue }));
         setShowModal(false);
+        alert("Modo cambiado con éxito a " + (newValue ? "DEMO" : "LIVE"));
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert("Error al cambiar el modo: " + (errData.error || "Error desconocido"));
       }
     } catch (error) {
       console.error("Error updating mode:", error);
+      alert("Error de conexión al intentar cambiar el modo");
     } finally {
       setUpdating(false);
     }

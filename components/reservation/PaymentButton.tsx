@@ -26,7 +26,7 @@ export function PaymentButton({ reservationId, amount, onLoading, autoTrigger }:
 
     try {
       // Check if demo mode is active
-      const settingsRes = await fetch("/api/admin/settings");
+      const settingsRes = await fetch("/api/admin/settings?t=" + Date.now(), { cache: 'no-store' });
       const settings = await settingsRes.json();
       const isDemo = settings.demo_mode === "true";
 
