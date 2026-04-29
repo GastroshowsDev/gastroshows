@@ -33,13 +33,13 @@ export async function POST(request: Request) {
         guests: 1,
         totalAmount: 0,
         paidAmount: 0,
-        status: "CONFIRMED", 
+        status: "PENDING", 
         visitDate: new Date(date),
         visitTime: time,
       },
     });
 
-    // 3. Send Confirmation Email
+    // 3. Send Notification Email
     try {
       const formattedDate = new Date(date).toLocaleDateString("es-ES", {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -47,20 +47,20 @@ export async function POST(request: Request) {
 
       await sendMail({
         to: email,
-        subject: "Confirmación de tu visita a GastroShows",
+        subject: "Solicitud de visita recibida - GastroShows",
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
             <h2 style="color: #daa520;">¡Hola ${name}!</h2>
-            <p>Tu visita a nuestro local ha sido confirmada correctamente.</p>
+            <p>Hemos recibido tu solicitud de visita a nuestro local.</p>
             
             <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p><strong>Fecha:</strong> ${formattedDate}</p>
-              <p><strong>Hora:</strong> ${time}h</p>
-              <p><strong>Ubicación:</strong> C/ de Bertrand i Serra, 7, 08017 Barcelona (Sarrià)</p>
+              <p><strong>Fecha solicitada:</strong> ${formattedDate}</p>
+              <p><strong>Hora solicitada:</strong> ${time}h</p>
+              <p><strong>Estado:</strong> <span style="color: #daa520; font-weight: bold;">Pendiente de confirmación</span></p>
             </div>
 
-            <p>Te esperamos para enseñarte nuestro espacio y hablar sobre tu próximo evento.</p>
-            <p>Si necesitas cambiar la fecha o tienes alguna duda, puedes responder a este correo o contactarnos por WhatsApp.</p>
+            <p>Estamos revisando nuestra agenda y te confirmaremos la disponibilidad muy pronto por esta misma vía o por teléfono.</p>
+            <p>Si tienes alguna duda urgente, puedes contactarnos directamente por WhatsApp.</p>
             
             <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;" />
             <p style="font-size: 12px; color: #999;">GastroShows Barcelona · Experiencias Clandestinas</p>
