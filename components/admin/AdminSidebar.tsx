@@ -27,6 +27,15 @@ const NAV: NavSection[] = [
     ],
   },
   {
+    title: "Comunicación",
+    items: [
+      { label: "Plantillas Email", href: "/admin/comunicacion/plantillas", icon: "✉" },
+      { label: "Campañas",        href: "/admin/comunicacion/campanas",   icon: "⇮" },
+      { label: "Automatizaciones", href: "/admin/comunicacion/automatizaciones", icon: "⚙" },
+      { label: "Ajustes SMTP",     href: "/admin/comunicacion/ajustes",    icon: "⚡" },
+    ],
+  },
+  {
     title: "Configuración",
     items: [
       { label: "Promociones", href: "/admin/promociones", icon: "◆" },

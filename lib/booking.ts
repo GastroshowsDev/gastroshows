@@ -103,36 +103,39 @@ export function buildEmailQueueSchedule(eventDate: Date, now: Date): Array<{ tem
   const sendSoon = addDays(now, 0);
   sendSoon.setMinutes(sendSoon.getMinutes() + 5);
 
+  const queue: Array<{ templateKey: string; scheduledAt: Date }> = [];
+
+  // Add D14 if scheduled far enough in advance
+  if (daysDiff >= 14.1) {
+    queue.push({ templateKey: "D14", scheduledAt: atBarcelonaHour(subDays(eventDate, 14), 10, 0) });
+  }
+
   if (daysDiff >= 4) {
-    return [
+    queue.push(
       { templateKey: "D4", scheduledAt: atBarcelonaHour(subDays(eventDate, 4), 10, 0) },
       { templateKey: "D3", scheduledAt: atBarcelonaHour(subDays(eventDate, 3), 10, 0) },
       { templateKey: "D2", scheduledAt: atBarcelonaHour(subDays(eventDate, 2), 10, 0) },
       { templateKey: "D0", scheduledAt: atBarcelonaHour(eventDate, 10, 0) },
-    ];
-  }
-
-  if (daysDiff >= 3) {
-    return [
+    );
+  } else if (daysDiff >= 3) {
+    queue.push(
       { templateKey: "D3", scheduledAt: sendSoon },
       { templateKey: "D2", scheduledAt: atBarcelonaHour(subDays(eventDate, 2), 10, 0) },
       { templateKey: "D0", scheduledAt: atBarcelonaHour(eventDate, 10, 0) },
-    ];
-  }
-
-  if (daysDiff >= 2) {
-    return [
+    );
+  } else if (daysDiff >= 2) {
+    queue.push(
       { templateKey: "D2", scheduledAt: sendSoon },
       { templateKey: "D0", scheduledAt: atBarcelonaHour(eventDate, 10, 0) },
-    ];
-  }
-
-  if (daysDiff >= 1) {
-    return [
+    );
+  } else if (daysDiff >= 1) {
+    queue.push(
       { templateKey: "D1_NIGHT", scheduledAt: atBarcelonaHour(now, 20, 0) },
       { templateKey: "D0", scheduledAt: atBarcelonaHour(eventDate, 10, 0) },
-    ];
+    );
+  } else {
+    queue.push({ templateKey: "COMPACT", scheduledAt: sendSoon });
   }
 
-  return [{ templateKey: "COMPACT", scheduledAt: sendSoon }];
+  return queue;
 }
