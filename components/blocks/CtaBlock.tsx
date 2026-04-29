@@ -123,7 +123,9 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 <em style={{ 
                   color: "var(--gs-gold)", 
                   fontStyle: "italic",
-                  textShadow: "0 0 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.4)"
+                  textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
+                    ? "none" 
+                    : "var(--gs-gold-shadow)"
 
                 }}>
 

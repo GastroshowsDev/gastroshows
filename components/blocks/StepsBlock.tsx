@@ -56,7 +56,9 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             style={{ 
               color: primaryColor, 
               fontStyle: "italic",
-              textShadow: "0 0 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.4)"
+              textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
+                ? "none" 
+                : "var(--gs-gold-shadow)"
 
             }}
           />
@@ -144,8 +146,8 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
         zIndex: isOpen ? 10 : 1,
         opacity: isOpen ? 1 : 0,
         transform: isOpen ? "scale(1)" : "scale(0.98)",
-        transition: `all ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
-        pointerEvents: isOpen ? "auto" : "none",
+        transition: isEditing ? "none" : `all ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
+        pointerEvents: (isOpen || isEditing) ? "auto" : "none",
         boxShadow: "inset 0 0 50px rgba(200,169,110,0.08)",
         border: "1px solid rgba(0,0,0,0.05)",
         display: "flex",
@@ -155,103 +157,125 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
         <div style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: color35, marginBottom: "0.3rem" }}>0{index + 1}</div>
         
         <div style={{ marginBottom: "0.5rem" }}>
-          <span style={{
-             display: "inline-block", background: "rgba(200,169,110,0.1)", border: `1px solid rgba(200,169,110,0.2)`, borderRadius: "2px",
-             padding: "0.3rem 0.8rem", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: primaryColor,
-          }}>{step.day}</span>
+          <InlineText
+            tagName="span"
+            value={step.day}
+            onChange={(v) => onUpdate("day", v)}
+            isEditing={isEditing}
+            style={{
+              display: "inline-block", background: "rgba(200,169,110,0.1)", border: `1px solid rgba(200,169,110,0.2)`, borderRadius: "2px",
+              padding: "0.3rem 0.8rem", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: primaryColor,
+            }}
+          />
         </div>
 
-        <div style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.2rem" }}>{step.eyebrow}</div>
-
+        <InlineText
+          tagName="div"
+          value={step.eyebrow}
+          onChange={(v) => onUpdate("eyebrow", v)}
+          isEditing={isEditing}
+          style={{ fontSize: "0.7rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#999", marginBottom: "0.2rem" }}
+        />
 
         <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.7rem", fontWeight: 400, color: "#111", lineHeight: 1.2, marginBottom: "0.6rem" }}>
-          {step.title}
+          <InlineText
+            tagName="span"
+            value={step.title}
+            onChange={(v) => onUpdate("title", v)}
+            isEditing={isEditing}
+          />
         </h3>
 
         <div style={{ fontSize: "0.98rem", lineHeight: 1.6, color: "#444", fontFamily: "var(--font-montserrat), sans-serif" }}>
-          {step.body}
+          <InlineText
+            tagName="div"
+            value={step.body}
+            onChange={(v) => onUpdate("body", v)}
+            isEditing={isEditing}
+          />
         </div>
-
 
         {/* Decorative elements */}
         <div style={{ position: "absolute", bottom: 0, right: 0, width: "60px", height: "60px", background: "linear-gradient(135deg, transparent 60%, rgba(200,169,110,0.08) 60%)" }} />
       </div>
 
       {/* ── ENVELOPE DESIGN (FADES OUT) ── */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        zIndex: isOpen ? 1 : 10,
-        opacity: isOpen ? 0 : 1,
-        transition: `opacity ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
-        pointerEvents: isOpen ? "none" : "auto",
-      }}>
-        {/* Large Number */}
+      {!isEditing && (
         <div style={{
-          position: "absolute", 
-          top: "50%", 
-          left: "50%", 
-          transform: "translate(-50%, -50%)",
-          fontFamily: "var(--font-cormorant), Georgia, serif",
-          fontSize: "10rem",
-
-          color: primaryColor,
-          opacity: 0.15,
-          pointerEvents: "none",
-          userSelect: "none",
-          zIndex: 0
+          position: "absolute",
+          inset: 0,
+          zIndex: isOpen ? 1 : 10,
+          opacity: isOpen ? 0 : 1,
+          transition: `opacity ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
+          pointerEvents: isOpen ? "none" : "auto",
         }}>
-          {index + 1}
+          {/* Large Number */}
+          <div style={{
+            position: "absolute", 
+            top: "50%", 
+            left: "50%", 
+            transform: "translate(-50%, -50%)",
+            fontFamily: "var(--font-cormorant), Georgia, serif",
+            fontSize: "10rem",
+
+            color: primaryColor,
+            opacity: 0.15,
+            pointerEvents: "none",
+            userSelect: "none",
+            zIndex: 0
+          }}>
+            {index + 1}
+          </div>
+
+          <div style={{ position: "absolute", inset: 0, background: paperDarker }} />
+
+          {/* Bottom Flap */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: paperBase,
+            clipPath: "polygon(0 100%, 100% 100%, 50% 50%)",
+            zIndex: 4,
+            boxShadow: "inset 0 -15px 40px rgba(0,0,0,0.08)"
+          }} />
+
+          {/* Side Flaps */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: paperLighter,
+            clipPath: "polygon(0 0, 50% 50%, 0 100%)",
+            zIndex: 3,
+          }} />
+          <div style={{
+            position: "absolute", inset: 0,
+            background: paperLighter,
+            clipPath: "polygon(100% 0, 50% 50%, 100% 100%)",
+            zIndex: 3,
+          }} />
+
+          {/* Top Flap */}
+          <div style={{
+            position: "absolute", inset: 0,
+            background: paperLighter,
+            clipPath: "polygon(0 0, 100% 0, 50% 50%)",
+            zIndex: 5,
+            boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+            borderBottom: "1px solid rgba(0,0,0,0.08)"
+          }} />
+
+          {/* Label */}
+          <div style={{
+            position: "absolute", 
+            top: "8%", 
+            left: "50%", 
+            transform: "translateX(-50%)",
+            textAlign: "center",
+            zIndex: 6
+          }}>
+            <div style={{ fontSize: "0.9rem", fontWeight: 700, color: primaryColor, letterSpacing: "0.6em", marginBottom: "0.5rem" }}>0{index + 1}</div>
+            <div style={{ width: "40px", height: "1.5px", background: primaryColor, margin: "0 auto", opacity: 0.4 }} />
+          </div>
         </div>
-
-        <div style={{ position: "absolute", inset: 0, background: paperDarker }} />
-
-        {/* Bottom Flap */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: paperBase,
-          clipPath: "polygon(0 100%, 100% 100%, 50% 50%)",
-          zIndex: 4,
-          boxShadow: "inset 0 -15px 40px rgba(0,0,0,0.08)"
-        }} />
-
-        {/* Side Flaps */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: paperLighter,
-          clipPath: "polygon(0 0, 50% 50%, 0 100%)",
-          zIndex: 3,
-        }} />
-        <div style={{
-          position: "absolute", inset: 0,
-          background: paperLighter,
-          clipPath: "polygon(100% 0, 50% 50%, 100% 100%)",
-          zIndex: 3,
-        }} />
-
-        {/* Top Flap */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: paperLighter,
-          clipPath: "polygon(0 0, 100% 0, 50% 50%)",
-          zIndex: 5,
-          boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-          borderBottom: "1px solid rgba(0,0,0,0.08)"
-        }} />
-
-        {/* Label */}
-        <div style={{
-          position: "absolute", 
-          top: "8%", 
-          left: "50%", 
-          transform: "translateX(-50%)",
-          textAlign: "center",
-          zIndex: 6
-        }}>
-          <div style={{ fontSize: "0.9rem", fontWeight: 700, color: primaryColor, letterSpacing: "0.6em", marginBottom: "0.5rem" }}>0{index + 1}</div>
-          <div style={{ width: "40px", height: "1.5px", background: primaryColor, margin: "0 auto", opacity: 0.4 }} />
-        </div>
-      </div>
+      )}
     </div>
   );
 }

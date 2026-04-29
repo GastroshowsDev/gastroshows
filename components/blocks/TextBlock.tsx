@@ -12,6 +12,13 @@ type Props = {
   onUpdate?: (newContent: TextContent) => void;
 };
 
+const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
+const shouldHaveShadow = (text?: string) => {
+  if (!text) return false;
+  const lower = text.toLowerCase();
+  return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
+};
+
 export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
   const align = content.alignment ?? "center";
   const [ready, setReady] = useState(false);
@@ -81,6 +88,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 lineHeight: 1.2,
                 marginBottom: content.body ? "1.5rem" : 0,
               }}
+              className={shouldHaveShadow(content.title) ? "shadow-revelado-dark" : ""}
             >
               <InlineText
                 tagName="span"
@@ -121,6 +129,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
               }}
+              className={shouldHaveShadow(content.body) ? "shadow-revelado-dark" : ""}
             >
               <InlineText
                 tagName="div"

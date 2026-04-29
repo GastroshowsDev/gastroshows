@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { usePageActions } from "@/context/PageActionsContext";
 
 export function Footer() {
   const pathname = usePathname();
+  const { openReservation, openGift } = usePageActions();
   const [isHideableAdmin, setIsHideableAdmin] = useState(false);
 
   useEffect(() => {
@@ -20,14 +22,10 @@ export function Footer() {
   const isAdmin = pathname?.startsWith("/admin");
   const shouldHide = isAdmin;
 
-
   if (shouldHide) return null;
-
-
 
   const currentYear = new Date().getFullYear();
 
-  
   return (
     <footer style={{
       background: "var(--gs-bg2)",
@@ -42,7 +40,7 @@ export function Footer() {
           <div style={{ flex: "1 1 300px" }}>
             <h3 style={{ 
               fontFamily: "var(--font-cormorant)", 
-              fontSize: "1.8rem", 
+              fontSize: "2.2rem", 
               fontWeight: 300,
               color: "var(--gs-gold)", 
               marginBottom: "1rem",
@@ -59,9 +57,8 @@ export function Footer() {
           <div style={{ display: "flex", gap: "4rem", flexWrap: "wrap" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Navegación</span>
-              <Link href="/eventos" style={linkStyle}>Próximos Eventos</Link>
-              <Link href="/#regalar" style={linkStyle}>Regalar Experiencia</Link>
-              <Link href="/#reservar" style={linkStyle}>Reservar Mesa</Link>
+              <span onClick={openGift} style={linkStyle}>Regalar Experiencia</span>
+              <span onClick={openReservation} style={linkStyle}>Reservar Mesa</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Legal</span>
@@ -72,6 +69,7 @@ export function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Síguenos</span>
               <a href="https://instagram.com/gastroshows" target="_blank" rel="noreferrer" style={linkStyle}>Instagram</a>
+              <a href="https://www.tiktok.com/@gastroshows" target="_blank" rel="noreferrer" style={linkStyle}>TikTok</a>
               <a href="#" style={linkStyle}>Facebook</a>
             </div>
           </div>
@@ -87,7 +85,7 @@ export function Footer() {
           gap: "1.5rem" 
         }}>
           <p style={{ fontSize: "0.72rem", color: "var(--gs-muted)", letterSpacing: "0.02em" }}>
-            © {currentYear} GastroShows Barcelona. El Ritual de la Cena Clandestina.
+            © {currentYear} GastroShows Barcelona. Las mejores cenas clandestinas.
           </p>
           <div style={{ display: "flex", gap: "1.5rem" }}>
              <span style={{ fontSize: "0.72rem", color: "var(--gs-muted)", opacity: 0.5 }}>Hecho con pasión en BCN</span>

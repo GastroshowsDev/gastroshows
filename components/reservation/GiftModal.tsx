@@ -144,6 +144,7 @@ export function GiftModal({ open, onClose }: Props) {
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div
+        className="clandestino-forced"
         style={{
           background: DARK2,
           border: "1px solid rgba(200,169,110,0.2)",
@@ -152,6 +153,7 @@ export function GiftModal({ open, onClose }: Props) {
           borderRadius: "4px",
           margin: "auto",
           animation: "slideUp 0.4s cubic-bezier(0.16,1,0.3,1)",
+          color: OFFWHITE, // Ensure text color is set
         }}
       >
         {/* Header */}

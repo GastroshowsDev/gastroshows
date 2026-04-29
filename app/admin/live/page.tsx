@@ -4,6 +4,7 @@ import { PendingReservationsPanel } from "@/components/admin/PendingReservations
 import { RecentActivityFeed } from "@/components/admin/RecentActivityFeed";
 import { TablesLiveBoard } from "@/components/admin/TablesLiveBoard";
 import { SalaBoard } from "@/components/admin/SalaBoard";
+import { TableMap } from "@/components/admin/TableMap";
 import {
   getRecentReservationsForLive,
   getReservationsForServiceDay,
@@ -64,6 +65,14 @@ export default async function AdminLivePage() {
             <RecentActivityFeed initialItems={recent} />
           </section>
         </div>
+
+        {/* Vista de Mapa — Nuevo */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-medium">Mapa de Sala</h2>
+          </div>
+          <TableMap />
+        </section>
 
         {/* Sala — full width */}
         <section className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">

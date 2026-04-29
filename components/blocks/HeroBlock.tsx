@@ -14,6 +14,13 @@ type Props = {
   onUpdate?: (newContent: HeroContent) => void;
 };
 
+const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
+const shouldHaveShadow = (text?: string) => {
+  if (!text) return false;
+  const lower = text.toLowerCase();
+  return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
+};
+
 export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -137,6 +144,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               color: "#F5F0E8",
               marginBottom: "1.5rem",
             }}
+            className={shouldHaveShadow(content.title) ? "shadow-revelado-dark" : ""}
           >
             <InlineText
               tagName="span"
@@ -164,9 +172,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   style={{ 
                     color: "#daa520", 
                     fontStyle: "italic",
-                    textShadow: "0 0 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.4)"
-
-
+                    textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
+                      ? "none" 
+                      : "var(--gs-gold-shadow)"
                   }}
 
                 />
@@ -273,7 +281,7 @@ function HeroButton({
       onMouseLeave={() => setHovered(false)}
       style={{
         display: "inline-block",
-        background: bg,
+        backgroundColor: bg,
         color: primary ? "#0A0A0A" : hovered ? "#F5F0E8" : "rgba(200,169,110,0.9)",
         border: primary ? "none" : `1px solid ${hovered ? "rgba(200,169,110,0.9)" : "rgba(200,169,110,0.55)"}`,
         padding: "1rem 2.8rem",

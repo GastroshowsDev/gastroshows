@@ -47,7 +47,9 @@ export async function POST(request: Request) {
         email: parsed.data.email,
         allergies: parsed.data.allergies,
         previousVisit: parsed.data.previousVisit,
-        comments: parsed.data.comments,
+        comments: (parsed.data.previousVisit && parsed.data.previousBarrio
+          ? `[Local: ${parsed.data.previousBarrio === "EIXAMPLE" ? "Eixample" : "Sarrià"}] `
+          : "") + (parsed.data.comments || ""),
       },
     });
 

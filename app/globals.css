@@ -30,6 +30,7 @@
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);
   --gs-card-hover: rgba(200, 169, 110, 0.03);
+  --gs-gold-shadow: 0 0 13px rgba(0, 0, 0, 0.4);
 
   /* ── Admin panel palette (light default) ── */
   --color-admin-bg: #F4F6FA;
@@ -57,6 +58,7 @@
   --gs-border: rgba(218, 165, 32, 0.28);
   --gs-border-hover: rgba(218, 165, 32, 0.58);
   --gs-card-hover: rgba(218, 165, 32, 0.07);
+  --gs-gold-shadow: none;
 
   /* Admin stays light in light mode */
   --color-admin-bg: #F4F6FA;
@@ -71,7 +73,8 @@
 }
 
 /* ── Dark mode (Clandestino) ── */
-:root.clandestino {
+:root.clandestino,
+.clandestino-forced {
   --gs-bg: #0A0A0A;
   --gs-bg2: #111111;
   --gs-bg3: #0D0D0D;
@@ -84,6 +87,7 @@
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);
   --gs-card-hover: rgba(200, 169, 110, 0.03);
+  --gs-gold-shadow: none;
 
   /* Admin dark mode */
   --color-admin-bg: #0F1117;
@@ -143,6 +147,14 @@ img:not(.no-blur),
 :root.revelado p {
   text-shadow: 0 1px 2px rgba(255,255,255,0.5);
   letter-spacing: -0.01em; 
+}
+
+.shadow-revelado-dark {
+  text-shadow: none !important; /* Reset default white shadow */
+}
+
+:root.revelado .shadow-revelado-dark {
+  text-shadow: 0 0 13px rgba(0, 0, 0, 0.5) !important;
 }
 
 

@@ -101,9 +101,9 @@ export function DisponibilidadSection({
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
           <div style={{ flex: "1 1 300px" }}>
-            <p style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "0.75rem" }}>
+            <div style={{ fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "0.75rem" }}>
               {subtitle || "Disponibilidad"}
-            </p>
+            </div>
             <h2 style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",

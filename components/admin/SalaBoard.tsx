@@ -346,8 +346,15 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
           >
             {/* Guest info */}
             <div style={{ flex: "1 1 180px", minWidth: 0 }}>
-              <div style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--color-admin-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                {r.customer.name}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <span style={{ fontWeight: 600, fontSize: "0.88rem", color: "var(--color-admin-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {r.customer.name}
+                </span>
+                {r.type === "GIFT" && (
+                  <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "1px 6px", borderRadius: 10, background: "#FEE2E2", color: "#DC2626" }}>
+                    Regalo 🎁
+                  </span>
+                )}
               </div>
               <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)", marginTop: "2px" }}>
                 {r.customer.phone}

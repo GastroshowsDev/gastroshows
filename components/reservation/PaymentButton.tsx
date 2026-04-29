@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   reservationId: string;
@@ -10,12 +11,24 @@ type Props = {
 
 export function PaymentButton({ reservationId, amount, onLoading }: Props) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function handlePayment() {
     setLoading(true);
     onLoading?.(true);
 
     try {
+      // Check if demo mode is active
+      const settingsRes = await fetch("/api/admin/settings");
+      const settings = await settingsRes.json();
+      const isDemo = settings.demo_mode === "true";
+
+      if (isDemo) {
+        // Redirect to demo payment page
+        router.push(`/demo-pago?reservationId=${reservationId}&amount=${amount}`);
+        return;
+      }
+
       const res = await fetch("/api/payments/initiate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

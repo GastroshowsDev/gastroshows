@@ -38,6 +38,7 @@ model Venue {
   emailTemplates EmailTemplate[]
   events         Event[]
   reservations   Reservation[]
+  spaces         Space[]
 }
 
 model Event {
@@ -80,6 +81,7 @@ model Reservation {
   customer      Customer          @relation(fields: [customerId], references: [id])
   event         Event?            @relation(fields: [eventId], references: [id], onDelete: Restrict)
   venue         Venue?            @relation(fields: [venueId], references: [id])
+  tableAssignments TableAssignment[]
 
   @@index([eventId, status])
   @@index([venueId, createdAt])
@@ -211,6 +213,11 @@ model SeoSettings {
   customBodyScripts      String?
   schemaOrg              String?
   updatedAt              DateTime @updatedAt
+}
+
+model Setting {
+  key   String @id
+  value String
 }
 
 model LandingContent {
@@ -383,4 +390,57 @@ enum BackupStatus {
 enum CustomerType {
   PARTICULAR
   EMPRESA
+}
+
+model Space {
+  id        String   @id @default(cuid())
+  name      String   // Ej: "Sala Principal", "Terraza"
+  venueId   String
+  venue     Venue    @relation(fields: [venueId], references: [id])
+  tables    Table[]
+  createdAt DateTime @default(now())
+}
+
+model Table {
+  id           String            @id @default(cuid())
+  spaceId      String
+  space        Space             @relation(fields: [spaceId], references: [id])
+  identifier   String            // Ej: "Mesa 1", "Barra Columnas"
+  type         TableType         @default(TABLE)
+  shape        TableShape        @default(RECTANGLE)
+  x            Float             // Posición para el mapa
+  y            Float
+  width        Float
+  height       Float
+  rotation     Float             @default(0)
+  capacity     Int
+  isFixed      Boolean           @default(false)
+  assignments  TableAssignment[]
+}
+
+enum TableType {
+  TABLE       // Mesas para sentarse
+  DECORATIVE  // Como tu barra de cócteles fija
+}
+
+enum TableShape {
+  RECTANGLE
+  ROUND
+  SQUARE
+}
+
+model TableAssignment {
+  id            String      @id @default(cuid())
+  tableId       String
+  table         Table       @relation(fields: [tableId], references: [id])
+  reservationId String
+  reservation   Reservation @relation(fields: [reservationId], references: [id])
+  eventId       String
+  
+  @@unique([tableId, reservationId, eventId])
+}
+
+model Setting {
+  key   String @id
+  value String
 }

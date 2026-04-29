@@ -44,6 +44,26 @@ export function SmartLink({ href, children, className, style, onMouseEnter, onMo
       return;
     }
 
+    // Fallback: Check button text if href is missing
+    const text = (e.currentTarget as HTMLElement).textContent?.toLowerCase() || "";
+    if (!normalizedHref || normalizedHref === "") {
+      if (text.includes("reserva una visita")) {
+        e.preventDefault();
+        openVisit();
+        return;
+      }
+      if (text.includes("regalar")) {
+        e.preventDefault();
+        openGift();
+        return;
+      }
+      if (text === "reservar" || text.includes("reservar mesa")) {
+        e.preventDefault();
+        openReservation();
+        return;
+      }
+    }
+
 
 
     if (isEditing) {

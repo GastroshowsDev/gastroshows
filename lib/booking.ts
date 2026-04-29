@@ -16,6 +16,7 @@ export const normalReservationSchema = z.object({
   email: z.string().email(),
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean(),
+  previousBarrio: z.enum(["EIXAMPLE", "SARRIA"]).optional(),
   newsletter: z.boolean().optional(),
   groupRef: z.string().max(120).optional(),
   comments: z.string().max(1000).optional(),
@@ -40,6 +41,7 @@ export const giftRedeemSchema = z.object({
   email: z.string().email(),
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean(),
+  previousBarrio: z.enum(["EIXAMPLE", "SARRIA"]).optional(),
   comments: z.string().max(1000).optional(),
 });
 

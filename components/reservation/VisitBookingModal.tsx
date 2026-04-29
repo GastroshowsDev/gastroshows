@@ -85,11 +85,15 @@ export function VisitBookingModal({ open, onClose }: Props) {
     <div style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
       <div onClick={handleClose} style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.85)", backdropFilter: "blur(12px)" }} />
       
-      <div style={{ 
-        position: "relative", width: "100%", maxWidth: "560px", background: "var(--gs-bg2)", border: "1px solid var(--gs-border)", 
-        borderRadius: "4px", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-        transition: "background 0.8s ease, border 0.8s ease"
-      }}>
+      <div 
+        className="clandestino-forced"
+        style={{ 
+          position: "relative", width: "100%", maxWidth: "560px", background: "var(--gs-bg2)", border: "1px solid var(--gs-border)", 
+          borderRadius: "4px", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+          transition: "background 0.8s ease, border 0.8s ease",
+          color: "var(--gs-text)"
+        }}
+      >
 
         <button onClick={handleClose} style={{ position: "absolute", top: "1.5rem", right: "1.5rem", background: "none", border: "none", color: GOLD, fontSize: "1.8rem", cursor: "pointer", zIndex: 10 }}>×</button>
 
@@ -165,12 +169,33 @@ export function VisitBookingModal({ open, onClose }: Props) {
                     </div>
                   </div>
 
-                  <div style={{ padding: "1.25rem", background: "rgba(200,169,110,0.05)", border: "1px solid rgba(200,169,110,0.1)", borderRadius: "4px" }}>
-                    <p style={{ fontSize: "0.85rem", color: OFFWHITE, opacity: 0.8, textAlign: "center", lineHeight: 1.5 }}>
+                  <a 
+                    href="https://wa.me/34620269585"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ 
+                      padding: "1.25rem", 
+                      background: "rgba(200,169,110,0.05)", 
+                      border: "1px solid rgba(200,169,110,0.1)", 
+                      borderRadius: "4px",
+                      textDecoration: "none",
+                      display: "block",
+                      transition: "all 0.3s ease"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(200,169,110,0.1)";
+                      e.currentTarget.style.borderColor = "rgba(200,169,110,0.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(200,169,110,0.05)";
+                      e.currentTarget.style.borderColor = "rgba(200,169,110,0.1)";
+                    }}
+                  >
+                    <p style={{ fontSize: "0.85rem", color: OFFWHITE, opacity: 0.8, textAlign: "center", lineHeight: 1.5, margin: 0 }}>
                       ¿Necesitas otro día u hora? <br/>
                       <span style={{ color: GOLD, fontWeight: 600 }}>Contáctanos directamente por WhatsApp</span>
                     </p>
-                  </div>
+                  </a>
 
                   <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
                     <button onClick={() => setStep(1)} style={{ flex: 1, padding: "1rem", background: "transparent", border: `1px solid ${GOLD}`, color: GOLD, borderRadius: "2px", fontWeight: 600, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.1em", fontSize: "0.75rem" }}>Atrás</button>

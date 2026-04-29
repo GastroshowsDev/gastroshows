@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { AllergyPicker } from "./AllergyPicker";
 import { PaymentButton } from "./PaymentButton";
+import { BookingCalendar } from "./BookingCalendar";
 
 /* ─────────────────────────────────── types ── */
 
@@ -262,6 +263,7 @@ export function ReservationModal({ open, onClose }: Props) {
       }}
     >
       <div
+        className="clandestino-forced"
         style={{
           background: DARK2,
           border: "1px solid rgba(200,169,110,0.2)",
@@ -270,6 +272,7 @@ export function ReservationModal({ open, onClose }: Props) {
           borderRadius: "4px",
           margin: "auto",
           animation: "slideUp 0.4s cubic-bezier(0.16,1,0.3,1)",
+          color: OFFWHITE, // Ensure text color is set
         }}
       >
         {/* Header */}
@@ -477,7 +480,13 @@ function Step1({
 
   return (
     <div style={{ animation: "fadeIn 0.3s ease" }}>
-      <BookingCalendar value={form.date} holidays={holidays} onChange={handleDateSelect} />
+      <BookingCalendar 
+        value={form.date} 
+        holidays={holidays} 
+        onChange={handleDateSelect} 
+        allowedDays={[3, 4, 5, 6]}
+        privateDays={[0, 1, 2]}
+      />
       {errors.date && (
         <p style={{ fontSize: "0.84rem", color: "#C0392B", marginTop: "0.5rem" }}>{errors.date}</p>
       )}
@@ -563,216 +572,6 @@ function ShiftCard({
   );
 }
 
-/* ─────────────────────────────────── Booking Calendar ── */
-
-const MONTH_NAMES = [
-  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
-];
-const DAY_NAMES = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
-
-function BookingCalendar({
-  value,
-  holidays,
-  onChange,
-}: {
-  value: string | null;
-  holidays: { date: string; recurring: boolean }[];
-  onChange: (date: string) => void;
-}) {
-  const today = new Date();
-  const [viewYear, setViewYear] = useState(today.getFullYear());
-  const [viewMonth, setViewMonth] = useState(today.getMonth());
-
-  function prevMonth() {
-    if (viewMonth === 0) {
-      setViewMonth(11);
-      setViewYear((y) => y - 1);
-    } else {
-      setViewMonth((m) => m - 1);
-    }
-  }
-
-  function nextMonth() {
-    if (viewMonth === 11) {
-      setViewMonth(0);
-      setViewYear((y) => y + 1);
-    } else {
-      setViewMonth((m) => m + 1);
-    }
-  }
-
-  // Disable prev if showing current month
-  const isCurrentMonth =
-    viewYear === today.getFullYear() && viewMonth === today.getMonth();
-
-  // Disable next if 6 months ahead
-  const maxDate = new Date(today);
-  maxDate.setMonth(maxDate.getMonth() + 6);
-  const isMaxMonth =
-    viewYear === maxDate.getFullYear() && viewMonth === maxDate.getMonth();
-
-  const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
-  const offset = (firstDayOfWeek + 6) % 7; // Mon=0
-  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-
-  function dayStatus(day: number): "selected" | "available" | "past" | "unavailable" | "holiday" | "private_dinner" {
-    const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const monthDay = dateStr.substring(5); // e.g. "12-25"
-    
-    if (value === dateStr) return "selected";
-    if (isPast(dateStr)) return "past";
-    if (isTooFar(dateStr)) return "unavailable";
-    
-    const isHoliday = holidays.some(h => h.date === dateStr || (h.recurring && h.date.endsWith(monthDay)));
-    if (isHoliday) return "holiday";
-    
-    if (!isValidDay(dateStr)) return "private_dinner";
-    return "available";
-  }
-
-  return (
-    <div>
-      {/* Nav */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "1.5rem",
-        }}
-      >
-        <button
-          onClick={prevMonth}
-          disabled={isCurrentMonth}
-          style={calNavBtnStyle(isCurrentMonth)}
-        >
-          ‹
-        </button>
-        <span
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "1.3rem",
-            fontWeight: 300,
-            color: OFFWHITE,
-            textTransform: "capitalize",
-          }}
-        >
-          {MONTH_NAMES[viewMonth]} {viewYear}
-        </span>
-        <button
-          onClick={nextMonth}
-          disabled={isMaxMonth}
-          style={calNavBtnStyle(isMaxMonth)}
-        >
-          ›
-        </button>
-      </div>
-
-      {/* Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px" }}>
-        {/* Day headers */}
-        {DAY_NAMES.map((d) => (
-          <div
-            key={d}
-            style={{
-              fontSize: "0.72rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: LIGHT,
-              textAlign: "center",
-              padding: "0.5rem 0",
-            }}
-          >
-            {d}
-          </div>
-        ))}
-        {/* Empty offset cells */}
-        {Array.from({ length: offset }, (_, i) => (
-          <div key={`empty-${i}`} />
-        ))}
-        {/* Day cells */}
-        {Array.from({ length: daysInMonth }, (_, i) => {
-          const day = i + 1;
-          const status = dayStatus(day);
-          const clickable = status === "available" || status === "selected" || status === "private_dinner";
-          return (
-            <div
-              key={day}
-              onClick={() => {
-                if (!clickable) return;
-                const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-                onChange(dateStr);
-              }}
-              title={
-                status === "holiday"
-                  ? "Festivo / Cerrado"
-                  : status === "unavailable"
-                  ? "Cerrado"
-                  : status === "private_dinner"
-                  ? "Cena Privada Exclusiva"
-                  : status === "past"
-                  ? "Fecha pasada"
-                  : undefined
-              }
-              style={{
-                aspectRatio: "1",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.96rem",
-                borderRadius: "2px",
-                cursor: clickable ? "pointer" : "not-allowed",
-                border:
-                  status === "selected"
-                    ? `1px solid ${GOLD}`
-                    : status === "private_dinner"
-                    ? `1px dashed rgba(200,169,110,0.4)`
-                    : status === "available"
-                    ? `1px solid rgba(255,255,255,0.1)`
-                    : "1px solid transparent",
-                background: 
-                  status === "selected" 
-                    ? "var(--gs-gold)" 
-                    : status === "available"
-                    ? "rgba(255,255,255,0.03)"
-                    : "transparent",
-                color:
-                  status === "selected"
-                    ? "var(--gs-bg)"
-                    : status === "private_dinner"
-                    ? "rgba(200,169,110,0.7)"
-                    : status === "available"
-                    ? OFFWHITE
-                    : "rgba(245,240,232,0.15)",
-                fontWeight: status === "selected" ? 600 : 300,
-                transition: "all 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                if (!clickable || status === "selected") return;
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.background = "rgba(200,169,110,0.1)";
-                el.style.borderColor = "rgba(200,169,110,0.4)";
-                el.style.color = GOLD;
-              }}
-              onMouseLeave={(e) => {
-                if (!clickable || status === "selected") return;
-                const el = e.currentTarget as HTMLDivElement;
-                
-                el.style.background = status === "available" ? "rgba(255,255,255,0.03)" : "transparent";
-                el.style.borderColor = status === "private_dinner" ? "rgba(200,169,110,0.4)" : (status === "available" ? "rgba(255,255,255,0.1)" : "transparent");
-                el.style.borderStyle = status === "private_dinner" ? "dashed" : "solid";
-                el.style.color = status === "private_dinner" ? "rgba(200,169,110,0.7)" : OFFWHITE;
-              }}
-            >
-              {day}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 function calNavBtnStyle(disabled: boolean): React.CSSProperties {
   return {
@@ -1064,48 +863,36 @@ function Step3({
 
       {/* Previous visit */}
       <div style={{ marginBottom: "1.2rem" }}>
-        <div style={smallLabelStyle}>¿Has venido alguna vez?</div>
-        <div style={{ display: "flex", gap: "0.8rem", marginTop: "0.5rem" }}>
-          {(
-            [
-              { val: false, label: "Primera vez" },
-              { val: true, label: "Ya he venido" },
-            ] as { val: boolean; label: string }[]
-          ).map(({ val, label }) => (
+        <div style={{ ...smallLabelStyle, marginBottom: "0.8rem" }}>¿Has venido alguna vez?</div>
+        <div style={{ display: "flex", gap: "0.8rem", marginBottom: form.previousVisit === true ? "0.8rem" : "0" }}>
+          {[
+            { val: false, label: "Primera vez" },
+            { val: true, label: "Ya he venido" },
+          ].map(({ val, label }) => (
             <div
-              key={label}
-              onClick={() =>
-                setForm((f) => ({
-                  ...f,
-                  previousVisit: val,
-                  previousBarrio: val ? f.previousBarrio : null,
-                }))
-              }
+              key={String(val)}
+              onClick={() => setForm((f) => ({ ...f, previousVisit: val }))}
               style={{
                 flex: 1,
-                border:
-                  form.previousVisit === val
-                    ? `1px solid ${GOLD}`
-                    : "1px solid rgba(200,169,110,0.2)",
-                background:
-                  form.previousVisit === val ? "rgba(200,169,110,0.08)" : "transparent",
-                padding: "0.7rem 1rem",
-                cursor: "pointer",
+                padding: "0.9rem 1.2rem",
+                border: form.previousVisit === val ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.15)",
+                background: form.previousVisit === val ? "rgba(200,169,110,0.06)" : "rgba(255,255,255,0.01)",
+                color: form.previousVisit === val ? OFFWHITE : "rgba(245,240,232,0.6)",
+                fontSize: "0.95rem",
                 borderRadius: "2px",
+                cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                fontSize: "0.96rem",
-                color: form.previousVisit === val ? OFFWHITE : LIGHT,
+                gap: "0.8rem",
                 transition: "all 0.2s",
               }}
             >
               <div
                 style={{
-                  width: "12px",
-                  height: "12px",
+                  width: "14px",
+                  height: "14px",
                   borderRadius: "50%",
-                  border: `1px solid ${form.previousVisit === val ? GOLD : "rgba(200,169,110,0.4)"}`,
+                  border: `1px solid ${form.previousVisit === val ? GOLD : "rgba(200,169,110,0.3)"}`,
                   background: form.previousVisit === val ? GOLD : "transparent",
                   flexShrink: 0,
                   transition: "all 0.2s",
@@ -1118,41 +905,33 @@ function Step3({
 
         {/* Barrio selector — only when "Ya he venido" */}
         {form.previousVisit === true && (
-          <div style={{ display: "flex", gap: "0.8rem", marginTop: "0.8rem" }}>
-            {(
-              [
-                { val: "EIXAMPLE" as const, label: "Barrio del Eixample" },
-                { val: "SARRIA" as const, label: "Barrio de Sarrià-Sant Gervasi" },
-              ]
-            ).map(({ val, label }) => (
+          <div style={{ display: "flex", gap: "0.8rem", animation: "fadeIn 0.3s ease" }}>
+            {[
+              { val: "EIXAMPLE" as const, label: "Barrio del Eixample" },
+              { val: "SARRIA" as const, label: "Barrio de Sarrià-Sant Gervasi" },
+            ].map(({ val, label }) => (
               <div
                 key={val}
                 onClick={() => setForm((f) => ({ ...f, previousBarrio: val }))}
                 style={{
                   flex: 1,
-                  border:
-                    form.previousBarrio === val
-                      ? `1px solid ${GOLD}`
-                      : "1px solid rgba(200,169,110,0.15)",
-                  background:
-                    form.previousBarrio === val
-                      ? "rgba(200,169,110,0.06)"
-                      : "rgba(255,255,255,0.01)",
-                  padding: "0.6rem 0.8rem",
-                  cursor: "pointer",
+                  padding: "0.9rem 1.2rem",
+                  border: form.previousBarrio === val ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.15)",
+                  background: form.previousBarrio === val ? "rgba(200,169,110,0.06)" : "rgba(255,255,255,0.01)",
+                  color: form.previousBarrio === val ? OFFWHITE : "rgba(245,240,232,0.6)",
+                  fontSize: "0.95rem",
                   borderRadius: "2px",
+                  cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
-                  fontSize: "0.9rem",
-                  color: form.previousBarrio === val ? OFFWHITE : LIGHT,
+                  gap: "0.8rem",
                   transition: "all 0.2s",
                 }}
               >
                 <div
                   style={{
-                    width: "10px",
-                    height: "10px",
+                    width: "14px",
+                    height: "14px",
                     borderRadius: "50%",
                     border: `1px solid ${form.previousBarrio === val ? GOLD : "rgba(200,169,110,0.3)"}`,
                     background: form.previousBarrio === val ? GOLD : "transparent",

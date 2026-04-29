@@ -205,7 +205,7 @@ export function getAnimationStyles(type: AnimationType | string | undefined, act
 
     case "shimmer":
       return {
-        background: active ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)" : "none",
+        backgroundImage: active ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)" : "none",
         backgroundSize: "200% 100%",
         animation: active ? "gs-shimmer 2s infinite" : "none",
         ...base

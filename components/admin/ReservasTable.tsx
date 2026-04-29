@@ -917,6 +917,11 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                     <td style={S.td}>
                       <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexWrap: "wrap" }}>
                         <span style={{ fontWeight: 500 }}>{r.customer.name}</span>
+                        {r.type === "GIFT" && (
+                          <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "1px 6px", borderRadius: 10, background: "#FEE2E2", color: "#DC2626" }}>
+                            Regalo 🎁
+                          </span>
+                        )}
                         {r.customer.previousVisit && (
                           <span style={{ fontSize: "0.65rem", fontWeight: 700, padding: "1px 6px", borderRadius: 10, background: "#EDE9FE", color: "#7C3AED" }}>
                             Repetidor

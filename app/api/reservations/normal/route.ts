@@ -54,7 +54,9 @@ export async function POST(request: Request) {
         allergies: parsed.data.allergies,
         previousVisit: parsed.data.previousVisit,
         newsletter: parsed.data.newsletter ?? false,
-        comments: parsed.data.comments,
+        comments: (parsed.data.previousVisit && parsed.data.previousBarrio
+          ? `[Local: ${parsed.data.previousBarrio === "EIXAMPLE" ? "Eixample" : "Sarrià"}] `
+          : "") + (parsed.data.comments || ""),
       },
     });
 

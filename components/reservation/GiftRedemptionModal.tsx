@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BookingCalendar } from "./BookingCalendar";
 
 type Shift = "NOON" | "NIGHT";
 type FieldErrors = Partial<Record<string, string>>;
@@ -51,11 +52,22 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
   const [email, setEmail] = useState("");
   const [allergies, setAllergies] = useState("");
   const [previousVisit, setPreviousVisit] = useState<boolean | null>(null);
+  const [previousBarrio, setPreviousBarrio] = useState<"EIXAMPLE" | "SARRIA" | null>(null);
   const [comments, setComments] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      fetch("/api/public/holidays")
+        .then(res => res.json())
+        .then(data => setHolidays(data || []))
+        .catch(console.error);
+    }
+  }, [open]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -112,6 +124,7 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
           email: email.trim(),
           allergies: allergies.trim() || undefined,
           previousVisit: previousVisit ?? false,
+          previousBarrio: previousVisit ? previousBarrio : undefined,
           comments: comments.trim() || undefined,
         }),
       });
@@ -146,6 +159,7 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div
+        className="clandestino-forced"
         style={{
           background: DARK2,
           border: "1px solid rgba(200,169,110,0.2)",
@@ -153,6 +167,7 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
           borderRadius: "4px",
           margin: "auto",
           animation: "slideUp 0.4s cubic-bezier(0.16,1,0.3,1)",
+          color: OFFWHITE, // Ensure text color is set
         }}
       >
         {/* Header */}
@@ -186,6 +201,7 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
               date={date} setDate={setDate}
               shift={shift} setShift={setShift}
               errors={errors}
+              holidays={holidays}
             />
           ) : step === 2 ? (
             <Step2 guests={guests} purchaserName={purchaserName} />
@@ -196,6 +212,7 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
               email={email} setEmail={setEmail}
               allergies={allergies} setAllergies={setAllergies}
               previousVisit={previousVisit} setPreviousVisit={setPreviousVisit}
+              previousBarrio={previousBarrio} setPreviousBarrio={setPreviousBarrio}
               comments={comments} setComments={setComments}
               errors={errors}
               serverError={serverError}
@@ -236,13 +253,14 @@ export function GiftRedemptionModal({ open, onClose, token, guests, purchaserNam
 
 /* ── Step 1: Date + Shift ── */
 function Step1({
-  date, setDate, shift, setShift, errors,
+  date, setDate, shift, setShift, errors, holidays
 }: {
   date: string | null;
   setDate: (d: string) => void;
   shift: Shift;
   setShift: (s: Shift) => void;
   errors: FieldErrors;
+  holidays: { date: string; recurring: boolean }[];
 }) {
   const sat = date && isSaturday(date);
 
@@ -258,25 +276,13 @@ function Step1({
 
       {/* Date picker */}
       <div style={{ marginBottom: "1.5rem" }}>
-        <div style={{ ...smallLabel, marginBottom: "0.5rem" }}>Fecha</div>
-        <input
-          type="date"
-          value={date ?? ""}
-          min={minDate}
-          max={maxDate}
-          onChange={(e) => setDate(e.target.value)}
-          style={inputSt(!!errors.date)}
+        <div style={{ ...smallLabel, marginBottom: "1.25rem" }}>Selecciona el día</div>
+        <BookingCalendar 
+          value={date} 
+          holidays={holidays} 
+          onChange={(d) => setDate(d)} 
+          allowedDays={[3, 4, 5, 6]} 
         />
-        {date && isValidDay(date) && (
-          <p style={{ fontSize: "0.75rem", color: GOLD, marginTop: "0.4rem" }}>
-            {formatDate(date)}
-          </p>
-        )}
-        {date && !isValidDay(date) && (
-          <p style={{ fontSize: "0.75rem", color: "#E57373", marginTop: "0.4rem" }}>
-            Este día no hay servicio (solo mié–sáb)
-          </p>
-        )}
         {errors.date && <p style={errStyle}>{errors.date}</p>}
       </div>
 
@@ -354,13 +360,15 @@ function Step2({ guests, purchaserName }: { guests: number; purchaserName: strin
 function Step3({
   name, setName, phone, setPhone, email, setEmail,
   allergies, setAllergies, previousVisit, setPreviousVisit,
+  previousBarrio, setPreviousBarrio,
   comments, setComments, errors, serverError,
 }: {
   name: string; setName: (v: string) => void;
   phone: string; setPhone: (v: string) => void;
   email: string; setEmail: (v: string) => void;
   allergies: string; setAllergies: (v: string) => void;
-  previousVisit: boolean | null; setPreviousVisit: (v: boolean) => void;
+  previousVisit: boolean | null; setPreviousVisit: (v: boolean | null) => void;
+  previousBarrio: "EIXAMPLE" | "SARRIA" | null; setPreviousBarrio: (v: "EIXAMPLE" | "SARRIA" | null) => void;
   comments: string; setComments: (v: string) => void;
   errors: FieldErrors;
   serverError: string | null;
@@ -391,25 +399,87 @@ function Step3({
         </div>
 
         <div>
-          <div style={{ ...smallLabel, marginBottom: "0.4rem" }}>¿Has visitado alguno de nuestros locales?</div>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
-            {([true, false] as const).map((val) => (
+          <div style={{ ...smallLabel, marginBottom: "0.8rem" }}>¿Has venido alguna vez?</div>
+          <div style={{ display: "flex", gap: "0.8rem", marginBottom: previousVisit === true ? "0.8rem" : "0" }}>
+            {[
+              { val: false, label: "Primera vez" },
+              { val: true, label: "Ya he venido" },
+            ].map(({ val, label }) => (
               <button
                 key={String(val)}
                 type="button"
                 onClick={() => setPreviousVisit(val)}
                 style={{
-                  flex: 1, padding: "0.6rem",
-                  border: `1px solid ${previousVisit === val ? "rgba(200,169,110,0.6)" : "rgba(200,169,110,0.15)"}`,
-                  background: previousVisit === val ? "rgba(200,169,110,0.08)" : "transparent",
-                  color: previousVisit === val ? OFFWHITE : LIGHT,
-                  fontSize: "0.75rem", borderRadius: "2px", cursor: "pointer",
+                  flex: 1,
+                  padding: "0.9rem 1.2rem",
+                  border: previousVisit === val ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.15)",
+                  background: previousVisit === val ? "rgba(200,169,110,0.06)" : "rgba(255,255,255,0.01)",
+                  color: previousVisit === val ? OFFWHITE : "rgba(245,240,232,0.6)",
+                  fontSize: "0.95rem",
+                  borderRadius: "2px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.8rem",
+                  transition: "all 0.2s",
                 }}
               >
-                {val ? "Sí" : "No"}
+                <div
+                  style={{
+                    width: "14px",
+                    height: "14px",
+                    borderRadius: "50%",
+                    border: `1px solid ${previousVisit === val ? GOLD : "rgba(200,169,110,0.3)"}`,
+                    background: previousVisit === val ? GOLD : "transparent",
+                    flexShrink: 0,
+                  }}
+                />
+                {label}
               </button>
             ))}
           </div>
+
+          {/* Barrio selector — only when "Ya he venido" */}
+          {previousVisit === true && (
+            <div style={{ display: "flex", gap: "0.8rem", animation: "fadeIn 0.3s ease" }}>
+              {[
+                { val: "EIXAMPLE" as const, label: "Barrio del Eixample" },
+                { val: "SARRIA" as const, label: "Barrio de Sarrià-Sant Gervasi" },
+              ].map(({ val, label }) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setPreviousBarrio(val)}
+                  style={{
+                    flex: 1,
+                    padding: "0.9rem 1.2rem",
+                    border: previousBarrio === val ? `1px solid ${GOLD}` : "1px solid rgba(200,169,110,0.15)",
+                    background: previousBarrio === val ? "rgba(200,169,110,0.06)" : "rgba(255,255,255,0.01)",
+                    color: previousBarrio === val ? OFFWHITE : "rgba(245,240,232,0.6)",
+                    fontSize: "0.95rem",
+                    borderRadius: "2px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.8rem",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "50%",
+                      border: `1px solid ${previousBarrio === val ? GOLD : "rgba(200,169,110,0.3)"}`,
+                      background: previousBarrio === val ? GOLD : "transparent",
+                      flexShrink: 0,
+                    }}
+                  />
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>

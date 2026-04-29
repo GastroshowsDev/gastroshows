@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DemoModeToggle } from "./DemoModeToggle";
 
 function SaveStatusIndicator() {
   const [status, setStatus] = useState<"idle" | "unsaved" | "saving" | "saved">("idle");
@@ -127,6 +128,7 @@ export function AdminTopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) 
       </div>
 
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+        <DemoModeToggle />
         <SaveStatusIndicator />
         <ThemeToggle variant="admin" />
       </div>
