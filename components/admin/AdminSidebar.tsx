@@ -17,12 +17,13 @@ const NAV: NavSection[] = [
   {
     title: "Gestión",
     items: [
-      { label: "Reservas",     href: "/admin/reservas",     icon: "◈" },
-      { label: "Visitas",      href: "/admin/visitas",      icon: "👥" },
-      { label: "Regalos",      href: "/admin/regalos",      icon: "🎁" },
-      { label: "Calendario",   href: "/admin/calendario",   icon: "◻" },
-      { label: "Contactos",    href: "/admin/contactos",    icon: "◇" },
-      { label: "Estadísticas", href: "/admin/estadisticas", icon: "◬", adminOnly: true },
+      { label: "Reservas",      href: "/admin/reservas",     icon: "◈" },
+      { label: "Visitas",       href: "/admin/visitas",      icon: "👥" },
+      { label: "Regalos",       href: "/admin/regalos",      icon: "🎁" },
+      { label: "Calendario",    href: "/admin/calendario",   icon: "◻" },
+      { label: "Organización",  href: "/admin/organizacion", icon: "◬" },
+      { label: "Contactos",     href: "/admin/contactos",    icon: "◇" },
+      { label: "Estadísticas",  href: "/admin/estadisticas", icon: "◬", adminOnly: true },
     ],
   },
   {

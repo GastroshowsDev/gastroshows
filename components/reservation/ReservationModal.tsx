@@ -668,6 +668,22 @@ function Step2({
         </button>
       </div>
 
+      {form.guests >= 12 && (
+        <div style={{ textAlign: "center", marginTop: "-1rem", marginBottom: "2rem", animation: "fadeIn 0.4s ease" }}>
+          <p style={{ fontSize: "0.85rem", color: GOLD, lineHeight: 1.5 }}>
+            ¿Sois un grupo de más de 12 personas? <br/>
+            <a 
+              href="https://wa.me/34620269585" 
+              target="_blank" 
+              rel="noreferrer"
+              style={{ color: GOLD, textDecoration: "underline", fontWeight: 600, display: "inline-block", marginTop: "0.2rem" }}
+            >
+              Contáctanos directamente por WhatsApp
+            </a>
+          </p>
+        </div>
+      )}
+
       {/* Price display */}
       <div
         style={{
