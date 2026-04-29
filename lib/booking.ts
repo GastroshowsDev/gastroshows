@@ -20,6 +20,7 @@ export const normalReservationSchema = z.object({
   newsletter: z.boolean().optional(),
   groupRef: z.string().max(120).optional(),
   comments: z.string().max(1000).optional(),
+  payFull: z.boolean().optional().default(false),
 });
 
 export const giftPurchaseSchema = z.object({

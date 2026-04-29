@@ -67,6 +67,7 @@ model Reservation {
   guests        Int
   totalAmount   Decimal           @db.Decimal(10, 2)
   paidAmount    Decimal           @default(0) @db.Decimal(10, 2)
+  paymentStatus PaymentStatus     @default(PARTIAL)
   status        ReservationStatus @default(PENDING)
   groupRef      String?
   mergedGroupId String?
@@ -467,4 +468,44 @@ model TableAssignment {
 model Setting {
   key   String @id
   value String
+}
+
+model BookingIntent {
+  id            String              @id @default(cuid())
+  name          String
+  phone         String
+  email         String
+  allergies     String?
+  previousVisit Boolean             @default(false)
+  newsletter    Boolean             @default(false)
+  comments      String?
+  groupRef      String?
+  isFirstVisit  Boolean             @default(true)
+  date          DateTime
+  shift         Shift
+  guests        Int
+  eventId       String?
+  totalAmount   Decimal             @db.Decimal(10, 2)
+  amountDue     Decimal             @db.Decimal(10, 2)
+  payFull       Boolean             @default(false)
+  orderId       String?             @unique
+  status        BookingIntentStatus @default(AWAITING_PAYMENT)
+  expiresAt     DateTime
+  createdAt     DateTime            @default(now())
+
+  @@index([status, expiresAt])
+  @@index([orderId])
+}
+
+enum BookingIntentStatus {
+  AWAITING_PAYMENT
+  PAYMENT_FAILED
+  COMPLETED
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PARTIAL
+  COMPLETED
+  GIFT
 }

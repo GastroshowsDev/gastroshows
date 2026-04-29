@@ -1,14 +1,13 @@
-import { ReservationStatus, ReservationType } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 import {
   amountDueNow30Pct,
-  buildEmailQueueSchedule,
   calculateTotalAmountWithDiscounts,
   normalReservationSchema,
   validateServiceDate,
 } from "@/lib/booking";
 import { prisma } from "@/lib/prisma";
+import { buildRedsysFormData, reservationToOrderId } from "@/lib/redsys";
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null);
@@ -41,78 +40,88 @@ export async function POST(request: Request) {
 
   const campaignPct = activeCampaign ? Number(activeCampaign.discountPct) : 0;
   const wedThuActive = promoConfig?.wedThuActive ?? false;
-  const totalAmount = calculateTotalAmountWithDiscounts(parsed.data.guests, serviceDate, campaignPct, wedThuActive);
-
-  const amountDue = amountDueNow30Pct(totalAmount);
-
-  const created = await prisma.$transaction(async (tx) => {
-    const customer = await tx.customer.create({
-      data: {
-        name: parsed.data.name,
-        phone: parsed.data.phone,
-        email: parsed.data.email,
-        allergies: parsed.data.allergies,
-        previousVisit: parsed.data.previousVisit,
-        newsletter: parsed.data.newsletter ?? false,
-        comments: (parsed.data.previousVisit && parsed.data.previousBarrio
-          ? `[Local: ${parsed.data.previousBarrio === "EIXAMPLE" ? "Eixample" : "Sarrià"}] `
-          : "") + (parsed.data.comments || ""),
-      },
-    });
-
-    const event = await tx.event.upsert({
-      where: {
-        date_shift: {
-          date: serviceDate,
-          shift: parsed.data.shift,
-        },
-      },
-      create: {
-        date: serviceDate,
-        shift: parsed.data.shift,
-        totalGuests: parsed.data.guests,
-      },
-      update: {
-        totalGuests: { increment: parsed.data.guests },
-      },
-    });
-
-    const reservation = await tx.reservation.create({
-      data: {
-        type: ReservationType.NORMAL,
-        customerId: customer.id,
-        eventId: event.id,
-        guests: parsed.data.guests,
-        status: ReservationStatus.PENDING,
-        totalAmount,
-        paidAmount: 0,
-        groupRef: parsed.data.groupRef,
-        isFirstVisit: !parsed.data.previousVisit,
-      },
-    });
-
-    const queue = buildEmailQueueSchedule(serviceDate, now);
-    if (queue.length > 0) {
-      await tx.emailQueue.createMany({
-        data: queue.map((item) => ({
-          reservationId: reservation.id,
-          templateKey: item.templateKey,
-          scheduledAt: item.scheduledAt,
-        })),
-      });
-    }
-
-    return { reservation, event };
-  });
-
-  return NextResponse.json(
-    {
-      ok: true,
-      reservationId: created.reservation.id,
-      totalAmount,
-      amountDue,
-      eventId: created.event.id,
-    },
-    { status: 201 },
+  const totalAmount = calculateTotalAmountWithDiscounts(
+    parsed.data.guests,
+    serviceDate,
+    campaignPct,
+    wedThuActive,
   );
+
+  const payFull = parsed.data.payFull ?? false;
+  const amountDue = payFull ? totalAmount : amountDueNow30Pct(totalAmount);
+
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      // Availability check
+      const eventRecord = await tx.event.findUnique({
+        where: { date_shift: { date: serviceDate, shift: parsed.data.shift } },
+      });
+
+      const currentTotal = eventRecord?.totalGuests ?? 0;
+      const remaining = 40 - currentTotal;
+      const requested = parsed.data.guests;
+
+      let canBook = requested <= remaining;
+      // Flexibility rule: allow +1 over remaining when only 1-3 spots left
+      if (!canBook && remaining >= 1 && remaining <= 3 && requested === remaining + 1) {
+        canBook = true;
+      }
+      if (!canBook) throw new Error("EVENT_FULL");
+
+      // Create/update event — guest count held until payment confirmed or intent expires
+      const event = await tx.event.upsert({
+        where: { date_shift: { date: serviceDate, shift: parsed.data.shift } },
+        create: { date: serviceDate, shift: parsed.data.shift, totalGuests: requested },
+        update: { totalGuests: { increment: requested } },
+      });
+
+      // Generate Redsys-compatible orderId (independent of intent id — stored on intent)
+      const seed = `${Date.now()}${Math.random().toString(36).slice(2, 8)}`;
+      const orderId = reservationToOrderId(seed);
+
+      const intent = await tx.bookingIntent.create({
+        data: {
+          name:          parsed.data.name,
+          phone:         parsed.data.phone,
+          email:         parsed.data.email,
+          allergies:     parsed.data.allergies,
+          previousVisit: parsed.data.previousVisit,
+          newsletter:    parsed.data.newsletter ?? false,
+          comments:      parsed.data.comments?.trim() || undefined,
+          groupRef:      parsed.data.groupRef,
+          isFirstVisit:  !parsed.data.previousVisit,
+          date:          serviceDate,
+          shift:         parsed.data.shift,
+          guests:        parsed.data.guests,
+          eventId:       event.id,
+          totalAmount,
+          amountDue,
+          payFull,
+          orderId,
+          expiresAt:     new Date(now.getTime() + 15 * 60 * 1000),
+        },
+      });
+
+      return { intent, orderId };
+    });
+
+    const redsysData = buildRedsysFormData(amountDue, result.orderId);
+
+    return NextResponse.json(
+      { ok: true, bookingIntentId: result.intent.id, totalAmount, amountDue, redsysData },
+      { status: 201 },
+    );
+  } catch (err: any) {
+    if (err.message === "EVENT_FULL") {
+      return NextResponse.json(
+        { ok: false, error: "Lo sentimos, el aforo para este turno está completo." },
+        { status: 400 },
+      );
+    }
+    console.error("[api/reservations/normal] POST error:", err);
+    return NextResponse.json(
+      { ok: false, error: "Error interno al procesar la reserva" },
+      { status: 500 },
+    );
+  }
 }

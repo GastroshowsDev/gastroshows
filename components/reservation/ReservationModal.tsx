@@ -25,6 +25,7 @@ type FormState = {
   privacyConsent: boolean;
   marketingConsent: boolean;
   groupRef: string;
+  payFull: boolean;
 };
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -91,6 +92,7 @@ const INITIAL: FormState = {
   privacyConsent: false,
   marketingConsent: false,
   groupRef: "",
+  payFull: false,
 };
 
 type Props = { open: boolean; onClose: () => void };
@@ -102,6 +104,9 @@ export function ReservationModal({ open, onClose }: Props) {
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
+  const [countdownStart, setCountdownStart] = useState<Date | null>(null);
+  const [secondsLeft, setSecondsLeft] = useState(15 * 60);
+  const [expired, setExpired] = useState(false);
 
   const [basePrice, setBasePrice] = useState(INITIAL_BASE_PRICE);
   const [wedThuActive, setWedThuActive] = useState(false);
@@ -150,6 +155,21 @@ export function ReservationModal({ open, onClose }: Props) {
     }
   }, [open]);
 
+  // Countdown timer — starts when user advances from step 1 to step 2
+  useEffect(() => {
+    if (!countdownStart || step === 1) return;
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - countdownStart.getTime()) / 1000);
+      const remaining = Math.max(0, 15 * 60 - elapsed);
+      setSecondsLeft(remaining);
+      if (remaining === 0) {
+        clearInterval(interval);
+        setExpired(true);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [countdownStart, step]);
+
   // Lock body scroll while open
   useEffect(() => {
     if (open) {
@@ -168,6 +188,9 @@ export function ReservationModal({ open, onClose }: Props) {
     setErrors({});
     setServerError(null);
     setSuccess(null);
+    setCountdownStart(null);
+    setSecondsLeft(15 * 60);
+    setExpired(false);
     onClose();
   }
 
@@ -212,6 +235,7 @@ export function ReservationModal({ open, onClose }: Props) {
           previousVisit: form.previousVisit ?? false,
           newsletter: form.marketingConsent,
           groupRef: form.groupRef.trim() || undefined,
+          payFull: form.payFull,
           comments:
             (form.previousVisit && form.previousBarrio
               ? `Visita previa: ${form.previousBarrio === "EIXAMPLE" ? "Barrio del Eixample" : "Barrio de Sarrià-Sant Gervasi"}. `
@@ -222,8 +246,10 @@ export function ReservationModal({ open, onClose }: Props) {
         ok: boolean;
         error?: string;
         reservationId?: string;
+        bookingIntentId?: string;
         totalAmount?: number;
         amountDue?: number;
+        redsysData?: any;
       };
       if (!res.ok || !json.ok) {
         setServerError(json.error ?? "Error al crear la reserva. Inténtalo de nuevo.");
@@ -309,11 +335,31 @@ export function ReservationModal({ open, onClose }: Props) {
 
         {success ? (
           <SuccessScreen success={success} date={form.date!} shift={form.shift} onClose={handleClose} />
+        ) : expired ? (
+          <div style={{ padding: "3rem 2rem", textAlign: "center" }}>
+            <div style={{ fontSize: "2.5rem", marginBottom: "1rem", opacity: 0.6 }}>⏱</div>
+            <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: OFFWHITE, marginBottom: "0.75rem" }}>
+              Tiempo agotado
+            </div>
+            <div style={{ fontSize: "0.85rem", color: LIGHT, lineHeight: 1.7, marginBottom: "2rem" }}>
+              Los 15 minutos han expirado y las plazas han sido liberadas.<br />
+              Por favor, inicia la reserva de nuevo.
+            </div>
+            <button
+              onClick={() => { setStep(1); setExpired(false); setCountdownStart(null); setSecondsLeft(15 * 60); setForm(INITIAL); setErrors({}); }}
+              style={nextBtnStyle}
+            >
+              Empezar de nuevo
+            </button>
+          </div>
         ) : (
           <>
             {/* Body */}
             <div style={{ padding: "2rem" }}>
               <Stepper step={step} />
+              {step >= 2 && countdownStart && (
+                <CountdownBanner secondsLeft={secondsLeft} />
+              )}
               {step === 1 && (
                 <Step1
                   form={form}
@@ -356,7 +402,16 @@ export function ReservationModal({ open, onClose }: Props) {
               }}
             >
               {step > 1 ? (
-                <button onClick={() => setStep((s) => (s - 1) as 1 | 2 | 3)} style={backBtnStyle}>
+                <button
+                  onClick={() => {
+                    if (step === 2) {
+                      setCountdownStart(null);
+                      setSecondsLeft(15 * 60);
+                    }
+                    setStep((s) => (s - 1) as 1 | 2 | 3);
+                  }}
+                  style={backBtnStyle}
+                >
                   ← Atrás
                 </button>
               ) : (
@@ -366,7 +421,11 @@ export function ReservationModal({ open, onClose }: Props) {
               {step < 3 ? (
                 <button
                   onClick={() => {
-                    if (step === 1 && !validateStep1()) return;
+                    if (step === 1) {
+                      if (!validateStep1()) return;
+                      setCountdownStart(new Date());
+                      setSecondsLeft(15 * 60);
+                    }
                     setErrors({});
                     setStep((s) => (s + 1) as 1 | 2 | 3);
                   }}
@@ -387,6 +446,43 @@ export function ReservationModal({ open, onClose }: Props) {
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────── CountdownBanner ── */
+
+function CountdownBanner({ secondsLeft }: { secondsLeft: number }) {
+  const mins = Math.floor(secondsLeft / 60);
+  const secs = secondsLeft % 60;
+  const display = `${mins}:${secs.toString().padStart(2, "0")}`;
+  const isCritical = secondsLeft < 60;
+  const isUrgent   = secondsLeft < 180;
+
+  const color  = isCritical ? "#EF4444"                  : isUrgent ? "#F59E0B"                  : "rgba(200,169,110,1)";
+  const border = isCritical ? "rgba(239,68,68,0.6)"      : isUrgent ? "rgba(245,158,11,0.6)"      : "rgba(200,169,110,0.55)";
+  const bg     = isCritical ? "rgba(239,68,68,0.08)"     : isUrgent ? "rgba(245,158,11,0.08)"     : "rgba(200,169,110,0.10)";
+  const glow   = isCritical ? "0 0 14px rgba(239,68,68,0.25)"  : isUrgent ? "0 0 14px rgba(245,158,11,0.25)"  : "0 0 18px rgba(200,169,110,0.22)";
+
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.7rem",
+      padding: "0.75rem 1.1rem",
+      marginBottom: "1.5rem",
+      background: bg,
+      border: `1px solid ${border}`,
+      borderRadius: "3px",
+      boxShadow: glow,
+      fontSize: "0.85rem",
+      color,
+    }}>
+      <span style={{ flexShrink: 0, fontSize: "1rem" }}>⏱</span>
+      <span>
+        Tus plazas están reservadas — tiempo restante:{" "}
+        <strong style={{ fontVariantNumeric: "tabular-nums", letterSpacing: "0.04em" }}>{display}</strong>
+      </span>
     </div>
   );
 }
@@ -684,55 +780,111 @@ function Step2({
         </div>
       )}
 
-      {/* Price display */}
+      {/* Price summary */}
       <div
         style={{
           textAlign: "center",
-          padding: "1.5rem",
+          padding: "1rem 1.5rem 0.75rem",
           background: "rgba(200,169,110,0.05)",
           border: "1px solid rgba(200,169,110,0.1)",
-          borderRadius: "2px",
+          borderRadius: "2px 2px 0 0",
         }}
       >
-        <div
-          style={{
-            fontSize: "0.78rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: LIGHT,
-            marginBottom: "0.5rem",
-          }}
-        >
+        <div style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: LIGHT, marginBottom: "0.4rem" }}>
           Precio por persona
         </div>
         <div>
           {hasDiscount && (
-            <span style={{ color: LIGHT, textDecoration: "line-through", fontSize: "1.08rem", marginRight: "0.5rem" }}>
+            <span style={{ color: LIGHT, textDecoration: "line-through", fontSize: "1rem", marginRight: "0.5rem" }}>
               {basePrice} €
             </span>
           )}
-
-          <span
-            style={{
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: "1.8rem",
-              fontWeight: 300,
-              color: GOLD,
-            }}
-          >
+          <span style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.7rem", fontWeight: 300, color: GOLD }}>
             {price} €
           </span>
         </div>
         {hasDiscount && (
-          <div style={{ fontSize: "0.78rem", color: GOLD, marginTop: "0.2rem" }}>
+          <div style={{ fontSize: "0.72rem", color: GOLD, marginTop: "0.15rem" }}>
             20% dto. miércoles y jueves
           </div>
         )}
-        <div style={{ fontSize: "0.9rem", color: OFFWHITE, marginTop: "0.5rem" }}>
+        <div style={{ fontSize: "0.88rem", color: OFFWHITE, marginTop: "0.35rem" }}>
           Total: <strong>{total} €</strong>
         </div>
-        <div style={{ fontSize: "0.78rem", color: LIGHT, marginTop: "0.3rem" }}>
-          Depósito (30%): {deposit} €
+      </div>
+
+      {/* Payment option selector */}
+      <div style={{ display: "flex", gap: 0, marginBottom: "0.5rem" }}>
+        {/* Deposit option */}
+        <div
+          onClick={() => setForm(f => ({ ...f, payFull: false }))}
+          style={{
+            flex: 1,
+            padding: "0.9rem 0.75rem",
+            background: !form.payFull ? "rgba(200,169,110,0.09)" : "rgba(200,169,110,0.02)",
+            border: `1.5px solid ${!form.payFull ? "rgba(200,169,110,0.5)" : "rgba(200,169,110,0.12)"}`,
+            borderTop: "none",
+            borderRight: "none",
+            borderRadius: "0 0 0 2px",
+            cursor: "pointer",
+            textAlign: "center",
+            transition: "all 0.2s",
+          }}
+        >
+          <div style={{ fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: LIGHT, marginBottom: "0.3rem" }}>
+            Solo depósito
+          </div>
+          <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.45rem", fontWeight: 300, color: GOLD }}>
+            {deposit} €
+          </div>
+          <div style={{ fontSize: "0.62rem", color: LIGHT, marginTop: "0.2rem", lineHeight: 1.4 }}>
+            30% ahora · resto en el local
+          </div>
+        </div>
+
+        {/* Full payment option — highlighted */}
+        <div
+          onClick={() => setForm(f => ({ ...f, payFull: true }))}
+          style={{
+            flex: 1,
+            padding: "0.9rem 0.75rem",
+            background: form.payFull ? "rgba(200,169,110,0.13)" : "rgba(200,169,110,0.04)",
+            border: `1.5px solid ${form.payFull ? GOLD : "rgba(200,169,110,0.12)"}`,
+            borderTop: "none",
+            borderLeft: "1px solid rgba(200,169,110,0.15)",
+            borderRadius: "0 0 2px 0",
+            cursor: "pointer",
+            textAlign: "center",
+            transition: "all 0.2s",
+            position: "relative",
+          }}
+        >
+          <div style={{
+            position: "absolute",
+            top: "-10px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: GOLD,
+            color: "#1a1209",
+            fontSize: "0.52rem",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            padding: "2px 9px",
+            borderRadius: "2px",
+            whiteSpace: "nowrap",
+          }}>
+            Recomendado
+          </div>
+          <div style={{ fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: GOLD, fontWeight: 600, marginBottom: "0.3rem" }}>
+            Pagar todo ahora
+          </div>
+          <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.45rem", fontWeight: 300, color: GOLD }}>
+            {total} €
+          </div>
+          <div style={{ fontSize: "0.62rem", color: LIGHT, marginTop: "0.2rem", lineHeight: 1.4 }}>
+            Entra directo · sin pasar por caja
+          </div>
         </div>
       </div>
     </div>

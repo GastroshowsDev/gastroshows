@@ -97,6 +97,9 @@ export function GiftModal({ open, onClose }: Props) {
       const json = (await res.json()) as {
         ok: boolean;
         error?: string;
+        voucherId?: string;
+        token?: string;
+        totalAmount?: number;
         expiresAt?: string;
         redsysData?: any;
       };
