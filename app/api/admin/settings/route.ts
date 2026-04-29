@@ -28,7 +28,11 @@ export async function POST(req: Request) {
     });
     
     return NextResponse.json({ ok: true });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to update setting" }, { status: 500 });
+  } catch (error: any) {
+    console.error("[admin/settings] POST error:", error);
+    return NextResponse.json({ 
+      ok: false, 
+      error: error.message || "Failed to update setting" 
+    }, { status: 500 });
   }
 }
