@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
 
 type VisitRow = {
   id: string;
@@ -24,6 +23,7 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
   const [search, setSearch] = useState("");
   const [editingVisit, setEditingVisit] = useState<VisitRow | null>(null);
   const [saving, setSaving] = useState(false);
+  const [confirming, setConfirming] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     let list = visits;
@@ -68,6 +68,26 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
     if (!confirm("¿Eliminar esta visita?")) return;
     const res = await fetch(`/api/admin/reservations/${id}`, { method: "DELETE" });
     if (res.ok) setVisits((prev) => prev.filter((v) => v.id !== id));
+  }
+
+  async function handleConfirm(id: string) {
+    if (!confirm("¿Confirmar esta visita? Se enviará un email de confirmación al cliente.")) return;
+    setConfirming(id);
+    try {
+      const res = await fetch(`/api/admin/visits/${id}/confirm`, { method: "POST" });
+      const json = await res.json();
+      if (json.ok) {
+        setVisits((prev) =>
+          prev.map((v) => (v.id === id ? { ...v, status: "CONFIRMED" } : v))
+        );
+      } else {
+        alert(json.error ?? "Error al confirmar la visita");
+      }
+    } catch {
+      alert("Error de conexión");
+    } finally {
+      setConfirming(null);
+    }
   }
 
   async function handleUpdate(e: React.FormEvent) {
@@ -148,6 +168,7 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
           }}
         />
       </div>
+
       {/* Table */}
       <div style={{ flex: 1, overflowY: "auto" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem" }}>
@@ -157,46 +178,93 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
               <th style={thStyle}>Cliente</th>
               <th style={thStyle}>Contacto</th>
               <th style={thStyle}>Solicitado el</th>
+              <th style={thStyle}>Estado</th>
               <th style={thStyle}>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((v) => (
-              <tr 
-                key={v.id} 
-                onClick={() => setEditingVisit(v)}
-                style={{ 
-                  borderBottom: "1px solid var(--color-admin-border)", 
-                  background: "var(--color-admin-surface)",
-                  cursor: "pointer",
-                  transition: "background 0.2s"
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-admin-bg)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "var(--color-admin-surface)")}
-              >
-                <td style={tdStyle}>
-                  <div style={{ fontWeight: 600 }}>{new Date(v.visitDate).toLocaleDateString("es-ES")}</div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)" }}>{v.visitTime}</div>
-                </td>
-                <td style={tdStyle}>{v.customer.name}</td>
-                <td style={tdStyle}>
-                  <div>{v.customer.email}</div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)" }}>{v.customer.phone}</div>
-                </td>
-                <td style={tdStyle}>{new Date(v.createdAt).toLocaleDateString("es-ES")}</td>
-                <td style={tdStyle}>
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); handleDelete(v.id); }}
-                    style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer", fontSize: "0.75rem" }}
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {filtered.map((v) => {
+              const isPending = v.status === "PENDING";
+              const isConfirming = confirming === v.id;
+              return (
+                <tr
+                  key={v.id}
+                  onClick={() => setEditingVisit(v)}
+                  style={{
+                    borderBottom: "1px solid var(--color-admin-border)",
+                    background: "var(--color-admin-surface)",
+                    cursor: "pointer",
+                    transition: "background 0.2s"
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-admin-bg)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--color-admin-surface)")}
+                >
+                  <td style={tdStyle}>
+                    <div style={{ fontWeight: 600 }}>{new Date(v.visitDate).toLocaleDateString("es-ES")}</div>
+                    <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)" }}>{v.visitTime}</div>
+                  </td>
+                  <td style={tdStyle}>{v.customer.name}</td>
+                  <td style={tdStyle}>
+                    <div>{v.customer.email}</div>
+                    <div style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)" }}>{v.customer.phone}</div>
+                  </td>
+                  <td style={tdStyle}>{new Date(v.createdAt).toLocaleDateString("es-ES")}</td>
+                  <td style={tdStyle}>
+                    <span style={{
+                      display: "inline-block",
+                      padding: "0.25rem 0.65rem",
+                      borderRadius: "99px",
+                      fontSize: "0.7rem",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      background: isPending
+                        ? "rgba(245,158,11,0.12)"
+                        : "rgba(16,185,129,0.12)",
+                      color: isPending ? "#D97706" : "#059669",
+                      border: `1px solid ${isPending ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)"}`,
+                    }}>
+                      {isPending ? "Pendiente" : "Confirmada"}
+                    </span>
+                  </td>
+                  <td style={{ ...tdStyle, whiteSpace: "nowrap" }}>
+                    <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }} onClick={(e) => e.stopPropagation()}>
+                      {isPending && (
+                        <button
+                          disabled={isConfirming}
+                          onClick={() => handleConfirm(v.id)}
+                          style={{
+                            padding: "0.35rem 0.8rem",
+                            borderRadius: "6px",
+                            border: "none",
+                            background: "rgba(16,185,129,0.15)",
+                            color: "#059669",
+                            fontSize: "0.75rem",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            opacity: isConfirming ? 0.6 : 1,
+                            transition: "background 0.15s",
+                          }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(16,185,129,0.28)")}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(16,185,129,0.15)")}
+                        >
+                          {isConfirming ? "…" : "✓ Confirmar"}
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDelete(v.id)}
+                        style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer", fontSize: "0.75rem" }}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ padding: "3rem", textAlign: "center", color: "var(--color-admin-muted)" }}>
+                <td colSpan={6} style={{ padding: "3rem", textAlign: "center", color: "var(--color-admin-muted)" }}>
                   No se encontraron visitas
                 </td>
               </tr>
@@ -215,57 +283,57 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
             <form onSubmit={handleUpdate} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <div>
                 <label style={labelStyle}>Nombre</label>
-                <input 
-                  style={inputStyle} 
-                  value={editingVisit.customer.name} 
-                  onChange={(e) => setEditingVisit({...editingVisit, customer: {...editingVisit.customer, name: e.target.value}})} 
+                <input
+                  style={inputStyle}
+                  value={editingVisit.customer.name}
+                  onChange={(e) => setEditingVisit({ ...editingVisit, customer: { ...editingVisit.customer, name: e.target.value } })}
                 />
               </div>
               <div>
                 <label style={labelStyle}>Email</label>
-                <input 
-                  style={inputStyle} 
+                <input
+                  style={inputStyle}
                   type="email"
-                  value={editingVisit.customer.email} 
-                  onChange={(e) => setEditingVisit({...editingVisit, customer: {...editingVisit.customer, email: e.target.value}})} 
+                  value={editingVisit.customer.email}
+                  onChange={(e) => setEditingVisit({ ...editingVisit, customer: { ...editingVisit.customer, email: e.target.value } })}
                 />
               </div>
               <div>
                 <label style={labelStyle}>Teléfono</label>
-                <input 
-                  style={inputStyle} 
-                  value={editingVisit.customer.phone} 
-                  onChange={(e) => setEditingVisit({...editingVisit, customer: {...editingVisit.customer, phone: e.target.value}})} 
+                <input
+                  style={inputStyle}
+                  value={editingVisit.customer.phone}
+                  onChange={(e) => setEditingVisit({ ...editingVisit, customer: { ...editingVisit.customer, phone: e.target.value } })}
                 />
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div>
                   <label style={labelStyle}>Fecha</label>
-                  <input 
+                  <input
                     type="date"
-                    style={inputStyle} 
-                    value={editingVisit.visitDate.split("T")[0]} 
-                    onChange={(e) => setEditingVisit({...editingVisit, visitDate: e.target.value})} 
+                    style={inputStyle}
+                    value={editingVisit.visitDate.split("T")[0]}
+                    onChange={(e) => setEditingVisit({ ...editingVisit, visitDate: e.target.value })}
                   />
                 </div>
                 <div>
                   <label style={labelStyle}>Hora</label>
-                  <input 
-                    style={inputStyle} 
-                    value={editingVisit.visitTime} 
-                    onChange={(e) => setEditingVisit({...editingVisit, visitTime: e.target.value})} 
+                  <input
+                    style={inputStyle}
+                    value={editingVisit.visitTime}
+                    onChange={(e) => setEditingVisit({ ...editingVisit, visitTime: e.target.value })}
                   />
                 </div>
               </div>
               <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                <button 
+                <button
                   type="button"
                   onClick={() => setEditingVisit(null)}
                   style={{ flex: 1, padding: "0.6rem", borderRadius: "6px", border: "1px solid var(--color-admin-border)", background: "none", color: "var(--color-admin-text)", cursor: "pointer" }}
                 >
                   Cancelar
                 </button>
-                <button 
+                <button
                   type="submit"
                   disabled={saving}
                   style={{ flex: 1, padding: "0.6rem", borderRadius: "6px", border: "none", background: "var(--color-admin-accent)", color: "#fff", cursor: "pointer", fontWeight: 600, opacity: saving ? 0.7 : 1 }}
