@@ -70,7 +70,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
           maxWidth: "1200px",
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "var(--gs-stack, repeat(auto-fit, minmax(260px, 1fr)))",
+          gridTemplateColumns: "var(--gs-stack, repeat(auto-fit, minmax(220px, 1fr)))",
           gap: "3rem",
         } as React.CSSProperties}
       >
@@ -129,7 +129,7 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
       onMouseEnter={handleInteraction}
       style={{
         position: "relative",
-        height: "310px",
+        height: "260px",
         borderRadius: "4px",
         cursor: "pointer",
         transition: `all ${currentDuration} cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -154,8 +154,6 @@ function StepCard({ index, step, isEditing, primaryColor, onUpdate }: any) {
         flexDirection: "column",
         justifyContent: "center"
       }}>
-        <div style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: color35, marginBottom: "0.3rem" }}>0{index + 1}</div>
-        
         <div style={{ marginBottom: "0.5rem" }}>
           <InlineText
             tagName="span"
