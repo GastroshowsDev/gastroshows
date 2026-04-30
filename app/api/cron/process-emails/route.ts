@@ -20,7 +20,7 @@ export async function GET(req: Request) {
       },
       include: {
         reservation: {
-          include: { customer: true, event: true },
+          include: { customer: true, event: true, venue: true },
         },
       },
       take: 20,
@@ -44,12 +44,22 @@ export async function GET(req: Request) {
 
       const timeValue = isVisit ? (reservation.visitTime ?? "") : "";
 
+      const venueNameMap: Record<string, string> = {
+        BERTRAND: "Bertrand",
+        URGELL: "Eixample (Urgell)",
+      };
+
       const data: Record<string, string> = {
         NOMBRE: reservation.customer.name,
+        EMAIL: reservation.customer.email,
+        TELEFONO: reservation.customer.phone,
         FECHA: dateValue,
         HORA: timeValue,
         GUESTS: reservation.guests.toString(),
         TURNO: reservation.event?.shift === "NOON" ? "Mediodía" : "Noche",
+        TOTAL: `${Number(reservation.totalAmount).toFixed(2)} €`,
+        DEPOSITO: `${Number(reservation.paidAmount).toFixed(2)} €`,
+        LOCAL: reservation.venue ? (venueNameMap[reservation.venue.name] ?? reservation.venue.name) : "",
         REFERENCE: reservation.id.slice(0, 8).toUpperCase(),
       };
 
