@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Trigger automation workflows outside transaction
-    await triggerWorkflows("RESERVATION_CREATED", reservationId);
+    await triggerWorkflows("RESERVATION_CONFIRMED", reservationId);
 
     console.info(
       `[payments/callback] Pago OK — reserva ${reservationId} creada, ${amountEuros}€, auth ${Ds_AuthorisationCode}`,

@@ -1,28 +1,24 @@
 import { prisma } from "@/lib/prisma";
 import { addDays } from "date-fns";
 
-/**
- * Dispara los flujos de automatización configurados para un evento específico.
- */
 export async function triggerWorkflows(trigger: string, reservationId: string) {
   try {
     const activeWorkflows = await prisma.workflow.findMany({
-      where: { trigger, active: true }
+      where: { trigger, active: true },
     });
 
     for (const workflow of activeWorkflows) {
       const steps = workflow.steps as any[];
       if (steps.length === 0) continue;
 
-      // Iniciar ejecución
       await prisma.workflowExecution.create({
         data: {
           workflowId: workflow.id,
-          reservationId: reservationId,
+          reservationId,
           currentStep: 0,
           status: "RUNNING",
-          nextStepAt: new Date(), // Empezar inmediatamente
-        }
+          nextStepAt: new Date(),
+        },
       });
     }
   } catch (err) {
@@ -30,80 +26,127 @@ export async function triggerWorkflows(trigger: string, reservationId: string) {
   }
 }
 
-/**
- * Procesa los pasos pendientes de todas las ejecuciones activas.
- * Se debería llamar desde un cron job cada pocos minutos.
- */
 export async function processWorkflowExecutions() {
   const now = new Date();
-  
+
   const activeExecutions = await prisma.workflowExecution.findMany({
     where: {
       status: "RUNNING",
-      nextStepAt: { lte: now }
+      nextStepAt: { lte: now },
     },
     include: {
       workflow: true,
       reservation: {
-        include: { event: true }
-      }
-    }
+        include: { event: true, venue: true, customer: true },
+      },
+    },
   });
 
   for (const exec of activeExecutions) {
     const steps = exec.workflow.steps as any[];
-    const currentStep = steps[exec.currentStep];
+    const step = steps[exec.currentStep];
 
-    if (!currentStep) {
+    if (!step) {
       await prisma.workflowExecution.update({
         where: { id: exec.id },
-        data: { status: "COMPLETED" }
+        data: { status: "COMPLETED" },
       });
       continue;
     }
 
     try {
-      if (currentStep.type === "email") {
-        // Encolar email
-        await prisma.emailQueue.create({
-          data: {
-            reservationId: exec.reservationId,
-            templateKey: currentStep.templateKey,
-            scheduledAt: new Date(),
+      switch (step.type) {
+        case "email": {
+          if (step.templateKey) {
+            await prisma.emailQueue.create({
+              data: {
+                reservationId: exec.reservationId,
+                templateKey: step.templateKey,
+                scheduledAt: new Date(),
+              },
+            });
           }
-        });
-        
-        // Avanzar al siguiente paso inmediatamente (o esperar si hay delay)
-        await advanceWorkflow(exec, steps);
-      } 
-      else if (currentStep.type === "wait") {
-        // El paso de espera simplemente actualiza el 'nextStepAt' para el SIGUIENTE paso
-        // Pero el paso ACTUAL es la espera, así que avanzamos
-        await advanceWorkflow(exec, steps, currentStep.delayDays || 0);
+          await advanceStep(exec, steps);
+          break;
+        }
+
+        case "wait": {
+          await advanceStep(exec, steps, addDays(now, step.delayDays ?? 0));
+          break;
+        }
+
+        // Waits until N days before the event date (absolute target, not relative delay)
+        case "waitUntilRelative": {
+          const eventDate = exec.reservation.event?.date ?? exec.reservation.visitDate;
+          if (!eventDate) {
+            await advanceStep(exec, steps);
+            break;
+          }
+          const days = step.daysBeforeEvent ?? 0;
+          const target = new Date(eventDate);
+          target.setDate(target.getDate() - days);
+          target.setUTCHours(9, 0, 0, 0); // 9:00 UTC = ~10-11 Spain
+          // If target is already in the past, fire immediately
+          await advanceStep(exec, steps, target > now ? target : now);
+          break;
+        }
+
+        // Sends venue-specific template; retries every 6h if no venue is yet assigned
+        case "venueEmail": {
+          const venue = exec.reservation.venue;
+          if (!venue) {
+            const eventDate = exec.reservation.event?.date;
+            const eventPassed = !eventDate || now >= new Date(eventDate);
+            if (eventPassed) {
+              console.warn(`[workflow-engine] venueEmail skipped — event past, no venue (exec ${exec.id})`);
+              await advanceStep(exec, steps);
+            } else {
+              // Retry in 6 hours — admin may assign venue before D-3
+              await prisma.workflowExecution.update({
+                where: { id: exec.id },
+                data: { nextStepAt: new Date(now.getTime() + 6 * 60 * 60 * 1000) },
+              });
+            }
+            break;
+          }
+          const templateKey =
+            venue.name === "BERTRAND" ? step.bertrandKey : step.urgellKey;
+          if (templateKey) {
+            await prisma.emailQueue.create({
+              data: {
+                reservationId: exec.reservationId,
+                templateKey,
+                scheduledAt: new Date(),
+              },
+            });
+          }
+          await advanceStep(exec, steps);
+          break;
+        }
+
+        default:
+          await advanceStep(exec, steps);
       }
     } catch (err) {
-      console.error(`[workflow-engine] Error processing step ${exec.currentStep} for exec ${exec.id}:`, err);
+      console.error(
+        `[workflow-engine] Error on step ${exec.currentStep} for exec ${exec.id}:`,
+        err,
+      );
     }
   }
 }
 
-async function advanceWorkflow(exec: any, steps: any[], extraDelayDays = 0) {
-  const nextStepIdx = exec.currentStep + 1;
-  
-  if (nextStepIdx >= steps.length) {
+async function advanceStep(exec: any, steps: any[], nextAt: Date = new Date()) {
+  const next = exec.currentStep + 1;
+  if (next >= steps.length) {
     await prisma.workflowExecution.update({
       where: { id: exec.id },
-      data: { status: "COMPLETED", currentStep: nextStepIdx }
+      data: { status: "COMPLETED", currentStep: next },
     });
   } else {
-    // Si el paso actual era un 'wait', el delay se aplica ahora.
-    // Si el paso actual era un 'email', avanzamos al siguiente.
     await prisma.workflowExecution.update({
       where: { id: exec.id },
-      data: { 
-        currentStep: nextStepIdx,
-        nextStepAt: addDays(new Date(), extraDelayDays)
-      }
+      data: { currentStep: next, nextStepAt: nextAt },
     });
   }
 }
