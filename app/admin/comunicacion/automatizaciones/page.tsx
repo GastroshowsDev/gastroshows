@@ -71,8 +71,8 @@ export default function AutomatizacionesPage() {
     try {
       const res = await fetch("/api/admin/workflows/seed", { method: "POST" });
       const json = await res.json();
-      if (json.ok) await fetchWorkflows();
-      else alert(json.message ?? "Error al crear flujo");
+      if (json.ok) { await fetchWorkflows(); }
+      else alert(json.error ?? json.message ?? "Error al crear flujo");
     } catch { alert("Error de conexión"); } finally { setSeeding(false); }
   }
 
