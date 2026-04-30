@@ -2,6 +2,30 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendMail } from "@/lib/mail";
 
+/** GET /api/public/visits?date=YYYY-MM-DD — returns confirmed visit times for that date */
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const date = searchParams.get("date");
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return NextResponse.json({ ok: false, error: "date requerida" }, { status: 400 });
+  }
+
+  const start = new Date(`${date}T00:00:00.000Z`);
+  const end   = new Date(`${date}T23:59:59.999Z`);
+
+  const confirmed = await prisma.reservation.findMany({
+    where: {
+      type:      "VISIT",
+      status:    "CONFIRMED",
+      visitDate: { gte: start, lte: end },
+    },
+    select: { visitTime: true },
+  });
+
+  const bookedTimes = confirmed.map((r) => r.visitTime).filter(Boolean) as string[];
+  return NextResponse.json({ ok: true, bookedTimes });
+}
+
 export async function POST(request: Request) {
   try {
     const { date, time, name, email, phone } = await request.json();

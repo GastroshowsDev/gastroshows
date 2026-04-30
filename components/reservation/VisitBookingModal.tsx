@@ -32,6 +32,8 @@ export function VisitBookingModal({ open, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -42,6 +44,16 @@ export function VisitBookingModal({ open, onClose }: Props) {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    if (!form.date) { setBookedTimes([]); return; }
+    setLoadingSlots(true);
+    fetch(`/api/public/visits?date=${form.date}`)
+      .then((r) => r.json())
+      .then((j) => { if (j.ok) setBookedTimes(j.bookedTimes); })
+      .catch(() => {})
+      .finally(() => setLoadingSlots(false));
+  }, [form.date]);
+
   if (!open) return null;
 
   function handleClose() {
@@ -49,6 +61,7 @@ export function VisitBookingModal({ open, onClose }: Props) {
     setForm(INITIAL);
     setSuccess(false);
     setErrors({});
+    setBookedTimes([]);
     onClose();
   }
 
@@ -120,27 +133,38 @@ export function VisitBookingModal({ open, onClose }: Props) {
                   {form.date && (
                     <div style={{ marginTop: "2rem", animation: "fadeUp 0.3s ease" }}>
                       <p style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: "1rem" }}>Selecciona el Horario</p>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", gap: "0.5rem" }}>
-                        {getAvailableTimes(form.date).map(t => (
-                          <div 
-                            key={t}
-                            onClick={() => setForm({ ...form, time: t })}
-                            style={{
-                              padding: "0.75rem 0.5rem",
-                              textAlign: "center",
-                              background: form.time === t ? GOLD : "rgba(255,255,255,0.03)",
-                              color: form.time === t ? "var(--gs-bg)" : OFFWHITE,
-                              border: `1px solid ${form.time === t ? GOLD : "rgba(200,169,110,0.1)"}`,
-                              borderRadius: "2px",
-                              fontSize: "0.85rem",
-                              cursor: "pointer",
-                              transition: "all 0.2s"
-                            }}
-                          >
-                            {t}
-                          </div>
-                        ))}
-                      </div>
+                      {loadingSlots ? (
+                        <p style={{ fontSize: "0.8rem", color: LIGHT, textAlign: "center" }}>Comprobando disponibilidad…</p>
+                      ) : (
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(80px, 1fr))", gap: "0.5rem" }}>
+                          {getAvailableTimes(form.date).map(t => {
+                            const booked   = bookedTimes.includes(t);
+                            const selected = form.time === t;
+                            return (
+                              <div
+                                key={t}
+                                onClick={() => !booked && setForm({ ...form, time: t })}
+                                title={booked ? "Hora no disponible" : undefined}
+                                style={{
+                                  padding: "0.75rem 0.5rem",
+                                  textAlign: "center",
+                                  background: selected ? GOLD : booked ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.03)",
+                                  color: selected ? "var(--gs-bg)" : booked ? "rgba(255,255,255,0.18)" : OFFWHITE,
+                                  border: `1px solid ${selected ? GOLD : booked ? "rgba(255,255,255,0.05)" : "rgba(200,169,110,0.1)"}`,
+                                  borderRadius: "2px",
+                                  fontSize: "0.85rem",
+                                  cursor: booked ? "not-allowed" : "pointer",
+                                  textDecoration: booked ? "line-through" : "none",
+                                  transition: "all 0.2s",
+                                  opacity: booked ? 0.35 : 1,
+                                }}
+                              >
+                                {t}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -292,7 +316,7 @@ function VisitCalendar({ value, onChange }: { value: string | null, onChange: (d
       </div>
       <p style={{ marginTop: "1.5rem", fontSize: "0.7rem", color: LIGHT, textAlign: "center", lineHeight: 1.5 }}>
         Horarios de visita: <br/>
-        <span style={{ color: GOLD }}>Miércoles a Viernes (17:00h - 19:00h)</span> y <span style={{ color: GOLD }}>Sábados (10:00h - 12:00h)</span>.
+        <span style={{ color: GOLD }}>Miércoles a Viernes (17:00h - 18:30h)</span> y <span style={{ color: GOLD }}>Sábados (10:00h - 11:30h)</span>.
       </p>
     </div>
   );
@@ -302,8 +326,8 @@ function getAvailableTimes(dateStr: string) {
   if (!dateStr) return [];
   const date = new Date(dateStr + "T12:00:00");
   const dow = date.getDay();
-  if (dow >= 3 && dow <= 5) return ["17:00", "17:30", "18:00", "18:30", "19:00"];
-  if (dow === 6) return ["10:00", "10:30", "11:00", "11:30", "12:00"];
+  if (dow >= 3 && dow <= 5) return ["17:00", "17:30", "18:00", "18:30"];
+  if (dow === 6) return ["10:00", "10:30", "11:00", "11:30"];
   return [];
 }
 
