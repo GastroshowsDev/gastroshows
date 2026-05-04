@@ -153,6 +153,13 @@ img:not(.no-blur),
   text-shadow: 0 2px 13px rgba(0, 0, 0, 0.75), 0 0 13px rgba(0, 0, 0, 0.6) !important;
 }
 
+/* Title change for main page */
+.main-page-title {
+  font-size: 3rem; /* Example size, adjust as needed */
+  font-weight: 700; /* Example weight, adjust as needed */
+  text-align: center; /* Example alignment, adjust as needed */
+  margin-bottom: 1.5rem; /* Example margin, adjust as needed */
+}
 
 /* Noise texture overlay */
 body::before {
@@ -229,17 +236,4 @@ body::before {
 .gs-mobile-preview {
   --gs-stack: 1fr !important;
   --gs-gap: 1.5rem !important;
-}
-
-.page-title {
-  font-size: 3rem; /* Example size, adjust as needed */
-  font-weight: 700; /* Example weight, adjust as needed */
-  line-height: 1.2; /* Example line height, adjust as needed */
-  text-align: center; /* Example alignment, adjust as needed */
-  margin-bottom: 1rem; /* Example margin, adjust as needed */
-}
-
-/* Target the specific title to change it */
-.page-title.main-title {
-  content: "Experiencias gastronómicas";
 }
