@@ -154,6 +154,9 @@ img:not(.no-blur),
 }
 
 
+
+
+
 /* Noise texture overlay */
 body::before {
   content: '';
@@ -231,15 +234,93 @@ body::before {
   --gs-gap: 1.5rem !important;
 }
 
-.page-title {
-  font-size: 3rem; /* Example size, adjust as needed */
-  font-weight: 700; /* Example weight, adjust as needed */
-  line-height: 1.2; /* Example line height, adjust as needed */
-  text-align: center; /* Example alignment, adjust as needed */
-  margin-bottom: 1rem; /* Example margin, adjust as needed */
+
+.section-hero__title {
+  font-family: var(--font-cormorant);
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-/* Target the specific title to change it */
-.page-title.main-title {
+.section-hero__title span {
+  display: block;
+}
+
+.section-hero__title span:first-child {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-hero__title span:last-child {
+  background: linear-gradient(90deg, #b49867 0%, #e7d097 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 4rem;
+}
+
+.section-hero__title span:last-child::after {
   content: "Experiencias gastronómicas";
+  display: block;
+  font-size: 4rem;
+  color: transparent;
+  text-shadow: var(--gs-gold-shadow);
+  margin-top: -3.3rem;
+  letter-spacing: -0.03em;
+  font-family: var(--font-cormorant);
+  font-weight: 700;
+}
+
+.section-hero__subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--gs-text-muted);
+}
+
+.section-hero__buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.section-hero__buttons a {
+  padding: 1.25rem 2.5rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.section-hero__buttons a.btn-primary {
+  background: var(--gs-gold);
+  color: var(--gs-bg);
+  box-shadow: var(--gs-gold-shadow);
+}
+
+.section-hero__buttons a.btn-primary:hover {
+  background: var(--gs-gold-hover);
+  box-shadow: none;
+}
+
+.section-hero__buttons a.btn-secondary {
+  background: transparent;
+  color: var(--gs-gold);
+  border: 1px solid var(--gs-gold);
+}
+
+.section-hero__buttons a.btn-secondary:hover {
+  background: rgba(209, 136, 34, 0.1);
+  border-color: var(--gs-gold-hover);
+  color: var(--gs-gold-hover);
 }
