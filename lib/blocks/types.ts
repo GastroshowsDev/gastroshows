@@ -28,6 +28,10 @@ export type CommonStyles = {
   paddingLeft?: string;
   paddingRight?: string;
   fontSize?: string;
+  fontWeight?: string | number;
+  fontStyle?: "normal" | "italic";
+  letterSpacing?: string;
+  lineHeight?: string;
 };
 
 
