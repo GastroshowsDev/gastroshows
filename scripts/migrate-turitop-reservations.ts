@@ -122,7 +122,7 @@ async function cleanDatabase() {
   await prisma.workflowExecution.deleteMany({});
   await prisma.giftVoucher.deleteMany({});
   await prisma.reservation.deleteMany({});
-  await prisma.visit.deleteMany({});
+  // Note: visit table doesn't exist in schema
   await prisma.customer.deleteMany({});
 }
 
@@ -158,7 +158,7 @@ async function processBatch(batch: TuritopRecord[]) {
       const existingReservation = await prisma.reservation.findFirst({
         where: {
           turitopId: record.short_id,
-        },
+        } as any,
       });
 
       if (existingReservation) {
@@ -262,7 +262,7 @@ async function processBatch(batch: TuritopRecord[]) {
           turitopId: record.short_id,
           isFirstVisit: true,
           source: "turitop",
-        },
+        } as any,
       });
 
       result.successCount++;

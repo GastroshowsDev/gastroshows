@@ -272,9 +272,4 @@ export const BLOCK_LABELS: Record<string, { label: string; icon: string; descrip
 
 export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
   HEADING: { label: "Título", icon: "H" },
-  BUTTON:  { label: "Botón",  icon: "🔘" },
-  TEXT:    { label: "Texto",  icon: "T" },
-  IMAGE:   { label: "Imagen", icon: "🖼" },
-  CALENDAR: { label: "Calendario", icon: "📅" },
-};
-
+  BUTTON:  { label: "Botón",  

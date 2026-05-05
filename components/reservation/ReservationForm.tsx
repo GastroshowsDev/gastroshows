@@ -151,7 +151,7 @@ export function ReservationForm() {
       </div>
 
       {/* Name + Phone */}
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         <div className="space-y-1">
           <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
             Nombre <span className="text-red-500">*</span>
@@ -236,6 +236,4 @@ export function ReservationForm() {
       <p className="text-xs text-zinc-500 text-center">
         Se requiere un depósito del 30% para confirmar la reserva. Precio base: 130 €/persona.
       </p>
-    </form>
-  );
-}
+    </form
