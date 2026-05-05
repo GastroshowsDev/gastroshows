@@ -86,6 +86,7 @@ model Reservation {
   workflowExecutions WorkflowExecution[]
   source        String?
   comments      String?
+  turitopId     String?           @unique
 
   @@index([eventId, status])
   @@index([venueId, createdAt])
