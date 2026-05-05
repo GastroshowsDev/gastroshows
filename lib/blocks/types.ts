@@ -142,6 +142,10 @@ export type TextContent = {
   titleAnim?: string;
   bodyAnim?: string;
   hoverEffect?: "none" | "grow" | "glow" | "lift";
+  fontSize?: string;
+  color?: string;
+  bold?: boolean;
+  italic?: boolean;
 };
 
 export type StepsContent = {

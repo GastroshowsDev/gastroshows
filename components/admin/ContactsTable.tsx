@@ -417,7 +417,6 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
         (c) => c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q) || c.phone.includes(q)
       );
     }
-    }
 
     // Sort by last visit
     list = [...list].sort((a, b) => {

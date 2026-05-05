@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { emailValidation } from "@/lib/utils/validations";
 
 // Client-safe schema — no @prisma/client imports
