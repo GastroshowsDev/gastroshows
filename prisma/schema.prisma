@@ -362,6 +362,37 @@ model PromotionConfig {
   updatedAt    DateTime @updatedAt
 }
 
+// RAG Assistant Models
+model KnowledgeArticle {
+  id          String    @id @default(cuid())
+  title       String
+  content     String    @db.Text
+  category    String    // Ej: "reservas", "politica", "eventos"
+  tags        String[]  @default([]) // Para búsqueda mejorada
+  active      Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  chats       AssistantChat[]
+
+  @@index([category])
+  @@index([active])
+  @@index([createdAt])
+}
+
+model AssistantChat {
+  id              String    @id @default(cuid())
+  userMessage     String    @db.Text
+  assistantResponse String  @db.Text
+  articleIds      String[]  @default([]) // Refs a KnowledgeArticle.id usados
+  helpful         Boolean?  // null = no feedback, true = helpful, false = not helpful
+  feedbackAt      DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@index([createdAt])
+  @@index([helpful])
+}
+
 enum UserRole {
   ADMIN
   LIVE
