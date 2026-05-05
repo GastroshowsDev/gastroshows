@@ -212,7 +212,7 @@ export function DisponibilidadSection({
             onClick={onReservar}
             style={{
               background: buttonColor || "var(--gs-gold)",
-              color: buttonColor ? "#fff" : "#0A0A0A", // white text if custom color, otherwise dark
+              color: buttonColor ? "#fff" : "#0A0A0A",
               border: "none",
               padding: "1rem 3rem",
               fontFamily: "var(--font-montserrat), sans-serif",
@@ -221,22 +221,7 @@ export function DisponibilidadSection({
               letterSpacing: "0.22em",
               textTransform: "uppercase",
               cursor: "pointer",
-              borderRadius: "2px",
-              transition: "all 0.3s",
-            }}
-            onMouseEnter={(e) => {
-              const b = e.currentTarget;
-              b.style.background = buttonColor ? buttonColor : "var(--gs-gold-hover)";
-              b.style.transform = "translateY(-2px)";
-              b.style.boxShadow = "0 10px 30px rgba(218,165,32,0.3)";
-              if (buttonColor) b.style.opacity = "0.9";
-            }}
-            onMouseLeave={(e) => {
-              const b = e.currentTarget;
-              b.style.background = buttonColor || "var(--gs-gold)";
-              b.style.transform = "translateY(0)";
-              b.style.boxShadow = "none";
-              if (buttonColor) b.style.opacity = "1";
+              borderRadius: "8px",
             }}
           >
             {buttonText || "Reservar ahora"}

@@ -549,28 +549,67 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             <label style={labelStyle}>Texto del cuerpo</label>
             <textarea id="field-body" value={(content as TextContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "120px" }} />
           </div>
-          {/* ... style controls remain ... */}
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-            <div>
-              <label style={labelStyle}>Tamaño fuente</label>
-              <input id="field-fontSize" placeholder="1.1rem" value={(content as TextContent).fontSize || ""} onChange={(e) => update({ fontSize: e.target.value })} style={{ ...inputStyle, marginBottom: 0 }} />
+          <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "1rem", marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Estilos del Título</p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div>
+                <label style={labelStyle}>Tamaño fuente</label>
+                <input id="field-titleFontSize" placeholder="clamp(2rem, 4vw, 3.2rem)" value={(content as TextContent).titleStyles?.fontSize || ""} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontSize: e.target.value } })} style={{ ...inputStyle, marginBottom: 0 }} />
+              </div>
+              <div>
+                <label style={labelStyle}>Color</label>
+                <input id="field-titleColor" type="color" value={(content as TextContent).titleStyles?.color || "#F5F0E8"} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, color: e.target.value } })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
+              </div>
             </div>
-            <div>
-              <label style={labelStyle}>Color texto</label>
-              <input id="field-color" type="color" value={(content as TextContent).color || "#F5F0E8"} onChange={(e) => update({ color: e.target.value })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
+
+            <div style={rowStyle}>
+              <label style={labelStyle}>Sombra de texto</label>
+              <input id="field-titleTextShadow" placeholder="0 2px 10px rgba(0,0,0,0.3)" value={(content as TextContent).titleStyles?.textShadow || ""} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, textShadow: e.target.value } })} style={inputStyle} />
+            </div>
+
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+                <input id="field-titleBold" type="checkbox" checked={(content as TextContent).titleStyles?.fontWeight === "bold" || false} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontWeight: e.target.checked ? "bold" : "normal" } })} />
+                Negrita
+              </label>
+              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+                <input id="field-titleItalic" type="checkbox" checked={(content as TextContent).titleStyles?.fontStyle === "italic" || false} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontStyle: e.target.checked ? "italic" : "normal" } })} />
+                Cursiva
+              </label>
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.5rem" }}>
-            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-              <input id="field-bold" type="checkbox" checked={(content as TextContent).bold || false} onChange={(e) => update({ bold: e.target.checked })} />
-              Negrita
-            </label>
-            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-              <input id="field-italic" type="checkbox" checked={(content as TextContent).italic || false} onChange={(e) => update({ italic: e.target.checked })} />
-              Cursiva
-            </label>
+          <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "1rem", marginTop: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Estilos del Cuerpo</p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div>
+                <label style={labelStyle}>Tamaño fuente</label>
+                <input id="field-bodyFontSize" placeholder="1.1rem" value={(content as TextContent).bodyStyles?.fontSize || ""} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontSize: e.target.value } })} style={{ ...inputStyle, marginBottom: 0 }} />
+              </div>
+              <div>
+                <label style={labelStyle}>Color</label>
+                <input id="field-bodyColor" type="color" value={(content as TextContent).bodyStyles?.color || "#F5F0E8"} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, color: e.target.value } })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
+              </div>
+            </div>
+
+            <div style={rowStyle}>
+              <label style={labelStyle}>Sombra de texto</label>
+              <input id="field-bodyTextShadow" placeholder="0 2px 10px rgba(0,0,0,0.3)" value={(content as TextContent).bodyStyles?.textShadow || ""} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, textShadow: e.target.value } })} style={inputStyle} />
+            </div>
+
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+                <input id="field-bodyBold" type="checkbox" checked={(content as TextContent).bodyStyles?.fontWeight === "bold" || false} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontWeight: e.target.checked ? "bold" : "normal" } })} />
+                Negrita
+              </label>
+              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
+                <input id="field-bodyItalic" type="checkbox" checked={(content as TextContent).bodyStyles?.fontStyle === "italic" || false} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontStyle: e.target.checked ? "italic" : "normal" } })} />
+                Cursiva
+              </label>
+            </div>
           </div>
 
           <div style={rowStyle}>

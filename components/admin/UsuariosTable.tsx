@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { UserRow } from "@/app/admin/usuarios/page";
 
 const S = {
@@ -14,7 +14,7 @@ const S = {
   modal: { background: "var(--color-admin-surface)", borderRadius: 10, padding: "1.5rem", width: "100%", maxWidth: 460, boxShadow: "0 20px 60px rgba(0,0,0,0.25)" },
 };
 
-type UserForm = { name: string; email: string; password: string; role: "ADMIN" | "LIVE"; defaultVenue: "BERTRAND" | "URGELL" | "" };
+type UserForm = { name: string; email: string; password: string; role: "ADMIN" | "LIVE"; defaultVenue: string };
 const FORM_DEFAULT: UserForm = { name: "", email: "", password: "", role: "LIVE", defaultVenue: "" };
 
 function RoleBadge({ role }: { role: "ADMIN" | "LIVE" }) {
@@ -25,11 +25,12 @@ function RoleBadge({ role }: { role: "ADMIN" | "LIVE" }) {
   );
 }
 
-function UserModal({ title, form, setField, onSubmit, onClose, saving, isEdit }: {
+function UserModal({ title, form, setField, onSubmit, onClose, saving, isEdit, venues }: {
   title: string; form: UserForm;
   setField: <K extends keyof UserForm>(k: K, v: UserForm[K]) => void;
   onSubmit: (e: React.FormEvent) => void;
   onClose: () => void; saving: boolean; isEdit: boolean;
+  venues: Array<{ id: string; name: string }>;
 }) {
   return (
     <div style={S.overlay} onClick={onClose}>
@@ -61,10 +62,13 @@ function UserModal({ title, form, setField, onSubmit, onClose, saving, isEdit }:
             </div>
             <div style={{ gridColumn: "span 2" }}>
               <label style={S.label}>Local por defecto (Recepción)</label>
-              <select style={S.select} value={form.defaultVenue} onChange={(e) => setField("defaultVenue", e.target.value as "BERTRAND" | "URGELL" | "")}>
+              <select style={S.select} value={form.defaultVenue} onChange={(e) => setField("defaultVenue", e.target.value)}>
                 <option value="">Sin filtro</option>
-                <option value="BERTRAND">Bertrand</option>
-                <option value="URGELL">Urgell</option>
+                {venues.map((v) => (
+                  <option key={v.id} value={v.name}>
+                    {v.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -97,13 +101,22 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
   const [editForm, setEditForm] = useState<UserForm>(FORM_DEFAULT);
   const [saving, setSaving] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [venues, setVenues] = useState<Array<{ id: string; name: string }>>([]);
+
+  useEffect(() => {
+    fetch("/api/admin/venues")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok) setVenues(res.data);
+      });
+  }, []);
 
   function setCreateField<K extends keyof UserForm>(k: K, v: UserForm[K]) { setCreateForm((f) => ({ ...f, [k]: v })); }
   function setEditField<K extends keyof UserForm>(k: K, v: UserForm[K]) { setEditForm((f) => ({ ...f, [k]: v })); }
 
   function openEdit(u: UserRow) {
     setEditId(u.id);
-    setEditForm({ name: u.name, email: u.email, password: "", role: u.role, defaultVenue: (u.defaultVenue ?? "") as "BERTRAND" | "URGELL" | "" });
+    setEditForm({ name: u.name, email: u.email, password: "", role: u.role, defaultVenue: u.defaultVenue ?? "" });
     setApiError(null);
   }
 
@@ -195,10 +208,10 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
       )}
 
       {createOpen && (
-        <UserModal title="Nuevo usuario" form={createForm} setField={setCreateField} onSubmit={handleCreate} onClose={() => setCreateOpen(false)} saving={creating} isEdit={false} />
+        <UserModal title="Nuevo usuario" form={createForm} setField={setCreateField} onSubmit={handleCreate} onClose={() => setCreateOpen(false)} saving={creating} isEdit={false} venues={venues} />
       )}
       {editId !== null && (
-        <UserModal title="Editar usuario" form={editForm} setField={setEditField} onSubmit={handleUpdate} onClose={() => setEditId(null)} saving={saving} isEdit={true} />
+        <UserModal title="Editar usuario" form={editForm} setField={setEditField} onSubmit={handleUpdate} onClose={() => setEditId(null)} saving={saving} isEdit={true} venues={venues} />
       )}
     </>
   );

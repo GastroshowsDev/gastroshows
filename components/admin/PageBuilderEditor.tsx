@@ -426,7 +426,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                  style={{ padding: "0.3rem 0.6rem", background: previewMode === "mobile" ? "white" : "transparent", boxShadow: previewMode === "mobile" ? "0 1px 2px rgba(0,0,0,0.1)" : "none", border: "none", borderRadius: "4px", fontSize: "0.8rem", cursor: "pointer", color: previewMode === "mobile" ? "black" : "#6b7280" }}
                >📱 Móvil</button>
              </div>
-             <a href={`/admin/web/pages`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver</a>
+             <a href={`/admin/web`} style={{ fontSize: "0.8rem", color: "#6B7280", textDecoration: "none" }}>Volver</a>
           </div>
         </div>
 

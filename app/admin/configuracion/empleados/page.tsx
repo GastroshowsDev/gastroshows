@@ -37,7 +37,7 @@ export default async function EmpleadosPage() {
               gap: "0.4rem",
             }}
           >
-            <span>🔗</span> Abrir Fichaje Público
+            <span>🔗</span> Interfaz Fichaje
           </Link>
           <Link
             href="/admin/configuracion/empleados/registros"
@@ -52,7 +52,7 @@ export default async function EmpleadosPage() {
               fontWeight: 500,
             }}
           >
-            Ver registros (Horas)
+            Ver registros
           </Link>
         </div>
       </div>

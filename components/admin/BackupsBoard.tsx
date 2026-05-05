@@ -467,8 +467,8 @@ export function BackupsBoard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {stats.tables.map((t) => (
-                    <tr key={t.name} style={{ borderBottom: "1px solid var(--color-admin-border)" }}>
+                  {stats.tables.map((t, idx) => (
+                    <tr key={`table-${idx}`} style={{ borderBottom: "1px solid var(--color-admin-border)" }}>
                       <td style={{ padding: "0.6rem 0.75rem", fontWeight: 600, color: "var(--color-admin-text)" }}>
                         {t.label}
                         <div style={{ fontSize: "0.65rem", color: "var(--color-admin-muted)", fontWeight: 400 }}>{t.name}</div>

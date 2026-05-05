@@ -102,7 +102,7 @@ export async function GET(request: Request) {
   const totalAvailable = days.reduce((s, d) => s + d.totalAvailable, 0);
   const totalCapacity  = days.reduce((s, d) => s + d.totalCapacity, 0);
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     ok: true,
     week: monday.toISOString().split("T")[0],
     weekLabel: formatWeekLabel(monday),
@@ -110,4 +110,9 @@ export async function GET(request: Request) {
     totalAvailable,
     totalCapacity,
   });
+
+  // Cache for 2 minutes to reduce DB queries
+  response.headers.set("Cache-Control", "public, max-age=120, stale-while-revalidate=300");
+
+  return response;
 }

@@ -47,7 +47,7 @@ export function ReservationForm() {
     setServerError(null);
     try {
       // Build ISO datetime combining date + shift time
-      const hour = values.shift === "NOON" ? "14:00:00" : "21:00:00";
+      const hour = values.shift === "NOON" ? "12:45:00" : "19:45:00";
       const isoDate = `${values.date}T${hour}.000Z`;
 
       const res = await fetch("/api/reservations/normal", {
@@ -125,8 +125,8 @@ export function ReservationForm() {
             {...register("shift")}
             className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900"
           >
-            {allowedShifts.includes("NOON") && <option value="NOON">Mediodía (14:00)</option>}
-            <option value="NIGHT">Noche (21:00)</option>
+            {allowedShifts.includes("NOON") && <option value="NOON">Mediodía (12:45)</option>}
+            <option value="NIGHT">Noche (19:45)</option>
           </select>
           {selectedDate && allowedShifts.length === 1 && (
             <p className="text-xs text-zinc-500">Solo turno noche de miércoles a viernes</p>

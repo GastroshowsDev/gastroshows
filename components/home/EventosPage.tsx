@@ -253,7 +253,7 @@ function CtaButton({ content, small }: { content: LandingContentMap; small?: boo
         onMouseLeave={(e) => (e.currentTarget.style.background = "#daa520")}
       >
         <WhatsAppIcon />
-        {c(content, "ev.cta.button")}
+        <span>{c(content, "ev.cta.button")} • {c(content, "ev.cta.whatsapp")}</span>
       </a>
     </div>
   );

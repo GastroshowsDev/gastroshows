@@ -4,19 +4,32 @@ import { toZonedTime } from "date-fns-tz";
 import { z } from "zod";
 
 import { emailValidation } from "@/lib/utils/validations";
+import { validatePhoneNumber, getCountryByDialCode } from "@/lib/countries";
 
 export const reservationInputSchema = z.object({
   date: z.string().datetime(),
   shift: z.nativeEnum(Shift),
   guests: z.number().int().min(1).max(12),
   name: z.string().min(2).max(120),
-  phone: z.string().min(6).max(30),
+  countryCode: z.string().min(1).max(5),
+  phone: z.string().min(6).max(20),
   email: emailValidation,
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean().default(false),
   groupRef: z.string().max(120).optional(),
   comments: z.string().max(1000).optional(),
-});
+}).refine(
+  (data) => {
+    const country = getCountryByDialCode(data.countryCode);
+    if (!country) return false;
+    const validation = validatePhoneNumber(data.phone, country);
+    return validation.valid;
+  },
+  {
+    message: "Número de teléfono inválido para el país seleccionado",
+    path: ["phone"],
+  }
+);
 
 const BARCELONA_TZ = "Europe/Madrid";
 const BASE_PRICE_PER_GUEST = 130;

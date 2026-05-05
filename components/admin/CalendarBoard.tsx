@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { CalendarEvent } from "@/app/admin/calendario/page";
 
-type VenueFilter = "all" | "URGELL" | "BERTRAND";
+type VenueFilter = string;
 
 // Mon=0 … Sun=6  (index in our DAYS array starting Monday)
 // Operating days: Wed(2), Thu(3), Fri(4), Sat(5)
@@ -60,16 +60,26 @@ const S = {
   }),
 };
 
-// ── Compact event chip: "U🌙25" / "B☀️16" ───────────────────────────────────
-function venueStyle(venueName: string | null) {
-  if (venueName === "URGELL") return { letter: "U", bg: "#EDE9FE", color: "#7C3AED" };
-  if (venueName === "BERTRAND" || venueName === "SARRIA") return { letter: "B", bg: "#CFFAFE", color: "#0891B2" };
-  if (venueName === "VISIT") return { letter: "V", bg: "#FFFBEB", color: "#B45309" }; // Gold/Amber
-  return { letter: "?", bg: "var(--color-admin-bg)", color: "var(--color-admin-muted)" };
+const VENUE_COLORS = [
+  { bg: "#EDE9FE", color: "#7C3AED" },
+  { bg: "#CFFAFE", color: "#0891B2" },
+  { bg: "#CCE5FF", color: "#1E40AF" },
+  { bg: "#DDD6FE", color: "#6366F1" },
+  { bg: "#DCFCE7", color: "#22C55E" },
+  { bg: "#FCE7F3", color: "#EC4899" },
+  { bg: "#FEF3C7", color: "#F59E0B" },
+];
+
+function getVenueStyle(venueName: string | null, venueMap: Map<string, number>) {
+  if (!venueName) return { letter: "?", bg: "var(--color-admin-bg)", color: "var(--color-admin-muted)" };
+  const index = venueMap.get(venueName) ?? 0;
+  const colorSet = VENUE_COLORS[index % VENUE_COLORS.length];
+  const letter = venueName.substring(0, 1).toUpperCase();
+  return { letter, bg: colorSet.bg, color: colorSet.color };
 }
 
-function EventChip({ ev }: { ev: CalendarEvent }) {
-  const vs = venueStyle(ev.venueName);
+function EventChip({ ev, venueMap }: { ev: CalendarEvent; venueMap: Map<string, number> }) {
+  const vs = getVenueStyle(ev.venueName, venueMap);
   
   if (ev.isVisit) {
     return (
@@ -105,12 +115,13 @@ function EventChip({ ev }: { ev: CalendarEvent }) {
 
 // ── Regular cell ─────────────────────────────────────────────────────────────
 function RegularCell({
-  day, dayStr, isToday, isCurrentMonth, isOperating, dayEvents, onNavigate,
+  day, dayStr, isToday, isCurrentMonth, isOperating, dayEvents, onNavigate, venueMap,
 }: {
   day: Date; dayStr: string; isToday: boolean;
   isCurrentMonth: boolean; isOperating: boolean;
   dayEvents: CalendarEvent[];
   onNavigate: (date: string) => void;
+  venueMap: Map<string, number>;
 }) {
   const operatingBorder = isOperating
     ? "2px solid rgba(135,91,247,0.35)"
@@ -154,7 +165,7 @@ function RegularCell({
       </div>
       {dayEvents.filter((ev) => ev.reservationCount > 0).map((ev) => (
         <div key={ev.id} style={{ marginBottom: 2 }}>
-          <EventChip ev={ev} />
+          <EventChip ev={ev} venueMap={venueMap} />
         </div>
       ))}
     </div>
@@ -175,6 +186,15 @@ export function CalendarBoard({
   const [year, setYear] = useState(now.getFullYear());
   const [month, setMonth] = useState(now.getMonth());
   const [venueFilter, setVenueFilter] = useState<VenueFilter>("all");
+  const [venues, setVenues] = useState<Array<{ id: string; name: string }>>([]);
+
+  useEffect(() => {
+    fetch("/api/admin/venues")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok) setVenues(res.data);
+      });
+  }, []);
 
   function handleNavigate(date: string, shift?: "NOON" | "NIGHT") {
     const params = new URLSearchParams({ date });
@@ -184,6 +204,12 @@ export function CalendarBoard({
 
   const days = useMemo(() => getDaysInMonth(year, month), [year, month]);
   const closedSet = useMemo(() => new Set(closedDates), [closedDates]);
+
+  const venueMap = useMemo(() => {
+    const map = new Map<string, number>();
+    venues.forEach((v, i) => map.set(v.name, i));
+    return map;
+  }, [venues]);
 
   const eventMap = useMemo(() => {
     const map = new Map<string, CalendarEvent[]>();
@@ -218,8 +244,18 @@ export function CalendarBoard({
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           <div style={{ display: "flex", gap: "0.4rem" }}>
             <button style={S.chip(venueFilter === "all")} onClick={() => setVenueFilter("all")}>Todos</button>
-            <button style={S.chip(venueFilter === "URGELL", "#7C3AED")} onClick={() => setVenueFilter("URGELL")}>Urgell</button>
-            <button style={S.chip(venueFilter === "BERTRAND", "#0891B2")} onClick={() => setVenueFilter("BERTRAND")}>Bertrand</button>
+            {venues.map((v, i) => {
+              const colorSet = VENUE_COLORS[i % VENUE_COLORS.length];
+              return (
+                <button
+                  key={v.id}
+                  style={S.chip(venueFilter === v.name, colorSet.color)}
+                  onClick={() => setVenueFilter(v.name)}
+                >
+                  {v.name}
+                </button>
+              );
+            })}
           </div>
           <div style={{ display: "flex", gap: "0.4rem" }}>
             <button onClick={prevMonth} style={{ width: 30, height: 30, borderRadius: 6, border: "1px solid var(--color-admin-border)", background: "var(--color-admin-surface)", cursor: "pointer", color: "var(--color-admin-muted)", fontSize: "1rem" }}>‹</button>
@@ -264,6 +300,7 @@ export function CalendarBoard({
               isOperating={isOperating}
               dayEvents={dayEvents}
               onNavigate={handleNavigate}
+              venueMap={venueMap}
             />
           );
         })}

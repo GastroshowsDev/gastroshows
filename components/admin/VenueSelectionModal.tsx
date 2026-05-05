@@ -2,22 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-type VenueKey = "BERTRAND" | "URGELL";
-
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (venue: VenueKey) => void;
+  onConfirm: (venueName: string) => void;
   customerName: string;
   reservationDetails: string;
 };
 
 export function VenueSelectionModal({ isOpen, onClose, onConfirm, customerName, reservationDetails }: Props) {
-  const [selected, setSelected] = useState<VenueKey | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [venues, setVenues] = useState<Array<{ id: string; name: string }>>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Reset selection when opening
   useEffect(() => {
-    if (isOpen) setSelected(null);
+    if (!isOpen) return;
+    setSelected(null);
+    setLoading(true);
+    fetch("/api/admin/venues")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok) setVenues(res.data);
+      })
+      .finally(() => setLoading(false));
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -31,7 +38,6 @@ export function VenueSelectionModal({ isOpen, onClose, onConfirm, customerName, 
         className="w-full animate-in fade-in slide-in-from-bottom-8 duration-300 rounded-t-2xl bg-white p-6 pb-10 dark:bg-zinc-900 sm:max-w-md sm:rounded-2xl sm:pb-6"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Drag handle for mobile feel */}
         <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-zinc-200 dark:bg-zinc-800 sm:hidden" />
 
         <div className="mb-6 text-center">
@@ -45,20 +51,20 @@ export function VenueSelectionModal({ isOpen, onClose, onConfirm, customerName, 
         </div>
 
         <div className="grid gap-4">
-          <VenueButton
-            id="URGELL"
-            name="Eixample (Urgell)"
-            address="Carrer del Comte d'Urgell, 240"
-            selected={selected === "URGELL"}
-            onClick={() => setSelected("URGELL")}
-          />
-          <VenueButton
-            id="BERTRAND"
-            name="Bertrand (Sarrià)"
-            address="Carrer de Bertrand i Serra, 8"
-            selected={selected === "BERTRAND"}
-            onClick={() => setSelected("BERTRAND")}
-          />
+          {loading ? (
+            <div className="py-4 text-center text-sm text-zinc-500">Cargando locales...</div>
+          ) : venues.length === 0 ? (
+            <div className="py-4 text-center text-sm text-zinc-500">No hay locales disponibles</div>
+          ) : (
+            venues.map((venue) => (
+              <VenueButton
+                key={venue.id}
+                name={venue.name}
+                selected={selected === venue.name}
+                onClick={() => setSelected(venue.name)}
+              />
+            ))
+          )}
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row-reverse">
@@ -81,10 +87,8 @@ export function VenueSelectionModal({ isOpen, onClose, onConfirm, customerName, 
   );
 }
 
-function VenueButton({ id, name, address, selected, onClick }: {
-  id: VenueKey;
+function VenueButton({ name, selected, onClick }: {
   name: string;
-  address: string;
   selected: boolean;
   onClick: () => void;
 }) {
@@ -105,9 +109,6 @@ function VenueButton({ id, name, address, selected, onClick }: {
           </span>
         )}
       </div>
-      <span className={`mt-1 text-sm ${selected ? "text-zinc-400" : "text-zinc-500"}`}>
-        {address}
-      </span>
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ReservationStatus, ReservationType, Shift, VenueName } from "@prisma/client";
+import { ReservationStatus, ReservationType, Shift } from "@prisma/client";
 import { mailrelaySubscribe } from "@/lib/mailrelay";
 import { requireStaff } from "@/lib/auth-helpers";
 
@@ -18,7 +18,7 @@ export async function PATCH(req: Request, { params }: RouteContext) {
       name?: string; phone?: string; allergies?: string;
       previousVisit?: boolean; comments?: string;
       date?: string; shift?: Shift;
-      venueName?: VenueName | null;
+      venueName?: string | null;
       guests?: number; type?: ReservationType;
       totalAmount?: number; paidAmount?: number;
       status?: ReservationStatus;

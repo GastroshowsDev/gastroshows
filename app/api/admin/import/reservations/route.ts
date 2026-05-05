@@ -24,7 +24,7 @@ export type ImportRow = {
   paidAmount?: number;
   status?: "PENDING" | "CONFIRMED" | "CANCELLED";
   type?: "NORMAL" | "GIFT";
-  venueName?: "URGELL" | "BERTRAND" | null;
+  venueName?: string | null;
 };
 
 type Result = { ok: true; created: number; skipped: number; errors: string[] };

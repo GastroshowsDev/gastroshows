@@ -22,7 +22,7 @@ export default async function AdminLivePage() {
   const session = await getServerSession(authOptions);
   const user = session?.user as { role?: string; defaultVenue?: string | null } | undefined;
   const role = user?.role ?? "LIVE";
-  const defaultVenue = (user?.defaultVenue ?? null) as "BERTRAND" | "URGELL" | null;
+  const defaultVenue = user?.defaultVenue ?? null;
 
   const date = todayYmd();
   const shift = "NIGHT" as const;

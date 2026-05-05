@@ -4,6 +4,8 @@ import { Fragment, useEffect, useState } from "react";
 import { AllergyPicker } from "./AllergyPicker";
 import { PaymentButton } from "./PaymentButton";
 import { BookingCalendar } from "./BookingCalendar";
+import { CountrySelector } from "./CountrySelector";
+import { getDefaultCountry, COUNTRIES, type Country } from "@/lib/countries";
 
 /* ─────────────────────────────────── types ── */
 
@@ -16,6 +18,7 @@ type FormState = {
   shift: Shift;
   guests: number;
   name: string;
+  countryCode: string;
   phone: string;
   email: string;
   allergies: string;
@@ -83,6 +86,7 @@ const INITIAL: FormState = {
   shift: "NIGHT",
   guests: 2,
   name: "",
+  countryCode: getDefaultCountry().dialCode,
   phone: "",
   email: "",
   allergies: "",
@@ -216,7 +220,7 @@ export function ReservationModal({ open, onClose }: Props) {
     setServerError(null);
     setLoading(true);
     try {
-      const hour = form.shift === "NOON" ? "14:00:00" : "21:00:00";
+      const hour = form.shift === "NOON" ? "12:45:00" : "19:45:00";
       const isoDate = `${form.date}T${hour}.000Z`;
       const isPrivate = form.shift === "PRIVATE";
       const endpoint = isPrivate ? "/api/reservations/private" : "/api/reservations/normal";
@@ -229,6 +233,7 @@ export function ReservationModal({ open, onClose }: Props) {
           shift: form.shift,
           guests: form.guests,
           name: form.name.trim(),
+          countryCode: form.countryCode,
           phone: form.phone.trim(),
           email: form.email.trim(),
           allergies: form.allergies.trim() || undefined,
@@ -614,7 +619,7 @@ function Step1({
                   shift="NOON"
                   icon="☀"
                   name="Mediodía"
-                  time="14:00 h"
+                  time="12:45 h"
                   selected={form.shift === "NOON"}
                   onClick={() => setForm((f) => ({ ...f, shift: "NOON" }))}
                 />
@@ -623,7 +628,7 @@ function Step1({
                 shift="NIGHT"
                 icon="✦"
                 name="Noche"
-                time="21:00 h"
+                time="19:45 h"
                 selected={form.shift === "NIGHT"}
                 onClick={() => setForm((f) => ({ ...f, shift: "NIGHT" }))}
               />
@@ -968,13 +973,26 @@ function Step3({
           />
         </FormField>
         <FormField label="Teléfono" error={errors.phone} required>
-          <input
-            type="tel"
-            value={form.phone}
-            onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-            placeholder="+34 600 000 000"
-            style={inputStyle}
-          />
+          <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            <CountrySelector
+              selectedCountry={COUNTRIES.find((c) => c.dialCode === form.countryCode) || getDefaultCountry()}
+              onChange={(country) =>
+                setForm((f) => ({ ...f, countryCode: country.dialCode }))
+              }
+            />
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+              placeholder="600 000 000"
+              style={{
+                ...inputStyle,
+                flex: 1,
+                height: "2.5rem",
+                padding: "0.5rem 0.75rem",
+              }}
+            />
+          </div>
         </FormField>
       </div>
 
@@ -1020,12 +1038,12 @@ function Step3({
 
       {/* Related Reservations */}
       <div style={{ marginBottom: "1.2rem" }}>
-        <FormField label="Reservas relacionadas">
+        <FormField label="¿VIENES CON MÁS GENTE?">
           <input
             type="text"
             value={form.groupRef}
             onChange={(e) => setForm((f) => ({ ...f, groupRef: e.target.value }))}
-            placeholder="¿Vienes con otras personas que han hecho otra reserva por su cuenta?"
+            placeholder="Nombre persona titular de la/s reserva/s"
             style={inputStyle}
           />
         </FormField>

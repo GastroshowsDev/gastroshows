@@ -127,13 +127,12 @@ export function AllergyPicker({ open, onClose, value, onChange }: Props) {
   function toggle(id: string) {
     setSel((prev) => {
       const next = new Map(prev);
-      if (!next.has(id)) {
-        next.set(id, { severity: "alergia" });
+      if (next.has(id)) {
+        // Deselect if already selected
+        next.delete(id);
       } else {
-        const current = next.get(id)!;
-        if (current.severity === "alergia") next.set(id, { ...current, severity: "intolerancia" });
-        else if (current.severity === "intolerancia") next.set(id, { ...current, severity: "no-gusta" });
-        else next.delete(id);
+        // Select with default severity "alergia"
+        next.set(id, { severity: "alergia" });
       }
       return next;
     });
@@ -227,7 +226,7 @@ export function AllergyPicker({ open, onClose, value, onChange }: Props) {
                     onClick={() => toggle(a.id)}
                     style={{
                       display: "flex", alignItems: "center", gap: "1rem",
-                      padding: "1rem 1.25rem",
+                      padding: "0.6rem 1rem",
                       border: `1px solid ${isSelected ? activeColor : "rgba(255,255,255,0.1)"}`,
                       background: isSelected ? `${activeColor}15` : "transparent",
                       borderRadius: 99,
@@ -236,8 +235,8 @@ export function AllergyPicker({ open, onClose, value, onChange }: Props) {
                       textAlign: "left",
                     }}
                   >
-                    <span style={{ fontSize: "1.5rem" }}>{a.emoji}</span>
-                    <span style={{ fontSize: "1.1rem", color: isSelected ? OFF : LIGHT, fontWeight: isSelected ? 600 : 400 }}>
+                    <span style={{ fontSize: "1.3rem" }}>{a.emoji}</span>
+                    <span style={{ fontSize: "0.95rem", color: isSelected ? OFF : LIGHT, fontWeight: isSelected ? 600 : 400 }}>
                       {a.name}
                     </span>
                     {data && (

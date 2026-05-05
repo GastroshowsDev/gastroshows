@@ -254,25 +254,13 @@ a[role="button"] {
   border-radius: 8px; /* Redondeado suave por defecto, no forzado */
 }
 
-/* Escala por defecto (WEB): 5% + Elevación + Blanqueamiento */
+/* Escala por defecto (WEB): 5% + Elevación + Overlay */
 button:hover,
 .btn:hover,
 a[role="button"]:hover {
   transform: translateY(-5px) scale(1.05) !important;
   z-index: 50;
-}
-
-/* Overlay blanco respeta border-radius via ::before en lugar de background-image */
-button:hover::before,
-.btn:hover::before,
-a[role="button"]:hover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0.4);
-  pointer-events: none;
-  z-index: 0;
+  box-shadow: inset 0 0 0 9999px rgba(255, 255, 255, 0.4) !important;
 }
 
 /* Escala en ADMIN: Diferenciada por tamaño con máxima especificidad */
@@ -296,13 +284,6 @@ a[role="button"]:hover::before {
 .admin-context a[role="button"]:hover {
   transform: scale(1.05) !important;
   transition: transform 0.2s ease !important;
-}
-
-/* Sin overlay blanco en admin */
-.admin-context button:hover::before,
-.admin-context .btn:hover::before,
-.admin-context a[role="button"]:hover::before {
-  display: none;
 }
 
 /* Efecto Explosión al Clicar */

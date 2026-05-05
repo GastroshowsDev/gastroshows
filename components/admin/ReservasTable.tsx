@@ -2,13 +2,14 @@
 
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { type VenueName } from "@prisma/client";
 import type { ReservaRow } from "@/app/admin/reservas/page";
 import { ImportModal } from "@/components/admin/ImportModal";
 import { VenueSelectionModal } from "@/components/admin/VenueSelectionModal";
+import { useVenues } from "@/hooks/useVenues";
+import { getVenueDisplay } from "@/lib/admin/venue-display";
 
 type TimeFilter = "upcoming" | "today" | "week" | "month" | "next-month" | "all" | "past" | "past-2w";
-type VenueFilter = "all" | "URGELL" | "BERTRAND";
+type VenueFilter = string;
 type ShiftFilter = "all" | "NOON" | "NIGHT";
 
 const TIME_LABEL: Record<TimeFilter, string> = {
@@ -39,11 +40,6 @@ const STATUS_COLOR: Record<StatusKey, { bg: string; color: string }> = {
   PAYMENT_FAILED:{ bg: "#FEE2E2", color: "#DC2626" },
 };
 
-const VENUE_COLOR: Record<string, { bg: string; color: string }> = {
-  BERTRAND: { bg: "#CFFAFE", color: "#0891B2" },
-  SARRIA:   { bg: "#CFFAFE", color: "#0891B2" },
-  URGELL:   { bg: "#EDE9FE", color: "#7C3AED" },
-};
 
 function fmtDate(iso: string) {
   const d = new Date(iso);
@@ -196,7 +192,7 @@ type ReservaForm = {
   name: string; email: string; phone: string; allergies: string;
   previousVisit: boolean; comments: string;
   date: string; shift: "NOON" | "NIGHT";
-  venueName: "BERTRAND" | "URGELL" | "";
+  venueName: string;
   guests: number; type: "NORMAL" | "GIFT";
   pricePerPax: number; paidAmount: number;
   status: StatusKey;
@@ -223,7 +219,7 @@ function rowToForm(r: ReservaRow): ReservaForm {
     comments: r.customer.comments ?? "",
     date: toDateInput(r.event.date),
     shift: r.event.shift as "NOON" | "NIGHT",
-    venueName: (r.venue?.name ?? "") as "BERTRAND" | "URGELL" | "",
+    venueName: r.venue?.name ?? "",
     guests: r.guests,
     type: r.type as "NORMAL" | "GIFT",
     pricePerPax: r.guests > 0 ? Math.round(r.totalAmount / r.guests) : r.totalAmount,
@@ -355,6 +351,7 @@ function ReservaModal({
   onClose,
   saving,
   isEdit,
+  venues,
 }: {
   title: string;
   form: ReservaForm;
@@ -363,6 +360,7 @@ function ReservaModal({
   onClose: () => void;
   saving: boolean;
   isEdit: boolean;
+  venues: Array<{ id: string; name: string }>;
 }) {
   const total = form.pricePerPax * form.guests;
 
@@ -422,10 +420,11 @@ function ReservaModal({
             </div>
             <div>
               <label style={S.label}>Local</label>
-              <select style={S.select} value={form.venueName} onChange={(e) => setField("venueName", e.target.value as "BERTRAND" | "URGELL" | "")}>
+              <select style={S.select} value={form.venueName} onChange={(e) => setField("venueName", e.target.value)}>
                 <option value="">Sin asignar</option>
-                <option value="BERTRAND">Bertrand</option>
-                <option value="URGELL">Urgell</option>
+                {venues.map((v) => (
+                  <option key={v.id} value={v.name}>{getVenueDisplay(v.name).label}</option>
+                ))}
               </select>
             </div>
             <div>
@@ -484,6 +483,7 @@ function ReservaModal({
 export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas: ReservaRow[]; role?: "ADMIN" | "LIVE" }) {
   const isAdmin = role === "ADMIN";
   const searchParams = useSearchParams();
+  const { venues } = useVenues();
 
   const [reservas, setReservas] = useState(initial);
 
@@ -616,16 +616,75 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
 
   // ── Inline venue change ──────────────────────────────────────────────────────
   async function handleVenueChange(reservaId: string, venueName: string) {
-    const prev = reservas.find((r) => r.id === reservaId)?.venue?.name ?? null;
-    const name = venueName as VenueName | "";
-    setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, venue: name ? { id: r.venue?.id ?? "", name: name as VenueName } : null } : r));
-    const res = await fetch(`/api/reservations/${reservaId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ venueName: name || null }),
-    });
-    if (!res.ok) {
-      setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, venue: prev ? { id: r.venue?.id ?? "", name: prev as VenueName } : null } : r));
+    const reservation = reservas.find((r) => r.id === reservaId);
+    if (!reservation) return;
+
+    const prev = reservation.venue;
+
+    // Update UI optimistically
+    setReservas((rs) => rs.map((r) =>
+      r.id === reservaId
+        ? { ...r, venue: venueName && venueName !== "" ? { id: "temp", name: venueName } : null }
+        : r
+    ));
+
+    try {
+      const body = { venueName: venueName === "" ? null : venueName };
+      const url = `/api/reservations/${reservaId}`;
+      console.log("🔵 [handleVenueChange] Sending to:", url);
+      console.log("🔵 [handleVenueChange] Request body:", JSON.stringify(body));
+
+      const res = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const responseStatus = res.status;
+      const responseStatusText = res.statusText;
+      const responseOk = res.ok;
+
+      console.log(`🟡 [handleVenueChange] Got HTTP ${responseStatus} ${responseStatusText} (ok=${responseOk})`);
+
+      let json: any = null;
+      const responseText = await res.text();
+      console.log("🟠 [handleVenueChange] Raw response text:", responseText.substring(0, 500));
+
+      try {
+        json = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error("❌ [handleVenueChange] Failed to parse JSON response:", parseError);
+        json = null;
+      }
+
+      console.log("🟠 [handleVenueChange] Parsed response:", json);
+
+      if (!responseOk) {
+        console.error("❌ [handleVenueChange] Error response:", {
+          status: responseStatus,
+          statusText: responseStatusText,
+          json: json
+        });
+        // Revert on error
+        setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, venue: prev } : r));
+      } else if (json && json.ok && json.data) {
+        console.log("✅ [handleVenueChange] Success, updating local venue to:", json.data.venue?.name);
+        // Update with the actual response from server
+        setReservas((rs) => rs.map((r) =>
+          r.id === reservaId
+            ? {
+                ...r,
+                venue: json.data.venue ? { id: json.data.venue.id, name: json.data.venue.name } : null
+              }
+            : r
+        ));
+      } else {
+        console.warn("⚠️ [handleVenueChange] Unexpected response format:", json);
+      }
+    } catch (error) {
+      console.error("❌ [handleVenueChange] Exception:", error);
+      // Revert on error
+      setReservas((rs) => rs.map((r) => r.id === reservaId ? { ...r, venue: prev } : r));
     }
   }
 
@@ -657,7 +716,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     }
   }
 
-  async function handleModalConfirm(venueName: "BERTRAND" | "URGELL") {
+  async function handleModalConfirm(venueName: string) {
     if (!modalReserva) return;
     const reservaId = modalReserva.id;
     const status = modalPendingStatus || "CONFIRMED";
@@ -855,7 +914,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         <FilterDropdown<VenueFilter>
           label="Local"
           active={venueFilter === "all" ? null : venueFilter}
-          options={[{ value: "URGELL", label: "Urgell" }, { value: "BERTRAND", label: "Bertrand" }]}
+          options={venues.map((v) => ({ value: v.name, label: getVenueDisplay(v.name).label }))}
           onSelect={(v) => setVenueFilter(v ?? "all")}
         />
         <FilterDropdown<ShiftFilter>
@@ -1000,15 +1059,16 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                           style={{
                             padding: "2px 6px",
                             borderRadius: "14px",
-                            border: `1px solid ${r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-border)") : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-border)"}`,
-                            background: r.venue ? (VENUE_COLOR[r.venue.name]?.bg ?? "transparent") : r.status === "CONFIRMED" ? "#FFFBEB" : "transparent",
-                            color: r.venue ? (VENUE_COLOR[r.venue.name]?.color ?? "var(--color-admin-muted)") : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-muted)",
+                            border: `1px solid ${r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-border)"}`,
+                            background: r.venue ? (getVenueDisplay(r.venue.name).bg) : r.status === "CONFIRMED" ? "#FFFBEB" : "transparent",
+                            color: r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-muted)",
                             fontSize: "0.72rem", fontWeight: 600, cursor: "pointer", outline: "none",
                           }}
                         >
                           <option value="">— Sin local</option>
-                          <option value="BERTRAND">Bertrand</option>
-                          <option value="URGELL">Urgell</option>
+                          {venues.map((v) => (
+                            <option key={v.id} value={v.name}>{getVenueDisplay(v.name).label}</option>
+                          ))}
                         </select>
                         {r.status === "CONFIRMED" && !r.venue && (
                           <div style={{ position: "absolute", top: "-8px", right: "-4px", background: "#D97706", width: "14px", height: "14px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.6rem", fontWeight: 800, border: "1px solid #fff" }} title="Local pendiente de asignar">!</div>
@@ -1082,6 +1142,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           onClose={() => setCreateOpen(false)}
           saving={creating}
           isEdit={false}
+          venues={venues}
         />
       )}
 
@@ -1095,6 +1156,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           onClose={() => setEditId(null)}
           saving={saving}
           isEdit={true}
+          venues={venues}
         />
       )}
 

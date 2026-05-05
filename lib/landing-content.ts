@@ -134,7 +134,7 @@ export const EVENTOS_DEFAULTS: Record<string, Omit<FieldMeta, "key">> = {
   // Contact CTA
   "ev.cta.title":    { label: "Título sección contacto",        type: "TEXT",     section: "ev-cta", order: 1, defaultValue: "¿Quieres reservar el espacio completo?" },
   "ev.cta.body":     { label: "Texto",                          type: "TEXTAREA", section: "ev-cta", order: 2, defaultValue: "Cuéntanos quiénes sois, cuántos seréis y qué queréis celebrar. Nos ponemos en contacto contigo en menos de 24 horas." },
-  "ev.cta.whatsapp": { label: "Número WhatsApp (internacional)",type: "TEXT",     section: "ev-cta", order: 3, defaultValue: "+34620269585" },
+  "ev.cta.whatsapp": { label: "Número WhatsApp (internacional)",type: "TEXT",     section: "ev-cta", order: 3, defaultValue: "+34 620 26 95 85" },
   "ev.cta.button":   { label: "Texto del botón",                type: "TEXT",     section: "ev-cta", order: 4, defaultValue: "Contactar por WhatsApp" },
 };
 

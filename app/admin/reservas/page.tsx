@@ -9,17 +9,38 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-async function getReservasData(offset: number, limit: number) {
+async function getReservasData(offset: number, limit: number, date?: string, shift?: string) {
+  // Build filter for date/shift if provided
+  const whereClause: any = { type: { notIn: ["VISIT", "GIFT"] } };
+
+  if (date) {
+    // Parse YYYY-MM-DD format
+    const [y, m, d] = date.split("-");
+    if (y && m && d) {
+      const startDate = new Date(`${y}-${m}-${d}T00:00:00Z`);
+      const endDate = new Date(`${y}-${m}-${d}T23:59:59Z`);
+      whereClause.event = {
+        date: {
+          gte: startDate,
+          lte: endDate,
+        }
+      };
+    }
+  }
+
+  if (shift && (shift === "NOON" || shift === "NIGHT")) {
+    if (!whereClause.event) whereClause.event = {};
+    whereClause.event.shift = shift;
+  }
+
   // 1. Obtener el total de registros para la paginación
   const total = await prisma.reservation.count({
-    where: { type: { notIn: ["VISIT", "GIFT"] } }
+    where: whereClause
   });
 
   // 2. Obtener solo los registros del rango solicitado (skip/take)
   const reservations = await prisma.reservation.findMany({
-    where: {
-      type: { notIn: ["VISIT", "GIFT"] }
-    },
+    where: whereClause,
     orderBy: { createdAt: "desc" },
     skip: offset - 1,
     take: limit,
@@ -31,7 +52,7 @@ async function getReservasData(offset: number, limit: number) {
   });
 
   const rows = reservations.map((r) => ({
-    id: r.id,
+    id: String(r.id),
     type: r.type,
     status: r.status,
     guests: r.guests,
@@ -67,19 +88,19 @@ async function getReservasData(offset: number, limit: number) {
 
 export type ReservaRow = Awaited<ReturnType<typeof getReservasData>>["rows"][number];
 
-export default async function ReservasPage({ 
-  searchParams 
-}: { 
-  searchParams: Promise<{ view?: string, offset?: string, limit?: string }> 
+export default async function ReservasPage({
+  searchParams
+}: {
+  searchParams: Promise<{ view?: string, offset?: string, limit?: string, date?: string, shift?: string }>
 }) {
-  const { view, offset, limit } = await searchParams;
+  const { view, offset, limit, date, shift } = await searchParams;
   const isCalendar = view === "calendar";
-  
+
   const currentOffset = parseInt(offset || "1");
   const currentLimit = parseInt(limit || "25");
 
   const [{ rows: reservas, total }, calendarEvents, session] = await Promise.all([
-    getReservasData(currentOffset, currentLimit),
+    getReservasData(currentOffset, currentLimit, date, shift),
     isCalendar ? getCalendarData("NORMAL") : Promise.resolve([]),
     getServerSession(authOptions)
   ]);

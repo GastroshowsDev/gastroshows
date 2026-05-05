@@ -3,11 +3,21 @@
 import { useEffect, useState } from "react";
 import type { LiveReservationRow } from "@/types/live-reservation";
 
-const VENUE_COLOR: Record<string, { bg: string; color: string }> = {
-  BERTRAND: { bg: "#CFFAFE", color: "#0891B2" },
-  SARRIA:   { bg: "#CFFAFE", color: "#0891B2" },
-  URGELL:   { bg: "#EDE9FE", color: "#7C3AED" },
-};
+const VENUE_COLORS = [
+  { bg: "#EDE9FE", color: "#7C3AED" },
+  { bg: "#CFFAFE", color: "#0891B2" },
+  { bg: "#CCE5FF", color: "#1E40AF" },
+  { bg: "#DDD6FE", color: "#6366F1" },
+  { bg: "#DCFCE7", color: "#22C55E" },
+  { bg: "#FCE7F3", color: "#EC4899" },
+  { bg: "#FEF3C7", color: "#F59E0B" },
+];
+
+function getVenueColor(venueName: string | null, venueMap: Map<string, number>) {
+  if (!venueName) return null;
+  const index = venueMap.get(venueName) ?? 0;
+  return VENUE_COLORS[index % VENUE_COLORS.length];
+}
 
 function badge(bg: string, color: string, text: string) {
   return (
@@ -294,6 +304,15 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
   const [items, setItems] = useState(initialItems);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [cobrarId, setCobrarId] = useState<string | null>(null);
+  const [venues, setVenues] = useState<Array<{ id: string; name: string }>>([]);
+
+  useEffect(() => {
+    fetch("/api/admin/venues")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok) setVenues(res.data);
+      });
+  }, []);
 
   useEffect(() => {
     function handler(e: Event) {
@@ -328,11 +347,13 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
     );
   }
 
+  const venueMap = new Map(venues.map((v, i) => [v.name, i]));
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
       {items.map((r) => {
         const pending = r.totalAmount - r.paidAmount;
-        const vc = r.venue ? (VENUE_COLOR[r.venue.name] ?? null) : null;
+        const vc = r.venue ? getVenueColor(r.venue.name, venueMap) : null;
 
         return (
           <div
@@ -369,7 +390,7 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
               }}>
                 {r.guests} pax
               </span>
-              {vc && r.venue && badge(vc.bg, vc.color, r.venue.name === "BERTRAND" || r.venue.name === "SARRIA" ? "Bertrand" : "Urgell")}
+              {vc && r.venue && badge(vc.bg, vc.color, r.venue.name)}
             </div>
 
             {/* Payment */}

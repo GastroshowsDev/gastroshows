@@ -10,12 +10,15 @@ import { HomeButton } from "./HomeButton";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ThemeProvider 
-        attribute="class" 
-        defaultTheme="clandestino" 
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="clandestino"
         themes={["clandestino", "revelado"]}
         enableSystem={false}
         disableTransitionOnChange
+        storageKey="gs-theme"
+        enableColorScheme={false}
+        forcedTheme={undefined}
       >
         <PageActionsProvider>
           {children}

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { calculateVenueSplit } from "@/lib/admin/allocation-utils";
-import { VenueName } from "@prisma/client";
 
 export async function POST(request: Request) {
   try {
@@ -13,8 +12,8 @@ export async function POST(request: Request) {
 
     // 1. Get venues
     const venues = await prisma.venue.findMany();
-    const bertrandVenue = venues.find(v => v.name === VenueName.BERTRAND);
-    const urgellVenue = venues.find(v => v.name === VenueName.URGELL);
+    const bertrandVenue = venues.find(v => v.name === "BERTRAND");
+    const urgellVenue = venues.find(v => v.name === "URGELL");
 
     if (!bertrandVenue || !urgellVenue) {
       return NextResponse.json({ error: "Locales no configurados correctamente" }, { status: 500 });

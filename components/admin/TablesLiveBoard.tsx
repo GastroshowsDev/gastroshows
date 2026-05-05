@@ -17,12 +17,12 @@ type AllergyRow = {
 };
 import type { LiveReservationRow } from "@/types/live-reservation";
 
-type VenueFilter = "BERTRAND" | "URGELL" | null;
+type VenueFilter = string | null;
 
 type Props = {
   initialShift: Shift;
   initialItems: LiveReservationRow[];
-  defaultVenue?: "BERTRAND" | "URGELL" | null;
+  defaultVenue?: string | null;
 };
 
 export function TablesLiveBoard({ initialShift, initialItems, defaultVenue = null }: Props) {
@@ -33,6 +33,15 @@ export function TablesLiveBoard({ initialShift, initialItems, defaultVenue = nul
   );
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [venues, setVenues] = useState<Array<{ id: string; name: string }>>([]);
+
+  useEffect(() => {
+    fetch("/api/admin/venues")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok) setVenues(res.data);
+      });
+  }, []);
 
   // Allergies modal
   const [allergyOpen, setAllergyOpen] = useState(false);
@@ -147,8 +156,11 @@ export function TablesLiveBoard({ initialShift, initialItems, defaultVenue = nul
             className="rounded-md border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-700 dark:bg-zinc-950"
           >
             <option value="">Todos</option>
-            <option value="BERTRAND">Bertrand</option>
-            <option value="URGELL">Urgell</option>
+            {venues.map((v) => (
+              <option key={v.id} value={v.name}>
+                {v.name}
+              </option>
+            ))}
           </select>
         </label>
         <button
@@ -172,10 +184,10 @@ export function TablesLiveBoard({ initialShift, initialItems, defaultVenue = nul
       </div>
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       <ul className="max-h-96 space-y-2 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-2 text-sm dark:border-zinc-800 dark:bg-zinc-950">
-        {items.filter((r) => !venueFilter || r.venue?.name === venueFilter || (venueFilter === "BERTRAND" && r.venue?.name === "SARRIA")).length === 0 && !error ? (
+        {items.filter((r) => !venueFilter || r.venue?.name === venueFilter).length === 0 && !error ? (
           <li className="px-3 py-4 text-zinc-500">No hay reservas para esta fecha y turno.</li>
         ) : null}
-        {items.filter((r) => !venueFilter || r.venue?.name === venueFilter || (venueFilter === "BERTRAND" && r.venue?.name === "SARRIA")).map((r) => {
+        {items.filter((r) => !venueFilter || r.venue?.name === venueFilter).map((r) => {
           const checkedIn = r.status === "CHECKED_IN";
           return (
             <li
@@ -284,7 +296,7 @@ export function TablesLiveBoard({ initialShift, initialItems, defaultVenue = nul
                   {allergyRows.map((row) => {
                     const dateStr = new Date(row.eventDate).toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" });
                     const shiftLabel = row.shift === "NOON" ? "☀️ Mediodía" : "🌙 Noche";
-                    const venueLabel = row.venueName === "BERTRAND" || row.venueName === "SARRIA" ? "Bertrand" : row.venueName === "URGELL" ? "Urgell" : null;
+                    const venueLabel = row.venueName ?? null;
                     return (
                       <div
                         key={row.id}

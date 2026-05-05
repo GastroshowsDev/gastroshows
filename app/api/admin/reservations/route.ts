@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ReservationStatus, ReservationType, Shift, VenueName } from "@prisma/client";
+import { ReservationStatus, ReservationType, Shift } from "@prisma/client";
 import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function POST(req: Request) {
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       comments?: string;
       date: string;
       shift: Shift;
-      venueName?: VenueName | null;
+      venueName?: string | null;
       guests: number;
       type?: ReservationType;
       totalAmount: number;

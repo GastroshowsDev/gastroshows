@@ -1,24 +1,23 @@
 import "dotenv/config";
-import { VenueName } from "@prisma/client";
 
 import { prisma } from "../lib/prisma";
 
 async function main() {
   const bertrand = await prisma.venue.upsert({
-    where: { name: VenueName.BERTRAND },
+    where: { name: "BERTRAND" },
     update: { capacity: 16, rules: { softCap: 14, hardCap: 16 } },
     create: {
-      name: VenueName.BERTRAND,
+      name: "BERTRAND",
       capacity: 16,
       rules: { softCap: 14, hardCap: 16 },
     },
   });
 
   const urgell = await prisma.venue.upsert({
-    where: { name: VenueName.URGELL },
+    where: { name: "URGELL" },
     update: { capacity: 24, rules: { softCap: 22, hardCap: 24 } },
     create: {
-      name: VenueName.URGELL,
+      name: "URGELL",
       capacity: 24,
       rules: { softCap: 22, hardCap: 24 },
     },

@@ -8,7 +8,7 @@ declare module "next-auth" {
       email: string;
       name: string;
       role: "ADMIN" | "LIVE";
-      defaultVenue: "BERTRAND" | "URGELL" | null;
+      defaultVenue: string | null;
     };
   }
   interface User {

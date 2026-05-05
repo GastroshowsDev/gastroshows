@@ -72,6 +72,18 @@ export default async function RootLayout({
     >
       <head>
         <SeoHead />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('gs-theme') || 'clandestino';
+                const html = document.documentElement;
+                html.classList.remove('clandestino', 'revelado');
+                html.classList.add(theme);
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col">
         <Providers>

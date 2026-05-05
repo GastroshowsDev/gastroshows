@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { VenueSelectionModal } from "./VenueSelectionModal";
-
-type VenueName = "BERTRAND" | "SARRIA" | "URGELL";
+import { useVenues } from "@/hooks/useVenues";
+import { getVenueDisplay } from "@/lib/admin/venue-display";
 
 type PendingRow = {
   id: string;
@@ -19,17 +19,12 @@ type PendingRow = {
   venue: { name: string } | null;
 };
 
-const VENUE_LABELS: Record<VenueName, string> = {
-  BERTRAND: "Bertrand",
-  SARRIA:   "Bertrand",
-  URGELL:   "Eixample (Urgell)",
-};
-
 export function PendingReservationsPanel() {
   const [rows, setRows] = useState<PendingRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
-  const [venueSelect, setVenueSelect] = useState<Partial<Record<string, VenueName>>>({});
+  const [venueSelect, setVenueSelect] = useState<Partial<Record<string, string>>>({});
+  const { venues } = useVenues();
   
   // State for the modal
   const [modalReservation, setModalReservation] = useState<PendingRow | null>(null);
@@ -58,7 +53,7 @@ export function PendingReservationsPanel() {
     return () => clearInterval(id);
   }, [load]);
 
-  async function patchReservation(id: string, body: { status: string; venueName?: VenueName | null }) {
+  async function patchReservation(id: string, body: { status: string; venueName?: string | null }) {
     setBusyId(id);
     try {
       const res = await fetch(`/api/reservations/${id}`, {
@@ -83,7 +78,7 @@ export function PendingReservationsPanel() {
     const row = rows.find(r => r.id === id);
     if (!row) return;
 
-    const currentVenue = venueSelect[id] || (row.venue?.name as VenueName | undefined);
+    const currentVenue = venueSelect[id] || row.venue?.name;
     
     // We now allow confirming without venue. 
     // The venue will be assigned later (5 days before).
@@ -91,7 +86,7 @@ export function PendingReservationsPanel() {
   }
 
 
-  function handleModalConfirm(venue: "BERTRAND" | "URGELL") {
+  function handleModalConfirm(venue: string) {
     if (!modalReservation) return;
     const id = modalReservation.id;
     setModalReservation(null);
@@ -202,22 +197,22 @@ export function PendingReservationsPanel() {
                     Asignar local
                   </p>
                   <div className="flex gap-2">
-                    {(["BERTRAND", "URGELL"] as Array<"BERTRAND" | "URGELL">).map((v) => (
+                    {venues.map((v) => (
                       <button
-                        key={v}
+                        key={v.id}
                         onClick={() =>
                           setVenueSelect((prev) => ({
                             ...prev,
-                            [r.id]: prev[r.id] === v ? undefined : v,
+                            [r.id]: prev[r.id] === v.name ? undefined : v.name,
                           }))
                         }
                         className={`rounded-md border px-3 py-1.5 text-xs transition ${
-                          venueSelect[r.id] === v
+                          venueSelect[r.id] === v.name
                             ? "border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"
                             : "border-zinc-300 text-zinc-600 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-500"
                         }`}
                       >
-                        {VENUE_LABELS[v]}
+                        {getVenueDisplay(v.name).label}
                       </button>
                     ))}
                     {r.venue && (

@@ -67,19 +67,68 @@ export function PagesList() {
     <div style={{ padding: "2rem", background: "#F4F6FA", minHeight: "100vh" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <div>
-          <h1 style={{ fontSize: "1.75rem", fontWeight: 600, color: "#1A1A2E" }}>Páginas del sitio</h1>
-          <p style={{ fontSize: "0.88rem", color: "#8B94A8" }}>Gestiona las páginas y su contenido visual.</p>
+          <h1 style={{ fontSize: "1.75rem", fontWeight: 600, color: "var(--color-admin-text)" }}>Páginas del sitio</h1>
+          <p style={{ fontSize: "0.88rem", color: "var(--color-admin-muted)" }}>Gestiona las páginas y su contenido visual.</p>
         </div>
-        <button
-          onClick={createPage}
-          disabled={creating}
-          style={{
-            padding: "0.75rem 1.5rem", background: "#875BF7", color: "white",
-            border: "none", borderRadius: "8px", fontWeight: 600, cursor: "pointer",
-          }}
-        >
-          {creating ? "Creando..." : "+ Nueva página"}
-        </button>
+        <div style={{ display: "flex", gap: "0.75rem" }}>
+          <Link
+            href="/admin/web/redirects"
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "white",
+              color: "var(--color-admin-text)",
+              border: "1px solid var(--color-admin-border)",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.82rem"
+            }}
+          >
+            <span>🔗</span> Redirecciones
+          </Link>
+          <Link
+            href="/admin/seo"
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "white",
+              color: "var(--color-admin-text)",
+              border: "1px solid var(--color-admin-border)",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.82rem"
+            }}
+          >
+            <span>🔍</span> Ajustes SEO
+          </Link>
+          <button
+            onClick={createPage}
+            disabled={creating}
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "var(--color-admin-accent)",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "opacity 0.2s",
+              fontSize: "0.82rem"
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            {creating ? "Creando..." : "+ Nueva página"}
+          </button>
+        </div>
       </div>
 
       <div style={{ background: "white", borderRadius: "12px", border: "1px solid #EAEEF4", overflow: "hidden" }}>
@@ -120,21 +169,22 @@ export function PagesList() {
                     <div style={{ display: "flex", gap: "0.75rem" }}>
                       <Link
                         href={`/admin/web/pages/${page.id}/editor`}
-                        style={{ color: "#875BF7", textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}
+                        style={{ color: "var(--color-admin-accent)", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}
                       >
                         Editar visualmente
                       </Link>
                       <a
                         href={page.slug === "home" ? "/" : `/${page.slug}`}
                         target="_blank"
-                        style={{ color: "#6B7280", textDecoration: "none", fontSize: "0.85rem" }}
+                        rel="noopener noreferrer"
+                        style={{ color: "var(--color-admin-muted)", textDecoration: "none", fontSize: "0.85rem" }}
                       >
                         Ver página
                       </a>
                       {page.slug !== "home" && (
                         <button
                           onClick={() => deletePage(page.id, page.slug)}
-                          style={{ border: "none", background: "none", color: "#EF4444", cursor: "pointer", padding: 0 }}
+                          style={{ border: "none", background: "none", color: "#EF4444", cursor: "pointer", padding: 0, fontSize: "0.85rem" }}
                         >
                           Borrar
                         </button>

@@ -46,8 +46,8 @@ const NAV: NavSection[] = [
     items: [
       { label: "Promociones", href: "/admin/promociones", icon: "🎫" },
       { label: "Web",          href: "/admin/web",          icon: "🌐", adminOnly: true },
-      { label: "SEO",         href: "/admin/seo",         icon: "🔍", adminOnly: true },
       { label: "Usuarios",    href: "/admin/usuarios",    icon: "👤", adminOnly: true },
+      { label: "Locales",     href: "/admin/configuracion/locales", icon: "🏪", adminOnly: true },
       { label: "Empleados",   href: "/admin/configuracion/empleados", icon: "👨‍🍳", adminOnly: true },
       { label: "Backups",     href: "/admin/backups",     icon: "💾", adminOnly: true },
     ],
