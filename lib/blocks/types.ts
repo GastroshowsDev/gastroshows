@@ -14,6 +14,7 @@ export type CommonStyles = {
   textAlign?: "left" | "center" | "right";
   color?: string;
   boxShadow?: string;
+  textShadow?: string;
   animation?: string;
   opacity?: number;
   brightness?: number;
@@ -26,6 +27,7 @@ export type CommonStyles = {
   paddingBottom?: string;
   paddingLeft?: string;
   paddingRight?: string;
+  fontSize?: string;
 };
 
 
