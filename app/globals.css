@@ -255,38 +255,54 @@ a[role="button"] {
 }
 
 /* Escala por defecto (WEB): 5% + Elevación + Blanqueamiento */
-button:hover, 
+button:hover,
 .btn:hover,
 a[role="button"]:hover {
   transform: translateY(-5px) scale(1.05) !important;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)) !important;
-  z-index: 50; 
+  z-index: 50;
+}
+
+/* Overlay blanco respeta border-radius via ::before en lugar de background-image */
+button:hover::before,
+.btn:hover::before,
+a[role="button"]:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Escala en ADMIN: Diferenciada por tamaño con máxima especificidad */
-.admin-context button[data-size="large"]:hover, 
+.admin-context button[data-size="large"]:hover,
 .admin-context .btn[data-size="large"]:hover,
 .admin-context a[role="button"][data-size="large"]:hover {
-  transform: scale(1.05) !important; 
-  background-image: none !important;
+  transform: scale(1.05) !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 
-.admin-context button[data-size="small"]:hover, 
+.admin-context button[data-size="small"]:hover,
 .admin-context .btn[data-size="small"]:hover,
 .admin-context a[role="button"][data-size="small"]:hover {
-  transform: scale(1.05) !important; 
-  background-image: none !important;
+  transform: scale(1.05) !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 
 /* Fallback inmediato mientras se mide el botón */
-.admin-context button:hover, 
+.admin-context button:hover,
 .admin-context .btn:hover,
 .admin-context a[role="button"]:hover {
-  transform: scale(1.05) !important; 
-  background-image: none !important;
+  transform: scale(1.05) !important;
   transition: transform 0.2s ease !important;
+}
+
+/* Sin overlay blanco en admin */
+.admin-context button:hover::before,
+.admin-context .btn:hover::before,
+.admin-context a[role="button"]:hover::before {
+  display: none;
 }
 
 /* Efecto Explosión al Clicar */
