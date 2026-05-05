@@ -5,6 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DemoModeToggle } from "./DemoModeToggle";
+import { ChefHat, Globe } from "lucide-react";
 
 function SaveStatusIndicator() {
   const [status, setStatus] = useState<"idle" | "unsaved" | "saving" | "saved">("idle");
@@ -38,18 +39,17 @@ function SaveStatusIndicator() {
   );
 }
 
-export function AdminTopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) {
+export function AdminTopBar({ onMenuClick, isMenuOpen }: { onMenuClick?: () => void, isMenuOpen?: boolean } = {}) {
   const router = useRouter();
   const pathname = usePathname();
 
   const segments = pathname.split("/").filter(Boolean);
-  // Remove "admin" if present at the start
   const breadcrumbs = segments[0] === "admin" ? segments.slice(1) : segments;
 
   return (
     <div
       style={{
-        height: "52px",
+        height: "60px",
         borderBottom: "1px solid var(--color-admin-border)",
         background: "var(--color-admin-surface)",
         display: "flex",
@@ -57,87 +57,97 @@ export function AdminTopBar({ onMenuClick }: { onMenuClick?: () => void } = {}) 
         justifyContent: "space-between",
         padding: "0 1.25rem",
         flexShrink: 0,
+        zIndex: 100,
       }}
     >
-      {/* Hamburger — shown only on mobile */}
-      <button
-        onClick={onMenuClick}
-        aria-label="Abrir menú"
-        className="admin-hamburger"
-        style={{
-          display: "none",
-          flexDirection: "column",
-          gap: "5px",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "6px",
-          borderRadius: "6px",
-        }}
-      >
-        <span style={{ display: "block", width: 20, height: 2, background: "var(--color-admin-text)", borderRadius: 2 }} />
-        <span style={{ display: "block", width: 20, height: 2, background: "var(--color-admin-text)", borderRadius: 2 }} />
-        <span style={{ display: "block", width: 20, height: 2, background: "var(--color-admin-text)", borderRadius: 2 }} />
-      </button>
+      {/* Lado Izquierdo: Gorro de Chef (Menu Trigger) */}
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <button
+          onClick={onMenuClick}
+          className="chef-menu-btn"
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            background: "#efb810",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 12px rgba(239, 184, 16, 0.25)",
+            transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+            visibility: isMenuOpen ? "hidden" : "visible",
+            opacity: isMenuOpen ? 0 : 1,
+            outline: "none",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.boxShadow = "0 6px 20px rgba(239, 184, 16, 0.4)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 12px rgba(239, 184, 16, 0.25)";
+          }}
+        >
+          <ChefHat size={20} />
+        </button>
 
-      <button
-        onClick={() => router.back()}
-        aria-label="Atrás"
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "8px",
-          borderRadius: "6px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--color-admin-text)",
-          opacity: 0.7,
-          transition: "opacity 0.2s",
-          marginLeft: "0.5rem"
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-      </button>
-
-      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginLeft: "0.5rem", fontSize: "0.85rem", color: "var(--color-admin-muted)" }}>
-        <Link href="/admin/live" style={{ color: "var(--color-admin-text)", textDecoration: "none", fontWeight: 500 }}>Admin</Link>
-        {breadcrumbs.map((segment, i) => {
-          const path = `/admin/${breadcrumbs.slice(0, i + 1).join("/")}`;
-          const isLast = i === breadcrumbs.length - 1;
-          const label = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
-
-          return (
-            <Fragment key={path}>
-              <span style={{ opacity: 0.4 }}>/</span>
-              {isLast ? (
-                <span style={{ color: "var(--color-admin-text)", opacity: 0.6 }}>{label}</span>
-              ) : (
-                <Link href={path} style={{ color: "var(--color-admin-text)", textDecoration: "none" }}>
-                  {label}
-                </Link>
-              )}
-            </Fragment>
-          );
-        })}
+        {/* Logo/Label junto al botón (Opcional, muy discreto) */}
+        {!isMenuOpen && (
+          <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-admin-text)", opacity: 0.8 }}>
+            Gastro<span style={{ color: "#efb810" }}>Shows</span>
+          </div>
+        )}
       </div>
 
-      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-        <DemoModeToggle />
+      {/* Lado Derecho: Herramientas en formato circular */}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
         <SaveStatusIndicator />
+        
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Ver web pública"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            background: "rgba(0,0,0,0.03)",
+            border: "1px solid var(--color-admin-border)",
+            color: "var(--color-admin-text)",
+            textDecoration: "none",
+            transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+            marginRight: "0.25rem"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.borderColor = "var(--color-admin-accent)";
+            e.currentTarget.style.background = "var(--color-admin-accent-light)";
+            e.currentTarget.style.color = "var(--color-admin-accent)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.borderColor = "var(--color-admin-border)";
+            e.currentTarget.style.background = "rgba(0,0,0,0.03)";
+            e.currentTarget.style.color = "var(--color-admin-text)";
+          }}
+        >
+          <Globe size={18} />
+        </a>
+
+        <DemoModeToggle />
         <ThemeToggle variant="admin" />
       </div>
 
-      <style>{`
-        @media (max-width: 767px) {
-          .admin-hamburger {
-            display: flex !important;
-          }
+      <style jsx global>{`
+        .chef-menu-btn:active {
+          transform: scale(0.95) !important;
         }
       `}</style>
     </div>

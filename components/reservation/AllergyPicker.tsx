@@ -1,111 +1,158 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-/* ── Los 14 alérgenos de declaración obligatoria (UE) + 3 habituales en hostelería ── */
-const ALLERGENS = [
+type Severity = "alergia" | "intolerancia" | "no-gusta";
+
+interface AllergenDef {
+  id: string;
+  name: string;
+  emoji: string;
+  subOptions?: { id: string; name: string; emoji: string }[];
+}
+
+const ALLERGENS: AllergenDef[] = [
   { id: "gluten",      name: "Gluten",        emoji: "🌾" },
-  { id: "crustaceos",  name: "Crustáceos",    emoji: "🦐" },
   { id: "huevos",      name: "Huevos",         emoji: "🥚" },
   { id: "pescado",     name: "Pescado",        emoji: "🐟" },
+  { id: "lacteos",     name: "Lácteos",        emoji: "🥛" },
+  { 
+    id: "frutossecos", 
+    name: "Frutos secos",   
+    emoji: "🌰",
+    subOptions: [
+      { id: "almendras", name: "Almendras", emoji: "🥜" },
+      { id: "avellanas", name: "Avellanas", emoji: "🌰" },
+      { id: "nueces",    name: "Nueces",    emoji: "🥥" },
+      { id: "pistachos", name: "Pistachos", emoji: "🟢" },
+    ]
+  },
+  { 
+    id: "crustaceos",  
+    name: "Crustáceos",    
+    emoji: "🦐",
+    subOptions: [
+      { id: "gambas",    name: "Gambas / Langostinos", emoji: "🦐" },
+      { id: "langosta",  name: "Langosta / Bogavante", emoji: "🦞" },
+      { id: "cangrejo",  name: "Cangrejos",           emoji: "🦀" },
+    ]
+  },
+  { 
+    id: "moluscos",    
+    name: "Moluscos",       
+    emoji: "🦑", 
+    subOptions: [
+      { id: "bivalvos",   name: "Bivalvos (Almejas, Mejillones...)", emoji: "🐚" },
+      { id: "cefalopodos", name: "Cefalópodos (Pulpo, Calamar...)",   emoji: "🐙" },
+    ] 
+  },
   { id: "cacahuetes",  name: "Cacahuetes",    emoji: "🥜" },
   { id: "soja",        name: "Soja",           emoji: "🫘" },
-  { id: "lacteos",     name: "Lácteos",        emoji: "🥛" },
-  { id: "frutossecos", name: "Frutos secos",   emoji: "🌰" },
   { id: "apio",        name: "Apio",           emoji: "🌿" },
   { id: "mostaza",     name: "Mostaza",        emoji: "🌼" },
   { id: "sesamo",      name: "Sésamo",         emoji: "🌱" },
   { id: "sulfitos",    name: "Sulfitos",       emoji: "🍷" },
   { id: "altramuces",  name: "Altramuces",    emoji: "🌸" },
-  { id: "moluscos",    name: "Moluscos",       emoji: "🦑" },
+  { id: "cebolla",     name: "Cebolla",        emoji: "🧅" },
+  { id: "ajo",         name: "Ajo",           emoji: "🧄" },
   { id: "fructosa",    name: "Fructosa",       emoji: "🍬" },
-  { id: "cebolla",     name: "Cebolla / Ajo",  emoji: "🧅" },
   { id: "latexfruta",  name: "Látex-fruta",    emoji: "🥑" },
-] as const;
+];
 
-type AllergenId = (typeof ALLERGENS)[number]["id"];
-type Severity   = "alergia" | "intolerancia";
-type Selected   = Map<AllergenId, Severity>;
+type Selected = Map<string, { severity: Severity; subOptions?: string[] }>;
 
-/* ── Props ── */
 type Props = {
   open: boolean;
   onClose: () => void;
-  /** El campo actual de texto libre; el picker lo complementa. */
   value: string;
   onChange: (serialized: string) => void;
 };
 
-/* ── Serialización → texto legible para guardar en BD ── */
+/* ── Helpers ── */
 function serialize(selected: Selected, custom: string): string {
   const parts: string[] = [];
   for (const allergen of ALLERGENS) {
-    const sev = selected.get(allergen.id);
-    if (sev) parts.push(`${allergen.emoji} ${allergen.name} (${sev})`);
+    const data = selected.get(allergen.id);
+    if (data) {
+      const sevLabel = data.severity === "no-gusta" ? "No gusta" : data.severity;
+      let label = `${allergen.emoji} ${allergen.name} (${sevLabel})`;
+      if (data.subOptions?.length) {
+        label += `: ${data.subOptions.join(" + ")}`;
+      }
+      parts.push(label);
+    }
   }
   if (custom.trim()) parts.push(custom.trim());
   return parts.join(", ");
 }
 
-/* ── Deserialización → recuperar estado desde texto ── */
 function deserialize(text: string): { selected: Selected; custom: string } {
   const selected: Selected = new Map();
   let remaining = text;
+  
   for (const allergen of ALLERGENS) {
-    const alergia      = `${allergen.emoji} ${allergen.name} (alergia)`;
-    const intolerancia = `${allergen.emoji} ${allergen.name} (intolerancia)`;
-    if (remaining.includes(alergia)) {
-      selected.set(allergen.id, "alergia");
-      remaining = remaining.replace(alergia, "").replace(/^,\s*|,\s*$/, "").replace(/,\s*,/, ",").trim();
-    } else if (remaining.includes(intolerancia)) {
-      selected.set(allergen.id, "intolerancia");
-      remaining = remaining.replace(intolerancia, "").replace(/^,\s*|,\s*$/, "").replace(/,\s*,/, ",").trim();
+    const pattern = new RegExp(`${allergen.emoji} ${allergen.name} \\((alergia|intolerancia|No gusta)\\)(: ([^,]+))?`);
+    const match = remaining.match(pattern);
+    if (match) {
+      const sev = match[1] === "No gusta" ? "no-gusta" : match[1] as Severity;
+      const subs = match[3] ? match[3].split(" + ") : undefined;
+      selected.set(allergen.id, { severity: sev, subOptions: subs });
+      remaining = remaining.replace(match[0], "").replace(/^,\s*|,\s*$/, "").replace(/,\s*,/, ",").trim();
     }
   }
   return { selected, custom: remaining };
 }
 
 const GOLD  = "#daa520";
-const DARK  = "#222222";
-const DARK2 = "#1A1A1A";
-const LIGHT = "#888888";
-const OFF   = "#F5F0E8";
+const DARK  = "#111111";
+const DARK2 = "#0A0A0A";
+const LIGHT = "#A0A0A0";
+const OFF   = "#FFFFFF";
 
-/* ── Componente ── */
 export function AllergyPicker({ open, onClose, value, onChange }: Props) {
-  const init     = deserialize(value);
-  const [sel,    setSel]    = useState<Selected>(init.selected);
+  const init = deserialize(value);
+  const [sel, setSel] = useState<Selected>(init.selected);
   const [custom, setCustom] = useState(init.custom);
-  const customRef = useRef<HTMLInputElement>(null);
 
-  /* Sincronizar con el valor externo al abrir */
   useEffect(() => {
     if (open) {
       const parsed = deserialize(value);
       setSel(parsed.selected);
       setCustom(parsed.custom);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, value]);
 
   if (!open) return null;
 
-  function toggle(id: AllergenId) {
+  function toggle(id: string) {
     setSel((prev) => {
       const next = new Map(prev);
       if (!next.has(id)) {
-        next.set(id, "alergia");
-      } else if (next.get(id) === "alergia") {
-        next.set(id, "intolerancia");
+        next.set(id, { severity: "alergia" });
       } else {
-        next.delete(id);
+        const current = next.get(id)!;
+        if (current.severity === "alergia") next.set(id, { ...current, severity: "intolerancia" });
+        else if (current.severity === "intolerancia") next.set(id, { ...current, severity: "no-gusta" });
+        else next.delete(id);
       }
       return next;
     });
   }
 
-  function setSeverity(id: AllergenId, sev: Severity) {
-    setSel((prev) => { const m = new Map(prev); m.set(id, sev); return m; });
+  function toggleSubOption(allergenId: string, subName: string) {
+    setSel((prev) => {
+      const next = new Map(prev);
+      const current = next.get(allergenId);
+      if (!current) return next;
+      
+      const subs = current.subOptions || [];
+      const newSubs = subs.includes(subName) 
+        ? subs.filter(s => s !== subName) 
+        : [...subs, subName];
+      
+      next.set(allergenId, { ...current, subOptions: newSubs });
+      return next;
+    });
   }
 
   function handleConfirm() {
@@ -113,192 +160,199 @@ export function AllergyPicker({ open, onClose, value, onChange }: Props) {
     onClose();
   }
 
-  function handleClear() {
-    setSel(new Map());
-    setCustom("");
-  }
-
-  const selectedCount = sel.size;
-
   return (
-    /* Overlay */
     <div
       style={{
-        position: "fixed", inset: 0, zIndex: 2000,
-        background: "rgba(0,0,0,0.75)",
-        backdropFilter: "blur(4px)",
+        position: "fixed", inset: 0, zIndex: 3000,
+        background: "rgba(0,0,0,0.85)",
+        backdropFilter: "blur(12px)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: "1rem",
       }}
-      onClick={(e) => { if (e.target === e.currentTarget) { handleConfirm(); } }}
+      onClick={(e) => { if (e.target === e.currentTarget) handleConfirm(); }}
     >
-      {/* Card */}
       <div
         style={{
           background: DARK2,
-          border: "1px solid rgba(200,169,110,0.2)",
-          borderRadius: 6,
-          width: "100%", maxWidth: 560,
-          maxHeight: "90vh",
+          border: "1px solid rgba(200,169,110,0.3)",
+          borderRadius: 16,
+          width: "100%", maxWidth: 800,
+          maxHeight: "92vh",
           display: "flex", flexDirection: "column",
-          animation: "slideUp 0.3s cubic-bezier(0.16,1,0.3,1)",
+          animation: "slideUp 0.4s cubic-bezier(0.16,1,0.3,1)",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.8)",
         }}
       >
         {/* Header */}
         <div style={{
-          padding: "1.25rem 1.5rem",
-          borderBottom: "1px solid rgba(200,169,110,0.1)",
+          padding: "2rem",
+          borderBottom: "1px solid rgba(200,169,110,0.15)",
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexShrink: 0,
         }}>
           <div>
-            <div style={{ fontSize: "0.55rem", letterSpacing: "0.15em", textTransform: "uppercase", color: LIGHT, marginBottom: "0.2rem" }}>
-              Alergias e intolerancias
+            <div style={{ fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: GOLD, fontWeight: 700, marginBottom: "0.5rem" }}>
+              Protocolo de Seguridad Alimentaria
             </div>
-            <div style={{ fontSize: "1rem", fontWeight: 300, color: OFF, fontFamily: "var(--font-cormorant), Georgia, serif" }}>
-              Indica lo que aplica
+            <div style={{ fontSize: "1.6rem", fontWeight: 300, color: OFF, fontFamily: "var(--font-cormorant), Georgia, serif" }}>
+              Indique alergias, intolerancias o preferencias
             </div>
           </div>
-          <button
-            onClick={handleConfirm}
-            style={{ background: "none", border: "none", color: LIGHT, fontSize: "1.1rem", cursor: "pointer", padding: "0.25rem 0.5rem", lineHeight: 1 }}
-            aria-label="Cerrar"
-          >
-            ✕
-          </button>
+          <button onClick={handleConfirm} style={{ background: "rgba(255,255,255,0.05)", border: "none", color: OFF, width: 40, height: 40, borderRadius: "50%", cursor: "pointer", fontSize: "1.2rem" }}>✕</button>
         </div>
 
-        {/* Instrucción */}
-        <div style={{ padding: "0.75rem 1.5rem 0", flexShrink: 0 }}>
-          <p style={{ fontSize: "0.72rem", color: LIGHT, margin: 0, lineHeight: 1.5 }}>
-            Toca una vez para <span style={{ color: "#E57373" }}>alergia</span> · toca de nuevo para <span style={{ color: "#FFB74D" }}>intolerancia</span> · toca otra vez para quitar
-          </p>
-        </div>
+        {/* Grid Principal */}
+        <div style={{ overflowY: "auto", flex: 1, padding: "2rem" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+            gap: "1.5rem",
+          }}>
+            {ALLERGENS.map((a) => {
+              const data = sel.get(a.id);
+              const isSelected = !!data;
+              
+              const severityColors = {
+                "alergia": "#EF4444",
+                "intolerancia": "#F59E0B",
+                "no-gusta": "#10B981"
+              };
+              
+              const activeColor = data ? severityColors[data.severity] : "rgba(200,169,110,0.2)";
 
-        {/* Grid de alérgenos */}
-        <div style={{
-          overflowY: "auto", flex: 1,
-          padding: "1rem 1.5rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(145px, 1fr))",
-          gap: "0.5rem",
-          alignContent: "start",
-        }}>
-          {ALLERGENS.map((a) => {
-            const sev  = sel.get(a.id);
-            const isA  = sev === "alergia";
-            const isI  = sev === "intolerancia";
-
-            const borderColor = isA ? "#E57373" : isI ? "#FFB74D" : "rgba(200,169,110,0.18)";
-            const bgColor     = isA ? "rgba(229,115,115,0.10)" : isI ? "rgba(255,183,77,0.10)" : "transparent";
-
-            return (
-              <div key={a.id} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                {/* Pill */}
-                <button
-                  type="button"
-                  onClick={() => toggle(a.id)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: "0.45rem",
-                    padding: "0.45rem 0.75rem",
-                    border: `1px solid ${borderColor}`,
-                    background: bgColor,
-                    borderRadius: 20,
-                    cursor: "pointer",
-                    transition: "all 0.15s",
-                    width: "100%",
-                  }}
-                >
-                  <span style={{ fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}>{a.emoji}</span>
-                  <span style={{ fontSize: "0.75rem", color: sev ? OFF : LIGHT, fontWeight: sev ? 500 : 400, letterSpacing: "0.01em", textAlign: "left" }}>
-                    {a.name}
-                  </span>
-                  {sev && (
-                    <span style={{
-                      marginLeft: "auto", fontSize: "0.58rem", fontWeight: 700, flexShrink: 0,
-                      color: isA ? "#E57373" : "#FFB74D",
-                      background: isA ? "rgba(229,115,115,0.15)" : "rgba(255,183,77,0.15)",
-                      padding: "1px 5px", borderRadius: 10,
-                    }}>
-                      {isA ? "A" : "I"}
+              return (
+                <div key={a.id} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {/* Botón Principal (Píldora) */}
+                  <button
+                    type="button"
+                    onClick={() => toggle(a.id)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: "1rem",
+                      padding: "1rem 1.25rem",
+                      border: `1px solid ${isSelected ? activeColor : "rgba(255,255,255,0.1)"}`,
+                      background: isSelected ? `${activeColor}15` : "transparent",
+                      borderRadius: 99,
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span style={{ fontSize: "1.5rem" }}>{a.emoji}</span>
+                    <span style={{ fontSize: "1.1rem", color: isSelected ? OFF : LIGHT, fontWeight: isSelected ? 600 : 400 }}>
+                      {a.name}
                     </span>
+                    {data && (
+                      <div style={{ 
+                        marginLeft: "auto", 
+                        width: 12, height: 12, 
+                        borderRadius: "50%", 
+                        background: activeColor,
+                        boxShadow: `0 0 10px ${activeColor}`
+                      }} />
+                    )}
+                  </button>
+
+                  {/* Selector de Severidad */}
+                  {data && (
+                    <div style={{ 
+                      display: "flex", 
+                      background: "rgba(255,255,255,0.03)", 
+                      borderRadius: 12, 
+                      padding: "4px",
+                      border: "1px solid rgba(255,255,255,0.05)"
+                    }}>
+                      {(["alergia", "intolerancia", "no-gusta"] as Severity[]).map((s) => (
+                        <button
+                          key={s}
+                          onClick={() => {
+                            const next = new Map(sel);
+                            next.set(a.id, { ...data, severity: s });
+                            setSel(next);
+                          }}
+                          style={{
+                            flex: 1, padding: "6px 2px", borderRadius: 8, fontSize: "0.7rem", fontWeight: 700,
+                            textTransform: "uppercase", border: "none", cursor: "pointer",
+                            background: data.severity === s ? severityColors[s] : "transparent",
+                            color: data.severity === s ? "#000" : LIGHT,
+                            transition: "all 0.2s",
+                          }}
+                        >
+                          {s === "no-gusta" ? "No gusta" : s}
+                        </button>
+                      ))}
+                    </div>
                   )}
-                </button>
 
-                {/* Severity toggle (visible solo cuando está seleccionado) */}
-                {sev && (
-                  <div style={{ display: "flex", borderRadius: 12, overflow: "hidden", border: "1px solid rgba(200,169,110,0.15)" }}>
-                    {(["alergia", "intolerancia"] as Severity[]).map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setSeverity(a.id, s)}
-                        style={{
-                          flex: 1, padding: "3px 0",
-                          fontSize: "0.62rem", fontWeight: 600,
-                          border: "none", cursor: "pointer",
-                          background: sev === s
-                            ? (s === "alergia" ? "#E57373" : "#FFB74D")
-                            : "rgba(255,255,255,0.04)",
-                          color: sev === s ? "#0A0A0A" : LIGHT,
-                          transition: "all 0.12s",
-                          letterSpacing: "0.04em",
-                        }}
-                      >
-                        {s === "alergia" ? "Alergia" : "Intolerancia"}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Campo libre */}
-        <div style={{ padding: "0 1.5rem 1rem", flexShrink: 0, borderTop: "1px solid rgba(200,169,110,0.08)", paddingTop: "0.85rem" }}>
-          <div style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: LIGHT, marginBottom: "0.4rem" }}>
-            Otras (texto libre)
+                  {/* Sub-opciones (UI Mejorada) */}
+                  {data && a.subOptions && (
+                    <div style={{ 
+                      marginTop: "0.5rem", 
+                      padding: "1rem", 
+                      background: "rgba(200,169,110,0.05)", 
+                      borderRadius: 16,
+                      border: "1px solid rgba(200,169,110,0.15)",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5rem"
+                    }}>
+                      <div style={{ fontSize: "0.7rem", color: GOLD, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>
+                        Especificar {a.name}:
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                        {a.subOptions.map((sub) => {
+                          const isSubActive = data.subOptions?.includes(sub.name);
+                          return (
+                            <button
+                              key={sub.id}
+                              onClick={() => toggleSubOption(a.id, sub.name)}
+                              style={{
+                                display: "flex", alignItems: "center", gap: "0.5rem",
+                                padding: "0.6rem 1rem", borderRadius: 99, fontSize: "0.85rem",
+                                border: `1px solid ${isSubActive ? GOLD : "rgba(255,255,255,0.1)"}`,
+                                background: isSubActive ? `${GOLD}30` : "transparent",
+                                color: isSubActive ? OFF : LIGHT,
+                                cursor: "pointer", transition: "all 0.2s",
+                              }}
+                            >
+                              <span>{sub.emoji}</span>
+                              <span>{sub.name}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <input
-            ref={customRef}
-            type="text"
-            value={custom}
-            onChange={(e) => setCustom(e.target.value)}
-            placeholder="Ej: intolerancia al anisakis, alergia a las fresas…"
-            style={{
-              width: "100%", background: DARK, border: "1px solid rgba(200,169,110,0.2)",
-              color: OFF, padding: "0.5rem 0.75rem", borderRadius: 4,
-              fontSize: "0.78rem", outline: "none", boxSizing: "border-box",
-            }}
-          />
         </div>
 
         {/* Footer */}
-        <div style={{
-          padding: "0.85rem 1.5rem",
-          borderTop: "1px solid rgba(200,169,110,0.1)",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexShrink: 0, gap: "1rem",
-        }}>
-          <button
-            type="button"
-            onClick={handleClear}
-            style={{ background: "none", border: "none", color: LIGHT, fontSize: "0.75rem", cursor: "pointer", padding: 0 }}
-          >
-            Limpiar todo
-          </button>
-          <button
-            type="button"
+        <div style={{ padding: "2rem", borderTop: "1px solid rgba(200,169,110,0.15)", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+          <div style={{ flex: 1 }}>
+             <div style={{ fontSize: "0.75rem", color: GOLD, fontWeight: 700, marginBottom: "0.5rem", textTransform: "uppercase" }}>Notas adicionales de cocina</div>
+             <input 
+               type="text" 
+               value={custom}
+               onChange={(e) => setCustom(e.target.value)}
+               placeholder="Ej: Alergia severa a las fresas, trazas de frutos secos..."
+               style={{
+                 width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
+                 padding: "1rem 1.25rem", borderRadius: 12, color: OFF, fontSize: "1rem", outline: "none"
+               }}
+             />
+          </div>
+          <button 
             onClick={handleConfirm}
             style={{
-              background: GOLD, color: "#0A0A0A", border: "none",
-              padding: "0.6rem 1.5rem", borderRadius: 2,
-              fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.15em",
-              textTransform: "uppercase", cursor: "pointer",
+              background: GOLD, color: "#000", border: "none",
+              padding: "1.2rem 3rem", borderRadius: 99,
+              fontSize: "1rem", fontWeight: 800, textTransform: "uppercase",
+              cursor: "pointer", transition: "all 0.3s",
+              boxShadow: `0 8px 24px ${GOLD}40`
             }}
           >
-            {selectedCount > 0 ? `Confirmar (${selectedCount})` : "Confirmar"}
+            Confirmar Parte
           </button>
         </div>
       </div>

@@ -11,21 +11,6 @@ import { prisma } from "@/lib/prisma";
 import { buildRedsysFormData, reservationToOrderId } from "@/lib/redsys";
 import { triggerWorkflows } from "@/lib/admin/workflow-engine";
 
-export async function GET() {
-  const reservations = await prisma.reservation.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 100,
-    include: {
-      customer: true,
-      event: true,
-      venue: true,
-      paymentSplits: true,
-    },
-  });
-
-  return NextResponse.json({ ok: true, data: reservations });
-}
-
 export async function POST(request: Request) {
   const json = await request.json().catch(() => null);
   const parsed = reservationInputSchema.safeParse(json);

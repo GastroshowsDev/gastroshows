@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     const body = await request.json() as { name?: string; email?: string; password?: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string };
@@ -38,8 +42,17 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
+    if (auth.session.user?.id && auth.session.user.id === id) {
+      return NextResponse.json(
+        { ok: false, error: "No puedes eliminar tu propia cuenta" },
+        { status: 400 },
+      );
+    }
     await prisma.user.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   } catch (err) {

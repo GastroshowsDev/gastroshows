@@ -113,8 +113,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.eyebrow || ""}
                 onChange={(v) => updateField("eyebrow", v)}
                 isEditing={isEditing}
-                styles={content}
-                onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
+                styles={content.eyebrowStyles}
+                onStyleChange={(s) => updateField("eyebrowStyles", { ...content.eyebrowStyles, ...s })}
                 dataField="eyebrow"
                 placeholder="UBICACIÓN"
                 style={{ 
@@ -151,8 +151,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               value={typedTitle}
               onChange={(v) => updateField("title", v)}
               isEditing={isEditing}
-              styles={content}
-              onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
+              styles={content.titleStyles}
+              onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
               dataField="title"
               placeholder="Título principal"
             />
@@ -165,8 +165,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   value={content.titleAccent || ""}
                   onChange={(v) => updateField("titleAccent", v)}
                   isEditing={isEditing}
-                  styles={content}
-                  onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
+                  styles={content.titleAccentStyles}
+                  onStyleChange={(s) => updateField("titleAccentStyles", { ...content.titleAccentStyles, ...s })}
                   dataField="titleAccent"
                   placeholder="Acento"
                   style={{ 
@@ -201,8 +201,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.subtitle || ""}
                 onChange={(v) => updateField("subtitle", v)}
                 isEditing={isEditing}
-                styles={content}
-                onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
+                styles={content.subtitleStyles}
+                onStyleChange={(s) => updateField("subtitleStyles", { ...content.subtitleStyles, ...s })}
                 dataField="subtitle"
                 placeholder="Subtítulo o descripción corta"
               />
@@ -229,6 +229,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                     value={content.ctaPrimaryText || "Boton Primario"}
                     onChange={(v) => updateField("ctaPrimaryText", v)}
                     isEditing={isEditing}
+                    styles={content.ctaPrimaryStyles}
+                    onStyleChange={(s) => updateField("ctaPrimaryStyles", { ...content.ctaPrimaryStyles, ...s })}
                     dataField="ctaPrimaryText"
                   />
                 </HeroButton>
@@ -244,6 +246,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                     value={content.ctaSecondaryText || "Boton Secundario"}
                     onChange={(v) => updateField("ctaSecondaryText", v)}
                     isEditing={isEditing}
+                    styles={content.ctaSecondaryStyles}
+                    onStyleChange={(s) => updateField("ctaSecondaryStyles", { ...content.ctaSecondaryStyles, ...s })}
                     dataField="ctaSecondaryText"
                   />
                 </HeroButton>
@@ -271,7 +275,7 @@ function HeroButton({
 
   const bg = primary
     ? hovered ? "#E8D5A8" : "#daa520"
-    : hovered ? "rgba(200,169,110,0.18)" : "rgba(200,169,110,0.06)";
+    : hovered ? "rgba(200,169,110,0.6)" : "rgba(200,169,110,0.4)";
 
   return (
     <SmartLink
@@ -282,8 +286,8 @@ function HeroButton({
       style={{
         display: "inline-block",
         backgroundColor: bg,
-        color: primary ? "#0A0A0A" : hovered ? "#F5F0E8" : "rgba(200,169,110,0.9)",
-        border: primary ? "none" : `1px solid ${hovered ? "rgba(200,169,110,0.9)" : "rgba(200,169,110,0.55)"}`,
+        color: primary ? "#0A0A0A" : "#FFFFFF",
+        border: primary ? "none" : `1px solid #FFFFFF`,
         padding: "1rem 2.8rem",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "0.72rem",
@@ -292,8 +296,7 @@ function HeroButton({
         textTransform: "uppercase",
         textDecoration: "none",
         cursor: "pointer",
-        borderRadius: "2px",
-        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        borderRadius: "9999px",
         boxShadow: hovered
           ? primary
             ? "0 12px 36px rgba(200,169,110,0.4)"

@@ -1,15 +1,15 @@
 import { Shift } from "@prisma/client";
 import { getDay } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { z } from "zod";
+import { emailValidation } from "@/lib/utils/validations";
 
 export const reservationInputSchema = z.object({
   date: z.string().datetime(),
   shift: z.nativeEnum(Shift),
-  guests: z.int().min(1).max(12),
+  guests: z.number().int().min(1).max(12),
   name: z.string().min(2).max(120),
   phone: z.string().min(6).max(30),
-  email: z.string().email(),
+  email: emailValidation,
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean().default(false),
   groupRef: z.string().max(120).optional(),

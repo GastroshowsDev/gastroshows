@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 import { mailrelaySubscribe } from "@/lib/mailrelay";
+import { requireAdmin, requireStaff } from "@/lib/auth-helpers";
 
 const paramsSchema = z.object({ id: z.string().min(1) });
 
@@ -15,6 +16,9 @@ const patchSchema = z.object({
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function GET(_: Request, context: RouteContext) {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   const maybeParams = paramsSchema.safeParse(await context.params);
   if (!maybeParams.success) {
     return NextResponse.json({ ok: false, error: "Invalid id param" }, { status: 400 });
@@ -39,6 +43,9 @@ export async function GET(_: Request, context: RouteContext) {
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   const maybeParams = paramsSchema.safeParse(await context.params);
   if (!maybeParams.success) {
     return NextResponse.json({ ok: false, error: "Invalid id param" }, { status: 400 });
@@ -101,6 +108,9 @@ export async function PATCH(request: Request, context: RouteContext) {
 }
 
 export async function DELETE(_: Request, context: RouteContext) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   const maybeParams = paramsSchema.safeParse(await context.params);
   if (!maybeParams.success) {
     return NextResponse.json({ ok: false, error: "Invalid id param" }, { status: 400 });

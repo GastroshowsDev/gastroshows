@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { testSmtpConnection, invalidateSmtpCache, sendMail } from "@/lib/mail";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 const SMTP_KEYS = [
   "smtp_host", "smtp_port", "smtp_user", "smtp_pass",
@@ -8,6 +9,9 @@ const SMTP_KEYS = [
 ];
 
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const settings = await prisma.setting.findMany({
       where: { key: { in: SMTP_KEYS } },
@@ -24,6 +28,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
     const { action, settings, testEmail } = body;

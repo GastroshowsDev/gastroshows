@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const GOLD = "#C8A96E";
+import { LucideVideo, LucideEye, LucideLoader2 } from "lucide-react";
 
 export function DemoModeToggle() {
   const [isDemo, setIsDemo] = useState(true);
@@ -45,14 +44,12 @@ export function DemoModeToggle() {
         setIsDemo(newValue);
         window.dispatchEvent(new CustomEvent("gs-demo-mode-changed", { detail: newValue }));
         setShowModal(false);
-        alert("Modo cambiado con éxito a " + (newValue ? "DEMO" : "LIVE"));
       } else {
         const errData = await res.json().catch(() => ({}));
-        alert("Error al cambiar el modo: " + (errData.error || "Error desconocido"));
+        alert("Error: " + (errData.error || "No se pudo cambiar el modo"));
       }
     } catch (error) {
-      console.error("Error updating mode:", error);
-      alert("Error de conexión al intentar cambiar el modo");
+      alert("Error de conexión");
     } finally {
       setUpdating(false);
     }
@@ -64,88 +61,92 @@ export function DemoModeToggle() {
     <>
       <button
         onClick={handleToggleClick}
+        title={isDemo ? "Modo Demo (Click para pasar a LIVE)" : "Modo Directo (Click para pasar a DEMO)"}
         style={{
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          background: isDemo ? "rgba(239, 68, 68, 0.05)" : "rgba(16, 185, 129, 0.05)",
+          border: `1px solid ${isDemo ? "rgba(239, 68, 68, 0.2)" : "rgba(16, 185, 129, 0.2)"}`,
+          color: isDemo ? "#EF4444" : "#10B981",
+          cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          gap: "0.5rem",
-          background: isDemo ? "rgba(239, 68, 68, 0.1)" : "rgba(16, 185, 129, 0.1)",
-          border: `1px solid ${isDemo ? "rgba(239, 68, 68, 0.3)" : "rgba(16, 185, 129, 0.3)"}`,
-          color: isDemo ? "#EF4444" : "#10B981",
-          padding: "0.4rem 1rem",
-          borderRadius: "4px",
-          fontSize: "0.7rem",
-          fontWeight: 700,
-          letterSpacing: "0.1em",
-          cursor: "pointer",
-          transition: "all 0.2s",
-          marginRight: "1rem"
+          justifyContent: "center",
+          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          outline: "none",
+          position: "relative",
         }}
-        title={isDemo ? "Modo Demo Activo (Pagos simulados)" : "Modo Real Activo (Redsys)"}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.boxShadow = isDemo ? "0 0 15px rgba(239, 68, 68, 0.2)" : "0 0 15px rgba(16, 185, 129, 0.2)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow = "none";
+        }}
       >
-        <span style={{ 
-          width: "8px", 
-          height: "8px", 
-          borderRadius: "50%", 
-          background: "currentColor",
-          animation: isDemo ? "gs-pulse 1.5s infinite" : "none"
-        }} />
-        {isDemo ? "DEMO MODE" : "LIVE MODE"}
+        {isDemo ? <LucideEye size={18} /> : <LucideVideo size={18} />}
+        {isDemo && (
+          <span style={{ 
+            position: "absolute", top: "2px", right: "2px", 
+            width: "8px", height: "8px", background: "#EF4444", 
+            borderRadius: "50%", border: "2px solid var(--color-admin-surface)",
+            animation: "gs-pulse 2s infinite"
+          }} />
+        )}
       </button>
 
       {showModal && (
         <div style={{
           position: "fixed", inset: 0, zIndex: 10000,
-          background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)",
+          background: "rgba(0,0,0,0.4)", backdropFilter: "blur(10px)",
           display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem"
         }}>
           <div style={{
-            background: "#121212", border: `1px solid ${GOLD}`, borderRadius: "4px",
-            width: "100%", maxWidth: "420px", padding: "2.5rem", textAlign: "center",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
+            background: "var(--color-admin-surface)", border: "1px solid var(--color-admin-border)", borderRadius: "16px",
+            width: "100%", maxWidth: "400px", padding: "2rem", textAlign: "center",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
           }}>
-            <h3 style={{ 
-              fontFamily: "var(--font-cormorant), serif", fontSize: "1.8rem", color: "#F5F0E8",
-              marginBottom: "1rem" 
+            <div style={{ 
+              width: "50px", height: "50px", borderRadius: "50%", 
+              background: isDemo ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)",
+              display: "flex", alignItems: "center", justifyContent: "center", 
+              margin: "0 auto 1.5rem", color: isDemo ? "#10B981" : "#EF4444"
             }}>
-              ¿Cambiar a modo {isDemo ? "LIVE" : "DEMO"}?
+              {isDemo ? <LucideVideo size={24} /> : <LucideEye size={24} />}
+            </div>
+            
+            <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.5rem" }}>
+              ¿Pasar a modo {isDemo ? "REAL" : "DEMO"}?
             </h3>
             
-            <p style={{ color: "rgba(245,240,232,0.7)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "2rem" }}>
-              Estás a punto de cambiar el sistema de pagos a modo <strong>{isDemo ? "REAL (Redsys)" : "SIMULADO"}</strong>.<br/>
-              Para confirmar, escribe <span style={{ color: GOLD, fontWeight: 700 }}>"{requiredWord}"</span> a continuación.
+            <p style={{ color: "var(--color-admin-muted)", fontSize: "0.85rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+              Para confirmar el cambio a modo <strong>{isDemo ? "DIRECTO (Pagos reales)" : "SIMULADO"}</strong>, escribe la palabra:
+              <br/><span style={{ color: "#efb810", fontWeight: 700, fontSize: "1.1rem" }}>{requiredWord}</span>
             </p>
 
-            <div style={{ position: "relative", marginBottom: "2rem" }}>
-              <input
-                autoFocus
-                type="text"
-                value={confirmText}
-                onChange={(e) => setConfirmText(e.target.value)}
-                placeholder={`Escribe "${requiredWord}"`}
-                style={{
-                  width: "100%", padding: "1rem", background: "rgba(255,255,255,0.03)",
-                  border: `1px solid ${isMatch ? "#10B981" : "rgba(200,169,110,0.2)"}`, 
-                  borderRadius: "2px",
-                  color: "#F5F0E8", fontSize: "1rem", textAlign: "center",
-                  outline: "none", transition: "all 0.3s"
-                }}
-              />
-              {isMatch && (
-                <div style={{ 
-                  position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)",
-                  color: "#10B981", fontSize: "0.8rem", fontWeight: 700
-                }}>
-                  ✓
-                </div>
-              )}
-            </div>
+            <input
+              autoFocus
+              type="text"
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              placeholder={`Escribe ${requiredWord}`}
+              style={{
+                width: "100%", padding: "0.75rem", background: "var(--color-admin-bg)",
+                border: `1px solid ${isMatch ? "#10B981" : "var(--color-admin-border)"}`, 
+                borderRadius: "10px",
+                color: "var(--color-admin-text)", fontSize: "1rem", textAlign: "center",
+                outline: "none", transition: "all 0.3s", marginBottom: "1.5rem"
+              }}
+            />
 
             <div style={{ display: "flex", gap: "1rem" }}>
               <button
                 onClick={() => setShowModal(false)}
                 style={{
-                  flex: 1, padding: "0.8rem", background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
-                  color: "rgba(255,255,255,0.6)", borderRadius: "2px", cursor: "pointer", fontWeight: 600
+                  flex: 1, padding: "0.75rem", background: "none", border: "1px solid var(--color-admin-border)",
+                  color: "var(--color-admin-muted)", borderRadius: "10px", cursor: "pointer", fontWeight: 600
                 }}
               >
                 Cancelar
@@ -154,14 +155,15 @@ export function DemoModeToggle() {
                 disabled={!isMatch || updating}
                 onClick={confirmChange}
                 style={{
-                  flex: 1, padding: "0.8rem", 
-                  background: isMatch ? GOLD : "rgba(200,169,110,0.1)", 
-                  color: isMatch ? "#0A0A0A" : "rgba(200,169,110,0.3)", 
-                  border: "none", borderRadius: "2px", cursor: isMatch ? "pointer" : "not-allowed",
-                  fontWeight: 700, transition: "all 0.3s"
+                  flex: 1, padding: "0.75rem", 
+                  background: isMatch ? "#efb810" : "var(--color-admin-bg)", 
+                  color: isMatch ? "#fff" : "var(--color-admin-muted)", 
+                  border: "none", borderRadius: "10px", cursor: isMatch ? "pointer" : "not-allowed",
+                  fontWeight: 700, transition: "all 0.3s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"
                 }}
               >
-                {updating ? "Cambiando..." : "Confirmar"}
+                {updating && <LucideLoader2 size={16} className="animate-spin" />}
+                Confirmar
               </button>
             </div>
           </div>
@@ -170,9 +172,9 @@ export function DemoModeToggle() {
 
       <style jsx global>{`
         @keyframes gs-pulse {
-          0% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.4; transform: scale(0.85); }
-          100% { opacity: 1; transform: scale(1); }
+          0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+          70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+          100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
       `}</style>
     </>

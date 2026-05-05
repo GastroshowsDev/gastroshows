@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { LucideSun, LucideMoon } from "lucide-react";
 
 type Variant = "public" | "admin";
 
@@ -11,7 +12,7 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = mounted ? theme === "clandestino" : true; // Default to true for Clandestino
+  const isDark = mounted ? theme === "clandestino" : true;
 
   if (variant === "admin") {
     return (
@@ -19,29 +20,34 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
         onClick={() => setTheme(isDark ? "revelado" : "clandestino")}
         title={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
         style={{
-          width: "100%", padding: "0.5rem", borderRadius: "6px",
-          border: "1px solid var(--color-admin-border)", background: "transparent",
-          color: "var(--color-admin-muted)", fontSize: "0.75rem", cursor: "pointer",
-          transition: "all 0.15s", display: "flex", alignItems: "center",
-          justifyContent: "center", gap: "0.4rem",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
+          border: "1px solid var(--color-admin-border)",
+          color: isDark ? "#efb810" : "var(--color-admin-text)",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          outline: "none",
         }}
         onMouseEnter={(e) => {
-          const btn = e.currentTarget as HTMLButtonElement;
-          btn.style.borderColor = "var(--color-admin-accent)";
-          btn.style.color = "var(--color-admin-accent)";
+          e.currentTarget.style.transform = "scale(1.1)";
+          e.currentTarget.style.borderColor = "#efb810";
         }}
         onMouseLeave={(e) => {
-          const btn = e.currentTarget as HTMLButtonElement;
-          btn.style.borderColor = "var(--color-admin-border)";
-          btn.style.color = "var(--color-admin-muted)";
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.borderColor = "var(--color-admin-border)";
         }}
       >
-        {isDark ? "☀" : "☾"} {isDark ? "Modo claro" : "Modo oscuro"}
+        {isDark ? <LucideSun size={18} /> : <LucideMoon size={18} />}
       </button>
     );
   }
 
-  /* ── Public variant: CLANDESTINO / REVELADO pill ── */
+  /* ── Public variant: Mantener original ── */
   if (!mounted) return null;
 
   return (

@@ -110,7 +110,8 @@ export function BookingCalendar({
           const status = dayStatus(day);
           const clickable = status === "available" || status === "selected" || status === "private";
           return (
-            <div
+            <button
+              type="button"
               key={day}
               onClick={() => {
                 if (!clickable) return;
@@ -122,23 +123,23 @@ export function BookingCalendar({
                 status === "private" ? "Cena Privada Exclusiva" :
                 status === "past" ? "Fecha pasada" : undefined
               }
+              disabled={!clickable}
               style={{
                 aspectRatio: "1",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "0.96rem",
-                borderRadius: "2px",
-                cursor: clickable ? "pointer" : "not-allowed",
                 border: status === "selected" ? `1px solid ${GOLD}` : (status === "private" ? `1px dashed rgba(200,169,110,0.4)` : (status === "available" ? `1px solid rgba(255,255,255,0.1)` : "1px solid transparent")),
                 background: status === "selected" ? GOLD : (status === "available" ? "rgba(255,255,255,0.03)" : "transparent"),
                 color: status === "selected" ? "black" : (status === "private" ? "rgba(200,169,110,0.7)" : (status === "available" ? OFFWHITE : "rgba(245,240,232,0.15)")),
                 fontWeight: status === "selected" ? 600 : 300,
-                transition: "all 0.15s",
+                width: "100%",
+                padding: 0,
               }}
             >
               {day}
-            </div>
+            </button>
           );
         })}
       </div>

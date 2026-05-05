@@ -103,13 +103,19 @@ export type SectionContent = {
 export type HeroContent = {
   bgImage: string;
   eyebrow?: string;
+  eyebrowStyles?: CommonStyles;
   title: string;
+  titleStyles?: CommonStyles;
   titleAccent: string;
+  titleAccentStyles?: CommonStyles;
   subtitle: string;
+  subtitleStyles?: CommonStyles;
   ctaPrimaryText: string;
   ctaPrimaryLink: string;
+  ctaPrimaryStyles?: CommonStyles;
   ctaSecondaryText?: string;
   ctaSecondaryLink?: string;
+  ctaSecondaryStyles?: CommonStyles;
   overlayOpacity: number;
   animation?: string;
   eyebrowAnim?: string;
@@ -123,14 +129,14 @@ export type HeroContent = {
 
 export type TextContent = {
   eyebrow?: string;
+  eyebrowStyles?: CommonStyles;
   title?: string;
+  titleStyles?: CommonStyles;
   titleAccent?: string;
+  titleAccentStyles?: CommonStyles;
   body: string;
+  bodyStyles?: CommonStyles;
   alignment?: "left" | "center" | "right";
-  fontSize?: string;
-  color?: string;
-  bold?: boolean;
-  italic?: boolean;
   animation?: string;
   eyebrowAnim?: string;
   titleAnim?: string;
@@ -156,11 +162,16 @@ export type AvailabilityContent = {
 export type CtaContent = {
   bgImage?: string;
   eyebrow?: string;
+  eyebrowStyles?: CommonStyles;
   title: string;
+  titleStyles?: CommonStyles;
   titleAccent?: string;
+  titleAccentStyles?: CommonStyles;
   body?: string;
+  bodyStyles?: CommonStyles;
   buttonText?: string;
   buttonLink?: string;
+  buttonStyles?: CommonStyles;
   eyebrowAnim?: string;
   titleAnim?: string;
   bodyAnim?: string;

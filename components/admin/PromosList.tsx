@@ -265,7 +265,7 @@ export function PromosList({
           <div style={{ fontWeight: 600, fontSize: "0.85rem", color: "var(--color-admin-text)", marginBottom: "0.75rem" }}>
             Festividades — clic para pre-rellenar el formulario
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "0.5rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.75rem" }}>
             {PRESETS.map((p) => {
               const { startDate, endDate } = presetDates(p);
               const fmtDate = (s: string) => new Date(s).toLocaleDateString("es-ES", { day: "numeric", month: "short" });
@@ -274,21 +274,50 @@ export function PromosList({
                   key={p.name}
                   onClick={() => applyPreset(p)}
                   style={{
-                    display: "flex", flexDirection: "column", alignItems: "flex-start",
-                    padding: "0.65rem 0.75rem", borderRadius: 8, cursor: "pointer",
+                    display: "flex", 
+                    alignItems: "center",
+                    gap: "1rem",
+                    padding: "1rem", 
+                    borderRadius: 6, 
+                    cursor: "pointer",
                     border: "1px solid var(--color-admin-border)",
                     background: "var(--color-admin-bg)",
-                    textAlign: "left", transition: "all 0.15s",
+                    textAlign: "left", 
+                    transition: "all 0.2s ease",
+                    position: "relative",
+                    overflow: "hidden"
                   }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-admin-accent)"; (e.currentTarget as HTMLButtonElement).style.background = "var(--color-admin-accent-light)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-admin-border)"; (e.currentTarget as HTMLButtonElement).style.background = "var(--color-admin-bg)"; }}
+                  onMouseEnter={(e) => { 
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-admin-accent)"; 
+                    (e.currentTarget as HTMLButtonElement).style.background = "#fff";
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 12px rgba(0,0,0,0.05)";
+                  }}
+                  onMouseLeave={(e) => { 
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--color-admin-border)"; 
+                    (e.currentTarget as HTMLButtonElement).style.background = "var(--color-admin-bg)";
+                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
+                  }}
                 >
-                  <span style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>{p.icon}</span>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--color-admin-text)" }}>{p.name}</span>
-                  <span style={{ fontSize: "0.68rem", color: "var(--color-admin-muted)" }}>
-                    {fmtDate(startDate)} → {fmtDate(endDate)}
-                  </span>
-                  <span style={{ fontSize: "0.68rem", color: "var(--color-admin-accent)", fontWeight: 600, marginTop: "0.15rem" }}>-{p.discount}%</span>
+                  <div style={{ fontSize: "1.8rem", flexShrink: 0 }}>{p.icon}</div>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.1rem" }}>
+                    <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-admin-text)" }}>{p.name}</span>
+                    <span style={{ fontSize: "0.7rem", color: "var(--color-admin-muted)", fontWeight: 500 }}>
+                      {fmtDate(startDate)} — {fmtDate(endDate)}
+                    </span>
+                    <div style={{ 
+                      display: "inline-block", 
+                      fontSize: "0.7rem", 
+                      color: "var(--color-admin-accent)", 
+                      fontWeight: 700, 
+                      marginTop: "0.2rem",
+                      background: "var(--color-admin-accent-light)",
+                      padding: "2px 6px",
+                      borderRadius: 4,
+                      alignSelf: "flex-start"
+                    }}>
+                      -{p.discount}% dto.
+                    </div>
+                  </div>
                 </button>
               );
             })}

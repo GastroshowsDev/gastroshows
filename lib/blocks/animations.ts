@@ -199,7 +199,7 @@ export function getAnimationStyles(type: AnimationType | string | undefined, act
         ...base,
         filter: active ? "blur(0) brightness(1)" : "blur(20px) brightness(2)",
         letterSpacing: active ? "0px" : "-10px",
-        transform: active ? "scale(1)" : "scale(1.2)"
+        transform: active ? "scale(1)" : "scale(1.05)"
       };
 
 

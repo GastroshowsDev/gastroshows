@@ -80,6 +80,7 @@ export function SmartLink({ href, children, className, style, onMouseEnter, onMo
   return (
     <a
       href={isEditing ? undefined : (normalizedAction === "eventos" ? "/eventos" : (href || "#"))}
+      role="button"
 
       onClick={handleClick}
       onMouseEnter={() => {

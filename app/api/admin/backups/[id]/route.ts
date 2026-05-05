@@ -1,20 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-async function assertAdmin() {
-  const session = await getServerSession(authOptions);
-  const role = (session?.user as { role?: string } | undefined)?.role;
-  return role === "ADMIN";
-}
+import { requireAdmin } from "@/lib/auth-helpers";
 
 // GET /api/admin/backups/[id] → descarga el backup como fichero JSON
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!(await assertAdmin())) return NextResponse.json({ ok: false }, { status: 403 });
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
   const { id } = await params;
   const backup = await prisma.backup.findUnique({ where: { id } });
@@ -37,7 +31,8 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!(await assertAdmin())) return NextResponse.json({ ok: false }, { status: 403 });
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
   const { id } = await params;
   await prisma.backup.delete({ where: { id } });

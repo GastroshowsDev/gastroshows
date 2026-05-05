@@ -4,16 +4,25 @@ import { prisma } from "@/lib/prisma";
 import { ReservasTable } from "@/components/admin/ReservasTable";
 import { getCalendarData } from "@/lib/admin/calendar-utils";
 import { CalendarBoard } from "@/components/admin/CalendarBoard";
+import { AdminPagination } from "@/components/admin/AdminPagination";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-async function getReservas() {
+async function getReservasData(offset: number, limit: number) {
+  // 1. Obtener el total de registros para la paginación
+  const total = await prisma.reservation.count({
+    where: { type: { notIn: ["VISIT", "GIFT"] } }
+  });
+
+  // 2. Obtener solo los registros del rango solicitado (skip/take)
   const reservations = await prisma.reservation.findMany({
     where: {
       type: { notIn: ["VISIT", "GIFT"] }
     },
     orderBy: { createdAt: "desc" },
+    skip: offset - 1,
+    take: limit,
     include: {
       customer: { select: { id: true, name: true, email: true, phone: true, allergies: true, comments: true, previousVisit: true } },
       event: { select: { id: true, date: true, shift: true } },
@@ -21,13 +30,14 @@ async function getReservas() {
     },
   });
 
-  return reservations.map((r) => ({
+  const rows = reservations.map((r) => ({
     id: r.id,
     type: r.type,
     status: r.status,
     guests: r.guests,
     totalAmount: Number(r.totalAmount),
     paidAmount: Number(r.paidAmount),
+    source: r.source,
     groupRef: r.groupRef,
     mergedGroupId: r.mergedGroupId,
     createdAt: r.createdAt.toISOString(),
@@ -51,26 +61,37 @@ async function getReservas() {
     },
     venue: r.venue ? { id: r.venue.id, name: r.venue.name } : null,
   }));
+
+  return { rows, total };
 }
 
-export type ReservaRow = Awaited<ReturnType<typeof getReservas>>[number];
+export type ReservaRow = Awaited<ReturnType<typeof getReservasData>>["rows"][number];
 
-export default async function ReservasPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
-  const { view } = await searchParams;
+export default async function ReservasPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ view?: string, offset?: string, limit?: string }> 
+}) {
+  const { view, offset, limit } = await searchParams;
   const isCalendar = view === "calendar";
+  
+  const currentOffset = parseInt(offset || "1");
+  const currentLimit = parseInt(limit || "25");
 
-  const [reservas, calendarEvents, session] = await Promise.all([
-    getReservas(),
+  const [{ rows: reservas, total }, calendarEvents, session] = await Promise.all([
+    getReservasData(currentOffset, currentLimit),
     isCalendar ? getCalendarData("NORMAL") : Promise.resolve([]),
     getServerSession(authOptions)
   ]);
-  const role = ((session?.user as { role?: string } | undefined)?.role ?? "LIVE") as "ADMIN" | "LIVE";
+  
+  const sessionUser = session?.user as { role?: string } | undefined;
+  const role = (sessionUser?.role ?? "LIVE") as "ADMIN" | "LIVE";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--color-admin-bg)" }}>
       <div
         style={{
-          padding: "1.25rem 1.5rem",
+          padding: "1rem 1.5rem",
           borderBottom: "1px solid var(--color-admin-border)",
           background: "var(--color-admin-surface)",
           display: "flex",
@@ -79,13 +100,20 @@ export default async function ReservasPage({ searchParams }: { searchParams: Pro
           flexShrink: 0,
         }}
       >
-        <div>
-          <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
-            Reservas
-          </h1>
-          <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
-            {reservas.length} reserva{reservas.length !== 1 ? "s" : ""} en total
-          </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div>
+            <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
+              Reservas
+            </h1>
+            <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
+              Panel de gestión de reservas
+            </p>
+          </div>
+          
+          {/* Solo mostramos la paginación en vista de tabla */}
+          {!isCalendar && (
+            <AdminPagination total={total} defaultLimit={25} />
+          )}
         </div>
 
         <div style={{ display: "flex", gap: "0.5rem" }}>

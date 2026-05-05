@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-// 40 people max per day: Sat has NOON+NIGHT (20 each = 40), others NIGHT only (40)
-const SAT_SHIFT_CAPACITY   = 20;
+// 80 people max per day on Sat: NOON+NIGHT (40 each = 80), others NIGHT only (40)
+const SAT_SHIFT_CAPACITY   = 40;
 const OTHER_SHIFT_CAPACITY = 40;
 
 const DAY_SHORT: Record<number, string> = { 3: "Mié", 4: "Jue", 5: "Vie", 6: "Sáb" };
@@ -49,7 +49,15 @@ export async function GET(request: Request) {
     where: {
       date: { gte: rangeStart, lte: rangeEnd },
     },
-    select: { date: true, shift: true, totalGuests: true, status: true },
+    include: {
+      reservations: {
+        where: {
+          status: { in: ["CONFIRMED", "CHECKED_IN"] },
+          type: { not: "VISIT" }
+        },
+        select: { guests: true }
+      }
+    }
   });
 
   const days = operatingDays.map((date) => {
@@ -65,7 +73,8 @@ export async function GET(request: Request) {
       });
 
       const capacity = isSat ? SAT_SHIFT_CAPACITY : OTHER_SHIFT_CAPACITY;
-      const totalGuests = ev?.totalGuests ?? 0;
+      // Sumamos los invitados de las reservas reales encontradas
+      const totalGuests = ev?.reservations.reduce((acc, r) => acc + r.guests, 0) ?? 0;
       const isFull = ev?.status === "FULL" || ev?.status === "CLOSED";
       const available = isFull ? 0 : Math.max(0, capacity - totalGuests);
 

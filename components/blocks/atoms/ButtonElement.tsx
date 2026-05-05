@@ -63,7 +63,7 @@ export function ButtonElement({ element, isEditing = false, onUpdate }: Props) {
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           textDecoration: "none",
-          borderRadius: styles.borderRadius || "2px",
+          borderRadius: styles.borderRadius || "9999px",
           transition: "all 0.3s ease",
           cursor: "pointer",
           ...getVariantStyles(),

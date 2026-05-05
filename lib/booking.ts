@@ -3,6 +3,8 @@ import { addDays, getDay, subDays } from "date-fns";
 import { fromZonedTime, toZonedTime } from "date-fns-tz";
 import { z } from "zod";
 
+import { emailValidation } from "@/lib/utils/validations";
+
 const BARCELONA_TZ = "Europe/Madrid";
 const BASE_PRICE_PER_GUEST = 130;
 const WED_THU_DISCOUNT_PCT = 20;
@@ -13,7 +15,7 @@ export const normalReservationSchema = z.object({
   guests: z.number().int().min(1).max(12),
   name: z.string().min(2).max(120),
   phone: z.string().min(6).max(30),
-  email: z.string().email(),
+  email: emailValidation,
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean(),
   previousBarrio: z.enum(["EIXAMPLE", "SARRIA"]).optional(),
@@ -27,9 +29,9 @@ export const giftPurchaseSchema = z.object({
   guests: z.number().int().min(1).max(12),
   purchaserName: z.string().min(2).max(120),
   purchaserPhone: z.string().min(6).max(30),
-  purchaserEmail: z.string().email(),
+  purchaserEmail: emailValidation,
   deliveryMode: z.enum(["now", "later"]),
-  recipientEmail: z.string().email().optional(),
+  recipientEmail: emailValidation.optional(),
   sendDate: z.string().datetime().optional(),
 });
 
@@ -39,7 +41,7 @@ export const giftRedeemSchema = z.object({
   shift: z.nativeEnum(Shift),
   name: z.string().min(2).max(120),
   phone: z.string().min(6).max(30),
-  email: z.string().email(),
+  email: emailValidation,
   allergies: z.string().max(1000).optional(),
   previousVisit: z.boolean(),
   previousBarrio: z.enum(["EIXAMPLE", "SARRIA"]).optional(),

@@ -13,7 +13,9 @@ type PendingRow = {
   isFirstVisit: boolean;
   type: "NORMAL" | "GIFT" | "VISIT";
   customer: { name: string; phone: string; email: string; comments: string | null };
-  event: { date: string; shift: string };
+  event: { date: string; shift: string } | null;
+  visitDate?: string | null;
+  visitTime?: string | null;
   venue: { name: string } | null;
 };
 
@@ -137,12 +139,11 @@ export function PendingReservationsPanel() {
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {rows.map((r) => {
             const isBusy = busyId === r.id;
-            const eventDate = new Date(r.event.date).toLocaleDateString("es-ES", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            });
-            const shift = r.event.shift === "NOON" ? "Mediodía" : "Noche";
+            const rawDate = r.event?.date ?? r.visitDate ?? null;
+            const eventDate = rawDate
+              ? new Date(rawDate).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" })
+              : "Sin fecha";
+            const shift = r.event ? (r.event.shift === "NOON" ? "Mediodía" : "Noche") : (r.visitTime ?? "");
             const total = parseFloat(r.totalAmount);
             const deposit = (total * 0.3).toFixed(2);
 
@@ -166,7 +167,7 @@ export function PendingReservationsPanel() {
                           VISITA
                         </span>
                       )}
-                      {r.isFirstVisit && (
+                      {!isVisit && r.isFirstVisit && (
                         <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[10px] text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
                           1ª Visita
                         </span>
@@ -255,7 +256,7 @@ export function PendingReservationsPanel() {
         onClose={() => setModalReservation(null)}
         onConfirm={handleModalConfirm}
         customerName={modalReservation?.customer.name ?? ""}
-        reservationDetails={modalReservation ? `${modalReservation.guests} pax · ${new Date(modalReservation.event.date).toLocaleDateString("es-ES", { day: "numeric", month: "long" })} ${modalReservation.event.shift === "NOON" ? "Mediodía" : "Noche"}` : ""}
+        reservationDetails={modalReservation ? `${modalReservation.guests} pax${modalReservation.event ? ` · ${new Date(modalReservation.event.date).toLocaleDateString("es-ES", { day: "numeric", month: "long" })} ${modalReservation.event.shift === "NOON" ? "Mediodía" : "Noche"}` : ""}` : ""}
       />
     </section>
   );

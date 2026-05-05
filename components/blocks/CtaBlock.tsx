@@ -92,6 +92,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.eyebrow}
                 onChange={(v) => handleUpdate("eyebrow", v)}
                 isEditing={isEditing}
+                styles={content.eyebrowStyles}
+                onStyleChange={(s) => onUpdate?.({ ...content, eyebrowStyles: { ...content.eyebrowStyles, ...s } })}
                 dataField="eyebrow"
               />
             </div>
@@ -115,6 +117,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
               value={content.title}
               onChange={(v) => handleUpdate("title", v)}
               isEditing={isEditing}
+              styles={content.titleStyles}
+              onStyleChange={(s) => onUpdate?.({ ...content, titleStyles: { ...content.titleStyles, ...s } })}
               dataField="title"
             />
             {(content.titleAccent || isEditing) && (
@@ -134,8 +138,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                     value={content.titleAccent || ""}
                     onChange={(v) => handleUpdate("titleAccent", v)}
                     isEditing={isEditing}
-                    styles={content}
-                    onStyleChange={(s) => onUpdate?.({ ...content, ...s })}
+                    styles={content.titleAccentStyles}
+                    onStyleChange={(s) => onUpdate?.({ ...content, titleAccentStyles: { ...content.titleAccentStyles, ...s } })}
                     dataField="titleAccent"
                   />
 
@@ -160,6 +164,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.body}
                 onChange={(v) => handleUpdate("body", v)}
                 isEditing={isEditing}
+                styles={content.bodyStyles}
+                onStyleChange={(s) => onUpdate?.({ ...content, bodyStyles: { ...content.bodyStyles, ...s } })}
                 dataField="body"
               />
             </div>
@@ -188,7 +194,7 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                   textTransform: "uppercase",
                   textDecoration: "none",
                   cursor: "pointer",
-                  borderRadius: "2px",
+                  borderRadius: "9999px",
                   transform: hovered ? "translateY(-3px)" : "translateY(0)",
                   boxShadow: hovered ? "0 12px 36px rgba(200,169,110,0.4)" : "none",
                   transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
@@ -198,6 +204,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                   value={content.buttonText || "Boton"}
                   onChange={(v) => handleUpdate("buttonText", v)}
                   isEditing={isEditing}
+                  styles={content.buttonStyles}
+                  onStyleChange={(s) => onUpdate?.({ ...content, buttonStyles: { ...content.buttonStyles, ...s } })}
                   dataField="buttonText"
                 />
               </SmartLink>

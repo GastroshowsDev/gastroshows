@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "asc" },
     select: { id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true },
@@ -11,6 +15,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json() as { name: string; email: string; password: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string };
     if (!body.name?.trim() || !body.email?.trim() || !body.password) {

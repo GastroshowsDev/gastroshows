@@ -4,9 +4,11 @@ import { z } from "zod";
 import { sendGiftEmail } from "@/app/api/reservations/gift/route";
 import { prisma } from "@/lib/prisma";
 
+import { emailValidation } from "@/lib/utils/validations";
+
 const schema = z.object({
   token: z.string().uuid(),
-  recipientEmail: z.string().email(),
+  recipientEmail: emailValidation,
 });
 
 export async function POST(request: Request) {

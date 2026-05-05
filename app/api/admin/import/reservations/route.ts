@@ -9,6 +9,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export type ImportRow = {
   name: string;
@@ -29,6 +30,9 @@ export type ImportRow = {
 type Result = { ok: true; created: number; skipped: number; errors: string[] };
 
 export async function POST(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   let body: { rows: ImportRow[] };
   try {
     body = await req.json() as { rows: ImportRow[] };

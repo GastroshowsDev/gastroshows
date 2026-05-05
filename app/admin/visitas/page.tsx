@@ -4,20 +4,27 @@ import { prisma } from "@/lib/prisma";
 import { VisitasTable } from "@/components/admin/VisitasTable";
 import { getCalendarData } from "@/lib/admin/calendar-utils";
 import { CalendarBoard } from "@/components/admin/CalendarBoard";
+import { AdminPagination } from "@/components/admin/AdminPagination";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-async function getVisitas() {
+async function getVisitasData(offset: number, limit: number) {
+  const total = await prisma.reservation.count({
+    where: { type: "VISIT" }
+  });
+
   const visits = await prisma.reservation.findMany({
     where: { type: "VISIT" },
     orderBy: { visitDate: "asc" },
+    skip: offset - 1,
+    take: limit,
     include: {
       customer: { select: { name: true, email: true, phone: true } },
     },
   });
 
-  return visits.map((v) => ({
+  const rows = visits.map((v) => ({
     id: v.id,
     customer: v.customer,
     visitDate: v.visitDate?.toISOString() ?? "",
@@ -25,14 +32,23 @@ async function getVisitas() {
     status: v.status,
     createdAt: v.createdAt.toISOString(),
   }));
+
+  return { rows, total };
 }
 
-export default async function VisitasPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
-  const { view } = await searchParams;
+export default async function VisitasPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ view?: string, offset?: string, limit?: string }> 
+}) {
+  const { view, offset, limit } = await searchParams;
   const isCalendar = view === "calendar";
 
-  const [visits, calendarEvents, session] = await Promise.all([
-    getVisitas(),
+  const currentOffset = parseInt(offset || "1");
+  const currentLimit = parseInt(limit || "25");
+
+  const [{ rows: visits, total }, calendarEvents, session] = await Promise.all([
+    getVisitasData(currentOffset, currentLimit),
     isCalendar ? getCalendarData("VISIT") : Promise.resolve([]),
     getServerSession(authOptions)
   ]);
@@ -41,7 +57,7 @@ export default async function VisitasPage({ searchParams }: { searchParams: Prom
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--color-admin-bg)" }}>
       <div
         style={{
-          padding: "1.25rem 1.5rem",
+          padding: "1rem 1.5rem",
           borderBottom: "1px solid var(--color-admin-border)",
           background: "var(--color-admin-surface)",
           display: "flex",
@@ -50,13 +66,19 @@ export default async function VisitasPage({ searchParams }: { searchParams: Prom
           flexShrink: 0,
         }}
       >
-        <div>
-          <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
-            Visitas
-          </h1>
-          <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
-            {visits.length} visita{visits.length !== 1 ? "s" : ""} registradas
-          </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div>
+            <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
+              Visitas
+            </h1>
+            <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
+              Panel de gestión de visitas
+            </p>
+          </div>
+
+          {!isCalendar && (
+            <AdminPagination total={total} defaultLimit={25} />
+          )}
         </div>
 
         <div style={{ display: "flex", gap: "0.5rem" }}>

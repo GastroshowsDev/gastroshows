@@ -8,7 +8,15 @@ export async function GET() {
     const reservations = await prisma.reservation.findMany({
       where: { status: ReservationStatus.PENDING, type: "VISIT" },
       orderBy: { createdAt: "desc" },
-      include: {
+      select: {
+        id: true,
+        guests: true,
+        totalAmount: true,
+        createdAt: true,
+        isFirstVisit: true,
+        type: true,
+        visitDate: true,
+        visitTime: true,
         customer: {
           select: { id: true, name: true, phone: true, email: true, comments: true },
         },

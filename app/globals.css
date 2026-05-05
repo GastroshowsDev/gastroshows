@@ -36,9 +36,9 @@
   --color-admin-bg: #F4F6FA;
   --color-admin-surface: #FFFFFF;
   --color-admin-border: #EAEEF4;
-  --color-admin-accent: #875BF7;
-  --color-admin-accent-hover: #7347E8;
-  --color-admin-accent-light: #F0EBFE;
+  --color-admin-accent: #efb810;
+  --color-admin-accent-hover: #d4a30e;
+  --color-admin-accent-light: #fef8e7;
   --color-admin-text: #1A1A2E;
   --color-admin-muted: #6B7280;
   --color-admin-sidebar: #FFFFFF;
@@ -64,9 +64,9 @@
   --color-admin-bg: #F4F6FA;
   --color-admin-surface: #FFFFFF;
   --color-admin-border: #EAEEF4;
-  --color-admin-accent: #875BF7;
-  --color-admin-accent-hover: #7347E8;
-  --color-admin-accent-light: #F0EBFE;
+  --color-admin-accent: #efb810;
+  --color-admin-accent-hover: #d4a30e;
+  --color-admin-accent-light: #fef8e7;
   --color-admin-text: #1A1A2E;
   --color-admin-muted: #6B7280;
   --color-admin-sidebar: #FFFFFF;
@@ -93,9 +93,9 @@
   --color-admin-bg: #0F1117;
   --color-admin-surface: #1A1D27;
   --color-admin-border: #252836;
-  --color-admin-accent: #875BF7;
-  --color-admin-accent-hover: #9B72FF;
-  --color-admin-accent-light: #2D1F5E;
+  --color-admin-accent: #efb810;
+  --color-admin-accent-hover: #d4a30e;
+  --color-admin-accent-light: #f6efe0;
   --color-admin-text: #E8EAF0;
   --color-admin-muted: #8B93A7;
   --color-admin-sidebar: #141620;
@@ -150,7 +150,7 @@ img:not(.no-blur),
 }
 
 .shadow-revelado-dark {
-  text-shadow: 0 2px 13px rgba(0, 0, 0, 0.75), 0 0 13px rgba(0, 0, 0, 0.6) !important;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.6) !important;
 }
 
 
@@ -242,4 +242,73 @@ body::before {
 /* Target the specific title to change it */
 .page-title.main-title {
   content: "Experiencias gastronómicas";
+}
+
+/* ── Global Button Animations (Gastroshows Signature) ── */
+button, 
+.btn,
+a[role="button"] {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, filter 0.3s ease !important;
+  position: relative;
+  overflow: visible !important; /* Para permitir que la explosión se vea fuera */
+  border-radius: 8px; /* Redondeado suave por defecto, no forzado */
+}
+
+/* Escala por defecto (WEB): 5% + Elevación + Blanqueamiento */
+button:hover, 
+.btn:hover,
+a[role="button"]:hover {
+  transform: translateY(-5px) scale(1.05) !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)) !important;
+  z-index: 50; 
+}
+
+/* Escala en ADMIN: Diferenciada por tamaño con máxima especificidad */
+.admin-context button[data-size="large"]:hover, 
+.admin-context .btn[data-size="large"]:hover,
+.admin-context a[role="button"][data-size="large"]:hover {
+  transform: scale(1.05) !important; 
+  background-image: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.admin-context button[data-size="small"]:hover, 
+.admin-context .btn[data-size="small"]:hover,
+.admin-context a[role="button"][data-size="small"]:hover {
+  transform: scale(1.05) !important; 
+  background-image: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+/* Fallback inmediato mientras se mide el botón */
+.admin-context button:hover, 
+.admin-context .btn:hover,
+.admin-context a[role="button"]:hover {
+  transform: scale(1.05) !important; 
+  background-image: none !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Efecto Explosión al Clicar */
+button:active::after,
+.btn:active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.6;
+  animation: gs-explosion 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes gs-explosion {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes gs-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 184, 16, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 184, 16, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 184, 16, 0); }
 }

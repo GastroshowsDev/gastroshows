@@ -1,11 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { ContactsTable } from "@/components/admin/ContactsTable";
+import { AdminPagination } from "@/components/admin/AdminPagination";
 
 export const dynamic = "force-dynamic";
 
-async function getContacts() {
+async function getContactsData(offset: number, limit: number) {
+  const total = await prisma.customer.count();
+
   const customers = await prisma.customer.findMany({
     orderBy: { createdAt: "desc" },
+    skip: offset - 1,
+    take: limit,
     include: {
       reservations: {
         where: { status: { notIn: ["CANCELLED"] } },
@@ -20,7 +25,7 @@ async function getContacts() {
     },
   });
 
-  return customers.map((c) => ({
+  const rows = customers.map((c) => ({
     id: c.id,
     name: c.name,
     email: c.email,
@@ -40,19 +45,29 @@ async function getContacts() {
     lastVisit: c.reservations[0]?.event?.date?.toISOString() ?? null,
     createdAt: c.createdAt.toISOString(),
   }));
+
+  return { rows, total };
 }
 
-export type ContactRow = Awaited<ReturnType<typeof getContacts>>[number];
+export type ContactRow = Awaited<ReturnType<typeof getContactsData>>["rows"][number];
 
-export default async function ContactosPage() {
-  const contacts = await getContacts();
+export default async function ContactosPage({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ offset?: string, limit?: string }> 
+}) {
+  const { offset, limit } = await searchParams;
+  
+  const currentOffset = parseInt(offset || "1");
+  const currentLimit = parseInt(limit || "25");
+
+  const { rows: contacts, total } = await getContactsData(currentOffset, currentLimit);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--color-admin-bg)" }}>
-      {/* Page header */}
       <div
         style={{
-          padding: "1.25rem 1.5rem",
+          padding: "1rem 1.5rem",
           borderBottom: "1px solid var(--color-admin-border)",
           background: "var(--color-admin-surface)",
           display: "flex",
@@ -61,17 +76,20 @@ export default async function ContactosPage() {
           flexShrink: 0,
         }}
       >
-        <div>
-          <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
-            Contactos
-          </h1>
-          <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
-            {contacts.length} contacto{contacts.length !== 1 ? "s" : ""} registrado{contacts.length !== 1 ? "s" : ""}
-          </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div>
+            <h1 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
+              Contactos
+            </h1>
+            <p style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: "0.1rem" }}>
+              Base de datos de clientes
+            </p>
+          </div>
+
+          <AdminPagination total={total} defaultLimit={25} />
         </div>
       </div>
 
-      {/* Table client component */}
       <ContactsTable contacts={contacts} />
     </div>
   );

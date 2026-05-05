@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 type VisitRow = {
   id: string;
@@ -19,11 +19,18 @@ type TimeFilter = "today" | "week" | "month" | "all";
 
 export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
   const [visits, setVisits] = useState(initial);
+
+  // Sincronizar estado cuando cambian las props (necesario para la paginación de servidor)
+  useEffect(() => {
+    setVisits(initial);
+  }, [initial]);
+
   const [timeFilter, setTimeFilter] = useState<TimeFilter>("all");
   const [search, setSearch] = useState("");
   const [editingVisit, setEditingVisit] = useState<VisitRow | null>(null);
   const [saving, setSaving] = useState(false);
   const [confirming, setConfirming] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const filtered = useMemo(() => {
     let list = visits;
@@ -61,8 +68,15 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
       );
     }
 
+    // Sort by date
+    list = [...list].sort((a, b) => {
+      const da = new Date(a.visitDate).getTime();
+      const db = new Date(b.visitDate).getTime();
+      return sortOrder === "asc" ? da - db : db - da;
+    });
+
     return list;
-  }, [visits, timeFilter, search]);
+  }, [visits, timeFilter, search, sortOrder]);
 
   async function handleDelete(id: string) {
     if (!confirm("¿Eliminar esta visita?")) return;
@@ -174,7 +188,12 @@ export function VisitasTable({ visits: initial }: { visits: VisitRow[] }) {
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem" }}>
           <thead>
             <tr style={{ background: "var(--color-admin-surface)", textAlign: "left" }}>
-              <th style={thStyle}>Fecha y Hora</th>
+              <th 
+                style={{ ...thStyle, cursor: "pointer", userSelect: "none" }}
+                onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
+              >
+                Fecha y Hora {sortOrder === "asc" ? "↑" : "↓"}
+              </th>
               <th style={thStyle}>Cliente</th>
               <th style={thStyle}>Contacto</th>
               <th style={thStyle}>Solicitado el</th>

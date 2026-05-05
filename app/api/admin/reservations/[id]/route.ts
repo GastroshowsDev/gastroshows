@@ -2,10 +2,16 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ReservationStatus, ReservationType, Shift, VenueName } from "@prisma/client";
 import { mailrelaySubscribe } from "@/lib/mailrelay";
+import { requireStaff } from "@/lib/auth-helpers";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
+const ADMIN_ONLY_FIELDS = ["totalAmount", "paidAmount", "type"] as const;
+
 export async function PATCH(req: Request, { params }: RouteContext) {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = await params;
     const body = await req.json() as {
@@ -19,6 +25,16 @@ export async function PATCH(req: Request, { params }: RouteContext) {
       visitDate?: string;
       visitTime?: string;
     };
+
+    if (auth.role !== "ADMIN") {
+      const usedAdminField = ADMIN_ONLY_FIELDS.find((f) => body[f] !== undefined);
+      if (usedAdminField) {
+        return NextResponse.json(
+          { ok: false, error: `Solo un administrador puede modificar '${usedAdminField}'.` },
+          { status: 403 },
+        );
+      }
+    }
 
     const reservation = await prisma.reservation.findUnique({
       where: { id },

@@ -381,8 +381,15 @@ function ContactModal({
 // ── Main component ─────────────────────────────────────────────────────────────
 export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] }) {
   const [contacts, setContacts] = useState(initial);
+
+  // Sincronizar estado cuando cambian las props (necesario para la paginación de servidor)
+  useEffect(() => {
+    setContacts(initial);
+  }, [initial]);
+
   const [search, setSearch] = useState("");
   const [visitFilter, setVisitFilter] = useState<VisitFilter | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   // Selection
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -410,8 +417,17 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
         (c) => c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q) || c.phone.includes(q)
       );
     }
+    }
+
+    // Sort by last visit
+    list = [...list].sort((a, b) => {
+      const da = a.lastVisit ? new Date(a.lastVisit).getTime() : 0;
+      const db = b.lastVisit ? new Date(b.lastVisit).getTime() : 0;
+      return sortOrder === "asc" ? da - db : db - da;
+    });
+
     return list;
-  }, [contacts, visitFilter, search]);
+  }, [contacts, visitFilter, search, sortOrder]);
 
   // ── Selection helpers ────────────────────────────────────────────────────────
   const filteredIds = useMemo(() => new Set(filtered.map((c) => c.id)), [filtered]);
@@ -605,7 +621,12 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
               <th style={S.th}>Email / Teléfono</th>
               <th style={S.th}>Reservas</th>
               <th style={S.th}>LTV</th>
-              <th style={S.th}>Última visita</th>
+              <th 
+                style={{ ...S.th, cursor: "pointer", userSelect: "none" }}
+                onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
+              >
+                Última visita {sortOrder === "asc" ? "↑" : "↓"}
+              </th>
               <th style={S.th}>Marketing</th>
               <th style={S.th}>Tipo</th>
               <th style={S.th}>Alergias / Nota</th>

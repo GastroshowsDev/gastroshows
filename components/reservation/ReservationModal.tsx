@@ -822,9 +822,8 @@ function Step2({
             flex: 1,
             padding: "0.9rem 0.75rem",
             background: !form.payFull ? "rgba(200,169,110,0.09)" : "rgba(200,169,110,0.02)",
-            border: `1.5px solid ${!form.payFull ? "rgba(200,169,110,0.5)" : "rgba(200,169,110,0.12)"}`,
-            borderTop: "none",
-            borderRight: "none",
+            borderLeft: `1.5px solid ${!form.payFull ? "rgba(200,169,110,0.5)" : "rgba(200,169,110,0.12)"}`,
+            borderBottom: `1.5px solid ${!form.payFull ? "rgba(200,169,110,0.5)" : "rgba(200,169,110,0.12)"}`,
             borderRadius: "0 0 0 2px",
             cursor: "pointer",
             textAlign: "center",
@@ -849,8 +848,8 @@ function Step2({
             flex: 1,
             padding: "0.9rem 0.75rem",
             background: form.payFull ? "rgba(200,169,110,0.13)" : "rgba(200,169,110,0.04)",
-            border: `1.5px solid ${form.payFull ? GOLD : "rgba(200,169,110,0.12)"}`,
-            borderTop: "none",
+            borderRight: `1.5px solid ${form.payFull ? GOLD : "rgba(200,169,110,0.12)"}`,
+            borderBottom: `1.5px solid ${form.payFull ? GOLD : "rgba(200,169,110,0.12)"}`,
             borderLeft: "1px solid rgba(200,169,110,0.15)",
             borderRadius: "0 0 2px 0",
             cursor: "pointer",
@@ -1026,7 +1025,7 @@ function Step3({
             type="text"
             value={form.groupRef}
             onChange={(e) => setForm((f) => ({ ...f, groupRef: e.target.value }))}
-            placeholder="Nombre del titular de la otra reserva (Opcional)"
+            placeholder="¿Vienes con otras personas que han hecho otra reserva por su cuenta?"
             style={inputStyle}
           />
         </FormField>

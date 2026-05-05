@@ -111,12 +111,13 @@ async function getStats() {
   };
 }
 
-const ACCENT = "#875BF7";
-const GREEN = "#16A34A";
-const AMBER = "#D97706";
-const BLUE = "#2563EB";
-const BERTRAND = "#0891B2";
-const URGELL = "#7C3AED";
+// NUEVA PALETA GOLD EDITION
+const ACCENT     = "#efb810"; // Oro Principal
+const GOLD_DEEP  = "#c5a028"; // Oro Profundo
+const BRONZE     = "#b8860b"; // Bronce
+const AMBER_SOFT = "#f4d03f"; // Ámbar Suave
+const BERTRAND   = "#daa520"; 
+const URGELL     = "#a67c00"; 
 
 function StatCard({ label, value, sub, accent }: { label: string; value: string | number; sub?: string; accent: string }) {
   return (
@@ -165,9 +166,9 @@ export default async function EstadisticasPage() {
           <h2 style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--color-admin-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.75rem" }}>Este mes</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "0.75rem" }}>
             <StatCard label="Reservas" value={stats.month.count} accent={ACCENT} />
-            <StatCard label="Comensales" value={stats.month.guests} accent={GREEN} />
-            <StatCard label="Facturación" value={`${stats.month.revenue.toFixed(0)}€`} accent={BLUE} />
-            <StatCard label="Media/reserva" value={stats.month.count > 0 ? `${(stats.month.guests / stats.month.count).toFixed(1)}p` : "—"} accent={AMBER} />
+            <StatCard label="Comensales" value={stats.month.guests} accent={GOLD_DEEP} />
+            <StatCard label="Facturación" value={`${stats.month.revenue.toFixed(0)}€`} accent={BRONZE} />
+            <StatCard label="Media/reserva" value={stats.month.count > 0 ? `${(stats.month.guests / stats.month.count).toFixed(1)}p` : "—"} accent={AMBER_SOFT} />
           </div>
         </section>
 
@@ -196,7 +197,7 @@ export default async function EstadisticasPage() {
                         style={{
                           width: "100%",
                           height: h,
-                          background: `linear-gradient(to top, ${ACCENT}, ${ACCENT}99)`,
+                          background: `linear-gradient(to top, ${ACCENT}, ${ACCENT}cc)`,
                           borderRadius: "4px 4px 0 0",
                           transition: "height 0.3s",
                           cursor: "default",
@@ -220,8 +221,8 @@ export default async function EstadisticasPage() {
               </div>
               <div style={{ padding: "1.25rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 {[
-                  { label: "Bertrand", data: stats.venues.sarria, color: BERTRAND, bg: "#CFFAFE" },
-                  { label: "Urgell", data: stats.venues.urgell, color: URGELL, bg: "#EDE9FE" },
+                  { label: "Bertrand", data: stats.venues.sarria, color: BERTRAND, bg: "#FFFBEB" },
+                  { label: "Urgell", data: stats.venues.urgell, color: URGELL, bg: "#FEF3C7" },
                 ].map(({ label, data, color, bg }) => {
                   const total = stats.all.count || 1;
                   const pct = Math.round((data.count / total) * 100);
@@ -284,9 +285,9 @@ export default async function EstadisticasPage() {
           <h2 style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--color-admin-muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.75rem" }}>Acumulado total</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "0.75rem" }}>
             <StatCard label="Total reservas" value={stats.all.count} accent={ACCENT} />
-            <StatCard label="Total comensales" value={stats.all.guests} accent={GREEN} />
-            <StatCard label="Facturación total" value={`${stats.all.revenue.toFixed(0)}€`} accent={BLUE} />
-            <StatCard label="Pendiente cobro" value={`${stats.all.pending.toFixed(0)}€`} accent={AMBER} />
+            <StatCard label="Total comensales" value={stats.all.guests} accent={GOLD_DEEP} />
+            <StatCard label="Facturación total" value={`${stats.all.revenue.toFixed(0)}€`} accent={BRONZE} />
+            <StatCard label="Pendiente cobro" value={`${stats.all.pending.toFixed(0)}€`} accent={AMBER_SOFT} />
           </div>
         </section>
 

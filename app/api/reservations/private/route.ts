@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 import { sendMail } from "@/lib/mail";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
@@ -19,12 +28,12 @@ export async function POST(request: Request) {
 
     const htmlContent = `
       <h2>Nueva solicitud de Cena Privada</h2>
-      <p><strong>Nombre:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Teléfono:</strong> ${phone}</p>
+      <p><strong>Nombre:</strong> ${escapeHtml(String(name))}</p>
+      <p><strong>Email:</strong> ${escapeHtml(String(email))}</p>
+      <p><strong>Teléfono:</strong> ${escapeHtml(String(phone ?? ""))}</p>
       <p><strong>Fecha solicitada:</strong> ${formattedDate}</p>
-      <p><strong>Número de personas:</strong> ${guests}</p>
-      <p><strong>Comentarios/Idea:</strong> ${comments || "Ninguno"}</p>
+      <p><strong>Número de personas:</strong> ${escapeHtml(String(guests ?? ""))}</p>
+      <p><strong>Comentarios/Idea:</strong> ${comments ? escapeHtml(String(comments)) : "Ninguno"}</p>
       <hr />
       <p>Por favor, contacta con el cliente para confirmar la disponibilidad y elaborar un presupuesto.</p>
     `;

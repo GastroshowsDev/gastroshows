@@ -10,7 +10,7 @@ model Customer {
   id            String        @id @default(cuid())
   name          String
   phone         String
-  email         String
+  email         String        @unique
   customerType  CustomerType  @default(PARTICULAR)
   cif           String?
   billingStreet String?
@@ -84,6 +84,8 @@ model Reservation {
   venue         Venue?            @relation(fields: [venueId], references: [id])
   tableAssignments TableAssignment[]
   workflowExecutions WorkflowExecution[]
+  source        String?
+  comments      String?
 
   @@index([eventId, status])
   @@index([venueId, createdAt])

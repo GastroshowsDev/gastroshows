@@ -64,6 +64,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
               value={content.eyebrow || ""}
               onChange={(v) => updateField("eyebrow", v)}
               isEditing={isEditing}
+              styles={content.eyebrowStyles}
+              onStyleChange={(s) => updateField("eyebrowStyles", { ...content.eyebrowStyles, ...s })}
               dataField="eyebrow"
               placeholder="SECCIÓN"
               style={{
@@ -95,6 +97,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={content.title || ""}
                 onChange={(v) => updateField("title", v)}
                 isEditing={isEditing}
+                styles={content.titleStyles}
+                onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
                 dataField="title"
                 placeholder="Título"
               />
@@ -106,6 +110,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                     value={content.titleAccent || ""}
                     onChange={(v) => updateField("titleAccent", v)}
                     isEditing={isEditing}
+                    styles={content.titleAccentStyles}
+                    onStyleChange={(s) => updateField("titleAccentStyles", { ...content.titleAccentStyles, ...s })}
                     dataField="titleAccent"
                     placeholder="Acento"
                     style={{ color: "var(--gs-gold)" }}
@@ -120,11 +126,9 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
           <AnimatedWrapper animation={content.bodyAnim || "fade-in"} delay={0.2}>
             <div
               style={{
-                fontSize: content.fontSize || "1.1rem",
+                fontSize: "1.1rem",
                 lineHeight: "1.7",
-                color: content.color || "rgba(245,240,232,0.7)",
-                fontWeight: content.bold ? "bold" : "normal",
-                fontStyle: content.italic ? "italic" : "normal",
+                color: "rgba(245,240,232,0.7)",
                 maxWidth: "1100px",
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
@@ -136,6 +140,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 value={typedBody}
                 onChange={(v) => updateField("body", v)}
                 isEditing={isEditing}
+                styles={content.bodyStyles}
+                onStyleChange={(s) => updateField("bodyStyles", { ...content.bodyStyles, ...s })}
                 dataField="body"
                 placeholder="Escribe el contenido aquí..."
               />

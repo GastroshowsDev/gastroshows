@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { Menu, Globe } from "lucide-react";
 import { 
   BlockType, 
   BlockData, 
@@ -317,6 +318,26 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ padding: "1rem 2rem", background: "white", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("gs-toggle-sidebar"))}
+              style={{
+                background: "none",
+                border: "none",
+                padding: "0.5rem",
+                cursor: "pointer",
+                color: "var(--color-admin-text)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "6px",
+                marginRight: "0.5rem"
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-admin-bg)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+            >
+              <Menu size={20} />
+            </button>
+
             <input
               value={page.title}
               onChange={(e) => {
@@ -360,6 +381,41 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 />
                 Publicada
              </label>
+             <a
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Ver web pública"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  background: "rgba(0,0,0,0.03)",
+                  border: "1px solid #EAEEF4",
+                  color: "#6B7280",
+                  textDecoration: "none",
+                  transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                  marginRight: "1rem"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.borderColor = "#efb810";
+                  e.currentTarget.style.background = "#fef8e7";
+                  e.currentTarget.style.color = "#efb810";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.borderColor = "#EAEEF4";
+                  e.currentTarget.style.background = "rgba(0,0,0,0.03)";
+                  e.currentTarget.style.color = "#6B7280";
+                }}
+              >
+                <Globe size={18} />
+              </a>
+
              <div style={{ display: "flex", background: "#f3f4f6", borderRadius: "6px", padding: "0.2rem", marginRight: "1rem" }}>
                <button 
                  onClick={() => setPreviewMode("desktop")}

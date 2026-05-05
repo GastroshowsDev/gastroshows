@@ -1,19 +1,11 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { createBackup } from "@/lib/admin/backup";
-
-async function assertAdmin() {
-  const session = await getServerSession(authOptions);
-  const role = (session?.user as { role?: string } | undefined)?.role;
-  if (role !== "ADMIN") return null;
-  return session;
-}
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function GET() {
-  const session = await assertAdmin();
-  if (!session) return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
   const backups = await prisma.backup.findMany({
     select: {
@@ -27,10 +19,10 @@ export async function GET() {
 }
 
 export async function POST() {
-  const session = await assertAdmin();
-  if (!session) return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
-  const email = session.user?.email ?? "admin";
+  const email = auth.session.user?.email ?? "admin";
 
   try {
     const id = await createBackup(email);

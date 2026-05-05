@@ -486,6 +486,12 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   const searchParams = useSearchParams();
 
   const [reservas, setReservas] = useState(initial);
+
+  // Sincronizar estado cuando cambian las props (necesario para la paginación de servidor)
+  useEffect(() => {
+    setReservas(initial);
+  }, [initial]);
+
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [search, setSearch] = useState(() => {
     const dateParam = searchParams.get("date");
@@ -501,6 +507,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     const s = searchParams.get("shift");
     return s === "NOON" || s === "NIGHT" ? s : "all";
   });
+  const [paymentFilter, setPaymentFilter] = useState<"all" | "PAID" | "PARTIAL">("all");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // Create modal
   const [createOpen, setCreateOpen] = useState(false);
@@ -570,8 +578,23 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         dateMatchesQuery(r.event.date, q)
       );
     }
+
+    if (paymentFilter !== "all") {
+      list = list.filter((r) => {
+        const isPaid = r.paidAmount >= r.totalAmount && r.totalAmount > 0;
+        return paymentFilter === "PAID" ? isPaid : !isPaid;
+      });
+    }
+
+    // Sort by date
+    list = [...list].sort((a, b) => {
+      const da = new Date(a.event.date).getTime();
+      const db = new Date(b.event.date).getTime();
+      return sortOrder === "asc" ? da - db : db - da;
+    });
+
     return list;
-  }, [reservas, timeFilter, venueFilter, shiftFilter, search, today]);
+  }, [reservas, timeFilter, venueFilter, shiftFilter, search, paymentFilter, sortOrder, today]);
 
   // ── Selection helpers ────────────────────────────────────────────────────────
   const filteredIds = useMemo(() => new Set(filtered.map((r) => r.id)), [filtered]);
@@ -839,6 +862,16 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           options={[{ value: "NOON", label: "Mediodía" }, { value: "NIGHT", label: "Noche" }]}
           onSelect={(v) => setShiftFilter(v ?? "all")}
         />
+        <FilterDropdown<"PAID" | "PARTIAL">
+          label="Pago"
+          active={paymentFilter === "all" ? null : paymentFilter}
+          options={[
+            { value: "PAID", label: "Pagado" },
+            { value: "PARTIAL", label: "Pago Parcial" }
+          ]}
+          onSelect={(v) => setPaymentFilter(v ?? "all")}
+        />
+        <div style={{ flex: 1 }} />
         <span style={{ marginLeft: "auto", fontSize: "0.78rem", color: "var(--color-admin-muted)" }}>
           {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
         </span>
@@ -864,16 +897,17 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         <table style={S.table}>
           <thead>
             <tr>
-              <th style={{ ...S.th, width: 40, padding: "0.6rem 0.75rem" }}>
-                <input
-                  type="checkbox"
-                  checked={allSelected}
-                  ref={(el) => { if (el) el.indeterminate = someSelected && !allSelected; }}
-                  onChange={toggleAll}
-                  style={{ cursor: "pointer" }}
-                />
+              <th style={{ ...S.th, width: "40px" }}>
+                <input type="checkbox" checked={allSelected} onChange={toggleAll} style={{ cursor: "pointer" }} />
               </th>
-              <th style={S.th}>Fecha</th>
+              <th 
+                style={{ ...S.th, cursor: "pointer", userSelect: "none" }} 
+                onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  Fecha reserva {sortOrder === "asc" ? "↑" : "↓"}
+                </div>
+              </th>
               <th style={S.th}>Turno</th>
               <th style={S.th}>Nombre</th>
               <th style={S.th}>Pax</th>
@@ -882,6 +916,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
               <th style={S.th}>Pago</th>
               <th style={S.th}>Estado</th>
               <th style={S.th}>Comprado en</th>
+              <th style={S.th}>Canal</th>
             </tr>
           </thead>
           <tbody>
@@ -1011,6 +1046,21 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                       <div style={{ fontSize: "0.7rem" }}>
                         {new Date(r.createdAt).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}
                       </div>
+                    </td>
+                    <td style={S.td}>
+                      <span style={{
+                        padding: "2px 8px",
+                        borderRadius: "12px",
+                        fontSize: "0.65rem",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.02em",
+                        background: r.source === "TURITOP" ? "#DBEAFE" : r.source === "WEB" ? "#DCFCE7" : "#F3F4F6",
+                        color: r.source === "TURITOP" ? "#1E40AF" : r.source === "WEB" ? "#166534" : "#4B5563",
+                        border: `1px solid ${r.source === "TURITOP" ? "#BFDBFE" : r.source === "WEB" ? "#BBF7D0" : "#E5E7EB"}`
+                      }}>
+                        {r.source || "Manual"}
+                      </span>
                     </td>
                   </tr>
                 );

@@ -74,8 +74,8 @@ export default async function RootLayout({
         <SeoHead />
       </head>
       <body className="min-h-full flex flex-col">
-        <SeoBodyScripts />
         <Providers>
+          <SeoBodyScripts />
           {children}
           <Footer />
         </Providers>

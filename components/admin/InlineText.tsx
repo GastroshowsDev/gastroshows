@@ -310,6 +310,47 @@ export function InlineText({
 
           <Sep />
 
+          {/* Sombra */}
+          <TGroup label="Sombra">
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <input
+                type="color"
+                value={styles.shadowColor || "#000000"}
+                onChange={(e) => sc({ shadowColor: e.target.value })}
+                title="Color de sombra"
+                style={{ width: "20px", height: "20px", border: "1px solid #333", borderRadius: "3px", background: "none", cursor: "pointer", padding: "1px" }}
+              />
+              <input
+                type="number"
+                value={styles.shadowBlur ?? ""}
+                onChange={(e) => sc({ shadowBlur: parseInt(e.target.value) || 0 })}
+                placeholder="Blur"
+                title="Difuminado (px)"
+                style={{ ...inpStyle, width: "38px", padding: "3px 4px" }}
+              />
+              <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+                <input
+                  type="number"
+                  value={styles.shadowOffsetX ?? ""}
+                  onChange={(e) => sc({ shadowOffsetX: parseInt(e.target.value) || 0 })}
+                  placeholder="X"
+                  title="Alcance X"
+                  style={{ ...inpStyle, width: "32px", height: "14px", fontSize: "0.55rem", padding: "0 3px" }}
+                />
+                <input
+                  type="number"
+                  value={styles.shadowOffsetY ?? ""}
+                  onChange={(e) => sc({ shadowOffsetY: parseInt(e.target.value) || 0 })}
+                  placeholder="Y"
+                  title="Alcance Y"
+                  style={{ ...inpStyle, width: "32px", height: "14px", fontSize: "0.55rem", padding: "0 3px" }}
+                />
+              </div>
+            </div>
+          </TGroup>
+
+          <Sep />
+
           {/* Animación */}
           <TGroup label="Animación">
             <select
@@ -326,6 +367,10 @@ export function InlineText({
         document.body
       )
     : null;
+
+  const textShadow = (styles.shadowBlur !== undefined || styles.shadowOffsetX !== undefined || styles.shadowOffsetY !== undefined)
+    ? `${styles.shadowOffsetX || 0}px ${styles.shadowOffsetY || 0}px ${styles.shadowBlur || 0}px ${styles.shadowColor || "rgba(0,0,0,0.5)"}`
+    : style?.textShadow;
 
   return (
     <div style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
@@ -346,12 +391,13 @@ export function InlineText({
           minWidth:   "20px",
           minHeight:  "1em",
           cursor:     "text",
-          borderRadius: "2px",
+          borderRadius: "inherit",
           padding:    "0 4px",
           transition: "background 0.2s, border 0.2s",
-          background: isFocused ? "rgba(135,91,247,0.07)" : "transparent",
-          border:     isFocused ? "1px dashed rgba(135,91,247,0.3)" : "1px dashed transparent",
+          background: isFocused ? "rgba(135,91,247,0.04)" : "transparent",
+          border:     isFocused ? "1px dashed rgba(135,91,247,0.2)" : "1px dashed transparent",
           ...styles,
+          textShadow,
           fontWeight:     styles.bold          ? 700         : (styles.fontWeight  || style?.fontWeight),
           fontStyle:      styles.italic        ? "italic"    : (styles.fontStyle   || style?.fontStyle),
           textDecoration: [
