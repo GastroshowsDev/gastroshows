@@ -44,17 +44,24 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
         token.role = ((user as { role?: string }).role ?? "ADMIN") as "ADMIN" | "LIVE";
         token.defaultVenue = (user as { defaultVenue?: string | null }).defaultVenue ?? null;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        (session.user as { id?: string; role?: string; defaultVenue?: string | null }).id = token.id as string;
-        (session.user as { role?: string }).role = token.role as string;
-        (session.user as { defaultVenue?: string | null }).defaultVenue = (token.defaultVenue as string | null | undefined) ?? null;
+      // Ensure session.user exists
+      if (!session.user) {
+        session.user = { email: token.email as string };
       }
+
+      session.user.id = token.id as string;
+      session.user.name = token.name as string;
+      (session.user as any).role = token.role as string;
+      (session.user as any).defaultVenue = (token.defaultVenue as string | null) ?? null;
+
       return session;
     },
   },
