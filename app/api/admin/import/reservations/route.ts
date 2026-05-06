@@ -13,6 +13,7 @@ import { requireAdmin } from "@/lib/auth-helpers";
 import { apiErrorResponse } from "@/lib/api-errors";
 
 export type ImportRow = {
+  id?: string;        // Optional: reservation ID for UPSERT (update if exists)
   name: string;
   email?: string;
   phone?: string;
@@ -28,7 +29,7 @@ export type ImportRow = {
   venueName?: string | null;
 };
 
-type Result = { ok: true; created: number; skipped: number; errors: string[] };
+type Result = { ok: true; created: number; updated: number; skipped: number; errors: string[] };
 
 export async function POST(req: Request) {
   const auth = await requireAdmin();
@@ -81,6 +82,7 @@ export async function POST(req: Request) {
   const venueMap = new Map(venues.map((v) => [v.name as string, v.id]));
 
   let created = 0;
+  let updated = 0;
   const errors: string[] = [];
 
   for (let i = 0; i < rows.length; i++) {
@@ -92,6 +94,54 @@ export async function POST(req: Request) {
       if (!row.date) { errors.push(`${rowLabel}: falta la fecha`); continue; }
       if (!row.shift) { errors.push(`${rowLabel}: falta el turno`); continue; }
       if (!row.guests || row.guests < 1) { errors.push(`${rowLabel}: personas inválidas`); continue; }
+
+      // If row has ID, this is an update (from exported file)
+      if (row.id) {
+        const existingRes = await prisma.reservation.findUnique({ where: { id: row.id } });
+        if (!existingRes) {
+          errors.push(`${rowLabel}: Reservation ID ${row.id} not found`);
+          continue;
+        }
+
+        // Update existing reservation
+        const eventDate = new Date(`${row.date}T12:00:00Z`);
+        const event = await prisma.event.upsert({
+          where: { date_shift: { date: eventDate, shift: row.shift } },
+          update: {},
+          create: { date: eventDate, shift: row.shift, totalGuests: 0 },
+        });
+
+        const venueId = row.venueName ? (venueMap.get(row.venueName) ?? null) : existingRes.venueId;
+
+        await prisma.reservation.update({
+          where: { id: row.id },
+          data: {
+            guests: row.guests,
+            totalAmount: row.totalAmount ?? existingRes.totalAmount,
+            paidAmount: row.paidAmount ?? existingRes.paidAmount,
+            status: row.status ?? existingRes.status,
+            type: row.type ?? existingRes.type,
+            venueId,
+            eventId: event.id,
+          },
+        });
+
+        // Also update customer info if provided
+        if (existingRes.customerId) {
+          await prisma.customer.update({
+            where: { id: existingRes.customerId },
+            data: {
+              name: row.name.trim(),
+              ...(row.phone && { phone: row.phone.trim() }),
+              ...(row.allergies && { allergies: row.allergies.trim() }),
+              ...(row.comments && { comments: row.comments.trim() }),
+            },
+          });
+        }
+
+        updated++;
+        continue;
+      }
 
       const eventDate = new Date(`${row.date}T12:00:00Z`);
       if (isNaN(eventDate.getTime())) { errors.push(`${rowLabel}: fecha inválida (${row.date})`); continue; }
@@ -167,7 +217,7 @@ export async function POST(req: Request) {
     }
   }
 
-  console.info(`[import/reservations] created=${created} errors=${errors.length} total=${rows.length}`);
-  const result: Result = { ok: true, created, skipped: rows.length - created - errors.length, errors };
+  console.info(`[import/reservations] created=${created} updated=${updated} errors=${errors.length} total=${rows.length}`);
+  const result: Result = { ok: true, created, updated, skipped: rows.length - created - updated - errors.length, errors };
   return NextResponse.json(result);
 }
