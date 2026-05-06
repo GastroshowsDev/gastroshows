@@ -1,10 +1,13 @@
 import { ReservationStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getServerSession } from "next-auth/next";
 
 import { prisma } from "@/lib/prisma";
 import { mailrelaySubscribe } from "@/lib/mailrelay";
 import { requireAdmin, requireStaff } from "@/lib/auth-helpers";
+import { authOptions } from "@/lib/auth";
+import { apiErrorResponse } from "@/lib/api-errors";
 
 const paramsSchema = z.object({ id: z.string().min(1) });
 
@@ -44,7 +47,7 @@ export async function GET(_: Request, context: RouteContext) {
 
 export async function PATCH(request: Request, context: RouteContext) {
   try {
-    const auth = await requireStaff();
+    const auth = await requireAdmin();
     if (!auth.ok) return auth.response;
 
     const maybeParams = paramsSchema.safeParse(await context.params);
@@ -139,12 +142,9 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
 
     return NextResponse.json({ ok: true, data: reservation });
-  } catch (error) {
-    console.error("[PATCH /api/reservations/:id] Unexpected error:", error);
-    return NextResponse.json(
-      { ok: false, error: error instanceof Error ? error.message : "Internal server error" },
-      { status: 500 },
-    );
+  } catch (error: unknown) {
+    const [data, status] = apiErrorResponse(error, "Failed to update reservation");
+    return NextResponse.json(data, { status });
   }
 }
 

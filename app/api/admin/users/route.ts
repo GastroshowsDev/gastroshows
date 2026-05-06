@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-helpers";
+import { validatePassword } from "@/lib/validators";
+import { apiErrorResponse } from "@/lib/api-errors";
 
 export async function GET() {
   const auth = await requireAdmin();
@@ -20,12 +22,22 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json() as { name: string; email: string; password: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string };
+
     if (!body.name?.trim() || !body.email?.trim() || !body.password) {
-      return NextResponse.json({ ok: false, error: "Nombre, email y contraseña son obligatorios" }, { status: 400 });
+      return NextResponse.json(
+        { ok: false, code: "INVALID_INPUT", error: "Name, email, and password required" },
+        { status: 400 }
+      );
     }
-    if (body.password.length < 8) {
-      return NextResponse.json({ ok: false, error: "La contraseña debe tener al menos 8 caracteres" }, { status: 400 });
+
+    const pwValidation = validatePassword(body.password);
+    if (!pwValidation.valid) {
+      return NextResponse.json(
+        { ok: false, code: "INVALID_INPUT", error: pwValidation.reason },
+        { status: 400 }
+      );
     }
+
     const passwordHash = await bcrypt.hash(body.password, 12);
     const user = await prisma.user.create({
       data: {
@@ -41,9 +53,12 @@ export async function POST(request: Request) {
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "";
     if (msg.includes("Unique constraint")) {
-      return NextResponse.json({ ok: false, error: "Ya existe un usuario con ese email" }, { status: 409 });
+      return NextResponse.json(
+        { ok: false, code: "CONFLICT", error: "User with that email already exists" },
+        { status: 409 }
+      );
     }
-    console.error("[users] POST error:", err);
-    return NextResponse.json({ ok: false, error: "Error interno" }, { status: 500 });
+    const [data, status] = apiErrorResponse(err, "Failed to create user");
+    return NextResponse.json(data, { status });
   }
 }

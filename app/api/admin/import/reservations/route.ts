@@ -10,6 +10,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-helpers";
+import { apiErrorResponse } from "@/lib/api-errors";
 
 export type ImportRow = {
   name: string;
@@ -37,12 +38,42 @@ export async function POST(req: Request) {
   try {
     body = await req.json() as { rows: ImportRow[] };
   } catch {
-    return NextResponse.json({ ok: false, error: "JSON inválido" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, code: "INVALID_INPUT", error: "Invalid JSON" },
+      { status: 400 }
+    );
   }
 
   const { rows } = body;
   if (!Array.isArray(rows) || rows.length === 0) {
-    return NextResponse.json({ ok: false, error: "Sin filas" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, code: "INVALID_INPUT", error: "No rows provided" },
+      { status: 400 }
+    );
+  }
+
+  // Validate size limits
+  if (rows.length > 1000) {
+    return NextResponse.json(
+      { ok: false, code: "TOO_LARGE", error: "Maximum 1000 rows per import" },
+      { status: 400 }
+    );
+  }
+
+  // Check for duplicate emails within the batch
+  const emails = rows
+    .map((r) => r.email?.toLowerCase().trim())
+    .filter(Boolean) as string[];
+  const dupes = emails.filter((e, i) => emails.indexOf(e) !== i);
+  if (dupes.length > 0) {
+    return NextResponse.json(
+      {
+        ok: false,
+        code: "CONFLICT",
+        error: `Duplicate emails in batch: ${dupes.slice(0, 5).join(", ")}${dupes.length > 5 ? "..." : ""}`,
+      },
+      { status: 400 }
+    );
   }
 
   // Pre-fetch venues

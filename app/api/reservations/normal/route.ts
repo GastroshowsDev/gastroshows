@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
   amountDueNow30Pct,
@@ -8,14 +8,34 @@ import {
 } from "@/lib/booking";
 import { prisma } from "@/lib/prisma";
 import { buildRedsysFormData, reservationToOrderId } from "@/lib/redsys";
+import { rateLimit } from "@/lib/rate-limit";
+import { ApiError, apiErrorResponse } from "@/lib/api-errors";
 
-export async function POST(request: Request) {
-  const payload = await request.json().catch(() => null);
+export async function POST(request: NextRequest) {
+  // Rate limiting: 10 requests per 60 seconds per IP
+  const { success } = await rateLimit(request, { limit: 10, window: 60 });
+  if (!success) {
+    return NextResponse.json(
+      { ok: false, code: "RATE_LIMITED", error: "Too many booking requests. Please wait a moment." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
+  let payload: unknown;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json(
+      { ok: false, code: "INVALID_INPUT", error: "Invalid JSON" },
+      { status: 400 }
+    );
+  }
+
   const parsed = normalReservationSchema.safeParse(payload);
   if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, error: "Invalid request body", issues: parsed.error.flatten() },
-      { status: 400 },
+      { ok: false, code: "INVALID_INPUT", error: "Invalid request data" },
+      { status: 400 }
     );
   }
 
@@ -111,17 +131,20 @@ export async function POST(request: Request) {
       { ok: true, bookingIntentId: result.intent.id, totalAmount, amountDue, redsysData },
       { status: 201 },
     );
-  } catch (err: any) {
-    if (err.message === "EVENT_FULL") {
+  } catch (err: unknown) {
+    if (err instanceof ApiError) {
+      const [data, status] = apiErrorResponse(err);
+      return NextResponse.json(data, { status });
+    }
+
+    if (err instanceof Error && err.message === "EVENT_FULL") {
       return NextResponse.json(
-        { ok: false, error: "Lo sentimos, el aforo para este turno está completo." },
-        { status: 400 },
+        { ok: false, code: "CONFLICT", error: "Lo sentimos, el aforo para este turno está completo." },
+        { status: 400 }
       );
     }
-    console.error("[api/reservations/normal] POST error:", err);
-    return NextResponse.json(
-      { ok: false, error: "Error interno al procesar la reserva" },
-      { status: 500 },
-    );
+
+    const [data, status] = apiErrorResponse(err, "Error processing booking");
+    return NextResponse.json(data, { status });
   }
 }
