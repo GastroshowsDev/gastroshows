@@ -13,13 +13,13 @@ export async function GET(request: NextRequest) {
   try {
     // Get query params for filtering
     const url = new URL(request.url);
-    const status = url.searchParams.get("status");
+    const statusParam = url.searchParams.get("status");
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "50000"), 50000);
 
     // Fetch reservations with relations
     const reservations = await prisma.reservation.findMany({
       where: {
-        ...(status && { status }),
+        ...(statusParam && { status: statusParam as any }),
       },
       include: {
         customer: true,
