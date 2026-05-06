@@ -56,13 +56,15 @@
       "PowerShell(Get-Process node -ErrorAction SilentlyContinue)",
       "PowerShell(Stop-Process -Force)",
       "Bash(ls -la \"c:\\\\Users\\\\renat\\\\.claude\\\\projects\\\\c--Users-renat-Documents-Github-gastroshows\\\\memory\\\\\")",
-      "Read(//c/Users/renat/.claude/projects/c--Users-renat-Documents-Github-gastroshows/**)"
+      "Read(//c/Users/renat/.claude/projects/c--Users-renat-Documents-Github-gastroshows/**)",
+      "Bash(git branch *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\renat\\Documents\\Github\\gastroshows\\app\\api\\admin\\visits\\[id]",
       "c:\\Users\\renat\\.claude\\projects\\c--Users-renat-Documents-Github-gastroshows\\memory",
       "c:\\Users\\renat\\Documents\\Github\\gastroshows\\app\\api\\admin\\venues\\[id]",
-      "c:\\Users\\renat\\Documents\\Github\\gastroshows"
+      "c:\\Users\\renat\\Documents\\Github\\gastroshows",
+      "C:\\Users\\renat\\Documents\\Github\\gastroshows\\.git"
     ]
   }
 }

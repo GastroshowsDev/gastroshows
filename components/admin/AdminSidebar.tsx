@@ -15,12 +15,6 @@ const NAV: NavSection[] = [
     ],
   },
   {
-    title: "Herramientas",
-    items: [
-      { label: "Asistente AI", href: "/admin/asistente", icon: "✨", adminOnly: true },
-    ],
-  },
-  {
     title: "Gestión",
     items: [
       { label: "Reservas",      href: "/admin/reservas",     icon: "🛎️" },

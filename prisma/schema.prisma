@@ -507,31 +507,3 @@ enum PaymentStatus {
   COMPLETED
   GIFT
 }
-
-model KnowledgeArticle {
-  id        String   @id @default(cuid())
-  title     String   @unique
-  category  String   // e.g., "Reservas", "Teléfono", "Eventos", etc.
-  content   String   @db.Text
-  keywords  String   // palabras clave separadas por comas
-  order     Int      @default(0)
-  active    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([category])
-  @@index([active])
-}
-
-model AssistantChat {
-  id        String   @id @default(cuid())
-  userId    String?  // null si es anónimo
-  question  String
-  answer    String   @db.Text
-  sources   String?  // IDs de KnowledgeArticles usados
-  helpful   Boolean? // null = sin feedback, true = útil, false = no útil
-  createdAt DateTime @default(now())
-
-  @@index([userId])
-  @@index([createdAt])
-}
