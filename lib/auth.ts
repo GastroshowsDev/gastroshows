@@ -59,7 +59,22 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: { signIn: "/admin/login" },
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+    updateAge: 60 * 60, // Refresh every hour
+  },
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict" as const, // CSRF protection
+        path: "/",
+      },
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET,
   ...(process.env.VERCEL_URL && !process.env.NEXTAUTH_URL
     ? { url: `https://${process.env.VERCEL_URL}` }

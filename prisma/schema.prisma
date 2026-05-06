@@ -507,3 +507,21 @@ enum PaymentStatus {
   COMPLETED
   GIFT
 }
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String   // Admin user ID who performed the action
+  action    String   // e.g., "DELETE_RESERVATION", "UPDATE_USER", "CHANGE_PASSWORD"
+  table     String   // Table name: "Reservation", "User", "Campaign", etc.
+  recordId  String   // ID of the affected record
+  details   String?  // JSON: who changed what, from what to what
+  ipAddress String?  // Source IP
+  userAgent String?  // Browser/client info
+  success   Boolean  @default(true)
+  error     String?  // If action failed
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+  @@index([table, createdAt])
+}

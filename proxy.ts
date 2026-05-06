@@ -40,6 +40,19 @@ const authMiddleware = withAuth(
 // ── Main Middleware Dispatcher ──
 export default async function proxy(request: NextRequest, event: NextFetchEvent) {
   const path = request.nextUrl.pathname;
+  const response = NextResponse.next();
+
+  // Add security headers
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-XSS-Protection", "1; mode=block");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
+
+  // Add HSTS for HTTPS (production only)
+  if (process.env.NODE_ENV === "production" && request.nextUrl.protocol === "https:") {
+    response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  }
 
   // 1. FAST SKIP: Ignore static files and internal Next.js paths immediately
   if (
@@ -47,7 +60,7 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
     path.includes(".") ||
     (path.startsWith("/api") && !path.startsWith("/api/admin"))
   ) {
-    return NextResponse.next();
+    return response;
   }
 
   // 2. Protect ADMIN API routes — token + role-based access

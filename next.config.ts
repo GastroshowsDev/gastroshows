@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "pqzvohidkjnonkhitoro.supabase.co" },
     ],
   },
+  // Limit request body size to prevent DoS attacks
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb", // Adjust per use case (bulk imports, media uploads, etc.)
+    },
+  },
 };
 
 export default nextConfig;
