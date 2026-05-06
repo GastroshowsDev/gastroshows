@@ -1,0 +1,304 @@
+{
+  "timestamp": "2026-05-05T20:12:32.853Z",
+  "duration": "CONTINUADO DESDE CHECKPOINT",
+  "startTime": "2026-05-05T18:35:52.985Z",
+  "resumedFrom": 2500,
+  "summary": {
+    "totalRecords": 15723,
+    "processedCount": 15723,
+    "successCount": 14340,
+    "errorCount": 1299,
+    "duplicateCount": 84,
+    "successRate": "91.20%",
+    "pendingCount": 0
+  },
+  "venues": {
+    "withVenue": 0,
+    "withoutVenue": 14340
+  },
+  "errors": [
+    {
+      "turitopId": "G300-210429-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210429-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210428-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210422-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210418-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210417-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210417-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210416-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210416-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210413-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210413-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210411-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210411-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210408-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210408-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210406-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210406-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210328-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210327-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210325-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210324-3 ",
+      "error": "Nombre vacío"
+    }
+  ],
+  "duplicates": [
+    {
+      "turitopId": "G300-250804-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-10 ",
+      "reason": "Ya existe en BD"
+    }
+  ],
+  "lastProcessedId": "G300-190427-1 "
+}

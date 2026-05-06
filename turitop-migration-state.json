@@ -1,0 +1,5550 @@
+{
+  "csvPath": "C:\\Users\\renat\\Downloads\\Reservas Full 05-05.csv",
+  "totalRecords": 15723,
+  "processedCount": 15723,
+  "lastCheckpoint": 15723,
+  "successCount": 14340,
+  "errorCount": 1299,
+  "duplicateCount": 84,
+  "venueAssignedCount": 0,
+  "venueNotAssignedCount": 14340,
+  "errors": [
+    {
+      "turitopId": "G300-210429-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210429-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210428-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210427-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210422-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210421-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210420-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210419-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210418-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210417-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210417-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210416-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210416-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210415-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210414-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210413-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210413-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210412-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210411-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210411-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210408-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210408-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210406-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210406-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210328-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210327-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210325-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210324-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210319-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210319-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210317-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210317-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210316-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210316-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210316-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210315-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210315-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210312-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210311-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210311-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210310-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210310-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210309-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210309-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210309-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210308-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210308-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210307-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210305-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210305-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210304-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210304-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210302-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210302-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210301-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210301-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210228-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210228-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210228-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210226-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210225-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210224-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210224-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210223-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210222-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210220-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210219-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210219-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210218-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210218-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210217-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210217-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210216-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210216-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210216-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210216-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210216-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210213-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210212-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210212-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210211-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210211-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210211-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210211-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-11 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210210-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210209-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210209-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210209-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210209-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210209-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210208-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210208-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210208-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210208-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210207-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210205-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210205-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210205-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210205-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210204-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210204-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210203-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210202-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210202-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210202-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210201-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210131-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210130-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210130-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210129-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210128-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210128-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210127-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210127-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210127-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210126-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210125-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210125-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210125-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210125-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210124-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210124-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210124-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210124-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210122-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210122-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210122-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210121-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210121-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210121-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210120-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210119-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210118-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210118-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210117-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210115-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210113-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210112-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210112-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210111-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210109-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210108-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210108-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210107-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210107-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210107-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210106-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210106-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210106-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210106-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210106-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210105-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210104-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210104-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210104-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210103-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210103-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210103-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210103-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210103-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210102-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210102-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-210101-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201231-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201231-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201231-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201230-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201230-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201230-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201230-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201229-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201229-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201229-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201229-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201228-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201227-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201227-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201226-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201226-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201225-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201225-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201225-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201224-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201223-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201223-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201223-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201223-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201222-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201222-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201222-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201221-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201220-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201220-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201220-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201220-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201220-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201219-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201219-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201219-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201219-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201219-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201218-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201218-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201218-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201217-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201217-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201216-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201216-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201216-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201214-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201214-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201213-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201213-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201213-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201212-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201212-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201212-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201211-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201210-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201210-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201210-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201209-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201209-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201207-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201206-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201205-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201205-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201203-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201203-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201202-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201202-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201202-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201201-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201130-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201130-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201130-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201129-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201128-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201127-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201127-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201127-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201127-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201126-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201126-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201126-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201126-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201125-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201125-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201125-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201124-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201123-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201122-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201121-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201121-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201121-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201120-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201120-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201120-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201120-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201120-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201119-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201118-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201118-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201118-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201118-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201117-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201116-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201116-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201116-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201115-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201114-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201113-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201113-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201113-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201113-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201113-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201112-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201112-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201112-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201112-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201111-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201111-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201110-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201109-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201109-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201109-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201109-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201109-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201108-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201108-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201108-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201107-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201106-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201105-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201104-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201104-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201104-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201103-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201103-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201103-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201103-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201103-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201101-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201031-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201030-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201029-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201029-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201029-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201028-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201028-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201028-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201028-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201027-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201027-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201027-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201026-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201024-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201024-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201022-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201022-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201022-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201022-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201021-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201020-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201020-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201020-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201019-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201018-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201018-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201017-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201017-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201017-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201016-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201015-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201015-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201015-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201015-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201014-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201013-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201012-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201011-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201010-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201007-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201007-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201007-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201007-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201006-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201004-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-201003-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200930-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200928-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200927-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200927-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200927-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200925-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200925-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200923-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200920-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200915-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200915-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200914-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200910-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200909-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200909-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200906-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200904-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200831-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200831-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200830-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200828-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200827-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200827-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200827-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200825-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200824-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200824-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200824-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200824-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200820-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200818-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200816-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200814-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200813-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200813-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200811-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200810-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200809-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200808-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200806-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200806-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200805-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200803-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200803-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200802-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200802-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200801-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200731-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200730-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200730-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200730-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200730-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200729-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200728-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200727-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200727-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200727-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200727-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200726-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200726-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200726-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200726-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200724-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200724-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200723-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200722-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200722-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200722-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200722-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200720-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200720-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200720-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200719-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200718-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200717-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200717-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200716-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200715-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200715-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200715-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200715-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200714-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200714-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200713-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200713-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200713-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200713-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200711-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200709-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200709-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200709-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200709-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200708-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200708-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200708-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200706-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200706-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200704-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200703-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200702-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200702-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200630-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200630-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200630-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200630-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200630-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200629-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200629-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200627-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200627-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200626-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200626-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200626-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200626-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200625-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200625-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200623-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200623-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200622-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200622-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200622-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200622-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200619-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200618-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200618-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200617-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200617-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200617-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200615-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200614-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200613-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200612-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200612-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200612-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200612-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200612-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200611-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200611-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200609-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200609-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200608-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200608-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200608-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200606-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200606-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200606-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200605-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200605-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200605-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200604-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200604-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200604-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200604-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200603-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200602-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200601-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200601-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200601-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200601-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200531-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200531-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200530-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200530-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200529-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200529-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200528-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200528-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200528-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200527-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200527-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200525-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200525-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200525-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200525-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200524-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200522-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200522-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200522-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200522-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200522-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200521-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200520-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200520-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200519-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200519-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200519-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200519-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200519-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200518-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200517-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200517-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200515-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200515-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200515-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200514-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200514-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200513-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200513-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200513-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200513-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200513-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200512-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200511-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200510-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200510-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200510-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200509-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200509-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200509-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200509-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200508-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200508-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200507-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200507-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200507-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200507-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200506-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200506-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200506-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200505-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200504-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200504-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200503-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200502-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200429-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200429-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200428-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200428-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200428-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200428-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200427-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200427-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200426-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200426-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200425-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200416-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200322-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200311-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200307-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200307-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200306-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200306-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200305-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200305-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200305-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200304-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200304-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200304-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200303-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200303-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200302-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200302-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200302-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200302-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200301-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200301-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200301-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200301-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200301-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200229-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200228-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200228-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200226-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200225-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200225-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200224-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200223-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200221-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200215-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200215-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200214-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200214-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200214-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200214-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200213-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200212-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200212-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200212-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200211-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200211-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200211-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200211-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200208-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200207-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200205-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200204-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200204-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200204-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200204-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200204-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200203-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200202-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200201-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200201-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200131-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200131-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200131-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200130-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200130-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200128-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200128-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200128-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200128-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200127-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200127-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200126-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200125-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200124-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200123-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200123-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200123-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200122-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200121-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200121-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200121-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200121-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200121-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200120-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200120-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200119-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200119-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200117-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200117-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200117-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200116-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200116-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200116-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200116-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200115-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200115-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200115-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200114-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200113-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200113-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200113-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200113-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200112-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200112-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200112-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200112-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200112-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200111-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200111-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200111-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200111-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200109-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200108-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200108-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200108-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200108-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200107-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200106-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200106-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200106-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-24 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-23 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-22 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-21 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-18 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-15 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-14 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-13 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-12 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-11 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200105-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-11 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200104-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-13 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-12 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-11 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200103-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200102-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200101-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200101-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200101-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200101-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-200101-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191231-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191231-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191231-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191230-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191230-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191229-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191229-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191229-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191229-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191228-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191227-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191227-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191227-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191226-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191225-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191225-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191225-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-11 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191224-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191223-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191223-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191223-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191223-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191223-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191222-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191222-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191222-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191221-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191221-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191221-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191220-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191219-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191219-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191219-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191218-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191218-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191218-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191217-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191215-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191214-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191214-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191213-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191212-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191212-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191211-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191211-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191210-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191210-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191210-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191209-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191209-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191209-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191205-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191205-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191205-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191204-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191204-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191204-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191204-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191203-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191203-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191202-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191202-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191201-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191130-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191130-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-10 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-9 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-8 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191129-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191128-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191128-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191127-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191127-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191127-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191127-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191127-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191126-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191126-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191126-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191126-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191125-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191125-6 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191125-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191125-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191125-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191124-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191124-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191124-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191123-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191123-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191123-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191122-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191122-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191121-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191121-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191121-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191121-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191120-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191120-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191120-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191119-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191119-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191119-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191118-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191117-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191115-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191114-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191114-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191114-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191113-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191113-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191112-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191112-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191112-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191111-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191111-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191111-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191110-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191110-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191108-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191107-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191106-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191106-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191105-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191105-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191105-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191105-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191105-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191104-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191101-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191031-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191030-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191030-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191030-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191030-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191029-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191028-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191028-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191028-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191028-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191027-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191027-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191026-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191026-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191025-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191025-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191025-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191024-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191024-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191024-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191024-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191023-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191023-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191022-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191018-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191017-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191015-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191013-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191012-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191011-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191010-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191010-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191009-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191009-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191009-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191008-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191007-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191007-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191006-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191006-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191005-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191004-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191004-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191004-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191004-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191003-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191002-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191002-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191002-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191001-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191001-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191001-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-191001-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190930-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190929-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190929-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190929-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190928-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190927-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190926-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190926-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190924-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190924-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190923-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190923-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190922-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190922-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190921-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190921-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190920-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190918-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190917-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190917-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190917-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190917-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190916-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190916-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190915-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190914-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190914-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190913-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190912-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190911-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190911-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190911-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190910-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190910-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190907-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190906-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190906-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190905-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190905-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190905-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190904-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190904-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190903-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190902-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190902-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190902-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190902-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190831-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190830-5 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190830-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190830-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190830-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190830-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190828-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190828-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190828-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190827-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190827-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190826-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190826-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190825-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190825-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190825-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190825-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190824-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190824-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190822-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190820-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190819-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190819-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190819-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190818-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190817-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190816-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190816-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190815-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190815-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190814-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190813-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190811-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190810-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190810-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190808-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190807-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190806-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190806-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190805-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190803-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190802-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190731-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190731-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190730-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190730-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190729-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190729-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190728-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190727-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190726-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190726-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190725-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190724-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190724-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190724-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190724-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190723-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190723-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190723-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190723-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190722-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190722-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190721-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190720-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190719-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190719-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190718-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190717-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190716-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190715-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190714-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190713-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190713-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190712-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190712-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190712-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190711-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190711-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190710-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190710-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190709-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190708-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190706-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190706-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190705-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190704-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190703-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190702-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190701-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190701-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190630-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190630-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190629-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190629-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190629-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190628-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190628-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190626-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190625-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190625-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190624-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190622-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190621-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190620-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190620-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190620-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190619-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190618-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190618-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190617-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190617-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190616-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190616-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190615-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190615-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190615-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190613-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190613-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190612-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190611-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190610-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190608-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190608-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190607-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190606-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190605-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190605-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190604-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190603-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190603-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190602-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190602-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190601-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190601-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190601-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190531-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190530-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190530-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190529-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190529-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190529-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190528-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190528-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190527-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190526-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190526-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190525-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190525-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190524-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190524-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190523-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190522-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190522-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190521-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190520-4 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190520-3 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190520-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190520-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190519-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190518-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190518-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190517-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190516-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190516-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190515-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190512-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190510-7 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190503-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190503-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190502-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190430-1 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190428-2 ",
+      "error": "Nombre vacío"
+    },
+    {
+      "turitopId": "G300-190427-1 ",
+      "error": "Nombre vacío"
+    }
+  ],
+  "duplicates": [
+    {
+      "turitopId": "G300-250804-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250803-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250802-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250801-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-10 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250731-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-13 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-12 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-10 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250730-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-13 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-12 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-11 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250729-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250728-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250728-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250728-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250728-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250727-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250727-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250727-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250727-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250727-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250726-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250726-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250726-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250726-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-10 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-5 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250725-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250724-7 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250724-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250724-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250724-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250724-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-9 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-6 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250723-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250722-4 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250722-3 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250722-2 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250722-1 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250721-8 ",
+      "reason": "Ya existe en BD"
+    },
+    {
+      "turitopId": "G300-250721-7 ",
+      "reason": "Ya existe en BD"
+    }
+  ],
+  "lastProcessedId": "G300-190427-1 ",
+  "startTime": "2026-05-05T18:35:52.985Z",
+  "resumedFrom": 2500
+}

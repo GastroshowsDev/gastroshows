@@ -532,4 +532,6 @@ model AssistantChat {
   helpful   Boolean? // null = sin feedback, true = útil, false = no útil
   createdAt DateTime @default(now())
 
-  @
+  @@index([userId])
+  @@index([createdAt])
+}

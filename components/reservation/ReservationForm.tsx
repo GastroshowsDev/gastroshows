@@ -236,4 +236,6 @@ export function ReservationForm() {
       <p className="text-xs text-zinc-500 text-center">
         Se requiere un depósito del 30% para confirmar la reserva. Precio base: 130 €/persona.
       </p>
-    </form
+    </form>
+  );
+}
