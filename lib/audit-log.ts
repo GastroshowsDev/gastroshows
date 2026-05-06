@@ -45,7 +45,6 @@ export function getRequestMetadata(req: NextRequest) {
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0] ||
     req.headers.get("x-real-ip") ||
-    req.ip ||
     "unknown";
 
   const userAgent = req.headers.get("user-agent") || undefined;

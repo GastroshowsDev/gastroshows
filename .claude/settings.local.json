@@ -58,7 +58,8 @@
       "Bash(ls -la \"c:\\\\Users\\\\renat\\\\.claude\\\\projects\\\\c--Users-renat-Documents-Github-gastroshows\\\\memory\\\\\")",
       "Read(//c/Users/renat/.claude/projects/c--Users-renat-Documents-Github-gastroshows/**)",
       "Bash(git branch *)",
-      "Bash(grep -r 'sql`\\\\|prisma\\\\.$queryRaw\\\\|prisma\\\\.raw\\\\|db\\\\.execute' app/api '--include=*.ts')"
+      "Bash(grep -r 'sql`\\\\|prisma\\\\.$queryRaw\\\\|prisma\\\\.raw\\\\|db\\\\.execute' app/api '--include=*.ts')",
+      "WebSearch"
     ],
     "additionalDirectories": [
       "C:\\Users\\renat\\Documents\\Github\\gastroshows\\app\\api\\admin\\visits\\[id]",

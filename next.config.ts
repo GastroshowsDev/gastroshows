@@ -8,12 +8,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "pqzvohidkjnonkhitoro.supabase.co" },
     ],
   },
-  // Limit request body size to prevent DoS attacks
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb", // Adjust per use case (bulk imports, media uploads, etc.)
-    },
-  },
+  // Note: Request body size limit is enforced at middleware level in proxy.ts
+  // Next.js 16 handles body parsing automatically; use middleware for size validation
 };
 
 export default nextConfig;
