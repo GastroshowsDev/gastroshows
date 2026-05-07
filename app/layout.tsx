@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { SeoHead, SeoBodyScripts, getTrackingConfig } from "@/components/SeoHead";
@@ -72,18 +73,16 @@ export default async function RootLayout({
     >
       <head>
         <SeoHead />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const theme = localStorage.getItem('gs-theme') || 'clandestino';
-                const html = document.documentElement;
-                html.classList.remove('clandestino', 'revelado');
-                html.classList.add(theme);
-              } catch (e) {}
-            `,
-          }}
-        />
+        <Script id="theme-script" strategy="beforeInteractive">
+          {`
+            try {
+              const theme = localStorage.getItem('gs-theme') || 'clandestino';
+              const html = document.documentElement;
+              html.classList.remove('clandestino', 'revelado');
+              html.classList.add(theme);
+            } catch (e) {}
+          `}
+        </Script>
       </head>
       <body className="min-h-full flex flex-col">
         <Providers>

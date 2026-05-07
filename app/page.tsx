@@ -6,10 +6,16 @@ import { getLandingContent } from "@/lib/landing-content";
 import type { BlockData, BlockType, BlockContent } from "@/lib/blocks/types";
 
 export default async function Page() {
-  const homePage = await prisma.page.findUnique({
-    where: { slug: "home", published: true },
-    include: { blocks: { orderBy: { order: "asc" } } },
-  });
+  let homePage = null;
+
+  try {
+    homePage = await prisma.page.findUnique({
+      where: { slug: "home", published: true },
+      include: { blocks: { orderBy: { order: "asc" } } },
+    });
+  } catch (e) {
+    // Table might not exist yet, use fallback
+  }
 
   // Fallback to legacy system if the new "home" page isn't ready/published
   if (!homePage) {
