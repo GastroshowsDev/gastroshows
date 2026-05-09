@@ -83,7 +83,7 @@ export function PaymentButton({ reservationId, amount, onLoading, autoTrigger }:
       onClick={handlePayment}
       disabled={loading}
       style={{
-        background: "#daa520",
+        background: "#C8A96E",
         color: "#0A0A0A",
         border: "none",
         padding: "1rem 2.5rem",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { usePageActions } from "@/context/PageActionsContext";
 import { DisponibilidadSection } from "./DisponibilidadSection";
 import { HeroSection } from "./HeroSection";
@@ -23,8 +22,6 @@ export function LandingPage({ content }: Props) {
 
   return (
     <>
-      <ThemeToggle variant="public" />
-
       <HeroSection
         content={content}
         onReservar={openReservation}
@@ -75,7 +72,7 @@ function LandingFooter({ content }: { content: LandingContentMap }) {
           letterSpacing: "0.12em",
           color: "#F5F0E8",
         }}>
-          Gastro<em style={{ color: "#daa520" }}>Shows</em>
+          Gastro<em style={{ color: "#C8A96E" }}>Shows</em>
         </span>
         <div style={{ flex: 1, height: "1px", background: "linear-gradient(to left, transparent, rgba(200,169,110,0.25))", maxWidth: "120px" }} />
       </div>
@@ -107,7 +104,7 @@ function LandingFooter({ content }: { content: LandingContentMap }) {
               textDecoration: "none",
               transition: "color 0.2s",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#daa520"; }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C8A96E"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(200,169,110,0.4)"; }}
           >
             {label}

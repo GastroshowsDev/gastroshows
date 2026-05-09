@@ -1,15 +1,6 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
-
-export const metadata: Metadata = {
-  title: "Aviso Legal · GastroShows",
-  description: "Aviso legal de GastroShows. Términos y condiciones de uso del sitio web.",
-  alternates: {
-    canonical: "https://gastroshows.es/aviso-legal",
-  },
-};
 
 export default function AvisoLegalPage() {
   return (
@@ -142,3 +133,4 @@ export default function AvisoLegalPage() {
     </PageLayout>
   );
 }
+

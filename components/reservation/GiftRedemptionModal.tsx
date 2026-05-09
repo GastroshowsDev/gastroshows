@@ -15,7 +15,7 @@ type Props = {
   expiresAt: string;
 };
 
-const GOLD = "#daa520";
+const GOLD = "#C8A96E";
 const DARK2 = "#1A1A1A";
 const OFFWHITE = "#F5F0E8";
 const LIGHT = "#888888";

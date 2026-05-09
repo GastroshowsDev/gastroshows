@@ -59,7 +59,12 @@
       "Read(//c/Users/renat/.claude/projects/c--Users-renat-Documents-Github-gastroshows/**)",
       "Bash(git branch *)",
       "Bash(grep -r 'sql`\\\\|prisma\\\\.$queryRaw\\\\|prisma\\\\.raw\\\\|db\\\\.execute' app/api '--include=*.ts')",
-      "WebSearch"
+      "WebSearch",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(find ~/Downloads -name \"*Performance*\" -o -name \"*Search*\" 2>/dev/null | head -20)",
+      "Read(//c/Users/mcgri/Downloads/**)",
+      "Bash(tasklist)",
+      "Bash(findstr node *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\renat\\Documents\\Github\\gastroshows\\app\\api\\admin\\visits\\[id]",

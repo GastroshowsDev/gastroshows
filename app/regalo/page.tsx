@@ -1,26 +1,8 @@
 "use client";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { usePageActions } from "@/context/PageActionsContext";
-
-export const metadata: Metadata = {
-  title: "Regala una Experiencia Gastronómica · Bono Regalo GastroShows",
-  description:
-    "Regala una cena clandestina exclusiva en Barcelona. Bono regalo personalizable con validez 12 meses. La experiencia gastronómica perfecta para sorprender.",
-  keywords:
-    "regalar menu degustacion barcelona, regalo cena para dos, bono regalo restaurante barcelona, regala experiencia gastronomica, tarjeta regalo cena",
-  alternates: {
-    canonical: "https://gastroshows.es/regalo",
-  },
-  openGraph: {
-    title: "Regala una Experiencia Gastronómica Única",
-    description: "Bono regalo para la cena clandestina de Barcelona. Personalizable y válido 12 meses.",
-    type: "website",
-    locale: "es_ES",
-  },
-};
 
 export default function Regalo() {
   const { openGift } = usePageActions();

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 
 const BARCELONA_TZ = "Europe/Madrid";
-const GOLD = "#daa520";
+const GOLD = "#C8A96E";
 
 type Status = "IDLE" | "LOADING" | "SUCCESS_IN" | "SUCCESS_OUT" | "ERROR";
 

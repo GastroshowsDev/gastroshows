@@ -34,7 +34,7 @@ export function EventosPage({ content }: Props) {
             color: "rgba(200,169,110,0.7)", textDecoration: "none",
             transition: "color 0.2s",
           }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#daa520"; }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#C8A96E"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(200,169,110,0.7)"; }}
         >
           ← Inicio
@@ -80,7 +80,7 @@ export function EventosPage({ content }: Props) {
             marginBottom: "1.75rem",
           }}>
             {c(content, "ev.hero.title_line1")}<br />
-            <em style={{ color: "#daa520", fontStyle: "italic" }}>
+            <em style={{ color: "#C8A96E", fontStyle: "italic" }}>
               {c(content, "ev.hero.title_em")}
             </em>
           </h1>
@@ -176,7 +176,7 @@ function FeatureCard({ title, body }: { title: string; body: string }) {
       <div style={{
         width: hovered ? "48px" : "28px",
         height: "2px",
-        background: "#daa520",
+        background: "#C8A96E",
         marginBottom: "1.5rem",
         transition: "width 0.3s",
       }} />
@@ -241,7 +241,7 @@ function CtaButton({ content, small }: { content: LandingContentMap; small?: boo
         style={{
           display: "inline-flex", alignItems: "center", gap: "0.75rem",
           padding: small ? "0.9rem 2.2rem" : "1.1rem 3rem",
-          background: "#daa520",
+          background: "#C8A96E",
           color: "#0A0A0A",
           fontFamily: "var(--font-montserrat), sans-serif",
           fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
@@ -250,7 +250,7 @@ function CtaButton({ content, small }: { content: LandingContentMap; small?: boo
           transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#E8D5A8")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "#daa520")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "#C8A96E")}
       >
         <WhatsAppIcon />
         <span>{c(content, "ev.cta.button")} • {c(content, "ev.cta.whatsapp")}</span>

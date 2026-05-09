@@ -92,7 +92,7 @@ function DetailRow({ label, value, bold }: { label: string; value: string; bold?
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "0.5rem 0" }}>
       <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666" }}>{label}</span>
-      <span style={{ fontSize: "0.9rem", color: bold ? "#daa520" : "#F5F0E8", fontWeight: bold ? 600 : 400 }}>{value}</span>
+      <span style={{ fontSize: "0.9rem", color: bold ? "#C8A96E" : "#F5F0E8", fontWeight: bold ? 600 : 400 }}>{value}</span>
     </div>
   );
 }

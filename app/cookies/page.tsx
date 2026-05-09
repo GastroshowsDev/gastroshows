@@ -1,15 +1,7 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
 
-export const metadata: Metadata = {
-  title: "Política de Cookies · GastroShows",
-  description: "Política de cookies de GastroShows. Información sobre las cookies que utilizamos.",
-  alternates: {
-    canonical: "https://gastroshows.es/cookies",
-  },
-};
 
 export default function CookiesPage() {
   return (
@@ -144,3 +136,4 @@ export default function CookiesPage() {
     </PageLayout>
   );
 }
+

@@ -44,7 +44,7 @@ export default async function BookingConfirmationPage({
           <p style={{ color: "#888", marginBottom: "2rem", lineHeight: 1.6 }}>Estamos confirmando tu transacción con el banco. Esto puede tardar unos segundos.</p>
           <a
             href={`/booking-confirmation?order=${order}`}
-            style={{ background: "#daa520", color: "#0A0A0A", border: "none", padding: "1rem 2rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", cursor: "pointer", borderRadius: "2px", textDecoration: "none", display: "inline-block" }}
+            style={{ background: "#C8A96E", color: "#0A0A0A", border: "none", padding: "1rem 2rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", cursor: "pointer", borderRadius: "2px", textDecoration: "none", display: "inline-block" }}
           >
             Actualizar Estado
           </a>
@@ -58,7 +58,7 @@ export default async function BookingConfirmationPage({
   return (
     <div style={{ minHeight: "100vh", background: "#0A0A0A", color: "#F5F0E8", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", fontFamily: "Georgia, serif" }}>
       <div style={{ maxWidth: "600px", width: "100%", background: "#141414", border: "1px solid rgba(200,169,110,0.2)", borderRadius: "4px", padding: "4rem 3rem", textAlign: "center" }}>
-        <div style={{ width: "64px", height: "64px", border: "1px solid #daa520", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2rem", fontSize: "1.5rem", color: "#daa520" }}>
+        <div style={{ width: "64px", height: "64px", border: "1px solid #C8A96E", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2rem", fontSize: "1.5rem", color: "#C8A96E" }}>
           {isGift ? "◇" : "✓"}
         </div>
 
@@ -100,7 +100,7 @@ export default async function BookingConfirmationPage({
 
         <Link
           href="/"
-          style={{ display: "inline-block", background: "#daa520", color: "#0A0A0A", textDecoration: "none", padding: "1rem 3rem", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", borderRadius: "2px", transition: "all 0.2s" }}
+          style={{ display: "inline-block", background: "#C8A96E", color: "#0A0A0A", textDecoration: "none", padding: "1rem 3rem", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", borderRadius: "2px", transition: "all 0.2s" }}
         >
           Volver al Inicio
         </Link>
@@ -113,7 +113,7 @@ function DetailRow({ label, value, bold }: { label: string; value: string; bold?
   return (
     <div style={{ display: "flex", justifyContent: "space-between", padding: "0.75rem 0", borderBottom: "1px solid rgba(200,169,110,0.08)" }}>
       <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "#888" }}>{label}</span>
-      <span style={{ fontSize: "0.95rem", color: bold ? "#daa520" : "#F5F0E8", fontWeight: bold ? 600 : 400 }}>{value}</span>
+      <span style={{ fontSize: "0.95rem", color: bold ? "#C8A96E" : "#F5F0E8", fontWeight: bold ? 600 : 400 }}>{value}</span>
     </div>
   );
 }

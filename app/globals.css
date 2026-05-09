@@ -2,7 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-gold: #daa520;
+  --color-gold: #C8A96E;
   --color-gold-light: #E8D5A8;
   --color-gold-dark: #9A7A45;
   --color-gs-black: #0A0A0A;
@@ -16,21 +16,30 @@
   --font-sans: var(--font-montserrat), system-ui, sans-serif;
 }
 
-/* ── Public site palette (dark default) ── */
+/* ── Public site palette — GastroShows Design System ── */
 :root {
-  --gs-bg: #0A0A0A;
-  --gs-bg2: #111111;
+  /* Backgrounds: negro profundo, nunca puro #000 */
+  --gs-bg:  #050505;
+  --gs-bg2: #0A0A0A;
   --gs-bg3: #0D0D0D;
+
+  /* Texto: off-white cálido */
   --gs-text: #F5F0E8;
   --gs-text-muted: rgba(245, 240, 232, 0.82);
-  --gs-text-sub: rgba(245, 240, 232, 0.75);
-  --gs-muted: #A8A49E;
-  --gs-gold: #daa520;
-  --gs-gold-hover: #E8D5A8;
-  --gs-border: rgba(200, 169, 110, 0.1);
-  --gs-border-hover: rgba(200, 169, 110, 0.3);
-  --gs-card-hover: rgba(200, 169, 110, 0.03);
-  --gs-gold-shadow: 0 0 13px rgba(0, 0, 0, 0.4);
+  --gs-text-sub:   rgba(245, 240, 232, 0.55);
+  --gs-muted:      rgba(245, 240, 232, 0.45);
+
+  /* Dorado envejecido — acento, no fondo */
+  --gs-gold:        #C8A96E;
+  --gs-gold-bright: #C8A96E;
+  --gs-gold-hover:  #D9BC8A;
+  --gs-gold-subtle: rgba(200, 169, 110, 0.08);
+
+  /* Bordes */
+  --gs-border:       rgba(200, 169, 110, 0.10);
+  --gs-border-hover: rgba(200, 169, 110, 0.28);
+  --gs-card-hover:   rgba(200, 169, 110, 0.03);
+  --gs-gold-shadow:  0 0 20px rgba(200, 169, 110, 0.12);
 
   /* ── Admin panel palette (light default) ── */
   --color-admin-bg: #F4F6FA;
@@ -53,7 +62,7 @@
   --gs-text-muted: rgba(16, 14, 11, 0.78);
   --gs-text-sub: rgba(16, 14, 11, 0.68);
   --gs-muted: #3C3830;
-  --gs-gold: #daa520;
+  --gs-gold: #C8A96E;
   --gs-gold-hover: #b8860b;
   --gs-border: rgba(218, 165, 32, 0.28);
   --gs-border-hover: rgba(218, 165, 32, 0.58);
@@ -82,7 +91,7 @@
   --gs-text-muted: rgba(245, 240, 232, 0.82);
   --gs-text-sub: rgba(245, 240, 232, 0.75);
   --gs-muted: #A8A49E;
-  --gs-gold: #daa520;
+  --gs-gold: #C8A96E;
   --gs-gold-hover: #E8D5A8;
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);
@@ -117,26 +126,13 @@ body {
   transition: background 0.8s ease, color 0.8s ease;
 }
 
-/* ── Image blur in Clandestino mode ── */
+/* ── Images: always sharp ── */
 :root {
   --img-brightness: 1;
 }
 
-img:not(.no-blur), 
-.gs-bg-image {
-  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
-}
-
-:root.clandestino img:not(.no-blur),
-:root.clandestino .gs-bg-image {
-  filter: blur(20px) grayscale(0.3) brightness(calc(0.65 * var(--img-brightness)));
-  opacity: 0.55;
-}
-
-:root.revelado img,
-:root.revelado .gs-bg-image {
-  filter: blur(0) grayscale(0) brightness(calc(1.15 * var(--img-brightness))) contrast(1.05);
-  opacity: 1;
+img {
+  transition: opacity 0.3s ease;
 }
 
 

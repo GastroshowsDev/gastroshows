@@ -174,8 +174,8 @@ function buildGiftEmailHtml({
           <!-- Ornament top -->
           <tr>
             <td align="center" style="padding-bottom:32px;">
-              <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#daa520);margin:0 auto 16px;"></div>
-              <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#daa520;">GastroShows</span>
+              <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C8A96E);margin:0 auto 16px;"></div>
+              <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#C8A96E;">GastroShows</span>
             </td>
           </tr>
 
@@ -257,7 +257,7 @@ function buildGiftEmailHtml({
                 <!-- CTA -->
                 <tr>
                   <td align="center" style="padding-bottom:32px;">
-                    <a href="${redeemUrl}" style="display:inline-block;background:#daa520;color:#0A0A0A;text-decoration:none;padding:16px 40px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-radius:2px;">
+                    <a href="${redeemUrl}" style="display:inline-block;background:#C8A96E;color:#0A0A0A;text-decoration:none;padding:16px 40px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-radius:2px;">
                       Seleccionar fecha
                     </a>
                   </td>
@@ -268,7 +268,7 @@ function buildGiftEmailHtml({
                   <td align="center" style="padding-bottom:0;">
                     <p style="margin:0;font-size:11px;color:#555555;line-height:1.8;font-family:Arial,sans-serif;">
                       O copia este enlace en tu navegador:<br/>
-                      <span style="color:#daa520;">${redeemUrl}</span>
+                      <span style="color:#C8A96E;">${redeemUrl}</span>
                     </p>
                   </td>
                 </tr>

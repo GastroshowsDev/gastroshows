@@ -859,7 +859,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             <div style={{ display: "flex", gap: "0.5rem" }}>
               <input 
                 type="color" 
-                value={(content as StepsContent).accentColor || "#daa520"} 
+                value={(content as StepsContent).accentColor || "#C8A96E"} 
                 onChange={(e) => update({ accentColor: e.target.value })} 
                 style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
               />
@@ -904,7 +904,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             <div style={{ display: "flex", gap: "0.5rem" }}>
               <input 
                 type="color" 
-                value={(content as AvailabilityContent).buttonColor || "#daa520"} 
+                value={(content as AvailabilityContent).buttonColor || "#C8A96E"} 
                 onChange={(e) => update({ buttonColor: e.target.value })} 
                 style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
               />

@@ -126,8 +126,8 @@ function buildVisitReminderHtml({ name, date, time }: { name: string; date: stri
       <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
 
         <tr><td align="center" style="padding-bottom:32px;">
-          <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#daa520);margin:0 auto 16px;"></div>
-          <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#daa520;">GastroShows</span>
+          <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C8A96E);margin:0 auto 16px;"></div>
+          <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#C8A96E;">GastroShows</span>
         </td></tr>
 
         <tr><td style="background:#141414;border:1px solid rgba(200,169,110,0.25);border-radius:4px;padding:48px 40px;">

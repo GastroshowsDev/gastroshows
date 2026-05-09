@@ -74,13 +74,13 @@ export async function POST(request: Request) {
         subject: "Solicitud de visita recibida - GastroShows",
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
-            <h2 style="color: #daa520;">¡Hola ${name}!</h2>
+            <h2 style="color: #C8A96E;">¡Hola ${name}!</h2>
             <p>Hemos recibido tu solicitud de visita a nuestro local.</p>
             
             <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
               <p><strong>Fecha solicitada:</strong> ${formattedDate}</p>
               <p><strong>Hora solicitada:</strong> ${time}h</p>
-              <p><strong>Estado:</strong> <span style="color: #daa520; font-weight: bold;">Pendiente de confirmación</span></p>
+              <p><strong>Estado:</strong> <span style="color: #C8A96E; font-weight: bold;">Pendiente de confirmación</span></p>
             </div>
 
             <p>Estamos revisando nuestra agenda y te confirmaremos la disponibilidad muy pronto por esta misma vía o por teléfono.</p>

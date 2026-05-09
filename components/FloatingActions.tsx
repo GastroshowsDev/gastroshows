@@ -139,7 +139,7 @@ export function FloatingActions() {
         <div 
           onClick={openReservation}
           style={{
-            background: "#daa520", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
+            background: "#C8A96E", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
             borderRadius: "18px 18px 4px 18px", fontSize: isMobile ? "0.75rem" : "0.82rem", fontWeight: 600,
             boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: isMobile ? "180px" : "240px", cursor: "pointer",
             animation: "waPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both",
@@ -207,7 +207,7 @@ export function FloatingActions() {
             </svg>
             {hasPromo && (
               <div style={{
-                position: "absolute", top: "-3px", right: "-3px", background: "#daa520", color: "#000",
+                position: "absolute", top: "-3px", right: "-3px", background: "#C8A96E", color: "#000",
                 width: "16px", height: "16px", borderRadius: "50%", fontSize: "0.6rem", fontWeight: 800,
                 display: "flex", alignItems: "center", justifyContent: "center", border: "1.5px solid #0A0A0A"
               }}>!</div>

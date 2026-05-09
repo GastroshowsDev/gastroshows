@@ -56,21 +56,26 @@ export function Footer() {
           
           <div style={{ display: "flex", gap: "4rem", flexWrap: "wrap" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Navegación</span>
-              <span onClick={openGift} style={linkStyle}>Regalar Experiencia</span>
-              <span onClick={openReservation} style={linkStyle}>Reservar Mesa</span>
+              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Experiencia</span>
+              <Link href="/cena-clandestina" style={linkStyle}>Cena Clandestina</Link>
+              <Link href="/menu-degustacion" style={linkStyle}>Menú Degustación</Link>
+              <Link href="/regalo" style={linkStyle}>Regalar Experiencia</Link>
+              <Link href="/grupos" style={linkStyle}>Grupos y Eventos</Link>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Información</span>
+              <Link href="/preguntas-frecuentes" style={linkStyle}>Preguntas Frecuentes</Link>
+              <Link href="/blog" style={linkStyle}>Blog Gastronómico</Link>
+              <Link href="/contacto" style={linkStyle}>Contacto</Link>
+              <span onClick={openReservation} style={{ ...linkStyle, cursor: "pointer" }}>Reservar Mesa</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Legal</span>
               <Link href="/aviso-legal" style={linkStyle}>Aviso Legal</Link>
               <Link href="/privacidad" style={linkStyle}>Privacidad</Link>
               <Link href="/cookies" style={linkStyle}>Política de Cookies</Link>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-              <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Síguenos</span>
               <a href="https://instagram.com/gastroshows" target="_blank" rel="noreferrer" style={linkStyle}>Instagram</a>
               <a href="https://www.tiktok.com/@gastroshows" target="_blank" rel="noreferrer" style={linkStyle}>TikTok</a>
-              <a href="#" style={linkStyle}>Facebook</a>
             </div>
           </div>
         </div>

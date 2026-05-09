@@ -1,18 +1,7 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "Cena a Ciegas Barcelona: Experiencia Gastronómica Sin Ver",
-  description:
-    "Descubre qué es una cena a ciegas en Barcelona. Experiencia sensorial única donde comes sin poder ver. Cómo funciona, beneficios y dónde vivir esta experiencia.",
-  keywords:
-    "cena a ciegas barcelona, experiencia sensorial barcelona, cena sin ver, experiencia gastronoica ciega, fine dining sensorial",
-  alternates: {
-    canonical: "https://gastroshows.es/blog/cena-a-ciegas-barcelona",
-  },
-};
 
 export default function BlogCenaACiegasPage() {
   const { openReservation } = usePageActions();
@@ -274,3 +263,4 @@ export default function BlogCenaACiegasPage() {
     </main>
   );
 }
+

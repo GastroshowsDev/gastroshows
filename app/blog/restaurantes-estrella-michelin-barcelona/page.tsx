@@ -1,20 +1,9 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "Restaurantes Michelin Barcelona: Guía de Experiencias Culinarias Premium",
-  description:
-    "Descubre los mejores restaurantes con estrella Michelin en Barcelona. Guía completa de experiencias gastronómicas de lujo, chefs reconocidos y reservas.",
-  keywords:
-    "restaurantes estrella michelin barcelona, michelin barcelona, restaurantes michelin, experiencia gastronomica barcelona, cena premium barcelona",
-  alternates: {
-    canonical: "https://gastroshows.es/blog/restaurantes-estrella-michelin-barcelona",
-  },
-};
 
 export default function BlogRestaurantesMichelinPage() {
   const { openReservation } = usePageActions();
@@ -386,3 +375,4 @@ export default function BlogRestaurantesMichelinPage() {
     </main>
   );
 }
+

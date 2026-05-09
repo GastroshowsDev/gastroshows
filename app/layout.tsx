@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { SeoHead, SeoBodyScripts, getTrackingConfig } from "@/components/SeoHead";
@@ -57,6 +56,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { Footer } from "@/components/Footer";
+import { SiteNav } from "@/components/SiteNav";
+import { GoogleTagManager } from "@/components/tracking/GoogleTagManager";
+import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
+import { MetaPixel } from "@/components/tracking/MetaPixel";
+import { TikTokPixel } from "@/components/tracking/TikTokPixel";
 
 export default async function RootLayout({
   children,
@@ -73,21 +77,18 @@ export default async function RootLayout({
     >
       <head>
         <SeoHead />
-        <Script id="theme-script" strategy="beforeInteractive">
-          {`
-            try {
-              const theme = localStorage.getItem('gs-theme') || 'clandestino';
-              const html = document.documentElement;
-              html.classList.remove('clandestino', 'revelado');
-              html.classList.add(theme);
-            } catch (e) {}
-          `}
-        </Script>
+        <GoogleTagManager />
       </head>
       <body className="min-h-full flex flex-col">
         <Providers>
+          <GoogleAnalytics />
+          <MetaPixel />
+          <TikTokPixel />
           <SeoBodyScripts />
-          {children}
+          <SiteNav />
+          <div style={{ paddingTop: "60px" }}>
+            {children}
+          </div>
           <Footer />
         </Providers>
         <CookieConsent {...tracking} />

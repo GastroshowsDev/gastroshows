@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "experience": "L'Experiència",
+    "menu": "Menú",
+    "groups": "Grups",
+    "blog": "Blog",
+    "contact": "Contacte",
+    "reserve": "Reservar",
+    "gift": "Regalar"
+  },
+  "home": {
+    "hero_tag": "GastroShows · Barcelona",
+    "hero_title": "Un sopar que comença abans que hi arribis",
+    "hero_subtitle": "Quatre missatges, una ubicació secreta i el millor menú degustació de Barcelona.",
+    "reserve": "Reservar",
+    "gift": "Regalar experiència",
+    "discount_tag": "Oferta especial",
+    "discount_title": "15% de descompte els dimecres i dijous",
+    "discount_subtitle": "La mateixa experiència completa, a un preu especial entre setmana"
+  },
+  "menu_page": {
+    "tag": "GastroShows · Barcelona",
+    "title": "Menú Degustació",
+    "subtitle": "Set actes culinaris en una ubicació secreta. Una experiència gastronòmica que comença dies abans que et seguis a taula.",
+    "reserve": "Reservar Ara",
+    "gift": "Regalar Experiència",
+    "acts_tag": "El menú",
+    "acts_title": "Els Set Actes",
+    "pairing_tag": "Inclòs al menú",
+    "pairing_title": "Maridatge Complet",
+    "cta_title": "Preparat per viure l'experiència?",
+    "cta_subtitle": "Places limitades. Cada sessió és única i irrepetible.",
+    "meta_title": "Menú Degustació Barcelona · 7 Actes · GastroShows",
+    "meta_desc": "El millor menú degustació de Barcelona. 7 actes: còctel, taula del xef, 3 plats, 2 postres i gintònic amb petit fours. Maridatge inclòs."
+  },
+  "experience_page": {
+    "tag": "Una experiència única a Barcelona",
+    "title": "Sopar Clandestí Barcelona",
+    "subtitle": "Un sopar que comença abans que hi arribis. Quatre missatges, quatre pistes, una ubicació secreta que descobriràs tu sol.",
+    "how_tag": "El Ritual",
+    "how_title": "Com funciona l'experiència",
+    "meta_title": "Sopar Clandestí Barcelona · Restaurant Secret · GastroShows",
+    "meta_desc": "El sopar clandestí més famós de Barcelona. Ubicació secreta, menú de 7 actes i maridatge. Rep 4 missatges misteriosos. Reserva ara."
+  },
+  "gift_page": {
+    "tag": "El regal perfecte",
+    "title": "Regala una Experiència Gastronòmica a Barcelona",
+    "subtitle": "Un bo regal per viure el sopar clandestí més especial de Barcelona.",
+    "cta": "Comprar Bo Regal",
+    "meta_title": "Regalar Experiència Gastronòmica Barcelona · GastroShows",
+    "meta_desc": "Regala el sopar clandestí de GastroShows a Barcelona. Bo regal per a menú degustació amb maridatge complet. El regal que no s'oblida."
+  },
+  "groups_page": {
+    "tag": "Experiències exclusives",
+    "title": "Grups i Esdeveniments Privats a Barcelona",
+    "subtitle": "L'experiència clandestina per al teu grup. Des de 10 persones.",
+    "cta": "Consultar Disponibilitat",
+    "meta_title": "Esdeveniments Privats i Grups Barcelona · GastroShows",
+    "meta_desc": "Sopars privats i esdeveniments de grup a Barcelona. Team buildings, comiat de solter/a, aniversaris d'empresa. Menú degustació exclusiu des de 10 persones."
+  },
+  "faq_page": {
+    "tag": "Tot el que necessites saber",
+    "title": "Preguntes Freqüents",
+    "subtitle": "Resolem tots els dubtes sobre el sopar clandestí més especial de Barcelona.",
+    "more_q": "Tens més preguntes?",
+    "more_a": "Escriu-nos i et responem en menys de 24 hores.",
+    "contact_cta": "Contactar",
+    "meta_title": "Preguntes Freqüents · Sopar Clandestí Barcelona · GastroShows",
+    "meta_desc": "Totes les respostes sobre GastroShows: preu, ubicació, menú, al·lèrgies, com funciona i com reservar."
+  },
+  "contact_page": {
+    "tag": "Parlem",
+    "title": "Contacte",
+    "subtitle": "Tens preguntes? Escriu-nos i et responem en menys de 24 hores.",
+    "meta_title": "Contacte · GastroShows Barcelona",
+    "meta_desc": "Contacta amb GastroShows per a reserves, grups o preguntes sobre el sopar clandestí."
+  },
+  "blog_page": {
+    "tag": "Gastronomia · Barcelona",
+    "title": "Blog Gastronòmic",
+    "subtitle": "Receptes, guies, experiències i tot el que necessites saber sobre la gastronomia barcelonina.",
+    "read_more": "Llegir →",
+    "all": "Tots",
+    "meta_title": "Blog Gastronòmic · GastroShows Barcelona",
+    "meta_desc": "Blog de gastronomia de GastroShows. Receptes catalanes, guies de restaurants, maridatges i el sopar clandestí més famós de Barcelona."
+  },
+  "footer": {
+    "tagline": "Barcelona · Gastronomia · Misteri",
+    "experience_col": "Experiència",
+    "info_col": "Informació",
+    "legal_col": "Legal",
+    "clandestine": "Sopar Clandestí",
+    "menu": "Menú Degustació",
+    "gift": "Regalar Experiència",
+    "groups": "Grups i Esdeveniments",
+    "faq": "Preguntes Freqüents",
+    "blog": "Blog Gastronòmic",
+    "contact": "Contacte",
+    "reserve": "Reservar Taula",
+    "legal": "Avís Legal",
+    "privacy": "Privacitat",
+    "cookies": "Política de Cookies",
+    "copyright": "GastroShows Barcelona. Els millors sopars clandestins."
+  },
+  "discount_banner": {
+    "tag": "Oferta especial entre setmana",
+    "title": "15% de descompte els dimecres i dijous",
+    "subtitle": "La mateixa experiència completa. El mateix menú. El mateix misteri.",
+    "cta": "Veure disponibilitat"
+  }
+}

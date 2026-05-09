@@ -1,27 +1,9 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "Preguntas Frecuentes · GastroShows",
-  description:
-    "Resuelve tus dudas sobre la cena clandestina de GastroShows: cómo funciona, precio, ubicación, duración, alergias, regalo y más.",
-  keywords:
-    "cena clandestina barcelona preguntas, como funciona gastroshows, precio cena clandestina, regalo experiencia gastronoica",
-  alternates: {
-    canonical: "https://gastroshows.es/preguntas-frecuentes",
-  },
-  openGraph: {
-    title: "Preguntas Frecuentes · GastroShows",
-    description:
-      "Resuelve tus dudas sobre la cena clandestina de GastroShows: cómo funciona, precio, ubicación, duración, alergias y más.",
-    type: "website",
-    locale: "es_ES",
-  },
-};
 
 const faqItems = [
   {
@@ -380,3 +362,4 @@ export default function PreguntasFrecuentesPage() {
     </>
   );
 }
+

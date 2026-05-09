@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PaymentButton } from "./PaymentButton";
 
-const GOLD = "#daa520";
+const GOLD = "#C8A96E";
 const DARK2 = "#1A1A1A";
 const DARK = "#111111";
 const OFFWHITE = "#F5F0E8";

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { GiftRedemptionModal } from "./GiftRedemptionModal";
 
-const GOLD = "#daa520";
+const GOLD = "#C8A96E";
 const OFFWHITE = "#F5F0E8";
 const LIGHT = "#888888";
 

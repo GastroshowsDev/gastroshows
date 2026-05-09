@@ -88,15 +88,15 @@ function buildConfirmationHtml({
       <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
 
         <tr><td align="center" style="padding-bottom:32px;">
-          <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#daa520);margin:0 auto 16px;"></div>
-          <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#daa520;">GastroShows</span>
+          <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C8A96E);margin:0 auto 16px;"></div>
+          <span style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#C8A96E;">GastroShows</span>
         </td></tr>
 
         <tr><td style="background:#141414;border:1px solid rgba(200,169,110,0.25);border-radius:4px;padding:48px 40px;">
           <table width="100%" cellpadding="0" cellspacing="0">
 
             <tr><td align="center" style="padding-bottom:28px;">
-              <div style="width:64px;height:64px;border:1px solid rgba(200,169,110,0.4);border-radius:50%;display:inline-block;line-height:64px;text-align:center;font-size:26px;color:#daa520;">✓</div>
+              <div style="width:64px;height:64px;border:1px solid rgba(200,169,110,0.4);border-radius:50%;display:inline-block;line-height:64px;text-align:center;font-size:26px;color:#C8A96E;">✓</div>
             </td></tr>
 
             <tr><td align="center" style="padding-bottom:8px;">

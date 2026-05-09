@@ -1,18 +1,7 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "Restaurantes Michelin Baratos Barcelona: Gastronomía Premium Accesible",
-  description:
-    "Descubre restaurantes con estrella Michelin en Barcelona con buena relación calidad-precio. Gastronomía premium sin gastar una fortuna. Guía de establecimientos asequibles.",
-  keywords:
-    "restaurantes michelin baratos barcelona, michelin barcelona precio, gastronomia barata barcelona, cena michelin economica, menu degustacion barato barcelona",
-  alternates: {
-    canonical: "https://gastroshows.es/blog/restaurantes-michelin-baratos-barcelona",
-  },
-};
 
 export default function BlogMichelinBaritoPage() {
   const { openReservation } = usePageActions();
@@ -279,3 +268,4 @@ export default function BlogMichelinBaritoPage() {
     </main>
   );
 }
+

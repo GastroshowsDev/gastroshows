@@ -61,7 +61,7 @@ export function RegaloSection({ onRegalar, content }: Props) {
           lineHeight: 1.2,
         }}>
           {c(content, "regalo.title_line1")}<br />
-          <em style={{ color: "#daa520" }}>{c(content, "regalo.title_em")}</em>
+          <em style={{ color: "#C8A96E" }}>{c(content, "regalo.title_em")}</em>
         </h2>
 
         <p style={{
@@ -84,7 +84,7 @@ export function RegaloSection({ onRegalar, content }: Props) {
               background: "rgba(200,169,110,0.07)",
               backdropFilter: "blur(8px)",
             }}>
-              <span style={{ color: "#daa520", fontSize: "1.3rem" }}>{icon}</span>
+              <span style={{ color: "#C8A96E", fontSize: "1.3rem" }}>{icon}</span>
               <span style={{
                 fontSize: "0.9rem",
                 fontWeight: 500,
@@ -101,7 +101,7 @@ export function RegaloSection({ onRegalar, content }: Props) {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             style={{
-              background: hovered ? "#E8D5A8" : "#daa520",
+              background: hovered ? "#E8D5A8" : "#C8A96E",
               color: "#0A0A0A",
               border: "none",
               padding: "1.1rem 3rem",

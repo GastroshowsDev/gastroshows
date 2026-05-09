@@ -1,15 +1,7 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
 
-export const metadata: Metadata = {
-  title: "Política de Privacidad · GastroShows",
-  description: "Política de privacidad de GastroShows. Información sobre cómo protegemos tus datos personales.",
-  alternates: {
-    canonical: "https://gastroshows.es/privacidad",
-  },
-};
 
 export default function PrivacidadPage() {
   return (
@@ -155,3 +147,4 @@ export default function PrivacidadPage() {
     </PageLayout>
   );
 }
+

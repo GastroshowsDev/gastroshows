@@ -9,7 +9,7 @@ const MONTH_NAMES = [
 ];
 const DAY_NAMES = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
 
-const GOLD = "#daa520";
+const GOLD = "#C8A96E";
 const OFFWHITE = "#F5F0E8";
 const LIGHT = "#888888";
 

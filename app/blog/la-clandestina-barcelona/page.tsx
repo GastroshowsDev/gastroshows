@@ -1,19 +1,8 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import Link from "next/link";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "La Clandestina Barcelona: Historia, Concepto y Experiencia Secreta",
-  description:
-    "Descubre qué es la Clandestina en Barcelona. Historia del movimiento clandestino gastronómico, cómo funciona y dónde vivir experiencias secretas.",
-  keywords:
-    "la clandestina barcelona, clandestina barcelona, cena secreta barcelona, experiencia clandestina, gastronomia clandestina",
-  alternates: {
-    canonical: "https://gastroshows.es/blog/la-clandestina-barcelona",
-  },
-};
 
 export default function BlogLaClandestinaBCNPage() {
   const { openReservation } = usePageActions();
@@ -275,3 +264,4 @@ export default function BlogLaClandestinaBCNPage() {
     </main>
   );
 }
+

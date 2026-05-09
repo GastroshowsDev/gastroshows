@@ -122,7 +122,7 @@ export function Placeholder({ children }: { children: ReactNode }) {
       border: "1px solid rgba(200,169,110,0.4)",
       borderRadius: "3px",
       padding: "0 0.3rem",
-      color: "#daa520",
+      color: "#C8A96E",
       fontStyle: "italic",
       fontSize: "0.85em",
     }}>

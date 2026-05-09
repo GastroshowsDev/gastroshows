@@ -183,7 +183,7 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 onMouseLeave={() => setHovered(false)}
                 style={{
                   display: "inline-block",
-                  background: hovered ? "#E8D5A8" : "#daa520",
+                  background: hovered ? "#E8D5A8" : "#C8A96E",
                   color: "#0A0A0A",
                   border: "none",
                   padding: "1.1rem 3rem",

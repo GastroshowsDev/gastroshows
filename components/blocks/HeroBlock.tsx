@@ -170,7 +170,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   dataField="titleAccent"
                   placeholder="Acento"
                   style={{ 
-                    color: "#daa520", 
+                    color: "#C8A96E", 
                     fontStyle: "italic",
                     textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
                       ? "none" 
@@ -274,7 +274,7 @@ function HeroButton({
   const [hovered, setHovered] = useState(false);
 
   const bg = primary
-    ? hovered ? "#E8D5A8" : "#daa520"
+    ? hovered ? "#E8D5A8" : "#C8A96E"
     : hovered ? "rgba(200,169,110,0.6)" : "rgba(200,169,110,0.4)";
 
   return (

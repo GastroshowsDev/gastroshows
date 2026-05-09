@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "experience": "The Experience",
+    "menu": "Menu",
+    "groups": "Groups",
+    "blog": "Blog",
+    "contact": "Contact",
+    "reserve": "Book",
+    "gift": "Gift"
+  },
+  "home": {
+    "hero_tag": "GastroShows · Barcelona",
+    "hero_title": "A dinner that begins before you arrive",
+    "hero_subtitle": "Four messages, a secret location and the best tasting menu in Barcelona.",
+    "reserve": "Book Now",
+    "gift": "Gift the Experience",
+    "discount_tag": "Special offer",
+    "discount_title": "15% off on Wednesdays and Thursdays",
+    "discount_subtitle": "The same complete experience at a special midweek price"
+  },
+  "menu_page": {
+    "tag": "GastroShows · Barcelona",
+    "title": "Tasting Menu",
+    "subtitle": "Seven culinary acts in a secret location. A gastronomic experience that begins days before you sit at the table.",
+    "reserve": "Book Now",
+    "gift": "Gift the Experience",
+    "acts_tag": "The menu",
+    "acts_title": "The Seven Acts",
+    "pairing_tag": "Included in the menu",
+    "pairing_title": "Full Wine Pairing",
+    "cta_title": "Ready to live the experience?",
+    "cta_subtitle": "Limited places. Each session is unique and unrepeatable.",
+    "meta_title": "Tasting Menu Barcelona · 7 Acts · GastroShows",
+    "meta_desc": "The best tasting menu in Barcelona. 7 acts: welcome cocktail, chef's table, 3 courses, 2 desserts and gin & tonic with petit fours. Full pairing included."
+  },
+  "experience_page": {
+    "tag": "A unique experience in Barcelona",
+    "title": "Secret Dinner Barcelona",
+    "subtitle": "A dinner that begins before you arrive. Four messages, four clues, a secret location you'll discover on your own.",
+    "how_tag": "The Ritual",
+    "how_title": "How the experience works",
+    "meta_title": "Secret Dinner Barcelona · Clandestine Restaurant · GastroShows",
+    "meta_desc": "Barcelona's most famous secret dinner. Secret location, 7-act tasting menu and full pairing. Receive 4 mysterious messages. Book now."
+  },
+  "gift_page": {
+    "tag": "The perfect gift",
+    "title": "Gift a Gastronomic Experience in Barcelona",
+    "subtitle": "A gift voucher to experience Barcelona's most special secret dinner.",
+    "cta": "Buy Gift Voucher",
+    "meta_title": "Gift Gastronomic Experience Barcelona · GastroShows",
+    "meta_desc": "Gift the GastroShows secret dinner in Barcelona. Gift voucher for tasting menu with full pairing. The gift that's never forgotten."
+  },
+  "groups_page": {
+    "tag": "Exclusive experiences",
+    "title": "Groups and Private Events in Barcelona",
+    "subtitle": "The clandestine experience for your group. From 10 people.",
+    "cta": "Check Availability",
+    "meta_title": "Private Events and Groups Barcelona · GastroShows",
+    "meta_desc": "Private dinners and group events in Barcelona. Team buildings, hen/stag parties, company anniversaries. Exclusive tasting menu from 10 people."
+  },
+  "faq_page": {
+    "tag": "Everything you need to know",
+    "title": "Frequently Asked Questions",
+    "subtitle": "We answer all questions about Barcelona's most special secret dinner.",
+    "more_q": "Have more questions?",
+    "more_a": "Write to us and we'll respond within 24 hours.",
+    "contact_cta": "Contact Us",
+    "meta_title": "FAQ · Secret Dinner Barcelona · GastroShows",
+    "meta_desc": "All answers about GastroShows: price, location, menu, allergies, how it works and how to book."
+  },
+  "contact_page": {
+    "tag": "Let's talk",
+    "title": "Contact",
+    "subtitle": "Have questions? Write to us and we'll respond within 24 hours.",
+    "meta_title": "Contact · GastroShows Barcelona",
+    "meta_desc": "Contact GastroShows for bookings, groups or questions about the secret dinner."
+  },
+  "blog_page": {
+    "tag": "Gastronomy · Barcelona",
+    "title": "Gastronomic Blog",
+    "subtitle": "Recipes, guides, experiences and everything you need to know about Barcelona's gastronomy.",
+    "read_more": "Read →",
+    "all": "All",
+    "meta_title": "Gastronomic Blog · GastroShows Barcelona",
+    "meta_desc": "GastroShows gastronomy blog. Catalan recipes, Barcelona restaurant guides, wine pairings and the city's most famous secret dinner."
+  },
+  "footer": {
+    "tagline": "Barcelona · Gastronomy · Mystery",
+    "experience_col": "Experience",
+    "info_col": "Information",
+    "legal_col": "Legal",
+    "clandestine": "Secret Dinner",
+    "menu": "Tasting Menu",
+    "gift": "Gift the Experience",
+    "groups": "Groups & Events",
+    "faq": "FAQ",
+    "blog": "Gastronomic Blog",
+    "contact": "Contact",
+    "reserve": "Book a Table",
+    "legal": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "copyright": "GastroShows Barcelona. The best secret dinners."
+  },
+  "discount_banner": {
+    "tag": "Special midweek offer",
+    "title": "15% off on Wednesdays and Thursdays",
+    "subtitle": "The same complete experience. The same menu. The same mystery.",
+    "cta": "Check availability"
+  }
+}

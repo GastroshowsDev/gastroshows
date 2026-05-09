@@ -1,18 +1,7 @@
 ﻿"use client";
 
-import type { Metadata } from "next";
 import { usePageActions } from "@/context/PageActionsContext";
 
-export const metadata: Metadata = {
-  title: "Menú Degustación Barcelona: La Experiencia Culinaria Definitiva",
-  description:
-    "Descubre qué es un menú degustación, cómo funciona y dónde disfrutar de las mejores experiencias gastronómicas en Barcelona.",
-  keywords:
-    "menu degustacion barcelona, que es menu degustacion, menu degustacion precio, experiencia gastronoica barcelona",
-  alternates: {
-    canonical: "https://gastroshows.es/blog/menu-degustacion-barcelona",
-  },
-};
 
 export default function BlogMenuDegustacionPage() {
   const { openReservation } = usePageActions();
@@ -368,3 +357,4 @@ export default function BlogMenuDegustacionPage() {
     </main>
   );
 }
+
