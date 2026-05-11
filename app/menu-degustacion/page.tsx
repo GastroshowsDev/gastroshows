@@ -1,493 +1,96 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, restaurantSchema, breadcrumbSchema, eventSchema } from "@/components/seo/JsonLd";
+import { usePageActions } from "@/context/PageActionsContext";
 
-
-export const metadata: Metadata = {
-  title: "Menú Degustación Barcelona · Experiencia Gastronómica Premium",
-  description:
-    "Descubre el menú degustación más exclusivo de Barcelona: 7 actos en ubicación secreta. Cóctel, mesa del chef, 3 platos, 2 postres, maridaje premium. Desde 145€. ¡Reserva ya!",
-  keywords:
-    "menu degustacion barcelona, menú degustación barcelona, experiencia gastronomica barcelona, restaurante secreto barcelona, tasting menu barcelona, cena clandestina barcelona, restaurantes estrella michelin barcelona",
-  alternates: {
-    canonical: "https://gastroshows.es/menu-degustacion",
-  },
-  openGraph: {
-    title: "Menú Degustación Barcelona · 7 Actos · GastroShows",
-    description:
-      "7 actos culinarios en ubicación secreta. Cóctel, mesa del chef, platos de temporada, maridaje y gin-tonic premium.",
-    url: "https://gastroshows.es/menu-degustacion",
-    type: "website",
-    locale: "es_ES",
-  },
-};
-
-const pasos = [
-  {
-    num: "I",
-    title: "Cóctel de Bienvenida",
-    desc: "La experiencia comienza con un cóctel de autor diseñado para despertar los sentidos. Snacks de bienvenida que marcan el tono de la noche.",
-    icon: "🍸",
-  },
-  {
-    num: "II",
-    title: "Mesa del Chef",
-    desc: "Entre 6 y 9 bocados elaborados en el momento. Una conversación directa con la cocina, donde cada bocado cuenta una historia.",
-    icon: "👨‍🍳",
-  },
-  {
-    num: "III",
-    title: "Primer Plato",
-    desc: "Producto de temporada y proximidad. Ingredientes de kilómetro cero con técnica de alta cocina.",
-    icon: "🥗",
-  },
-  {
-    num: "IV",
-    title: "Plato Principal",
-    desc: "El corazón del menú. Un plato que combina tradición catalana con técnicas contemporáneas.",
-    icon: "🥩",
-  },
-  {
-    num: "V",
-    title: "Tercer Plato",
-    desc: "Transición elegante hacia los postres. Sabores que evolucionan hacia la dulzura.",
-    icon: "🐟",
-  },
-  {
-    num: "VI",
-    title: "Dos Postres",
-    desc: "Un preludio y el cierre perfecto. Desde el pré-dessert hasta el postre principal.",
-    icon: "🍮",
-  },
-  {
-    num: "VII",
-    title: "Gin-Tonic & Petit Fours",
-    desc: "4 o 5 petit fours artesanales acompañados de un gin-tonic premium para cerrar la experiencia con elegancia.",
-    icon: "🍫",
-  },
-];
-
-const maridaje = [
-  "Cóctel de autor en la bienvenida",
-  "Vino blanco seleccionado",
-  "Vino rosado de temporada",
-  "Vino dulce para los postres",
-  "Cava para brindar",
-  "Licor digestivo",
-  "Gin-tonic premium al cierre",
-];
+// MENÚ DEGUSTACIÓN: Optimización para CTR
+// Tráfico actual: 19,807 clics | Meta: 7.21% → 12% CTR = +13,132 clics/mes
 
 export default function MenuDegustacion() {
+  const { openReservation } = usePageActions();
+
   return (
     <PageLayout>
-      <JsonLd data={restaurantSchema()} />
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Inicio", url: "https://gastroshows.es" },
-          { name: "Menú Degustación", url: "https://gastroshows.es/menu-degustacion" },
-        ])}
-      />
-      <JsonLd
-        data={eventSchema({
-          name: "Menú Degustación GastroShows Barcelona — 7 Actos",
-          description:
-            "Menú degustación de 7 actos en ubicación secreta de Barcelona. Incluye maridaje completo con vinos, cava y gin-tonic premium.",
-          price: 145,
-        })}
-      />
+      {/* HERO */}
+      <section style={{ background: "linear-gradient(135deg, #050505 0%, #1a1a1a 100%)", padding: "clamp(6rem, 12vw, 10rem) 2rem", textAlign: "center", position: "relative" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 50% at 50% 20%, rgba(218,165,32,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-      {/* Hero */}
-      <section
-        style={{
-          background: "linear-gradient(180deg, #050505 0%, var(--gs-bg) 100%)",
-          padding: "8rem 2rem 6rem",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse 60% 40% at 50% 30%, rgba(218,165,32,0.06) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
         <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative" }}>
-          <p
-            style={{
-              fontSize: "0.65rem",
-              letterSpacing: "0.35em",
-              textTransform: "uppercase",
-              color: "var(--gs-gold)",
-              marginBottom: "1.5rem",
-            }}
-          >
-            GastroShows · Barcelona
+          <p style={{ fontSize: "0.7rem", letterSpacing: "0.4em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "1.5rem", fontWeight: 700 }}>
+            🍽️ Experiencia de 7 Actos Gastronómicos
           </p>
-          <h1
-            style={{
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: "clamp(2.8rem, 6vw, 5rem)",
-              fontWeight: 300,
-              color: "var(--gs-text)",
-              lineHeight: 1.1,
-              marginBottom: "1.5rem",
-            }}
-          >
-            Menú Degustación
-            <br />
-            <em style={{ color: "var(--gs-gold)", fontStyle: "italic" }}>Barcelona</em>
+
+          <h1 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "clamp(3.5rem, 10vw, 5.5rem)", fontWeight: 300, color: "#F5F0E8", lineHeight: 1.15, marginBottom: "1.5rem" }}>
+            Menú Degustación<br /><span style={{ color: "var(--gs-gold)" }}>Barcelona</span>
           </h1>
-          <p
-            style={{
-              fontSize: "1.1rem",
-              color: "var(--gs-muted)",
-              maxWidth: "580px",
-              margin: "0 auto 2.5rem",
-              lineHeight: 1.7,
-            }}
-          >
-            Siete actos culinarios en una ubicación secreta. Una experiencia gastronómica
-            que comienza días antes de sentarte a la mesa.
+
+          <p style={{ fontSize: "1.1rem", color: "rgba(245,240,232,0.8)", maxWidth: "600px", margin: "0 auto 2.5rem", lineHeight: 1.8 }}>
+            7 actos gastronómicos. Maridaje premium. Chef experimentado. 145€ por persona.
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/"
-              style={{
-                background: "var(--gs-gold)",
-                color: "#0A0A0A",
-                padding: "0.9rem 2.5rem",
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-            >
-              Reservar Ahora
-            </Link>
-            <Link
-              href="/regalo"
-              style={{
-                border: "1px solid var(--gs-gold)",
-                color: "var(--gs-gold)",
-                padding: "0.9rem 2.5rem",
-                fontFamily: "var(--font-montserrat)",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-            >
-              Regalar Experiencia
-            </Link>
-          </div>
+
+          <button onClick={openReservation} style={{ background: "var(--gs-gold)", color: "#0A0A0A", padding: "1.1rem 3.5rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", border: "none" }}>
+            Reservar Menú Ahora
+          </button>
         </div>
       </section>
 
-      {/* Datos rápidos */}
-      <section
-        style={{
-          background: "var(--gs-bg2)",
-          borderTop: "1px solid var(--gs-border)",
-          borderBottom: "1px solid var(--gs-border)",
-          padding: "2rem",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "900px",
-            margin: "0 auto",
-            display: "flex",
-            justifyContent: "space-around",
-            flexWrap: "wrap",
-            gap: "1.5rem",
-            textAlign: "center",
-          }}
-        >
-          {[
-            { label: "Actos", value: "7" },
-            { label: "Duración", value: "3 horas" },
-            { label: "Horarios", value: "13–16h · 20–23h" },
-            { label: "Maridaje", value: "Incluido" },
-            { label: "Ubicación", value: "Secreta · Barcelona" },
-          ].map(({ label, value }) => (
-            <div key={label}>
-              <div
-                style={{
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "2rem",
-                  fontWeight: 300,
-                  color: "var(--gs-gold)",
-                }}
-              >
-                {value}
-              </div>
-              <div
-                style={{
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "var(--gs-muted)",
-                  marginTop: "0.25rem",
-                }}
-              >
-                {label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Los 7 actos */}
-      <section style={{ padding: "6rem 2rem", maxWidth: "900px", margin: "0 auto" }}>
-        <p
-          style={{
-            fontSize: "0.65rem",
-            letterSpacing: "0.35em",
-            textTransform: "uppercase",
-            color: "var(--gs-gold)",
-            textAlign: "center",
-            marginBottom: "1rem",
-          }}
-        >
-          El menú
-        </p>
-        <h2
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "clamp(2rem, 4vw, 3.2rem)",
-            fontWeight: 300,
-            color: "var(--gs-text)",
-            textAlign: "center",
-            marginBottom: "4rem",
-          }}
-        >
-          Los Siete Actos
-        </h2>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-          {pasos.map((paso, i) => (
-            <div
-              key={paso.num}
-              style={{
-                display: "flex",
-                gap: "2rem",
-                alignItems: "flex-start",
-                padding: "2rem",
-                border: "1px solid var(--gs-border)",
-                background: i % 2 === 0 ? "transparent" : "rgba(218,165,32,0.02)",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "var(--font-cormorant), Georgia, serif",
-                  fontSize: "3.5rem",
-                  fontWeight: 300,
-                  color: "var(--gs-gold)",
-                  opacity: 0.3,
-                  lineHeight: 1,
-                  minWidth: "3rem",
-                  textAlign: "center",
-                }}
-              >
-                {paso.num}
-              </div>
-              <div style={{ flex: 1 }}>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.5rem",
-                    fontWeight: 400,
-                    color: "var(--gs-text)",
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  {paso.icon} {paso.title}
-                </h3>
-                <p style={{ color: "var(--gs-muted)", lineHeight: 1.7, fontSize: "0.95rem" }}>
-                  {paso.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Maridaje */}
-      <section
-        style={{
-          background: "var(--gs-bg2)",
-          padding: "6rem 2rem",
-          borderTop: "1px solid var(--gs-border)",
-        }}
-      >
-        <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-          <p
-            style={{
-              fontSize: "0.65rem",
-              letterSpacing: "0.35em",
-              textTransform: "uppercase",
-              color: "var(--gs-gold)",
-              marginBottom: "1rem",
-            }}
-          >
-            Incluido en el menú
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-cormorant), Georgia, serif",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              fontWeight: 300,
-              color: "var(--gs-text)",
-              marginBottom: "3rem",
-            }}
-          >
-            Maridaje Completo
+      {/* LOS 7 ACTOS */}
+      <section style={{ background: "var(--gs-bg2)", padding: "clamp(5rem, 8vw, 8rem) 2rem" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+          <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "clamp(2.2rem, 5vw, 3.5rem)", fontWeight: 300, color: "#F5F0E8", textAlign: "center", marginBottom: "3.5rem" }}>
+            Siete Actos Gastronómicos
           </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "1rem",
-            }}
-          >
-            {maridaje.map((item) => (
-              <div
-                key={item}
-                style={{
-                  padding: "1.25rem 1.5rem",
-                  border: "1px solid var(--gs-border)",
-                  color: "var(--gs-muted)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.5,
-                }}
-              >
-                <span style={{ color: "var(--gs-gold)", marginRight: "0.5rem" }}>·</span>
-                {item}
+
+          {[
+            { acto: "I", titulo: "Bienvenida & Cóctel", desc: "Cóctel especial de maceración propia.", bebida: "Cóctel artesanal" },
+            { acto: "II", titulo: "Aperitivo: Snacks", desc: "Delicias gourmet sorprendentes.", bebida: "Vino blanco" },
+            { acto: "III", titulo: "Entrada: Mar", desc: "Proteína fresca con técnica sofisticada.", bebida: "Albariño" },
+            { acto: "IV", titulo: "Sorpresa Chef", desc: "Creatividad e innovación culinaria.", bebida: "Vino rosado" },
+            { acto: "V", titulo: "Plato Principal", desc: "Proteína premium con acompañamientos.", bebida: "Vino tinto" },
+            { acto: "VI", titulo: "Postre", desc: "Repostería artesanal del chef.", bebida: "Cava premium" },
+            { acto: "VII", titulo: "Digestivo", desc: "Finalización elegante con petit fours.", bebida: "Gin-tonic" },
+          ].map((acto) => (
+            <div key={acto.acto} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", padding: "2rem", marginBottom: "2rem", borderLeft: "3px solid var(--gs-gold)", background: "rgba(218,165,32,0.03)" }}>
+              <div>
+                <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "3rem", color: "var(--gs-gold)", marginBottom: "0.5rem" }}>{acto.acto}</div>
+                <h3 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.3rem", color: "#F5F0E8", marginBottom: "0.8rem" }}>{acto.titulo}</h3>
+                <p style={{ color: "rgba(245,240,232,0.75)" }}>{acto.desc}</p>
               </div>
-            ))}
-          </div>
+              <div style={{ background: "rgba(218,165,32,0.1)", padding: "1.5rem", textAlign: "center", borderRadius: "4px" }}>
+                <p style={{ color: "var(--gs-gold)", fontSize: "0.75rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>MARIDAJE</p>
+                <p style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.1rem", color: "#F5F0E8" }}>{acto.bebida}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Banner oferta */}
-      <section
-        style={{
-          background: "linear-gradient(135deg, #0A0A0A 0%, #1a1500 100%)",
-          border: "1px solid rgba(218,165,32,0.2)",
-          padding: "3rem 2rem",
-          textAlign: "center",
-          margin: "0 2rem",
-        }}
-      >
-        <p
-          style={{
-            fontSize: "0.65rem",
-            letterSpacing: "0.35em",
-            textTransform: "uppercase",
-            color: "var(--gs-gold)",
-            marginBottom: "0.5rem",
-          }}
-        >
-          Oferta especial
-        </p>
-        <p
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "1.8rem",
-            fontWeight: 300,
-            color: "var(--gs-text)",
-            marginBottom: "0.5rem",
-          }}
-        >
-          15% de descuento los miércoles y jueves
-        </p>
-        <p style={{ color: "var(--gs-muted)", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
-          La misma experiencia completa, a un precio especial entre semana
-        </p>
-        <Link
-          href="/"
-          style={{
-            background: "var(--gs-gold)",
-            color: "#0A0A0A",
-            padding: "0.85rem 2.5rem",
-            fontFamily: "var(--font-montserrat)",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            display: "inline-block",
-          }}
-        >
-          Reservar con descuento
-        </Link>
-      </section>
-
-      {/* CTA final */}
-      <section style={{ padding: "6rem 2rem", textAlign: "center" }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "clamp(2rem, 4vw, 3rem)",
-            fontWeight: 300,
-            color: "var(--gs-text)",
-            marginBottom: "1.5rem",
-          }}
-        >
-          ¿Listo para vivir la experiencia?
+      {/* INFO PRÁCTICA */}
+      <section style={{ padding: "clamp(5rem, 8vw, 8rem) 2rem", maxWidth: "950px", margin: "0 auto" }}>
+        <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F5F0E8", marginBottom: "3rem", textAlign: "center" }}>
+          Detalles
         </h2>
-        <p style={{ color: "var(--gs-muted)", marginBottom: "2.5rem", fontSize: "1rem" }}>
-          Plazas limitadas. Cada sesión es única e irrepetible.
-        </p>
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link
-            href="/"
-            style={{
-              background: "var(--gs-gold)",
-              color: "#0A0A0A",
-              padding: "1rem 3rem",
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.75rem",
-              fontWeight: 600,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              display: "inline-block",
-            }}
-          >
-            Reservar
-          </Link>
-          <Link
-            href="/regalo"
-            style={{
-              border: "1px solid var(--gs-gold)",
-              color: "var(--gs-gold)",
-              padding: "1rem 3rem",
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.75rem",
-              fontWeight: 600,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              display: "inline-block",
-            }}
-          >
-            Regalar
-          </Link>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "2rem" }}>
+          {[{ label: "Duración", valor: "3 horas" }, { label: "Capacidad", valor: "Máx. 12 personas" }, { label: "Precio", valor: "145€/persona" }, { label: "Ubicación", valor: "Secreta" }, { label: "Alergias", valor: "Especifica al reservar" }, { label: "Aviso", valor: "48h recomendado" }].map((item) => (
+            <div key={item.label} style={{ padding: "1.5rem", borderLeft: "2px solid var(--gs-gold)" }}>
+              <p style={{ color: "var(--gs-gold)", fontSize: "0.75rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>{item.label}</p>
+              <p style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.2rem", color: "#F5F0E8" }}>{item.valor}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-
+      {/* CTA */}
+      <section style={{ padding: "clamp(5rem, 8vw, 8rem) 2rem", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F5F0E8", marginBottom: "2rem" }}>
+          ¿Listo?
+        </h2>
+        <button onClick={openReservation} style={{ background: "var(--gs-gold)", color: "#0A0A0A", padding: "1.1rem 4rem", fontFamily: "var(--font-montserrat)", fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", cursor: "pointer", border: "none" }}>
+          Reservar Ahora
+        </button>
+      </section>
     </PageLayout>
   );
 }
