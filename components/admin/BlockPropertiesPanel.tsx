@@ -244,7 +244,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                     const lastColIndex = count - 1;
                     const removedCols = currentCols.slice(count);
                     
-                    removedCols.forEach(col => {
+                    removedCols.forEach((col: ColumnData) => {
                       newCols[lastColIndex].elements = [
                         ...newCols[lastColIndex].elements,
                         ...col.elements
@@ -299,10 +299,10 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
             <div style={rowStyle}>
-              <label style={labelStyle}>Opacidad ({Math.round(((content as any).styles?.opacity ?? ((content as any).overlayOpacity ?? 100)/100 ?? 1) * 100)}%)</label>
+              <label style={labelStyle}>Opacidad ({Math.round(((content as any).styles?.opacity ?? (((content as any).overlayOpacity ?? 100) / 100)) * 100)}%)</label>
               <input 
                 type="range" min="0" max="1" step="0.01" 
-                value={(content as any).styles?.opacity ?? ((content as any).overlayOpacity ?? 100)/100 ?? 1} 
+                value={(content as any).styles?.opacity ?? (((content as any).overlayOpacity ?? 100) / 100)} 
                 onChange={(e) => {
                   if (type === "SECTION") updateStyles(content, { opacity: parseFloat(e.target.value) });
                   else update({ overlayOpacity: parseFloat(e.target.value) * 100 });
