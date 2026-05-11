@@ -39,30 +39,18 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
   return (
     <div style={{ padding: "1.5rem" }}>
-      <h3 style={{ fontSize: "0.75rem", fontWeight: 700, color: "#111827", marginBottom: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        Propiedades: {element ? `${element.type}` : (type as any)}
+      <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "1.5rem", textTransform: "uppercase", letterSpacing: "0.08em", borderBottom: "2px solid #875BF7", paddingBottom: "0.5rem" }}>
+        {element ? `Elemento: ${element.type}` : `Bloque: ${type}`}
       </h3>
 
       {/* ATOMIC ELEMENT PROPERTIES */}
       {element && (
         <div style={{ background: "#F9FAFB", padding: "1rem", borderRadius: "8px", marginBottom: "2rem", border: "1px solid #EAEEF4" }}>
-          {element.type === "HEADING" && (
-            <>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Nivel de Título</label>
-                <select value={(element as any).level || 2} onChange={(e) => updateElement({ level: Number(e.target.value) })} style={inputStyle}>
-                  {[1, 2, 3, 4, 5, 6].map(n => <option key={n} value={n}>H{n}</option>)}
-                </select>
-              </div>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Alineación</label>
-                <select value={element.styles?.textAlign || "left"} onChange={(e) => updateStyles(element, { textAlign: e.target.value })} style={inputStyle}>
-                  <option value="left">Izquierda</option>
-                  <option value="center">Centro</option>
-                  <option value="right">Derecha</option>
-                </select>
-              </div>
-            </>
+          {/* HEADING/TEXT removed: use inline editor */}
+          {(element.type === "HEADING" || element.type === "TEXT") && (
+            <p style={{ fontSize: "0.7rem", color: "#6B7280", fontStyle: "italic" }}>
+              * Edita el texto y el SEO (H1-H6) directamente en la vista previa.
+            </p>
           )}
 
           {element.type === "BUTTON" && (
@@ -208,13 +196,12 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
             </select>
           </div>
-
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "1rem" }}>
+               <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.5rem" }}>
             <button 
               onClick={() => onElementChange?.(null as any)} 
-              style={{ flex: 1, padding: "0.5rem", background: "white", border: "1px solid #D1D5DB", borderRadius: "6px", fontSize: "0.75rem", cursor: "pointer" }}
+              style={{ flex: 1, padding: "0.6rem", background: "white", border: "1px solid #D1D5DB", borderRadius: "6px", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}
             >
-              Cerrar
+              Cerrar Elemento
             </button>
             <button 
               onClick={() => {
@@ -222,569 +209,194 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                   onElementChange?.("DELETE" as any);
                 }
               }} 
-              style={{ padding: "0.5rem", background: "#FEE2E2", color: "#EF4444", border: "1px solid #FECACA", borderRadius: "6px", fontSize: "0.75rem", cursor: "pointer" }}
+              style={{ padding: "0.6rem", background: "#FEE2E2", color: "#EF4444", border: "1px solid #FECACA", borderRadius: "6px", fontSize: "0.75rem", cursor: "pointer" }}
             >
-              🗑
+              🗑 Borrar
             </button>
           </div>
         </div>
       )}
 
-      {!element && type === "SECTION" && (
-        <>
+      {/* CONTAINER PROPERTIES (Always accessible) */}
+      {(type === "SECTION" || type === "HERO" || type === "CTA" || type === "TEXT") && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
+          <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#875BF7", textTransform: "uppercase", marginBottom: "1.2rem", letterSpacing: "0.05em" }}>Configuración del Contenedor</p>
+          
+          {(type === "SECTION" || type === "HERO" || type === "CTA" || type === "TEXT") && (
+            <div style={rowStyle}>
+              <label style={labelStyle}>Distribución de Columnas</label>
+              <select 
+                value={(content as any).columns?.length || 1} 
+                onChange={(e) => {
+                  const count = Number(e.target.value);
+                  const currentCols = (content as any).columns || [{ width: "100%", elements: [] }];
+                  let newCols: ColumnData[] = [];
+
+                  if (count > currentCols.length) {
+                    // Increasing columns: add empty ones
+                    newCols = [...currentCols];
+                    for (let i = currentCols.length; i < count; i++) {
+                      newCols.push({ width: `${100/count}%`, elements: [] });
+                    }
+                  } else if (count < currentCols.length) {
+                    // Decreasing columns: Move elements from removed columns to the last kept column
+                    newCols = currentCols.slice(0, count);
+                    const lastColIndex = count - 1;
+                    const removedCols = currentCols.slice(count);
+                    
+                    removedCols.forEach(col => {
+                      newCols[lastColIndex].elements = [
+                        ...newCols[lastColIndex].elements,
+                        ...col.elements
+                      ];
+                    });
+                  } else {
+                    newCols = [...currentCols];
+                  }
+
+                  // Update widths for all to be equal
+                  newCols = newCols.map(c => ({ ...c, width: `${100/count}%` }));
+                  update({ columns: newCols });
+                }} 
+                style={inputStyle}
+              >
+                <option value={1}>1 Columna (Ancho total)</option>
+                <option value={2}>2 Columnas (50/50)</option>
+                <option value={3}>3 Columnas (33/33/33)</option>
+                <option value={4}>4 Columnas (25/25/25/25)</option>
+              </select>
+            </div>
+          )}
+
           <div style={rowStyle}>
-            <label style={labelStyle}>Número de Columnas</label>
+            <label style={labelStyle}>Imagen de Fondo</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input value={(content as any).styles?.backgroundImage || (content as any).bgImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+              <button onClick={() => openMedia((url) => {
+                if (type === "SECTION") updateStyles(content, { backgroundImage: url });
+                else update({ bgImage: url });
+              })} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Color de Fondo</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input 
+                type="color" 
+                value={(content as any).styles?.backgroundColor || "#000000"} 
+                onChange={(e) => updateStyles(content, { backgroundColor: e.target.value })} 
+                style={{ ...inputStyle, width: "40px", padding: "2px" }} 
+              />
+              <input 
+                value={(content as any).styles?.backgroundColor || ""} 
+                onChange={(e) => updateStyles(content, { backgroundColor: e.target.value })} 
+                style={{ ...inputStyle, flex: 1 }} 
+                placeholder="#000000"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Opacidad ({Math.round(((content as any).styles?.opacity ?? ((content as any).overlayOpacity ?? 100)/100 ?? 1) * 100)}%)</label>
+              <input 
+                type="range" min="0" max="1" step="0.01" 
+                value={(content as any).styles?.opacity ?? ((content as any).overlayOpacity ?? 100)/100 ?? 1} 
+                onChange={(e) => {
+                  if (type === "SECTION") updateStyles(content, { opacity: parseFloat(e.target.value) });
+                  else update({ overlayOpacity: parseFloat(e.target.value) * 100 });
+                }} 
+                style={{ width: "100%" }} 
+              />
+            </div>
+            <div style={rowStyle}>
+              <label style={labelStyle}>Brillo ({Math.round(((content as any).styles?.brightness ?? (content as any).brightness ?? 1) * 100)}%)</label>
+              <input 
+                type="range" min="0" max="3" step="0.05" 
+                value={(content as any).styles?.brightness ?? (content as any).brightness ?? 1} 
+                onChange={(e) => {
+                  if (type === "SECTION") updateStyles(content, { brightness: parseFloat(e.target.value) });
+                  else update({ brightness: parseFloat(e.target.value) });
+                }} 
+                style={{ width: "100%" }} 
+              />
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Posición Fondo</label>
             <select 
-              value={(content as SectionContent).columns.length} 
+              value={(content as any).styles?.backgroundPosition || (content as any).bgPosition || "center"} 
               onChange={(e) => {
-                const count = Number(e.target.value);
-                const currentCols = (content as SectionContent).columns;
-                let newCols: ColumnData[] = [];
-                for (let i = 0; i < count; i++) {
-                  newCols.push(currentCols[i] || { width: `${100/count}%`, elements: [] });
-                }
-                // Update widths for all
-                newCols = newCols.map(c => ({ ...c, width: `${100/count}%` }));
-                update({ columns: newCols });
+                if (type === "SECTION") updateStyles(content, { backgroundPosition: e.target.value });
+                else update({ bgPosition: e.target.value });
               }} 
               style={inputStyle}
             >
-              <option value={1}>1 Columna</option>
-              <option value={2}>2 Columnas</option>
-              <option value={3}>3 Columnas</option>
-              <option value={4}>4 Columnas</option>
-            </select>
-          </div>
-
-          <div style={{ borderTop: "1px solid #EEE", paddingTop: "1rem", marginTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Estilos de Sección</p>
-            
-            <div style={rowStyle}>
-              <label style={labelStyle}>Relleno Vertical (Padding)</label>
-              <input 
-                placeholder="4rem 2rem" 
-                value={(content as SectionContent).styles?.padding || ""} 
-                onChange={(e) => updateStyles(content, { padding: e.target.value })} 
-                style={inputStyle} 
-              />
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Color de Fondo</label>
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <input 
-                  type="color" 
-                  value={(content as SectionContent).styles?.backgroundColor || "#000000"} 
-                  onChange={(e) => updateStyles(content, { backgroundColor: e.target.value })} 
-                  style={{ ...inputStyle, width: "40px", padding: "2px" }} 
-                />
-                <input 
-                  value={(content as SectionContent).styles?.backgroundColor || ""} 
-                  onChange={(e) => updateStyles(content, { backgroundColor: e.target.value })} 
-                  style={{ ...inputStyle, flex: 1 }} 
-                  placeholder="#000000"
-                />
-              </div>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Imagen de Fondo</label>
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <input value={(content as SectionContent).styles?.backgroundImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-                <button onClick={() => openMedia((url) => updateStyles(content, { backgroundImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
-              </div>
-            </div>
-
-            {/* Section Effects */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Opacidad ({Math.round(((content as SectionContent).styles?.opacity ?? 1) * 100)}%)</label>
-                <input 
-                  type="range" min="0" max="1" step="0.01" 
-                  value={(content as SectionContent).styles?.opacity ?? 1} 
-                  onChange={(e) => updateStyles(content, { opacity: parseFloat(e.target.value) })} 
-                  style={{ width: "100%" }} 
-                />
-              </div>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Brillo ({Math.round(((content as SectionContent).styles?.brightness ?? 1) * 100)}%)</label>
-                <input 
-                  type="range" min="0" max="3" step="0.05" 
-                  value={(content as SectionContent).styles?.brightness ?? 1} 
-                  onChange={(e) => updateStyles(content, { brightness: parseFloat(e.target.value) })} 
-                  style={{ width: "100%" }} 
-                />
-              </div>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Posición Fondo</label>
-              <select 
-                value={(content as SectionContent).styles?.backgroundPosition || "center"} 
-                onChange={(e) => updateStyles(content, { backgroundPosition: e.target.value })} 
-                style={inputStyle}
-              >
-                <option value="center">Centro</option>
-                <option value="top">Arriba</option>
-                <option value="bottom">Abajo</option>
-                <option value="left">Izquierda</option>
-                <option value="right">Derecha</option>
-                <option value="center top">Centro Arriba</option>
-                <option value="center bottom">Centro Abajo</option>
-              </select>
-            </div>
-
-            <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
-              <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado (p.ej. 2rem o 20px)</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Margin Top</label>
-                  <input value={(content as SectionContent).styles?.marginTop || ""} onChange={(e) => updateStyles(content, { marginTop: e.target.value })} style={inputStyle} placeholder="0" />
-                </div>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Margin Bottom</label>
-                  <input value={(content as SectionContent).styles?.marginBottom || ""} onChange={(e) => updateStyles(content, { marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
-                </div>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Padding Top</label>
-                  <input value={(content as SectionContent).styles?.paddingTop || ""} onChange={(e) => updateStyles(content, { paddingTop: e.target.value })} style={inputStyle} placeholder="6rem" />
-                </div>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Padding Bottom</label>
-                  <input value={(content as SectionContent).styles?.paddingBottom || ""} onChange={(e) => updateStyles(content, { paddingBottom: e.target.value })} style={inputStyle} placeholder="8rem" />
-                </div>
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Padding Left</label>
-                  <input value={(content as SectionContent).styles?.paddingLeft || ""} onChange={(e) => updateStyles(content, { paddingLeft: e.target.value })} style={inputStyle} placeholder="2rem" />
-                </div>
-                <div style={rowStyle}>
-                  <label style={labelStyle}>Padding Right</label>
-                  <input value={(content as SectionContent).styles?.paddingRight || ""} onChange={(e) => updateStyles(content, { paddingRight: e.target.value })} style={inputStyle} placeholder="2rem" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-        </>
-      )}
-
-      {/* HERO PROPERTIES */}
-      {type === "HERO" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Imagen de fondo</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input id="field-bgImage" value={(content as HeroContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-              <button onClick={() => openMedia((url) => update({ bgImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
-            </div>
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto superior (Eyebrow)</label>
-            <input id="field-eyebrow" placeholder="Ej: BARCELONA" value={(content as HeroContent).eyebrow || ""} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título principal</label>
-            <input id="field-title" value={(content as HeroContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título acento (dorado)</label>
-            <input id="field-titleAccent" value={(content as HeroContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Subtítulo</label>
-            <textarea id="field-subtitle" value={(content as HeroContent).subtitle} onChange={(e) => update({ subtitle: e.target.value })} style={{ ...inputStyle, height: "80px" }} />
-          </div>
-          
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Texto Botón 1</label>
-              <input id="field-ctaPrimaryText" value={(content as HeroContent).ctaPrimaryText} onChange={(e) => update({ ctaPrimaryText: e.target.value })} style={inputStyle} />
-            </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Link Botón 1</label>
-              <input id="field-ctaPrimaryLink" value={(content as HeroContent).ctaPrimaryLink} onChange={(e) => update({ ctaPrimaryLink: e.target.value })} style={inputStyle} />
-            </div>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Texto Botón 2</label>
-              <input id="field-ctaSecondaryText" value={(content as HeroContent).ctaSecondaryText} onChange={(e) => update({ ctaSecondaryText: e.target.value })} style={inputStyle} />
-            </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Link Botón 2</label>
-              <input id="field-ctaSecondaryLink" value={(content as HeroContent).ctaSecondaryLink} onChange={(e) => update({ ctaSecondaryLink: e.target.value })} style={inputStyle} />
-            </div>
-          </div>
-
-          <div style={{ padding: "1rem", background: "#F3F4F6", borderRadius: "8px", marginTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "0.75rem" }}>Animaciones por elemento</p>
-            
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Eyebrow</label>
-              <select value={(content as HeroContent).eyebrowAnim || "none"} onChange={(e) => update({ eyebrowAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="fade-in">Fade In</option>
-                <option value="slide-up">Deslizar Arriba</option>
-                <option value="reveal-up">Revelar</option>
-              </select>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Título</label>
-              <select value={(content as HeroContent).titleAnim || (content as HeroContent).animation || "none"} onChange={(e) => update({ titleAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="fade-in">Fade In</option>
-                <option value="slide-up">Deslizar Arriba</option>
-                <option value="bounce-in">Rebote</option>
-                <option value="glitch">Glitch</option>
-                <option value="flip-x">Giro 3D</option>
-              </select>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Subtítulo</label>
-              <select value={(content as HeroContent).subtitleAnim || "none"} onChange={(e) => update({ subtitleAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="fade-in">Fade In</option>
-                <option value="slide-left">Desde Izquierda</option>
-                <option value="blur-in">Desenfoque</option>
-              </select>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Animación Botón 1</label>
-                <select value={(content as HeroContent).ctaPrimaryAnim || "none"} onChange={(e) => update({ ctaPrimaryAnim: e.target.value })} style={inputStyle}>
-                  <option value="none">Sin animación</option>
-                  <option value="scale-in">Escalar</option>
-                  <option value="shimmer">Brillo (Shimmer)</option>
-                  <option value="float">Flotar</option>
-                </select>
-              </div>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Animación Botón 2</label>
-                <select value={(content as HeroContent).ctaSecondaryAnim || "none"} onChange={(e) => update({ ctaSecondaryAnim: e.target.value })} style={inputStyle}>
-                  <option value="none">Sin animación</option>
-                  <option value="fade-in">Fade In</option>
-                  <option value="slide-right">Desde Derecha</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Opacidad Fondo ({Math.round(((content as HeroContent).overlayOpacity || 100))}%)</label>
-              <input id="field-overlayOpacity" type="range" min="0" max="100" value={(content as HeroContent).overlayOpacity} onChange={(e) => update({ overlayOpacity: Number(e.target.value) })} style={{ width: "100%" }} />
-            </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Brillo ({Math.round(((content as any).brightness ?? 1) * 100)}%)</label>
-              <input type="range" min="0" max="3" step="0.05" value={(content as any).brightness ?? 1} onChange={(e) => update({ brightness: parseFloat(e.target.value) })} style={{ width: "100%" }} />
-            </div>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Posición Fondo</label>
-            <select value={(content as HeroContent).bgPosition || "center"} onChange={(e) => update({ bgPosition: e.target.value })} style={inputStyle}>
               <option value="center">Centro</option>
               <option value="top">Arriba</option>
               <option value="bottom">Abajo</option>
-              <option value="center 20%">Arriba (20%)</option>
-              <option value="center 80%">Abajo (80%)</option>
-            </select>
-          </div>
-
-          <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Margin Top</label>
-                <input value={(content as any).marginTop || ""} onChange={(e) => update({ marginTop: e.target.value })} style={inputStyle} placeholder="0" />
-              </div>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Margin Bottom</label>
-                <input value={(content as any).marginBottom || ""} onChange={(e) => update({ marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Padding Top</label>
-                <input value={(content as any).paddingTop || ""} onChange={(e) => update({ paddingTop: e.target.value })} style={inputStyle} placeholder="0" />
-              </div>
-              <div style={rowStyle}>
-                <label style={labelStyle}>Padding Bottom</label>
-                <input value={(content as any).paddingBottom || ""} onChange={(e) => update({ paddingBottom: e.target.value })} style={inputStyle} placeholder="0" />
-              </div>
-            </div>
-          </div>
-
-
-
-        </>
-      )}
-
-      {/* TEXT PROPERTIES */}
-      {type === "TEXT" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Eyebrow (pequeño arriba)</label>
-            <input id="field-eyebrow" value={(content as TextContent).eyebrow} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título</label>
-            <input id="field-title" value={(content as TextContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título acento (dorado/cursiva)</label>
-            <input id="field-titleAccent" value={(content as TextContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto del cuerpo</label>
-            <textarea id="field-body" value={(content as TextContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "120px" }} />
-          </div>
-
-          <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "1rem", marginTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Estilos del Título</p>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-              <div>
-                <label style={labelStyle}>Tamaño fuente</label>
-                <input id="field-titleFontSize" placeholder="clamp(2rem, 4vw, 3.2rem)" value={(content as TextContent).titleStyles?.fontSize || ""} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontSize: e.target.value } })} style={{ ...inputStyle, marginBottom: 0 }} />
-              </div>
-              <div>
-                <label style={labelStyle}>Color</label>
-                <input id="field-titleColor" type="color" value={(content as TextContent).titleStyles?.color || "#F5F0E8"} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, color: e.target.value } })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
-              </div>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Sombra de texto</label>
-              <input id="field-titleTextShadow" placeholder="0 2px 10px rgba(0,0,0,0.3)" value={(content as TextContent).titleStyles?.textShadow || ""} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, textShadow: e.target.value } })} style={inputStyle} />
-            </div>
-
-            <div style={{ display: "flex", gap: "1.5rem" }}>
-              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-                <input id="field-titleBold" type="checkbox" checked={(content as TextContent).titleStyles?.fontWeight === "bold" || false} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontWeight: e.target.checked ? "bold" : "normal" } })} />
-                Negrita
-              </label>
-              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-                <input id="field-titleItalic" type="checkbox" checked={(content as TextContent).titleStyles?.fontStyle === "italic" || false} onChange={(e) => update({ titleStyles: { ...(content as TextContent).titleStyles, fontStyle: e.target.checked ? "italic" : "normal" } })} />
-                Cursiva
-              </label>
-            </div>
-          </div>
-
-          <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: "1rem", marginTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Estilos del Cuerpo</p>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-              <div>
-                <label style={labelStyle}>Tamaño fuente</label>
-                <input id="field-bodyFontSize" placeholder="1.1rem" value={(content as TextContent).bodyStyles?.fontSize || ""} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontSize: e.target.value } })} style={{ ...inputStyle, marginBottom: 0 }} />
-              </div>
-              <div>
-                <label style={labelStyle}>Color</label>
-                <input id="field-bodyColor" type="color" value={(content as TextContent).bodyStyles?.color || "#F5F0E8"} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, color: e.target.value } })} style={{ ...inputStyle, marginBottom: 0, padding: "2px" }} />
-              </div>
-            </div>
-
-            <div style={rowStyle}>
-              <label style={labelStyle}>Sombra de texto</label>
-              <input id="field-bodyTextShadow" placeholder="0 2px 10px rgba(0,0,0,0.3)" value={(content as TextContent).bodyStyles?.textShadow || ""} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, textShadow: e.target.value } })} style={inputStyle} />
-            </div>
-
-            <div style={{ display: "flex", gap: "1.5rem" }}>
-              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-                <input id="field-bodyBold" type="checkbox" checked={(content as TextContent).bodyStyles?.fontWeight === "bold" || false} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontWeight: e.target.checked ? "bold" : "normal" } })} />
-                Negrita
-              </label>
-              <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0 }}>
-                <input id="field-bodyItalic" type="checkbox" checked={(content as TextContent).bodyStyles?.fontStyle === "italic" || false} onChange={(e) => update({ bodyStyles: { ...(content as TextContent).bodyStyles, fontStyle: e.target.checked ? "italic" : "normal" } })} />
-                Cursiva
-              </label>
-            </div>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Animación de entrada</label>
-            <select id="field-animation" value={(content as TextContent).animation || "none"} onChange={(e) => update({ animation: e.target.value as any })} style={inputStyle}>
-              <option value="none">Ninguna</option>
-              <option value="typewriter">Máquina de escribir</option>
-              <option value="fade">Fundido</option>
-              <option value="slide">Deslizar</option>
-              <option value="zoom">Zoom</option>
-              <option value="bounce">Rebote</option>
-            </select>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Efecto al pasar el ratón (Hover)</label>
-            <select id="field-hoverEffect" value={(content as TextContent).hoverEffect || "none"} onChange={(e) => update({ hoverEffect: e.target.value as any })} style={inputStyle}>
-              <option value="none">Sin efecto</option>
-              <option value="grow">Agrandar</option>
-              <option value="glow">Brillar</option>
-              <option value="lift">Elevar</option>
-            </select>
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Alineación</label>
-            <select id="field-alignment" value={(content as TextContent).alignment} onChange={(e) => update({ alignment: e.target.value as any })} style={inputStyle}>
               <option value="left">Izquierda</option>
-              <option value="center">Centro</option>
               <option value="right">Derecha</option>
             </select>
           </div>
-        </>
-      )}
-
-      {/* IMAGE PROPERTIES */}
-      {type === "IMAGE" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Imagen</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input value={(content as ImageContent).src} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-              <button onClick={() => openMedia((url) => update({ src: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
-            </div>
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto Alternativo (SEO)</label>
-            <input value={(content as ImageContent).alt} onChange={(e) => update({ alt: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Pie de foto</label>
-            <input value={(content as ImageContent).caption} onChange={(e) => update({ caption: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={{ ...labelStyle, display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-              <input type="checkbox" checked={(content as ImageContent).fullWidth} onChange={(e) => update({ fullWidth: e.target.checked })} />
-              Ancho completo
-            </label>
-          </div>
-        </>
-      )}
-
-      {/* CTA PROPERTIES */}
-      {type === "CTA" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Imagen de fondo (opcional)</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input value={(content as CtaContent).bgImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-              <button onClick={() => openMedia((url) => update({ bgImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
-            </div>
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto superior (Eyebrow)</label>
-            <input value={(content as CtaContent).eyebrow || ""} onChange={(e) => update({ eyebrow: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título</label>
-            <input value={(content as CtaContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Cuerpo del texto</label>
-            <textarea value={(content as CtaContent).body} onChange={(e) => update({ body: e.target.value })} style={{ ...inputStyle, height: "80px" }} />
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Opacidad Fondo ({Math.round(((content as any).overlayOpacity ?? 1) * 100)}%)</label>
-              <input 
-                type="range" min="0" max="1" step="0.01" 
-                value={(content as any).overlayOpacity ?? 1} 
-                onChange={(e) => update({ overlayOpacity: parseFloat(e.target.value) })} 
-                style={{ width: "100%" }} 
-              />
-            </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Brillo ({Math.round(((content as any).brightness ?? 1) * 100)}%)</label>
-              <input 
-                type="range" min="0" max="3" step="0.05" 
-                value={(content as any).brightness ?? 1} 
-                onChange={(e) => update({ brightness: parseFloat(e.target.value) })} 
-                style={{ width: "100%" }} 
-              />
-            </div>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Posición Fondo</label>
-            <select value={(content as CtaContent).bgPosition || "center"} onChange={(e) => update({ bgPosition: e.target.value })} style={inputStyle}>
-              <option value="center">Centro</option>
-              <option value="top">Arriba</option>
-              <option value="bottom">Abajo</option>
-              <option value="center 30%">Arriba (30%)</option>
-              <option value="center 70%">Abajo (70%)</option>
-            </select>
-          </div>
 
           <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Espaciado</p>
+            <p style={{ fontSize: "0.65rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Márgenes y Espaciado</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
               <div style={rowStyle}>
                 <label style={labelStyle}>Margin Top</label>
-                <input value={(content as any).marginTop || ""} onChange={(e) => update({ marginTop: e.target.value })} style={inputStyle} placeholder="0" />
+                <input value={(content as any).styles?.marginTop || (content as any).marginTop || ""} onChange={(e) => update({ marginTop: e.target.value })} style={inputStyle} placeholder="0" />
               </div>
               <div style={rowStyle}>
                 <label style={labelStyle}>Margin Bottom</label>
-                <input value={(content as any).marginBottom || ""} onChange={(e) => update({ marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
+                <input value={(content as any).styles?.marginBottom || (content as any).marginBottom || ""} onChange={(e) => update({ marginBottom: e.target.value })} style={inputStyle} placeholder="0" />
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
               <div style={rowStyle}>
                 <label style={labelStyle}>Padding Top</label>
-                <input value={(content as any).paddingTop || ""} onChange={(e) => update({ paddingTop: e.target.value })} style={inputStyle} placeholder="0" />
+                <input value={(content as any).styles?.paddingTop || (content as any).paddingTop || ""} onChange={(e) => update({ paddingTop: e.target.value })} style={inputStyle} placeholder="0" />
               </div>
               <div style={rowStyle}>
                 <label style={labelStyle}>Padding Bottom</label>
-                <input value={(content as any).paddingBottom || ""} onChange={(e) => update({ paddingBottom: e.target.value })} style={inputStyle} placeholder="0" />
+                <input value={(content as any).styles?.paddingBottom || (content as any).paddingBottom || ""} onChange={(e) => update({ paddingBottom: e.target.value })} style={inputStyle} placeholder="0" />
               </div>
             </div>
           </div>
 
-
-
-          
-          <div style={{ padding: "1rem", background: "#F3F4F6", borderRadius: "8px", marginTop: "1rem" }}>
-            <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "0.75rem" }}>Animaciones</p>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Título</label>
-              <select value={(content as CtaContent).titleAnim || "fade-in"} onChange={(e) => update({ titleAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="fade-in">Fade In</option>
-                <option value="slide-up">Deslizar Arriba</option>
-                <option value="bounce-in">Rebote</option>
-              </select>
+          {(type === "HERO" || type === "CTA") && (
+            <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+              <p style={{ fontSize: "0.65rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Enlaces de Botones</p>
+              <div style={rowStyle}>
+                <input 
+                  placeholder="Link 1 / Principal" 
+                  value={(content as any).ctaPrimaryLink || (content as any).buttonLink || ""} 
+                  onChange={(e) => {
+                    if (type === "HERO") update({ ctaPrimaryLink: e.target.value });
+                    else update({ buttonLink: e.target.value });
+                  }} 
+                  style={inputStyle} 
+                />
+                {type === "HERO" && (
+                  <input 
+                    placeholder="Link 2 / Secundario" 
+                    value={(content as any).ctaSecondaryLink || ""} 
+                    onChange={(e) => update({ ctaSecondaryLink: e.target.value })} 
+                    style={inputStyle} 
+                  />
+                )}
+              </div>
             </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Cuerpo</label>
-              <select value={(content as CtaContent).bodyAnim || "fade-in"} onChange={(e) => update({ bodyAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="fade-in">Fade In</option>
-                <option value="slide-left">Desde Izquierda</option>
-              </select>
-            </div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Animación Botón</label>
-              <select value={(content as CtaContent).buttonAnim || "fade-in"} onChange={(e) => update({ buttonAnim: e.target.value })} style={inputStyle}>
-                <option value="none">Sin animación</option>
-                <option value="scale-in">Escalar</option>
-                <option value="shimmer">Brillo (Shimmer)</option>
-              </select>
-            </div>
-          </div>
-        </>
+          )}
+        </div>
       )}
-      {type === "GALLERY" && (
-        <>
+
+      {/* GALLERY BLOCK */}
+      {type === "GALLERY" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+          <p style={labelStyle}>Configuración de Galería</p>
           <div style={rowStyle}>
             <label style={labelStyle}>Columnas</label>
             <select value={(content as GalleryContent).columns} onChange={(e) => update({ columns: Number(e.target.value) as any })} style={inputStyle}>
@@ -798,9 +410,9 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               const currentImages = (content as GalleryContent).images || [];
               update({ images: [...currentImages, { src: url, alt: "", label: "" }] });
             })}
-            style={{ width: "100%", padding: "0.6rem", background: "#F3F4F6", border: "1px dashed #D1D5DB", borderRadius: "8px", cursor: "pointer", fontSize: "0.85rem" }}
+            style={{ width: "100%", padding: "0.6rem", background: "#F3F4F6", border: "1px dashed #D1D5DB", borderRadius: "8px", cursor: "pointer", fontSize: "0.8rem" }}
           >
-            + Añadir imagen a galería
+            + Añadir imagen
           </button>
           <div style={{ marginTop: "1rem", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem" }}>
             {((content as GalleryContent).images || []).map((img, i) => (
@@ -819,132 +431,51 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
 
-      {/* CTA PROPERTIES */}
-      {type === "CTA" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Imagen de fondo</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input id="field-bgImage" value={(content as CtaContent).bgImage} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-              <button onClick={() => openMedia((url) => update({ bgImage: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
-            </div>
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título</label>
-            <input id="field-title" value={(content as CtaContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título acento (dorado)</label>
-            <input id="field-titleAccent" value={(content as CtaContent).titleAccent} onChange={(e) => update({ titleAccent: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto botón</label>
-            <input id="field-buttonText" value={(content as CtaContent).buttonText} onChange={(e) => update({ buttonText: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>URL botón</label>
-            <input id="field-buttonLink" value={(content as CtaContent).buttonLink} onChange={(e) => update({ buttonLink: e.target.value })} style={inputStyle} />
-          </div>
-        </>
+      {/* STEPS BLOCK */}
+      {type === "STEPS" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+          <p style={labelStyle}>Color de Acento</p>
+          <input 
+            type="color" 
+            value={(content as StepsContent).accentColor || "#daa520"} 
+            onChange={(e) => update({ accentColor: e.target.value })} 
+            style={{ ...inputStyle, width: "40px" }} 
+          />
+        </div>
       )}
 
-      {/* STEPS PROPERTIES */}
-      {type === "STEPS" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Color de Acento (Opcional)</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input 
-                type="color" 
-                value={(content as StepsContent).accentColor || "#daa520"} 
-                onChange={(e) => update({ accentColor: e.target.value })} 
-                style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
-              />
-              <input 
-                value={(content as StepsContent).accentColor || ""} 
-                onChange={(e) => update({ accentColor: e.target.value })} 
-                style={{ ...inputStyle, flex: 1, marginBottom: 0 }} 
-                placeholder="Por defecto (Dorado)"
-              />
-              <button 
-                onClick={() => update({ accentColor: "" })} 
-                style={{ padding: "0.5rem", background: "#F3F4F6", color: "#4B5563", border: "1px solid #D1D5DB", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center" }}
-                title="Limpiar color"
-              >
-                ↺
-              </button>
-            </div>
-          </div>
-          <p style={{ fontSize: "0.75rem", color: "#6B7280", fontStyle: "italic", marginTop: "1rem" }}>
-            * El texto de este bloque se edita directamente haciendo clic sobre él en la vista previa.
-          </p>
-        </>
+      {/* AVAILABILITY BLOCK */}
+      {type === "AVAILABILITY" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+          <p style={labelStyle}>Color de Botón Reserva</p>
+          <input 
+            type="color" 
+            value={(content as AvailabilityContent).buttonColor || "#daa520"} 
+            onChange={(e) => update({ buttonColor: e.target.value })} 
+            style={{ ...inputStyle, width: "40px" }} 
+          />
+        </div>
       )}
 
-      {/* AVAILABILITY PROPERTIES */}
-      {type === "AVAILABILITY" && (
-        <>
+      {/* SPACER BLOCK */}
+      {type === "SPACER" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
           <div style={rowStyle}>
-            <label style={labelStyle}>Subtítulo (pequeño arriba)</label>
-            <input id="field-subtitle" value={(content as AvailabilityContent).subtitle} onChange={(e) => update({ subtitle: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Título principal</label>
-            <input id="field-title" value={(content as AvailabilityContent).title} onChange={(e) => update({ title: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Texto del botón</label>
-            <input id="field-buttonText" value={(content as AvailabilityContent).buttonText || "Reservar ahora"} onChange={(e) => update({ buttonText: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Color del botón (Opcional)</label>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <input 
-                type="color" 
-                value={(content as AvailabilityContent).buttonColor || "#daa520"} 
-                onChange={(e) => update({ buttonColor: e.target.value })} 
-                style={{ ...inputStyle, width: "40px", padding: "2px", marginBottom: 0 }} 
-              />
-              <input 
-                value={(content as AvailabilityContent).buttonColor || ""} 
-                onChange={(e) => update({ buttonColor: e.target.value })} 
-                style={{ ...inputStyle, flex: 1, marginBottom: 0 }} 
-                placeholder="Por defecto (Dorado)"
-              />
-              <button 
-                onClick={() => update({ buttonColor: "" })} 
-                style={{ padding: "0.5rem", background: "#F3F4F6", color: "#4B5563", border: "1px solid #D1D5DB", borderRadius: "6px", cursor: "pointer", fontSize: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center" }}
-                title="Limpiar color"
-              >
-                ↺
-              </button>
-            </div>
-          </div>
-          <p style={{ fontSize: "0.75rem", color: "#6B7280", fontStyle: "italic", marginTop: "1rem" }}>
-            * El calendario y las plazas se actualizan automáticamente desde la base de datos.
-          </p>
-        </>
-      )}
-
-      {/* SPACER PROPERTIES */}
-      {type === "SPACER" && (
-        <>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Altura (píxeles)</label>
+            <label style={labelStyle}>Altura (px)</label>
             <input type="number" value={(content as SpacerContent).height} onChange={(e) => update({ height: Number(e.target.value) })} style={inputStyle} />
           </div>
           <div style={rowStyle}>
             <label style={labelStyle}>Gradiente</label>
             <select value={(content as SpacerContent).gradient} onChange={(e) => update({ gradient: e.target.value as any })} style={inputStyle}>
-              <option value="none">Ninguno (Transparente)</option>
+              <option value="none">Transparente</option>
               <option value="dark-to-light">Oscuro a Claro</option>
               <option value="light-to-dark">Claro a Oscuro</option>
             </select>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

@@ -59,6 +59,7 @@ export type ButtonElement = {
 export type TextElement = {
   type: "TEXT";
   body: string; // HTML or Markdown
+  tagName?: "p" | "div" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   styles?: CommonStyles;
 };
 
@@ -130,6 +131,8 @@ export type HeroContent = {
   ctaPrimaryAnim?: string;
   ctaSecondaryAnim?: string;
   bgPosition?: string;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  columns?: ColumnData[]; // To allow adding elements
 };
 
 
@@ -152,6 +155,8 @@ export type TextContent = {
   color?: string;
   bold?: boolean;
   italic?: boolean;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  columns?: ColumnData[]; // To allow adding elements
 };
 
 export type StepsContent = {
@@ -160,6 +165,7 @@ export type StepsContent = {
   titleAccent: string;
   accentColor?: string;
   steps: { day: string; eyebrow: string; title: string; body: string }[];
+  titleTag?: "h1" | "h2" | "h3" | "h4";
 };
 
 export type AvailabilityContent = {
@@ -187,6 +193,8 @@ export type CtaContent = {
   bodyAnim?: string;
   buttonAnim?: string;
   bgPosition?: string;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  columns?: ColumnData[]; // To allow adding elements
 };
 
 

@@ -11,9 +11,10 @@ type Props = {
 
 export function TextElement({ element, isEditing = false, onUpdate }: Props) {
   const { styles = {} } = element;
+  const Tag = element.tagName || "div";
 
   return (
-    <div
+    <Tag
       style={{
         margin: styles.margin || "0 0 1rem 0",
         padding: styles.padding || "0",
@@ -28,7 +29,11 @@ export function TextElement({ element, isEditing = false, onUpdate }: Props) {
         onChange={(v) => onUpdate?.({ ...element, body: v })}
         isEditing={isEditing}
         tagName="div"
+        styles={element.styles}
+        onStyleChange={(s) => onUpdate?.({ ...element, styles: { ...element.styles, ...s } })}
+        currentTag={Tag}
+        onTagChange={(t) => onUpdate?.({ ...element, tagName: t })}
       />
-    </div>
+    </Tag>
   );
 }

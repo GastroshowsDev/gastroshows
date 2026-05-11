@@ -31,6 +31,8 @@ type Props = {
   placeholder?: string;
   dataField?: string;
   styles?: any;
+  currentTag?: string;
+  onTagChange?: (newTag: any) => void;
 };
 
 export function InlineText({
@@ -44,6 +46,8 @@ export function InlineText({
   placeholder,
   dataField,
   styles = {},
+  currentTag,
+  onTagChange,
 }: Props) {
   const elementRef  = useRef<HTMLElement>(null);
   const toolbarRef  = useRef<HTMLDivElement>(null);
@@ -363,6 +367,29 @@ export function InlineText({
               ))}
             </select>
           </TGroup>
+
+          {onTagChange && (
+            <>
+              <Sep />
+              <TGroup label="Etiqueta (SEO)">
+                <select
+                  value={currentTag || tagName}
+                  onChange={(e) => onTagChange(e.target.value)}
+                  style={{ ...selStyle, borderColor: "#875BF7", color: "#875BF7" }}
+                >
+                  <option value="h1">H1</option>
+                  <option value="h2">H2</option>
+                  <option value="h3">H3</option>
+                  <option value="h4">H4</option>
+                  <option value="h5">H5</option>
+                  <option value="h6">H6</option>
+                  <option value="p">P (Párrafo)</option>
+                  <option value="div">DIV</option>
+                  <option value="span">SPAN</option>
+                </select>
+              </TGroup>
+            </>
+          )}
         </div>,
         document.body
       )

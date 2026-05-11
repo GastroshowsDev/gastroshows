@@ -5,11 +5,15 @@ import type { TextContent } from "@/lib/blocks/types";
 import { getHoverStyles } from "@/lib/blocks/animations";
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 
 type Props = { 
+  id: string;
   content: TextContent;
   isEditing?: boolean;
   onUpdate?: (newContent: TextContent) => void;
+  onSelectElement?: (colIndex: number, elIndex: number) => void;
+  selectedElementPath?: { col: number; el: number } | null;
 };
 
 const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
@@ -19,11 +23,12 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
-export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
+export function TextBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const align = content.alignment ?? "center";
   const [ready, setReady] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [typedBody, setTypedBody] = useState("");
+  const TitleTag = content.titleTag || "h2";
 
   const updateField = (field: keyof TextContent, value: any) => {
     if (onUpdate) {
@@ -36,10 +41,6 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
   }, []);
 
   useEffect(() => {
-    // Typewriter legacy support
-    if (content.animation === "typewriter" && ready) {
-       // ... keep if needed ...
-    }
     setTypedBody(content.body || "");
   }, [content.body, content.animation, ready]);
 
@@ -81,7 +82,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
 
         {(content.title || isEditing) && (
           <AnimatedWrapper animation={content.titleAnim || content.animation || "fade-in"}>
-            <h2
+            <TitleTag
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "clamp(2rem, 4vw, 3.2rem)",
@@ -99,6 +100,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 styles={content.titleStyles}
                 onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
+                currentTag={TitleTag}
+                onTagChange={(t) => updateField("titleTag", t)}
                 dataField="title"
                 placeholder="Título"
               />
@@ -118,7 +121,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                   />
                 </>
               )}
-            </h2>
+            </TitleTag>
           </AnimatedWrapper>
         )}
 
@@ -132,6 +135,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 maxWidth: "1100px",
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
+                marginBottom: "3rem"
               }}
               className={shouldHaveShadow(content.body) ? "shadow-revelado-dark" : ""}
             >
@@ -148,6 +152,16 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
             </div>
           </AnimatedWrapper>
         )}
+
+        {/* Extra elements support */}
+        <ColumnsRenderer 
+          blockId={blockId}
+          columns={content.columns || []}
+          isEditing={isEditing}
+          onUpdate={(newCols) => updateField("columns", newCols)}
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+        />
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import type { NextFetchEvent } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 /**
- * Combined Middleware (proxy.ts):
+ * Combined Middleware:
  * 1. Protects /api/admin routes.
  * 2. Handles Auth and Role-based access for /admin pages.
  * 3. Handles SEO 301/302 Redirects (Enabled ONLY in Production).
@@ -72,8 +72,6 @@ export default async function proxy(request: NextRequest, event: NextFetchEvent)
 
     const role = (token.role as "ADMIN" | "LIVE" | undefined) ?? "LIVE";
 
-    // Endpoints accesibles también por rol LIVE (operativa de sala).
-    // Cualquier ruta /api/admin/* fuera de esta lista exige rol ADMIN.
     const LIVE_ALLOWED_PREFIXES = [
       "/api/admin/reservations/live",
       "/api/admin/reservations/pending",

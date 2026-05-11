@@ -48,9 +48,27 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
 
   switch (type as BlockType) {
     case "HERO":
-      return <HeroBlock content={content as HeroContent} isEditing={isEditing} onUpdate={handleUpdate} />;
+      return (
+        <HeroBlock 
+          id={id}
+          content={content as HeroContent} 
+          isEditing={isEditing} 
+          onUpdate={handleUpdate} 
+          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          selectedElementPath={selectedElementPath}
+        />
+      );
     case "TEXT":
-      return <TextBlock content={content as TextContent} isEditing={isEditing} onUpdate={handleUpdate} />;
+      return (
+        <TextBlock 
+          id={id}
+          content={content as TextContent} 
+          isEditing={isEditing} 
+          onUpdate={handleUpdate} 
+          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          selectedElementPath={selectedElementPath}
+        />
+      );
     case "IMAGE":
       return <ImageBlock content={content as ImageContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "GALLERY":
@@ -67,7 +85,16 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
         />
       );
     case "CTA":
-      return <CtaBlock content={content as CtaContent} isEditing={isEditing} onUpdate={handleUpdate} />;
+      return (
+        <CtaBlock 
+          id={id}
+          content={content as CtaContent} 
+          isEditing={isEditing} 
+          onUpdate={handleUpdate} 
+          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          selectedElementPath={selectedElementPath}
+        />
+      );
     case "SPACER":
       return <SpacerBlock content={content as SpacerContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "AVAILABILITY":

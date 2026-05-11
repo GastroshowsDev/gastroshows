@@ -31,6 +31,13 @@ export function HeadingElement({ element, isEditing = false, onUpdate }: Props) 
         onChange={(v) => onUpdate?.({ ...element, text: v })}
         isEditing={isEditing}
         tagName="span"
+        styles={element.styles}
+        onStyleChange={(s) => onUpdate?.({ ...element, styles: { ...element.styles, ...s } })}
+        currentTag={Tag}
+        onTagChange={(t) => {
+          const level = parseInt(t.replace("h", ""));
+          if (!isNaN(level)) onUpdate?.({ ...element, level: level as any });
+        }}
       />
       {element.accentText && (
         <span style={{ color: "var(--gs-gold)", fontStyle: "italic", marginLeft: "0.5rem" }}>

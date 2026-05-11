@@ -2,16 +2,20 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import type { HeroContent } from "@/lib/blocks/types";
+import type { HeroContent, ColumnData } from "@/lib/blocks/types";
 
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 import { SmartLink } from "./SmartLink";
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 
 type Props = {
+  id: string;
   content: HeroContent;
   isEditing?: boolean;
   onUpdate?: (newContent: HeroContent) => void;
+  onSelectElement?: (colIndex: number, elIndex: number) => void;
+  selectedElementPath?: { col: number; el: number } | null;
 };
 
 const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
@@ -21,10 +25,11 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
-export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
+export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [typedTitle, setTypedTitle] = useState("");
+  const TitleTag = content.titleTag || "h1";
 
   const updateField = (field: keyof HeroContent, value: any) => {
     if (onUpdate) {
@@ -34,20 +39,14 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
 
   useEffect(() => {
     setReady(true);
-    // ... scroll logic ...
   }, []);
 
   useEffect(() => {
-    // ... typewriter logic ...
-    if (content.animation === "typewriter" && ready) {
-       // keep legacy typewriter if selected
-    }
     setTypedTitle(content.title);
   }, [content.title, content.animation, ready]);
 
   const opacity = (content.overlayOpacity ?? 70) / 100;
   const brightness = (content as any).brightness ?? 1;
-
 
   return (
     <section
@@ -65,9 +64,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         paddingTop: (content as any).paddingTop || "0px",
         paddingBottom: (content as any).paddingBottom || "0px",
       }}
-
     >
-      {/* ... parallax and overlay ... */}
+      {/* Background and Overlay */}
       <div
         ref={parallaxRef}
         style={{
@@ -80,9 +78,6 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         {content.bgImage && (
           <Image src={content.bgImage} alt="" fill priority className="gs-bg-image" style={{ objectFit: "cover", objectPosition: content.bgPosition || "center", "--img-brightness": brightness } as any} />
         )}
-
-
-
       </div>
 
       <div
@@ -95,7 +90,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
       />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", padding: "0 2rem" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", width: "100%", padding: "4rem 2rem" }}>
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <div 
@@ -132,12 +127,10 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         )}
 
         <AnimatedWrapper animation={content.titleAnim || content.animation || "fade-in"}>
-          <h1
+          <TitleTag
             style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: "clamp(1.5rem, 8vw, 6rem)",
-
-
               fontWeight: 300,
               letterSpacing: "0.04em",
               lineHeight: 1.05,
@@ -153,6 +146,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               isEditing={isEditing}
               styles={content.titleStyles}
               onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
+              currentTag={TitleTag}
+              onTagChange={(t) => updateField("titleTag", t)}
               dataField="title"
               placeholder="Título principal"
             />
@@ -176,11 +171,10 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                       ? "none" 
                       : "var(--gs-gold-shadow)"
                   }}
-
                 />
               </>
             )}
-          </h1>
+          </TitleTag>
         </AnimatedWrapper>
 
         {(content.subtitle || isEditing) && (
@@ -208,7 +202,6 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               />
             </div>
           </AnimatedWrapper>
-
         )}
 
         {/* CTAs */}
@@ -218,6 +211,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
             gap: "1rem",
             justifyContent: "center",
             flexWrap: "wrap",
+            marginBottom: "3rem"
           }}
         >
           {(content.ctaPrimaryText || isEditing) && (
@@ -255,6 +249,16 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
             </AnimatedWrapper>
           )}
         </div>
+
+        {/* Extra Elements (The "Unlock") */}
+        <ColumnsRenderer 
+          blockId={blockId}
+          columns={content.columns || []}
+          isEditing={isEditing}
+          onUpdate={(newCols) => updateField("columns", newCols)}
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+        />
       </div>
     </section>
   );

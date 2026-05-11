@@ -52,16 +52,13 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // Ensure session.user exists
-      if (!session.user) {
-        session.user = { email: token.email as string };
+      // Ensure session.user exists with all required properties
+      if (session.user) {
+        (session.user as any).id = token.id as string;
+        (session.user as any).name = token.name as string;
+        (session.user as any).role = token.role as string;
+        (session.user as any).defaultVenue = (token.defaultVenue as string | null) ?? null;
       }
-
-      session.user.id = token.id as string;
-      session.user.name = token.name as string;
-      (session.user as any).role = token.role as string;
-      (session.user as any).defaultVenue = (token.defaultVenue as string | null) ?? null;
-
       return session;
     },
   },
