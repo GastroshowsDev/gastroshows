@@ -20,7 +20,7 @@ type Props = {
   isEditing?: boolean;
   onUpdate?: (newElement: ElementData) => void;
   onSelectElement?: (path: string) => void;
-  selectedElementPath?: string;
+  selectedElementPath?: string | null;
 };
 
 export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
