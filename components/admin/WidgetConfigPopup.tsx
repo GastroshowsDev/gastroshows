@@ -24,16 +24,13 @@ export function WidgetConfigPopup({ anchorRect, onClose, children, title }: Prop
 
   if (!anchorRect) return null;
 
-  const top = anchorRect.top + window.scrollY - 10;
-  const left = anchorRect.left + anchorRect.width / 2;
-
   return (
     <div
       ref={ref}
       style={{
-        position: "absolute",
-        top: `${top}px`,
-        left: `${left}px`,
+        position: "fixed",
+        top: `${anchorRect.top - 10}px`,
+        left: `${anchorRect.left + anchorRect.width / 2}px`,
         transform: "translate(-50%, -100%)",
         background: "white",
         border: "1px solid #E5E7EB",

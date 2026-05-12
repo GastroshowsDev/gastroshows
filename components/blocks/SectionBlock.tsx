@@ -127,7 +127,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         paddingRight: styles.paddingRight || (content as any).paddingRight || "2rem",
         width: "100%",
         boxSizing: "border-box",
-        overflow: "hidden"
+        overflow: "visible"
       }}>
         {bgImage && (
           <div className="gs-section-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>

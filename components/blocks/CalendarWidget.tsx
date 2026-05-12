@@ -24,7 +24,7 @@ type ApiResponse = {
 
 import { BookingCalendar } from "../reservation/BookingCalendar";
 
-export function CalendarWidget({ color = "#daa520" }: { color?: string }) {
+export function CalendarWidget({ color = "#daa520", styles = {} }: { color?: string, styles?: any }) {
   const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
   const [loading, setLoading] = useState(true);
   const { openReservation } = usePageActions();
@@ -62,16 +62,17 @@ export function CalendarWidget({ color = "#daa520" }: { color?: string }) {
       padding: "2rem",
       width: "100%",
       maxWidth: "450px",
-      margin: "0 auto",
-      boxShadow: "0 20px 50px rgba(0,0,0,0.3)"
+      margin: `${styles.marginTop || "0px"} auto ${styles.marginBottom || "0px"}`,
+      boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+      textAlign: styles.textAlign || "center"
     }}>
       <h4 style={{ 
-        fontSize: "0.75rem", 
+        fontSize: styles.fontSize || "0.75rem", 
         letterSpacing: "0.3em", 
         textTransform: "uppercase", 
         color: color, 
         marginBottom: "2rem",
-        textAlign: "center",
+        textAlign: styles.textAlign || "center",
         fontWeight: 600
       }}>
         Disponibilidad en Vivo

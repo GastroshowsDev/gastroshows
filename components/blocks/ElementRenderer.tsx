@@ -293,10 +293,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
                   </>
                 )}
                 {element.type === "CALENDAR" && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", width: "250px" }}>
-                    <p style={{ fontSize: "0.7rem", color: "#6B7280", fontStyle: "italic", marginBottom: "0.5rem" }}>
-                      El widget de calendario se conecta automáticamente con la disponibilidad en vivo de TuriTop.
-                    </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "260px" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                       <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Color de Acento</label>
                       <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
@@ -311,6 +308,49 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
                           value={element.color || "#daa520"} 
                           onChange={(e) => updateWidget({ color: e.target.value })}
                           style={{ flex: 1, padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Tamaño de Título</label>
+                      <input 
+                        type="range" min="0.5" max="2.5" step="0.1"
+                        value={parseFloat(element.styles?.fontSize || "0.75")} 
+                        onChange={(e) => updateWidget({ styles: { ...element.styles, fontSize: `${e.target.value}rem` } })}
+                      />
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Alineación</label>
+                      <select 
+                        value={element.styles?.textAlign || "center"}
+                        onChange={(e) => updateWidget({ styles: { ...element.styles, textAlign: e.target.value as any } })}
+                        style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
+                      >
+                        <option value="left">Izquierda</option>
+                        <option value="center">Centro</option>
+                        <option value="right">Derecha</option>
+                      </select>
+                    </div>
+
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Margen Sup.</label>
+                        <input 
+                          type="text" placeholder="0px"
+                          value={element.styles?.marginTop || ""} 
+                          onChange={(e) => updateWidget({ styles: { ...element.styles, marginTop: e.target.value } })}
+                          style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
+                        />
+                      </div>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Margen Inf.</label>
+                        <input 
+                          type="text" placeholder="0px"
+                          value={element.styles?.marginBottom || ""} 
+                          onChange={(e) => updateWidget({ styles: { ...element.styles, marginBottom: e.target.value } })}
+                          style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
                         />
                       </div>
                     </div>

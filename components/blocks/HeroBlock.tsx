@@ -80,7 +80,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
       style={{
         position: "relative",
         minHeight: (content as any).styles?.minHeight || (content as any).minHeight || "100dvh",
-        overflow: "hidden",
+        overflow: "visible",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
