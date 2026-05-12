@@ -24,13 +24,15 @@ export function ImageElement({ element, isEditing = false, onUpdate }: Props) {
             src={element.src} 
             alt={element.alt} 
             style={{ 
+              width: styles.backgroundPosition === "cover" ? "100%" : "auto",
               maxWidth: "100%", 
               height: "auto", 
               borderRadius: styles.borderRadius || "4px",
               display: "block",
               opacity: styles.opacity ?? 1,
               filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
-              objectPosition: styles.backgroundPosition || "center"
+              objectFit: styles.backgroundPosition === "cover" ? "cover" : "unset",
+              objectPosition: styles.backgroundPosition === "cover" ? "center" : (styles.backgroundPosition || "center")
             }} 
           />
 

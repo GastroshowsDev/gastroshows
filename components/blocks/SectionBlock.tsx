@@ -24,8 +24,8 @@ type Props = {
   content: SectionContent;
   isEditing?: boolean;
   onUpdate?: (newContent: SectionContent) => void;
-  onSelectElement?: (colIndex: number, elIndex: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (id: string) => void;
+  selectedElementPath?: string | null;
 };
 
 // Sortable Wrapper for Elements
@@ -74,7 +74,7 @@ function SortableElement({
           ⋮⋮
         </div>
       )}
-      <ElementRenderer element={element} isEditing={isEditing} onUpdate={onUpdate} />
+      <ElementRenderer id={id} element={element} isEditing={isEditing} onUpdate={onUpdate} />
     </div>
   );
 }
@@ -84,26 +84,31 @@ import { AnimatedWrapper } from "./AnimatedWrapper";
 
 export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const { styles = {} } = content;
+  const bgImage = styles.backgroundImage || (content as any).bgImage || (content as any).backgroundImage;
+  const bgPos = styles.backgroundPosition || (content as any).bgPosition || "center";
 
   return (
     <AnimatedWrapper animation={styles.animation}>
       <section style={{
-        padding: styles.padding || "4rem 2rem",
-        backgroundColor: styles.backgroundColor || "transparent",
-        backgroundImage: styles.backgroundImage ? `url(${styles.backgroundImage})` : "none",
-        backgroundSize: styles.backgroundSize || "cover",
-        backgroundPosition: styles.backgroundPosition || "center",
+        padding: styles.padding || "0",
+        backgroundColor: styles.backgroundColor || (content as any).bgColor || "transparent",
+        backgroundImage: bgImage ? `url("${bgImage}")` : "none",
+        backgroundSize: bgPos === "cover" ? "cover" : "cover",
+        backgroundPosition: bgPos === "cover" ? "center center" : bgPos,
+        backgroundRepeat: "no-repeat",
         position: "relative",
-        opacity: styles.opacity ?? 1,
-        filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
-        marginTop: styles.marginTop || "0px",
-        marginBottom: styles.marginBottom || "0px",
-        marginLeft: styles.marginLeft || "0px",
-        marginRight: styles.marginRight || "0px",
-        paddingTop: styles.paddingTop || "6rem",
-        paddingBottom: styles.paddingBottom || "8rem",
-        paddingLeft: styles.paddingLeft || "2rem",
-        paddingRight: styles.paddingRight || "2rem",
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
+        filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
+        marginTop: styles.marginTop || (content as any).marginTop || "0px",
+        marginBottom: styles.marginBottom || (content as any).marginBottom || "0px",
+        paddingTop: styles.paddingTop || (content as any).paddingTop || "6rem",
+        paddingBottom: styles.paddingBottom || (content as any).paddingBottom || "8rem",
+        paddingLeft: styles.paddingLeft || (content as any).paddingLeft || "2rem",
+        paddingRight: styles.paddingRight || (content as any).paddingRight || "2rem",
+        boxSizing: "border-box",
       }}>
         <ColumnsRenderer 
           blockId={blockId}

@@ -12,10 +12,13 @@ type Page = {
   _count: { blocks: number };
 };
 
+import { CreatePageModal } from "./CreatePageModal";
+
 export function PagesList() {
   const [pages, setPages] = useState<Page[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function fetchPages() {
     setLoading(true);
@@ -30,13 +33,7 @@ export function PagesList() {
 
   useEffect(() => { fetchPages(); }, []);
 
-  async function createPage() {
-    const title = prompt("Título de la nueva página:");
-    if (!title) return;
-    
-    const slug = prompt("URL de la página (slug):", title.toLowerCase().replace(/\s+/g, "-"));
-    if (!slug) return;
-
+  async function handleCreatePage({ title, slug }: { title: string; slug: string }) {
     setCreating(true);
     try {
       const res = await fetch("/api/admin/pages", {
@@ -52,6 +49,7 @@ export function PagesList() {
       }
     } finally {
       setCreating(false);
+      setIsModalOpen(false);
     }
   }
 
@@ -65,6 +63,12 @@ export function PagesList() {
 
   return (
     <div style={{ padding: "2rem", background: "#F4F6FA", minHeight: "100vh" }}>
+      <CreatePageModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onConfirm={handleCreatePage} 
+      />
+
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <div>
           <h1 style={{ fontSize: "1.75rem", fontWeight: 600, color: "var(--color-admin-text)" }}>Páginas del sitio</h1>
@@ -109,8 +113,27 @@ export function PagesList() {
           >
             <span>🔍</span> Ajustes SEO
           </Link>
+          <Link
+            href="/admin/web/import"
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "white",
+              color: "var(--color-admin-text)",
+              border: "1px solid var(--color-admin-border)",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.82rem"
+            }}
+          >
+            <span>📥</span> Importar JSON
+          </Link>
           <button
-            onClick={createPage}
+            onClick={() => setIsModalOpen(true)}
             disabled={creating}
             style={{
               padding: "0.6rem 1.25rem",

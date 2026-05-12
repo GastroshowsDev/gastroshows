@@ -10,6 +10,7 @@ import {
   ELEMENT_LABELS 
 } from "@/lib/blocks/types";
 import { BlockPropertiesPanel } from "./BlockPropertiesPanel";
+import { PageSeoPanel } from "./PageSeoPanel";
 import { MediaGallery } from "./MediaGallery";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
 import { 
@@ -44,12 +45,14 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [page, setPage] = useState<PageData | null>(null);
   const [history, setHistory] = useState<PageData[]>([]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
-  const [selectedElementPath, setSelectedElementPath] = useState<{ col: number; el: number } | null>(null);
+  const [selectedElementPath, setSelectedElementPath] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showMedia, setShowMedia] = useState(false);
   const [mediaCallback, setMediaCallback] = useState<((url: string) => void) | null>(null);
   const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeRightTab, setActiveRightTab] = useState<"properties" | "seo">("properties");
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -208,13 +211,262 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     const { active, over } = event;
     if (!over || !page) return;
 
-    if (active.id !== over.id) {
-      const oldIndex = page.blocks.findIndex((b) => b.id === active.id);
-      const newIndex = page.blocks.findIndex((b) => b.id === over.id);
-      const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({ ...b, order: i }));
-      updatePageState({ ...page, blocks: reordered });
+    const activeId = active.id as string;
+    const overId = over.id as string;
+
+    if (activeId === overId) return;
+
+    // 1. Block Reordering (Top-level)
+    if (!activeId.includes("-")) {
+      const oldIndex = page.blocks.findIndex((b) => b.id === activeId);
+      const newIndex = page.blocks.findIndex((b) => b.id === overId);
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({ ...b, order: i }));
+        updatePageState({ ...page, blocks: reordered });
+      }
+      return;
     }
+
+    // 2. Element Reordering (Cross-container)
+    const sourcePath = activeId;
+    const targetPath = overId;
+
+    const activeEl = getElementByPath(page.blocks, sourcePath);
+    if (!activeEl) return;
+
+    // Remove from source
+    let newBlocks = updateElementByPath(page.blocks, sourcePath, "DELETE");
+
+    // Insert at target
+    // We need a helper to insert at a specific position
+    newBlocks = insertElementByPath(newBlocks, targetPath, activeEl);
+
+    updatePageState({ ...page, blocks: newBlocks });
   }
+
+  function insertElementByPath(blocks: BlockData[], path: string, element: ElementData): BlockData[] {
+    const parts = path.split("-");
+    const blockId = parts[0];
+    
+    return blocks.map(block => {
+      if (block.id !== blockId) return block;
+      
+      const newBlock = JSON.parse(JSON.stringify(block));
+      let current: any = newBlock.content;
+      
+      for (let i = 1; i < parts.length; i += 2) {
+        const colIdx = parseInt(parts[i]);
+        const elIdx = parseInt(parts[i+1]);
+        
+        if (i + 1 === parts.length - 1) {
+          // Insert BEFORE the target element
+          current.columns[colIdx].elements.splice(elIdx, 0, element);
+          break;
+        }
+        current = current.columns[colIdx].elements[elIdx].content;
+      }
+      return newBlock;
+    });
+  }
+
+  // Recursive helpers for deep elements
+  function getElementByPath(blocks: BlockData[], path: string): ElementData | null {
+    const parts = path.split("-");
+    const blockId = parts[0];
+    const block = blocks.find(b => b.id === blockId);
+    if (!block) return null;
+
+    // Handle Virtual Header/Footer Elements
+    if (parts[1] === "logo") {
+      return { 
+        type: "IMAGE", 
+        src: block.content.logo || "", 
+        alt: "Logo", 
+        styles: { textAlign: "left" },
+        // Add metadata to identify it as a virtual element
+        isVirtual: true,
+        virtualPath: path
+      } as any;
+    }
+    if (parts[1] === "link") {
+       const idx = parseInt(parts[2]);
+       const links = block.content.links || [];
+       const link = links[idx];
+       if (!link) return null;
+       return { 
+         type: "BUTTON", 
+         text: link.label, 
+         link: link.href, 
+         variant: "outline", 
+         size: "sm",
+         isVirtual: true,
+         virtualPath: path
+       } as any;
+    }
+    if (parts[1] === "cta") {
+      return { 
+        type: "BUTTON", 
+        text: block.content.ctaText || "", 
+        link: block.content.ctaLink || "", 
+        variant: "primary", 
+        size: "md",
+        isVirtual: true,
+        virtualPath: path
+      } as any;
+    }
+    if (parts[1] === "coltitle") {
+      const idx = parseInt(parts[2]);
+      const col = block.content.columns?.[idx];
+      if (!col) return null;
+      return { 
+        type: "HEADING", 
+        text: col.title, 
+        level: 4,
+        isVirtual: true,
+        virtualPath: path
+      } as any;
+    }
+    if (parts[1] === "copyright") {
+      return { 
+        type: "TEXT", 
+        body: block.content.copyright || "",
+        isVirtual: true,
+        virtualPath: path
+      } as any;
+    }
+
+    let current: any = block.content;
+    for (let i = 1; i < parts.length; i += 2) {
+      const colIdx = parseInt(parts[i]);
+      const elIdx = parseInt(parts[i+1]);
+      const el = current.columns?.[colIdx]?.elements?.[elIdx];
+      if (!el) return null;
+      if (i + 1 === parts.length - 1) return el;
+      current = el.content;
+    }
+    return null;
+  }
+
+  function updateElementByPath(blocks: BlockData[], path: string, newEl: ElementData | null | "DELETE"): BlockData[] {
+    const parts = path.split("-");
+    const blockId = parts[0];
+    
+    return blocks.map(block => {
+      if (block.id !== blockId) return block;
+      
+      const newBlock = JSON.parse(JSON.stringify(block));
+
+      // Handle Virtual Header/Footer Updates
+      if (parts[1] === "logo") {
+        if (newEl === "DELETE") newBlock.content.logo = "";
+        else if (newEl) newBlock.content.logo = (newEl as any).src;
+        return newBlock;
+      }
+      if (parts[1] === "link") {
+        const idx = parseInt(parts[2]);
+        if (newEl === "DELETE") {
+          newBlock.content.links.splice(idx, 1);
+        } else if (newEl) {
+          newBlock.content.links[idx] = { 
+            ...newBlock.content.links[idx], 
+            label: (newEl as any).text, 
+            href: (newEl as any).link 
+          };
+        }
+        return newBlock;
+      }
+      if (parts[1] === "cta") {
+        if (newEl === "DELETE") {
+          newBlock.content.ctaText = "";
+          newBlock.content.ctaLink = "";
+        } else if (newEl) {
+          newBlock.content.ctaText = (newEl as any).text;
+          newBlock.content.ctaLink = (newEl as any).link;
+        }
+        return newBlock;
+      }
+      if (parts[1] === "coltitle") {
+        const idx = parseInt(parts[2]);
+        if (newEl) newBlock.content.columns[idx].title = (newEl as any).text;
+        return newBlock;
+      }
+      if (parts[1] === "copyright") {
+        if (newEl) newBlock.content.copyright = (newEl as any).body;
+        return newBlock;
+      }
+
+      let current: any = newBlock.content;
+      
+      for (let i = 1; i < parts.length; i += 2) {
+        const colIdx = parseInt(parts[i]);
+        const elIdx = parseInt(parts[i+1]);
+        
+        if (i + 1 === parts.length - 1) {
+          if (newEl === "DELETE") {
+            current.columns[colIdx].elements.splice(elIdx, 1);
+          } else if (newEl === null) {
+            // No-op or handle closing
+          } else {
+            current.columns[colIdx].elements[elIdx] = newEl;
+          }
+          break;
+        }
+        current = current.columns[colIdx].elements[elIdx].content;
+      }
+      return newBlock;
+    });
+  }
+
+  const [sidebarWidth, setSidebarWidth] = useState(280);
+  const [leftTab, setLeftTab] = useState<"insert" | "layers">("insert");
+  const isResizing = useRef(false);
+
+  // Sidebar Styles Helpers
+  const sectionHeaderStyle = { 
+    fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase" as const, 
+    color: "#9CA3AF", marginBottom: "0.8rem", marginTop: "0.5rem", letterSpacing: "0.05em" 
+  };
+  
+  const insertButtonStyle = (bg = "white", border = "1px solid #E5E7EB") => ({
+    padding: "0.6rem 0.4rem", background: bg, border, borderRadius: "8px",
+    display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem", cursor: "pointer",
+    transition: "all 0.2s", boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
+  } as React.CSSProperties);
+
+  const draggableItemStyle = (bg = "white", border = "1px solid #E5E7EB") => ({
+    padding: "0.6rem 0.4rem", background: bg, border, borderRadius: "8px",
+    display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "grab",
+    transition: "all 0.2s", boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
+  } as React.CSSProperties);
+
+  const layerButtonStyle = { 
+    border: "none", background: "none", cursor: "pointer", fontSize: "0.6rem", 
+    color: "#9CA3AF", padding: "2px", borderRadius: "4px" 
+  };
+
+  const startResizing = (e: React.MouseEvent) => {
+    isResizing.current = true;
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", stopResizing);
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
+
+  const stopResizing = () => {
+    isResizing.current = false;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", stopResizing);
+    document.body.style.cursor = "default";
+    document.body.style.userSelect = "auto";
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isResizing.current) return;
+    const newWidth = window.innerWidth - e.clientX;
+    if (newWidth >= 250 && newWidth <= 600) {
+      setSidebarWidth(newWidth);
+    }
+  };
 
   if (loading || !page) return <div style={{ padding: "4rem", textAlign: "center" }}>Cargando editor...</div>;
 
@@ -222,94 +474,137 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#F4F6FA" }}>
-      <aside style={{ width: "210px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column", flexShrink: 0 }}>
-        <div style={{ padding: "1rem", borderBottom: "1px solid #EAEEF4" }}>
-          <h2 style={{ fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>Page Builder</h2>
+      {/* Sidebar Izquierda ... */}
+      {/* Sidebar Izquierda */}
+      <aside style={{ width: "260px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        <div style={{ padding: "1.2rem", borderBottom: "1px solid #EAEEF4", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+          <div style={{ width: "32px", height: "32px", background: "#875BF7", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 900 }}>G</div>
+          <h2 style={{ fontSize: "0.9rem", fontWeight: 700, margin: 0, color: "#111827" }}>Builder</h2>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", padding: "0.8rem" }}>
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>1. Layout</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
-            {Object.entries(BLOCK_LABELS).filter(([type]) => type === "SECTION" || type === "AVAILABILITY").map(([type, info]) => (
-              <button
-                key={type}
-                onClick={() => addBlock(type as BlockType)}
-                style={{
-                  padding: "0.4rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "4px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", cursor: "pointer",
-                }}
-              >
-                <span style={{ fontSize: "0.9rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.5rem", fontWeight: 600 }}>{info.label}</span>
-              </button>
-            ))}
-          </div>
+        {/* Sidebar Tabs */}
+        <div style={{ display: "flex", borderBottom: "1px solid #EAEEF4" }}>
+          <button 
+            onClick={() => setLeftTab("insert")}
+            style={{ 
+              flex: 1, padding: "0.75rem", fontSize: "0.7rem", fontWeight: 700, border: "none", 
+              background: leftTab === "insert" ? "white" : "#F9FAFB",
+              color: leftTab === "insert" ? "#875BF7" : "#6B7280",
+              borderBottom: leftTab === "insert" ? "2px solid #875BF7" : "none",
+              cursor: "pointer"
+            }}
+          >
+            INSERTAR
+          </button>
+          <button 
+            onClick={() => setLeftTab("layers")}
+            style={{ 
+              flex: 1, padding: "0.75rem", fontSize: "0.7rem", fontWeight: 700, border: "none", 
+              background: leftTab === "layers" ? "white" : "#F9FAFB",
+              color: leftTab === "layers" ? "#875BF7" : "#6B7280",
+              borderBottom: leftTab === "layers" ? "2px solid #875BF7" : "none",
+              cursor: "pointer"
+            }}
+          >
+            ESTRUCTURA
+          </button>
+        </div>
 
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>2. Elementos</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
-            {Object.entries(ELEMENT_LABELS).map(([type, info]) => (
-              <div
-                key={type}
-                draggable
-                onDragStart={(e) => e.dataTransfer.setData("elementType", type)}
-                style={{
-                  padding: "0.4rem", background: "white", border: "1px solid #E5E7EB", borderRadius: "4px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.1rem", cursor: "grab",
-                }}
-              >
-                <span style={{ fontSize: "0.8rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.5rem", fontWeight: 600 }}>{info.label}</span>
+        <div style={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
+          {leftTab === "insert" ? (
+            <>
+              <p style={sectionHeaderStyle}>1. Estructura</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                <button onClick={() => addBlock("HEADER")} style={insertButtonStyle("#F0EBFE", "#875BF733")}>
+                  <span style={{ fontSize: "1rem" }}>☰</span>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Menú</span>
+                </button>
+                <button onClick={() => addBlock("SECTION")} style={insertButtonStyle()}>
+                  <span style={{ fontSize: "1rem" }}>🔳</span>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Sección</span>
+                </button>
+                <button onClick={() => addBlock("FOOTER")} style={insertButtonStyle()}>
+                  <span style={{ fontSize: "1rem" }}>🏁</span>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Footer</span>
+                </button>
               </div>
-            ))}
-          </div>
 
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>3. Presets</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem", marginBottom: "1rem" }}>
-            {Object.entries(BLOCK_LABELS).filter(([type]) => type !== "SECTION" && type !== "AVAILABILITY" && type !== "COLUMNS").map(([type, info]) => (
-              <button
-                key={type}
-                onClick={() => addBlock(type as BlockType)}
-                style={{
-                  padding: "0.4rem", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: "4px",
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "0.1rem", cursor: "pointer",
-                }}
-              >
-                <span style={{ fontSize: "0.8rem" }}>{info.icon}</span>
-                <span style={{ fontSize: "0.5rem", fontWeight: 500 }}>{info.label}</span>
-              </button>
-            ))}
-          </div>
+              <p style={sectionHeaderStyle}>2. Elementos</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                {Object.entries(ELEMENT_LABELS).filter(([type]) => type !== "AVAILABILITY" && type !== "CALENDAR").map(([type, info]) => (
+                  <div
+                    key={type}
+                    draggable
+                    onDragStart={(e) => e.dataTransfer.setData("elementType", type)}
+                    style={draggableItemStyle()}
+                  >
+                    <span style={{ fontSize: "0.9rem" }}>{info.icon}</span>
+                    <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>{info.label}</span>
+                  </div>
+                ))}
+              </div>
 
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase", color: "#9CA3AF", marginBottom: "0.5rem", letterSpacing: "0.05em" }}>Estructura</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-            {page.blocks.map((block, i) => (
-              <div
-                key={block.id}
-                onClick={() => setSelectedBlockId(block.id)}
-                style={{
-                  padding: "0.4rem 0.6rem", borderRadius: "4px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
-                  background: selectedBlockId === block.id ? "#F0EBFE" : "white", cursor: "pointer",
-                  display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.65rem"
-                }}
-              >
-                <span style={{ color: "#9CA3AF", fontSize: "0.55rem" }}>{i + 1}</span>
-                <span style={{ flex: 1, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
-                <div style={{ display: "flex", gap: "2px" }}>
-                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "0.55rem" }}>▲</button>
-                  <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={{ border: "none", background: "none", cursor: "pointer", fontSize: "0.55rem" }}>▼</button>
+              <p style={sectionHeaderStyle}>3. Widgets</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+                <button onClick={() => addBlock("AVAILABILITY")} style={insertButtonStyle()}>
+                  <span style={{ fontSize: "1rem" }}>📅</span>
+                  <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Disponibilidad</span>
+                </button>
+                
+                {[
+                  { type: "REVIEWS",  label: "Google Reviews", icon: "⭐" },
+                  { type: "FORM",     label: "Formulario",     icon: "📋" },
+                  { type: "CALENDAR", label: "Calendario",     icon: "📆" }
+                ].map((widget) => (
+                  <div
+                    key={widget.type}
+                    draggable
+                    onDragStart={(e) => e.dataTransfer.setData("elementType", widget.type)}
+                    style={draggableItemStyle("#F0EBFE", "#875BF733")}
+                  >
+                    <span style={{ fontSize: "0.9rem" }}>{widget.icon}</span>
+                    <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "#875BF7" }}>{widget.label}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {page.blocks.map((block, i) => (
+                <div
+                  key={block.id}
+                  onClick={() => setSelectedBlockId(block.id)}
+                  style={{
+                    padding: "0.6rem 0.8rem", borderRadius: "8px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
+                    background: selectedBlockId === block.id ? "#F0EBFE" : "white", cursor: "pointer",
+                    display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.75rem",
+                    boxShadow: selectedBlockId === block.id ? "0 4px 6px -1px rgba(135, 91, 247, 0.1)" : "none"
+                  }}
+                >
+                  <span style={{ color: "#9CA3AF", fontSize: "0.6rem", width: "12px" }}>{i + 1}</span>
+                  <span style={{ flex: 1, fontWeight: 600, color: selectedBlockId === block.id ? "#875BF7" : "#374151" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
+                  <div style={{ display: "flex", gap: "4px" }}>
+                    <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={layerButtonStyle}>▲</button>
+                    <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={layerButtonStyle}>▼</button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
         
-        <div style={{ padding: "0.8rem", borderTop: "1px solid #EAEEF4" }}>
+        <div style={{ padding: "1rem", borderTop: "1px solid #EAEEF4", background: "#F9FAFB" }}>
           <button
             onClick={save}
             disabled={saving}
-            style={{ width: "100%", padding: "0.6rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", fontWeight: 600, cursor: "pointer", fontSize: "0.7rem" }}
+            style={{ 
+              width: "100%", padding: "0.75rem", background: "#875BF7", color: "white", 
+              border: "none", borderRadius: "10px", fontWeight: 700, cursor: "pointer", 
+              fontSize: "0.8rem", boxShadow: "0 4px 12px rgba(135, 91, 247, 0.25)",
+              transition: "transform 0.1s active"
+            }}
           >
-            {saving ? "..." : "Guardar"}
+            {saving ? "Guardando..." : "Guardar Cambios"}
           </button>
         </div>
       </aside>
@@ -430,7 +725,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           </div>
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "var(--gs-bg)", alignItems: "center" }}>
+        <div id="gs-editor-canvas-container" style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", background: "var(--gs-bg)", alignItems: "center" }}>
           <div 
             className={previewMode === "mobile" ? "gs-mobile-preview" : ""}
             style={{ 
@@ -448,8 +743,10 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                <DndContext
                  sensors={sensors}
                  collisionDetection={closestCenter}
-                 onDragEnd={handleDragEnd}
-                 modifiers={[restrictToVerticalAxis]}
+                 onDragStart={({ active }) => setActiveId(active.id as string)}
+                 onDragEnd={(e) => { handleDragEnd(e); setActiveId(null); }}
+                 onDragCancel={() => setActiveId(null)}
+                 modifiers={activeId?.includes("-") ? [] : [restrictToVerticalAxis]}
                >
                  <SortableContext
                    items={page.blocks.map((b) => b.id)}
@@ -459,10 +756,13 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                       <SortableBlock
                         key={block.id}
                         id={block.id}
-                        isSelected={selectedBlockId === block.id}
+                        isSticky={block.type === "HEADER" && (block.content as any).isSticky}
+                        isSelected={selectedBlockId === block.id && !selectedElementPath}
                         label={BLOCK_LABELS[block.type]?.label || block.type}
+                        onDelete={() => deleteBlock(block.id)}
                         onClick={(e) => {
                           setSelectedBlockId(block.id);
+                          setSelectedElementPath(null);
                           const target = e.target as HTMLElement;
                           const field = target.closest("[data-field]")?.getAttribute("data-field");
                           if (field) {
@@ -480,11 +780,12 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                           blocks={[block]} 
                           isEditing={true} 
                           onUpdateBlock={updateBlockContent}
-                          onSelectElement={(id, col, el) => {
-                            setSelectedBlockId(id);
-                            setSelectedElementPath({ col, el });
+                          onSelectElement={(id) => {
+                            const blockId = id.split("-")[0];
+                            setSelectedBlockId(blockId);
+                            setSelectedElementPath(id);
                           }}
-                          selectedElementPath={selectedBlockId === block.id ? selectedElementPath : null}
+                          selectedElementPath={selectedElementPath}
                         />
                       </SortableBlock>
                     ))}
@@ -495,44 +796,88 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         </div>
       </main>
 
-      <aside style={{ width: "210px", background: "white", borderLeft: "1px solid #EAEEF4", overflowY: "auto" }}>
-        {selectedBlock ? (
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ padding: "0.8rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>Propiedades</span>
-              <button onClick={() => deleteBlock(selectedBlock.id)} style={{ padding: "0.2rem 0.4rem", background: "#FEE2E2", color: "#EF4444", border: "none", borderRadius: "4px", fontSize: "0.6rem", cursor: "pointer" }}>Borrar</button>
-            </div>
-            <BlockPropertiesPanel
-              type={selectedBlock.type}
-              content={selectedBlock.content}
-              onChange={(content) => updateBlockContent(selectedBlock.id, content)}
-              element={selectedElementPath ? (selectedBlock.content as any).columns?.[selectedElementPath.col]?.elements?.[selectedElementPath.el] : null}
-              onElementChange={(newEl) => {
-                if (!selectedElementPath) return;
-                const newContent = JSON.parse(JSON.stringify(selectedBlock.content));
-                if (newEl === null) {
-                   setSelectedElementPath(null);
-                   return;
-                }
-                if (newEl === ("DELETE" as any)) {
-                  newContent.columns[selectedElementPath.col].elements.splice(selectedElementPath.el, 1);
-                  setSelectedElementPath(null);
-                } else {
-                  newContent.columns[selectedElementPath.col].elements[selectedElementPath.el] = newEl;
-                }
-                updateBlockContent(selectedBlock.id, newContent);
+      <aside style={{ width: `${sidebarWidth}px`, background: "white", borderLeft: "1px solid #EAEEF4", display: "flex", flexDirection: "column", position: "relative", flexShrink: 0 }}>
+        {/* Resizer Handle */}
+        <div 
+          onMouseDown={startResizing}
+          style={{
+            position: "absolute",
+            left: "-3px",
+            top: 0,
+            bottom: 0,
+            width: "6px",
+            cursor: "col-resize",
+            zIndex: 10,
+            background: "transparent",
+            transition: "background 0.2s"
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = "#875BF733"}
+          onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+        />
+
+        <div style={{ display: "flex", borderBottom: "1px solid #EAEEF4" }}>
+          <button 
+            onClick={() => setActiveRightTab("properties")}
+            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "properties" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "properties" ? "2px solid #875BF7" : "none", color: activeRightTab === "properties" ? "#875BF7" : "#6B7280" }}
+          >
+            Propiedades
+          </button>
+          <button 
+            onClick={() => setActiveRightTab("seo")}
+            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "seo" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "seo" ? "2px solid #875BF7" : "none", color: activeRightTab === "seo" ? "#875BF7" : "#6B7280" }}
+          >
+            SEO
+          </button>
+        </div>
+
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          {activeRightTab === "properties" ? (
+            selectedBlock ? (
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ padding: "0.8rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>Contenido</span>
+                  <button onClick={() => deleteBlock(selectedBlock.id)} style={{ padding: "0.2rem 0.4rem", background: "#FEE2E2", color: "#EF4444", border: "none", borderRadius: "4px", fontSize: "0.6rem", cursor: "pointer" }}>Borrar</button>
+                </div>
+                <BlockPropertiesPanel
+                  type={selectedBlock.type}
+                  content={selectedBlock.content}
+                  onChange={(content) => updateBlockContent(selectedBlock.id, content)}
+                  element={selectedElementPath ? getElementByPath(page.blocks, selectedElementPath) : null}
+                  onElementChange={(newEl) => {
+                    if (!selectedElementPath) return;
+                    if (newEl === null) {
+                       setSelectedElementPath(null);
+                       return;
+                    }
+                    const newBlocks = updateElementByPath(page.blocks, selectedElementPath, newEl);
+                    updatePageState({ ...page, blocks: newBlocks });
+                    if (newEl === "DELETE") setSelectedElementPath(null);
+                  }}
+                  openMedia={(callback) => {
+                    setMediaCallback(() => callback);
+                    setShowMedia(true);
+                  }}
+                />
+              </div>
+            ) : (
+              <div style={{ padding: "2rem 1rem", textAlign: "center", color: "#9CA3AF", fontSize: "0.7rem" }}>
+                Selecciona un bloque para editar sus propiedades.
+              </div>
+            )
+          ) : (
+            <PageSeoPanel 
+              page={page} 
+              onUpdate={(newPage) => {
+                setPage(newPage);
+                emitStatus("unsaved");
               }}
               openMedia={(callback) => {
                 setMediaCallback(() => callback);
                 setShowMedia(true);
               }}
             />
-          </div>
-        ) : (
-          <div style={{ padding: "2rem 1rem", textAlign: "center", color: "#9CA3AF", fontSize: "0.7rem" }}>
-            Selecciona un bloque para editar.
-          </div>
-        )}
+          )}
+        </div>
       </aside>
 
 

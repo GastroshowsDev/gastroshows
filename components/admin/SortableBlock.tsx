@@ -9,10 +9,12 @@ type Props = {
   children: React.ReactNode;
   isSelected: boolean;
   onClick: (e: React.MouseEvent) => void;
+  onDelete?: () => void;
   label: string;
+  isSticky?: boolean;
 };
 
-export function SortableBlock({ id, children, isSelected, onClick, label }: Props) {
+export function SortableBlock({ id, children, isSelected, onClick, onDelete, label, isSticky }: Props) {
   const {
     attributes,
     listeners,
@@ -25,11 +27,12 @@ export function SortableBlock({ id, children, isSelected, onClick, label }: Prop
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
-    position: "relative",
+    position: isSticky ? "sticky" : "relative",
+    top: isSticky ? 0 : undefined,
     cursor: "pointer",
     outline: isSelected ? "3px solid #875BF7" : "none",
     outlineOffset: "-3px",
-    zIndex: isDragging ? 100 : isSelected ? 10 : 1,
+    zIndex: isDragging ? 100 : isSticky ? 1100 : isSelected ? 10 : 1,
     opacity: isDragging ? 0.4 : 1,
   };
 
@@ -79,6 +82,26 @@ export function SortableBlock({ id, children, isSelected, onClick, label }: Prop
         }}>
           {label}
         </div>
+      )}
+
+      {/* Floating Delete Button */}
+      {(isSelected || isDragging) && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onDelete?.(); }}
+          style={{
+            position: "absolute", top: "10px", right: "10px",
+            width: "30px", height: "30px", borderRadius: "50%",
+            background: "#FEE2E2", color: "#EF4444", border: "1px solid #FECACA",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", zIndex: 101, boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            transition: "all 0.2s"
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#EF4444", e.currentTarget.style.color = "white")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#FEE2E2", e.currentTarget.style.color = "#EF4444")}
+          title="Eliminar bloque"
+        >
+          🗑️
+        </button>
       )}
     </div>
   );

@@ -12,7 +12,12 @@ type Props = {
   onElementChange?: (newElement: ElementData) => void;
 };
 
+import { useState } from "react";
+import { CreatePageModal } from "./CreatePageModal";
+
 export function BlockPropertiesPanel({ type, content, onChange, openMedia, element, onElementChange }: Props) {
+  const [createModalFor, setCreateModalFor] = useState<string | null>(null);
+
   function update(fields: Partial<BlockContent>) {
     onChange({ ...content, ...fields } as BlockContent);
   }
@@ -88,8 +93,19 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 </div>
               </div>
               <div style={rowStyle}>
-                <label style={labelStyle}>Texto Alternativo (SEO)</label>
-                <input value={element.alt || ""} onChange={(e) => updateElement({ alt: e.target.value })} style={inputStyle} />
+                <label style={labelStyle}>Texto Alternativo (Alt SEO)</label>
+                <input value={element.alt || ""} onChange={(e) => updateElement({ alt: e.target.value })} style={inputStyle} placeholder="Describe la imagen..." />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Atributo Title (Hover)</label>
+                <input value={(element as any).title || ""} onChange={(e) => updateElement({ title: e.target.value })} style={inputStyle} placeholder="Título de la imagen..." />
+              </div>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Carga (Performance)</label>
+                <select value={(element as any).loading || "lazy"} onChange={(e) => updateElement({ loading: e.target.value })} style={inputStyle}>
+                  <option value="lazy">Lazy (Recomendado - Lento)</option>
+                  <option value="eager">Eager (Prioridad - Rápido)</option>
+                </select>
               </div>
               <div style={rowStyle}>
                 <label style={labelStyle}>Alineación</label>
@@ -129,6 +145,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                   style={inputStyle}
                 >
                   <option value="center">Centro</option>
+                  <option value="cover">Completo (Se adapta)</option>
                   <option value="top">Arriba</option>
                   <option value="bottom">Abajo</option>
                   <option value="left">Izquierda</option>
@@ -196,7 +213,99 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
             </select>
           </div>
-               <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.5rem" }}>
+               {element.type === "CONTAINER" && (
+            <>
+              <div style={rowStyle}>
+                <label style={labelStyle}>Distribución de Columnas</label>
+                <select 
+                  value={element.content?.columns?.length || 1} 
+                  onChange={(e) => {
+                    const count = Number(e.target.value);
+                    const currentCols = element.content?.columns || [{ width: "100%", elements: [] }];
+                    let newCols: ColumnData[] = [];
+                    if (count > currentCols.length) {
+                      newCols = [...currentCols];
+                      for (let i = currentCols.length; i < count; i++) newCols.push({ width: `${100/count}%`, elements: [] });
+                    } else if (count < currentCols.length) {
+                      newCols = currentCols.slice(0, count);
+                      const lastColIndex = count - 1;
+                      const removedCols = currentCols.slice(count);
+                      removedCols.forEach((col: ColumnData) => {
+                        newCols[lastColIndex].elements = [...newCols[lastColIndex].elements, ...col.elements];
+                      });
+                    } else {
+                      newCols = [...currentCols];
+                    }
+                    newCols = newCols.map(c => ({ ...c, width: `${100/count}%` }));
+                    updateElement({ content: { ...element.content, columns: newCols } });
+                  }} 
+                  style={inputStyle}
+                >
+                  <option value={1}>1 Columna</option>
+                  <option value={2}>2 Columnas</option>
+                  <option value={3}>3 Columnas</option>
+                  <option value={4}>4 Columnas</option>
+                </select>
+              </div>
+
+              <div style={rowStyle}>
+                <label style={labelStyle}>Imagen de Fondo</label>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <input value={element.content?.styles?.backgroundImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+                  <button onClick={() => openMedia((url) => {
+                    updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundImage: url } } });
+                  })} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+                </div>
+              </div>
+
+              <div style={rowStyle}>
+                <label style={labelStyle}>Color de Fondo</label>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <input 
+                    type="color" 
+                    value={element.content?.styles?.backgroundColor || "#FFFFFF"} 
+                    onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundColor: e.target.value } } })} 
+                    style={{ ...inputStyle, width: "40px", padding: "2px" }} 
+                  />
+                  <input 
+                    value={element.content?.styles?.backgroundColor || ""} 
+                    onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundColor: e.target.value } } })} 
+                    style={{ ...inputStyle, flex: 1 }} 
+                    placeholder="#FFFFFF"
+                  />
+                </div>
+              </div>
+
+              <div style={rowStyle}>
+                <label style={labelStyle}>Posición Fondo</label>
+                <select 
+                  value={element.content?.styles?.backgroundPosition || "center"} 
+                  onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundPosition: e.target.value } } })} 
+                  style={inputStyle}
+                >
+                  <option value="center">Centro</option>
+                  <option value="cover">Completo (Se adapta)</option>
+                  <option value="top">Arriba</option>
+                  <option value="bottom">Abajo</option>
+                  <option value="left">Izquierda</option>
+                  <option value="right">Derecha</option>
+                </select>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Top</label>
+                  <input value={element.content?.styles?.paddingTop || ""} onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, paddingTop: e.target.value } } })} style={inputStyle} placeholder="2rem" />
+                </div>
+                <div style={rowStyle}>
+                  <label style={labelStyle}>Padding Bottom</label>
+                  <input value={element.content?.styles?.paddingBottom || ""} onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, paddingBottom: e.target.value } } })} style={inputStyle} placeholder="2rem" />
+                </div>
+              </div>
+            </>
+          )}
+
+          <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.5rem" }}>
             <button 
               onClick={() => onElementChange?.(null as any)} 
               style={{ flex: 1, padding: "0.6rem", background: "white", border: "1px solid #D1D5DB", borderRadius: "6px", fontSize: "0.75rem", fontWeight: 600, cursor: "pointer" }}
@@ -335,6 +444,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               style={inputStyle}
             >
               <option value="center">Centro</option>
+              <option value="cover">Completo (Se adapta)</option>
               <option value="top">Arriba</option>
               <option value="bottom">Abajo</option>
               <option value="left">Izquierda</option>
@@ -390,6 +500,237 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* HEADER BLOCK PROPERTIES */}
+      {type === "HEADER" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Opciones de Cabecera</label>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400 }}>
+              <input type="checkbox" checked={(content as any).isSticky} onChange={(e) => update({ isSticky: e.target.checked })} />
+              Sticky (Fijar al hacer scroll)
+            </label>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, marginTop: "0.5rem" }}>
+              <input type="checkbox" checked={(content as any).isTransparent} onChange={(e) => update({ isTransparent: e.target.checked })} />
+              Transparente (Sobre Hero)
+            </label>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Imagen del Logo</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input value={(content as any).logo || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+              <button onClick={() => openMedia((url) => update({ logo: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Altura del Logo (px)</label>
+            <input value={(content as any).logoHeight || ""} onChange={(e) => update({ logoHeight: e.target.value })} style={inputStyle} placeholder="40px" />
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Enlace del icono del logo</label>
+            <input value={(content as any).logoLink || ""} onChange={(e) => update({ logoLink: e.target.value })} style={inputStyle} placeholder="/" />
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Enlace del Botón CTA</label>
+            <input value={(content as any).ctaLink || ""} onChange={(e) => update({ ctaLink: e.target.value })} style={inputStyle} placeholder="/contacto" />
+          </div>
+
+          <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+             <p style={labelStyle}>Gestión de Enlaces</p>
+             <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+               <button 
+                 onClick={() => {
+                   const current = (content as any).links || [];
+                   update({ links: [...current, { label: "Nuevo Link", href: "#" }] });
+                 }}
+                 style={{ flex: 1, padding: "0.4rem", background: "#F3F4F6", border: "1px solid #D1D5DB", borderRadius: "6px", fontSize: "0.7rem", cursor: "pointer" }}
+               >
+                 + Enlace
+               </button>
+               <button 
+                 onClick={() => setCreateModalFor("HEADER_LINK")}
+                 style={{ flex: 1, padding: "0.4rem", background: "#F0EBFE", border: "1px solid #875BF733", color: "#875BF7", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
+               >
+                 ✨ Crear Página
+               </button>
+             </div>
+
+             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+               {((content as any).links || []).map((link: any, i: number) => (
+                 <div key={i} style={{ padding: "0.6rem", background: "#F9FAFB", borderRadius: "8px", border: "1px solid #EAEEF4" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                      <span style={{ fontSize: "0.65rem", fontWeight: 700, color: "#374151" }}>Enlace {i + 1}</span>
+                      <button onClick={() => {
+                        const newLinks = [...(content as any).links];
+                        newLinks.splice(i, 1);
+                        update({ links: newLinks });
+                      }} style={{ color: "#EF4444", background: "none", border: "none", cursor: "pointer", fontSize: "0.8rem" }}>×</button>
+                    </div>
+                    <input 
+                      value={link.label} 
+                      onChange={(e) => {
+                        const newLinks = [...(content as any).links];
+                        newLinks[i] = { ...newLinks[i], label: e.target.value };
+                        update({ links: newLinks });
+                      }}
+                      placeholder="Texto del enlace"
+                      style={{ ...inputStyle, fontSize: "0.75rem", marginBottom: "0.4rem" }}
+                    />
+                    <input 
+                      value={link.href} 
+                      onChange={(e) => {
+                        const newLinks = [...(content as any).links];
+                        newLinks[i] = { ...newLinks[i], href: e.target.value };
+                        update({ links: newLinks });
+                      }}
+                      placeholder="/url"
+                      style={{ ...inputStyle, fontSize: "0.75rem", marginBottom: 0 }}
+                    />
+                 </div>
+               ))}
+             </div>
+          </div>
+        </div>
+      )}
+
+      <CreatePageModal 
+        isOpen={!!createModalFor}
+        onClose={() => setCreateModalFor(null)}
+        onConfirm={async (data) => {
+          try {
+            const res = await fetch("/api/admin/pages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+            const json = await res.json();
+            if (json.ok) {
+              if (createModalFor === "HEADER_LINK") {
+                const current = (content as any).links || [];
+                update({ links: [...current, { label: data.title, href: `/${data.slug}` }] });
+              } else if (createModalFor === "FOOTER_COLUMN") {
+                const current = (content as any).columns || [];
+                update({ columns: [...current, { title: data.title, links: [{ label: data.title, href: `/${data.slug}` }] }] });
+              }
+              // Optional: Add a toast or something
+            } else {
+              alert(json.error || "Error al crear la página");
+            }
+          } finally {
+            setCreateModalFor(null);
+          }
+        }}
+      />
+
+      {/* FOOTER BLOCK PROPERTIES */}
+      {type === "FOOTER" && !element && (
+        <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB" }}>
+           <div style={rowStyle}>
+            <label style={labelStyle}>Imagen del Logo</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input value={(content as any).logo || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+              <button onClick={() => openMedia((url) => update({ logo: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Copyright</label>
+            <input value={(content as any).copyright || ""} onChange={(e) => update({ copyright: e.target.value })} style={inputStyle} />
+          </div>
+
+          <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
+            <p style={labelStyle}>Columnas de Enlaces</p>
+            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+              <button 
+                onClick={() => {
+                  const current = (content as any).columns || [];
+                  update({ columns: [...current, { title: "Nueva Columna", links: [] }] });
+                }}
+                style={{ flex: 1, padding: "0.4rem", background: "#F3F4F6", border: "1px solid #D1D5DB", borderRadius: "6px", fontSize: "0.7rem", cursor: "pointer" }}
+              >
+                + Columna
+              </button>
+              <button 
+                onClick={() => setCreateModalFor("FOOTER_COLUMN")}
+                style={{ flex: 1, padding: "0.4rem", background: "#F0EBFE", border: "1px solid #875BF733", color: "#875BF7", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
+              >
+                ✨ Crear Página
+              </button>
+            </div>
+
+             {((content as any).columns || []).map((col: any, i: number) => (
+               <div key={i} style={{ padding: "0.8rem", background: "#F9FAFB", borderRadius: "8px", marginBottom: "0.8rem", border: "1px solid #EAEEF4" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.6rem" }}>
+                    <input 
+                      value={col.title} 
+                      onChange={(e) => {
+                        const newCols = [...(content as any).columns];
+                        newCols[i] = { ...newCols[i], title: e.target.value };
+                        update({ columns: newCols });
+                      }}
+                      style={{ ...inputStyle, marginBottom: 0, width: "70%", fontWeight: 700 }}
+                    />
+                    <button onClick={() => {
+                       const newCols = [...(content as any).columns];
+                       newCols.splice(i, 1);
+                       update({ columns: newCols });
+                    }} style={{ color: "#EF4444", background: "none", border: "none", cursor: "pointer", fontSize: "0.8rem" }}>×</button>
+                  </div>
+                  
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "0.5rem" }}>
+                    {col.links.map((link: any, j: number) => (
+                      <div key={j} style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+                        <input 
+                          value={link.label}
+                          onChange={(e) => {
+                             const newCols = [...(content as any).columns];
+                             const newLinks = [...newCols[i].links];
+                             newLinks[j] = { ...newLinks[j], label: e.target.value };
+                             newCols[i] = { ...newCols[i], links: newLinks };
+                             update({ columns: newCols });
+                          }}
+                          placeholder="Texto"
+                          style={{ ...inputStyle, marginBottom: 0, fontSize: "0.65rem" }}
+                        />
+                        <input 
+                          value={link.href}
+                          onChange={(e) => {
+                             const newCols = [...(content as any).columns];
+                             const newLinks = [...newCols[i].links];
+                             newLinks[j] = { ...newLinks[j], href: e.target.value };
+                             newCols[i] = { ...newCols[i], links: newLinks };
+                             update({ columns: newCols });
+                          }}
+                          placeholder="/url"
+                          style={{ ...inputStyle, marginBottom: 0, fontSize: "0.65rem" }}
+                        />
+                         <button onClick={() => {
+                           const newCols = [...(content as any).columns];
+                           const newLinks = [...newCols[i].links];
+                           newLinks.splice(j, 1);
+                           newCols[i] = { ...newCols[i], links: newLinks };
+                           update({ columns: newCols });
+                        }} style={{ color: "#EF4444", background: "none", border: "none", cursor: "pointer", fontSize: "0.7rem" }}>×</button>
+                      </div>
+                    ))}
+                    <button 
+                      onClick={() => {
+                        const newCols = [...(content as any).columns];
+                        newCols[i] = { ...newCols[i], links: [...newCols[i].links, { label: "Enlace", href: "#" }] };
+                        update({ columns: newCols });
+                      }}
+                      style={{ fontSize: "0.6rem", background: "white", border: "1px solid #D1D5DB", borderRadius: "4px", padding: "4px", cursor: "pointer", marginTop: "4px" }}
+                    >+ Añadir enlace</button>
+                  </div>
+               </div>
+             ))}
+          </div>
         </div>
       )}
 

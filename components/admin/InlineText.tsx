@@ -400,7 +400,7 @@ export function InlineText({
     : style?.textShadow;
 
   return (
-    <div style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
+    <span style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
       {plusButton}
       {toolbar}
 
@@ -436,7 +436,7 @@ export function InlineText({
         "data-placeholder": placeholder,
         "data-field": dataField,
       })}
-    </div>
+    </span>
   );
 }
 

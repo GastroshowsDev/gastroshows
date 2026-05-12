@@ -1,18 +1,7 @@
-"use client";
-
-import { ColumnData, ElementData } from "@/lib/blocks/types";
+import { ColumnData, ElementData, BLOCK_DEFAULTS } from "@/lib/blocks/types";
 import { ElementRenderer } from "../ElementRenderer";
 import { useState } from "react";
 import { 
-  DndContext, 
-  closestCenter, 
-  PointerSensor, 
-  useSensor, 
-  useSensors, 
-  DragEndEvent 
-} from "@dnd-kit/core";
-import { 
-  arrayMove, 
   SortableContext, 
   verticalListSortingStrategy, 
   useSortable 
@@ -24,8 +13,8 @@ type Props = {
   columns: ColumnData[];
   isEditing?: boolean;
   onUpdate: (newColumns: ColumnData[]) => void;
-  onSelectElement?: (colIndex: number, elIndex: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (id: string) => void;
+  selectedElementPath?: string | null;
   fullWidth?: boolean;
 };
 
@@ -35,14 +24,18 @@ function SortableElement({
   isEditing, 
   isSelected, 
   onSelect, 
-  onUpdate 
+  onUpdate,
+  onSelectSubElement,
+  selectedElementPath
 }: { 
   id: string, 
   element: ElementData, 
   isEditing: boolean, 
   isSelected: boolean,
-  onSelect: () => void,
-  onUpdate: (el: ElementData) => void
+  onSelect: (id: string) => void,
+  onUpdate: (el: ElementData) => void,
+  onSelectSubElement?: (path: string) => void,
+  selectedElementPath?: string | null
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
@@ -59,7 +52,7 @@ function SortableElement({
   };
 
   return (
-    <div ref={setNodeRef} style={style} onClick={(e) => { if(isEditing) { e.stopPropagation(); onSelect(); } }}>
+    <div ref={setNodeRef} style={style} onClick={(e) => { if(isEditing) { e.stopPropagation(); onSelect(id); } }}>
       {isEditing && (
         <div 
           {...attributes} 
@@ -74,7 +67,31 @@ function SortableElement({
           ⋮⋮
         </div>
       )}
-      <ElementRenderer element={element} isEditing={isEditing} onUpdate={onUpdate} />
+
+      {isEditing && isSelected && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onUpdate("DELETE" as any); }}
+          style={{
+            position: "absolute", top: "5px", right: "5px",
+            width: "24px", height: "24px", borderRadius: "50%",
+            background: "#FEE2E2", color: "#EF4444", border: "1px solid #FECACA",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer", zIndex: 101, boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            fontSize: "0.6rem"
+          }}
+          title="Eliminar elemento"
+        >
+          🗑️
+        </button>
+      )}
+      <ElementRenderer 
+        id={id} 
+        element={element} 
+        isEditing={isEditing} 
+        onUpdate={onUpdate} 
+        onSelectElement={onSelectSubElement}
+        selectedElementPath={selectedElementPath}
+      />
     </div>
   );
 }
@@ -89,31 +106,23 @@ export function ColumnsRenderer({
   fullWidth = false
 }: Props) {
   const [dragOverCol, setDragOverCol] = useState<number | null>(null);
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   // Fallback for missing columns
   const activeColumns = columns.length > 0 ? columns : [{ width: "100%", elements: [] }];
 
-  const handleDragEnd = (event: DragEndEvent, colIdx: number) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = parseInt((active.id as string).split("-").pop() || "0");
-    const newIndex = parseInt((over.id as string).split("-").pop() || "0");
-
-    const newCols = [...activeColumns];
-    newCols[colIdx].elements = arrayMove(newCols[colIdx].elements, oldIndex, newIndex);
-    onUpdate(newCols);
-  };
-
   const onDrop = (e: React.DragEvent, colIdx: number) => {
     e.preventDefault();
+    e.stopPropagation();
     setDragOverCol(null);
     const type = e.dataTransfer.getData("elementType");
     if (!type) return;
 
     let newEl: ElementData;
-    if (type === "HEADING") {
+    const defaults = BLOCK_DEFAULTS[type as keyof typeof BLOCK_DEFAULTS];
+    
+    if (defaults) {
+      newEl = JSON.parse(JSON.stringify(defaults));
+    } else if (type === "HEADING") {
       newEl = { type: "HEADING", text: "Nuevo Título", level: 2, styles: {} };
     } else if (type === "BUTTON") {
       newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#", variant: "primary", size: "md", styles: {} };
@@ -123,8 +132,25 @@ export function ColumnsRenderer({
       newEl = { type: "IMAGE", src: "", alt: "", styles: {} };
     } else if (type === "SPACER") {
       newEl = { type: "SPACER", height: 40, styles: {} };
+    } else if (type === "AVAILABILITY") {
+      newEl = { 
+        type: "AVAILABILITY", 
+        title: "Hay {total} plazas libres esta semana", 
+        subtitle: "DISPONIBILIDAD", 
+        buttonText: "Reservar ahora", 
+        styles: {} 
+      };
     } else if (type === "CALENDAR") {
       newEl = { type: "CALENDAR", styles: {} };
+    } else if (type === "CONTAINER") {
+      newEl = { 
+        type: "CONTAINER", 
+        content: { 
+          columns: [{ width: "100%", elements: [] }],
+          styles: { padding: "2rem" }
+        },
+        styles: {} 
+      };
     } else return;
 
     const newCols = [...activeColumns];
@@ -157,25 +183,29 @@ export function ColumnsRenderer({
             transition: "all 0.2s"
           }}
         >
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={(e) => handleDragEnd(e, colIdx)}>
-            <SortableContext items={col.elements.map((_, i) => `${blockId}-${colIdx}-${i}`)} strategy={verticalListSortingStrategy}>
-              {col.elements.map((el, elIdx) => (
-                <SortableElement
-                  key={`${blockId}-${colIdx}-${elIdx}`}
-                  id={`${blockId}-${colIdx}-${elIdx}`}
-                  element={el}
-                  isEditing={isEditing}
-                  isSelected={selectedElementPath?.col === colIdx && selectedElementPath?.el === elIdx}
-                  onSelect={() => onSelectElement?.(colIdx, elIdx)}
-                  onUpdate={(newEl) => {
-                    const newCols = [...activeColumns];
+          <SortableContext items={col.elements.map((_, i) => `${blockId}-${colIdx}-${i}`)} strategy={verticalListSortingStrategy}>
+            {col.elements.map((el, elIdx) => (
+              <SortableElement
+                key={`${blockId}-${colIdx}-${elIdx}`}
+                id={`${blockId}-${colIdx}-${elIdx}`}
+                element={el}
+                isEditing={isEditing}
+                isSelected={selectedElementPath === `${blockId}-${colIdx}-${elIdx}`}
+                onSelect={(id) => onSelectElement?.(id)}
+                onUpdate={(newEl) => {
+                  const newCols = [...activeColumns];
+                  if (newEl === ("DELETE" as any)) {
+                    newCols[colIdx].elements.splice(elIdx, 1);
+                  } else {
                     newCols[colIdx].elements[elIdx] = newEl;
-                    onUpdate(newCols);
-                  }}
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
+                  }
+                  onUpdate(newCols);
+                }}
+                onSelectSubElement={onSelectElement}
+                selectedElementPath={selectedElementPath}
+              />
+            ))}
+          </SortableContext>
           
           {isEditing && col.elements.length === 0 && (
             <div style={{ textAlign: "center", color: "#666", fontSize: "0.7rem", paddingTop: "1rem" }}>

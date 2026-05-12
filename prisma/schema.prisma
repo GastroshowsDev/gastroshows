@@ -274,16 +274,23 @@ model WorkflowExecution {
 }
 
 model Page {
-  id        String      @id @default(cuid())
-  title     String
-  slug      String      @unique
-  published Boolean     @default(false)
-  seoTitle  String?
-  seoDesc   String?
-  ogImage   String?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  blocks    PageBlock[]
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  published    Boolean     @default(false)
+  seoTitle     String?
+  seoDesc      String?
+  ogImage      String?
+  ogType       String?     @default("website")
+  twitterCard  String?     @default("summary_large_image")
+  robots       String?     @default("index, follow")
+  canonical    String?
+  hreflang     Json?       // { "en": "/en/page", "es": "/page" }
+  schemaOrg    Json?       // Structured data JSON-LD
+  noIndexAfter DateTime?   // To automatically noindex after a certain date
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  blocks       PageBlock[]
 }
 
 model PageBlock {

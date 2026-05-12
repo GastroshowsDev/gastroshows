@@ -40,30 +40,34 @@ const authMiddleware = withAuth(
 // ── Main Middleware Dispatcher ──
 export default async function proxy(request: NextRequest, event: NextFetchEvent) {
   const path = request.nextUrl.pathname;
+
+  // 1. FAST SKIP: Ignore static files, internal paths and AUTH routes IMMEDIATELY
+  // This prevents any header interference with NextAuth or internal Next.js requests
+  if (
+    path.startsWith("/_next") ||
+    path.includes(".") ||
+    path.startsWith("/api/auth") || // Explicitly skip NextAuth
+    (path.startsWith("/api") && !path.startsWith("/api/admin") && !path.startsWith("/api/public"))
+  ) {
+    return NextResponse.next();
+  }
+
   const response = NextResponse.next();
 
-  // Add security headers
+  // Add security headers to all other requests
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-XSS-Protection", "1; mode=block");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
 
-  // Add HSTS for HTTPS (production only)
-  if (process.env.NODE_ENV === "production" && request.nextUrl.protocol === "https:") {
-    response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  // 2. SEO Headers (X-Robots-Tag)
+  // Apply global technical SEO rules or specific path rules
+  if (path.startsWith("/admin") && !path.startsWith("/admin/login")) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
   }
 
-  // 1. FAST SKIP: Ignore static files and internal Next.js paths immediately
-  if (
-    path.startsWith("/_next") ||
-    path.includes(".") ||
-    (path.startsWith("/api") && !path.startsWith("/api/admin"))
-  ) {
-    return response;
-  }
-
-  // 2. Protect ADMIN API routes — token + role-based access
+  // 3. Protect ADMIN API routes
   if (path.startsWith("/api/admin")) {
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
     if (!token) {
@@ -130,6 +134,6 @@ export const config = {
   matcher: [
     "/admin/:path*",
     "/api/admin/:path*",
-    "/((?!_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|auth|_next/static|_next/image|favicon.ico).*)",
   ],
 };

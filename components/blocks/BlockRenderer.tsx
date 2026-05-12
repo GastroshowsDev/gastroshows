@@ -12,6 +12,8 @@ import type {
   SpacerContent,
   AvailabilityContent,
   StepsContent,
+  HeaderContent,
+  FooterContent,
 } from "@/lib/blocks/types";
 
 import dynamic from "next/dynamic";
@@ -25,14 +27,18 @@ const CtaBlock = dynamic(() => import("./CtaBlock").then(mod => mod.CtaBlock));
 const SpacerBlock = dynamic(() => import("./SpacerBlock").then(mod => mod.SpacerBlock));
 const AvailabilityBlock = dynamic(() => import("./AvailabilityBlock").then(mod => mod.AvailabilityBlock));
 const StepsBlock = dynamic(() => import("./StepsBlock").then(mod => mod.StepsBlock));
+const HeaderBlock = dynamic(() => import("./HeaderBlock").then(mod => mod.HeaderBlock));
+const FooterBlock = dynamic(() => import("./FooterBlock").then(mod => mod.FooterBlock));
+const ReviewsBlock = dynamic(() => import("./ReviewsBlock").then(mod => mod.ReviewsBlock));
+const FormBlock = dynamic(() => import("./FormBlock").then(mod => mod.FormBlock));
 
 
 type Props = {
   block: BlockData;
   isEditing?: boolean;
   onUpdateBlock?: (id: string, newContent: any) => void;
-  onSelectElement?: (id: string, col: number, el: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (path: string) => void,
+  selectedElementPath?: string | null;
 };
 
 /**
@@ -47,6 +53,28 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
   };
 
   switch (type as BlockType) {
+    case "HEADER":
+      return (
+        <HeaderBlock 
+          content={content as HeaderContent} 
+          isEditing={isEditing} 
+          onUpdate={handleUpdate} 
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+          id={id}
+        />
+      );
+    case "FOOTER":
+      return (
+        <FooterBlock 
+          content={content as FooterContent} 
+          isEditing={isEditing} 
+          onUpdate={handleUpdate} 
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+          id={id}
+        />
+      );
     case "HERO":
       return (
         <HeroBlock 
@@ -54,7 +82,7 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
           content={content as HeroContent} 
           isEditing={isEditing} 
           onUpdate={handleUpdate} 
-          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          onSelectElement={(path) => onSelectElement?.(path)}
           selectedElementPath={selectedElementPath}
         />
       );
@@ -65,7 +93,7 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
           content={content as TextContent} 
           isEditing={isEditing} 
           onUpdate={handleUpdate} 
-          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          onSelectElement={(path) => onSelectElement?.(path)}
           selectedElementPath={selectedElementPath}
         />
       );
@@ -80,7 +108,7 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
           content={content as SectionContent} 
           isEditing={isEditing} 
           onUpdate={handleUpdate} 
-          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          onSelectElement={(path) => onSelectElement?.(path)}
           selectedElementPath={selectedElementPath}
         />
       );
@@ -91,7 +119,7 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
           content={content as CtaContent} 
           isEditing={isEditing} 
           onUpdate={handleUpdate} 
-          onSelectElement={(col, el) => onSelectElement?.(id, col, el)}
+          onSelectElement={(path) => onSelectElement?.(path)}
           selectedElementPath={selectedElementPath}
         />
       );
@@ -99,6 +127,10 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
       return <SpacerBlock content={content as SpacerContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     case "AVAILABILITY":
       return <AvailabilityBlock content={content as AvailabilityContent} isEditing={isEditing} onUpdate={handleUpdate} />;
+    case "REVIEWS":
+      return <ReviewsBlock content={content as any} isEditing={isEditing} onUpdate={handleUpdate} />;
+    case "FORM":
+      return <FormBlock content={content as any} isEditing={isEditing} onUpdate={onUpdateBlock ? (nc) => onUpdateBlock(id, nc) : undefined} />;
     case "STEPS":
       return <StepsBlock content={content as StepsContent} isEditing={isEditing} onUpdate={handleUpdate} />;
     default:
@@ -136,8 +168,8 @@ export function PageBlockList({
   blocks: BlockData[], 
   isEditing?: boolean,
   onUpdateBlock?: (id: string, newContent: any) => void,
-  onSelectElement?: (id: string, col: number, el: number) => void,
-  selectedElementPath?: { col: number; el: number } | null
+  onSelectElement?: (path: string) => void,
+  selectedElementPath?: string | null
 }) {
   return (
     <>
