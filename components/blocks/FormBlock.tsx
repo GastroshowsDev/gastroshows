@@ -126,7 +126,7 @@ export function FormBlock({ content, isEditing = false, onUpdate }: Props) {
                      <button 
                       onClick={() => {
                         const newId = Math.random().toString(36).substr(2, 9);
-                        const newFields = [...(content.fields || []), { id: newId, type: "text", label: "Nuevo Campo", placeholder: "Escribe aquí...", required: false, width: "full" }];
+                        const newFields = [...(content.fields || []), { id: newId, type: "text", label: "Nuevo Campo", placeholder: "Escribe aquí...", required: false, width: "full" }] as any;
                         updateWidget({ fields: newFields });
                       }}
                       style={{ width: "100%", marginTop: "0.5rem", padding: "0.4rem", background: "#F3F4F6", border: "1px solid #D1D5DB", borderRadius: "4px", fontSize: "0.6rem", cursor: "pointer" }}
