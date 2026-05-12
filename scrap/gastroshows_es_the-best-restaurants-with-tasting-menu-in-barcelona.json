@@ -1,0 +1,495 @@
+{
+  "url": "https://gastroshows.es/the-best-restaurants-with-tasting-menu-in-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T11:59:41.179497Z",
+  "title": "The best restaurants with tasting menu in Barcelona",
+  "meta_description": "In this post you will find the best restaurants with tasting menu in Barcelona that you can not miss, take a look!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/en/the-best-restaurants-with-tasting-menu-in-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "367.4 KB",
+  "headings": {
+    "h1": [
+      "The best restaurants with tasting menu Barcelona"
+    ],
+    "h2": [
+      "Gastroshows: tasting menu at La cena clandestina",
+      "RESTAURANT XAVIER PELLICER: eco tasting menu",
+      "TABERNA NOROESTE: tasting menu a la carte",
+      "CRUIX: restaurant with tasting menu in Barcelona",
+      "LA TARTARERÍA: tartar tasting menu",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien"
+    ],
+    "h3": [
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "The best restaurants with tasting menu in Barcelona",
+    "description": "In this post you will find the best restaurants with tasting menu in Barcelona that you can not miss, take a look!",
+    "url": "https://gastroshows.es/en/the-best-restaurants-with-tasting-menu-in-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2021/03/restaurantes-menu-degustacion-Barcelona.jpeg",
+    "image:width": "819",
+    "image:height": "1024",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "12 minutos"
+  },
+  "schema_org": [],
+  "word_count": 1051,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%201350'%3E%3C/svg%3E",
+      "alt": "DESCUENTO",
+      "title": "15 DE DCTO-3",
+      "width": "1080",
+      "height": "1350"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20900%20600'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "900",
+      "height": "600"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "set up a dinner party at home",
+      "title": "dinner at home for couples",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "tapas course barcelona",
+      "title": "tapas workshop barcelona",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%201350'%3E%3C/svg%3E",
+      "alt": "DESCUENTO",
+      "title": "15 DE DCTO-3",
+      "width": "1080",
+      "height": "1350"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "michelin star restaurants in Barcelona for less than 50€.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/the-best-tasting-menus-for-gift-giving/",
+      "anchor": "best tasting menus to give as a gift",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "unique gastronomic experience, The Clandestine Dinner in Barcelona.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "Gastroshows: tasting menu at La cena clandestina",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "The clandestine dinner",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "see more",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/the-best-restaurants-with-tasting-menu-in-barcelona/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://app.turitop.com/booking/box/G300/P1/es/0/aHR0cHM6Ly9nYXN0cm9zaG93cy5lcy8./0/0?only_gift=1&loading=1",
+      "anchor": "regala",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "http://www.xavierpellicer.com/",
+      "anchor": "RESTAURANT XAVIER PELLICER: eco tasting menu",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "http://www.xavierpellicer.com/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "http://www.xavierpellicer.com/",
+      "anchor": "Xavier Pellicer’s restaurant",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://tabernanoroeste.com/",
+      "anchor": "TABERNA NOROESTE: tasting menu a la carte",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://tabernanoroeste.com/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://tabernanoroeste.com/",
+      "anchor": "Northwest Tavern",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://slowandlowbcn.com/",
+      "anchor": "SLOW AND LOW: tasting menu with spicy flavors",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://slowandlowbcn.com/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://slowandlowbcn.com/",
+      "anchor": "Slow&Low,",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.cruixrestaurant.com/es/cruix/",
+      "anchor": "CRUIX: restaurant with tasting menu in Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.cruixrestaurant.com/es/cruix/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.cruixrestaurant.com/es/cruix/",
+      "anchor": "Cruix",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.latartareria.com/",
+      "anchor": "LA TARTARERÍA: tartar tasting menu",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.latartareria.com/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.latartareria.com/",
+      "anchor": "La Tartareria",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://app.turitop.com/booking/box/G300/P1/es/0/aHR0cHM6Ly9nYXN0cm9zaG93cy5lcy8./0/0?only_gift=1&loading=1",
+      "anchor": "regala",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "It’s no secret that gastronomy is in fashion . In recent years, cooking has experienced a surge in popularity thanks to social media . Foodies, chefs and restaurants share dishes and recipes. But where to start? or where to continue exploring? Here we bring you five restaurants with tasting menu in Barcelona that will not leave you indifferent . Places where you can let yourself be carried away by the elaborations prepared and recommended by the chefs in their closed menus. And there is nothing better to enjoy than to let your genius run free. Sounds good, doesn’t it? Well, if this is your field you can also consult our proposal of michelin star restaurants in Barcelona for less than 50€. or the best tasting menus to give as a gift . Also, if you are one of those who like secret experiences, you can not miss our unique gastronomic experience, the unique gastronomic experience, The Clandestine Dinner in Barcelona.",
+      "As you know, at Gastroshows we are creators and developers of new gastronomic experiences . We love cooking, but we can’t conceive it without surprises . We believe that if the food is good, and you enjoy it in the best atmosphere and in the best company , it becomes an unforgettable memory .",
+      "The clandestine dinner is a gastronomic experience that takes place in our secret space . It is discovered through clues and enigmas that you receive by mail the week before. At dinner, a tasting menu of 12 dishes is served with a pairing of 3 varieties of wine and cava . Dinner ends with premium gin and tonics . During the dinner there are also surprises, which we can tell each other."
+    ],
+    "entity_schema": {}
+  }
+}

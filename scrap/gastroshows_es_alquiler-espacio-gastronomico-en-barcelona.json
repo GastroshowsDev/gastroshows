@@ -1,0 +1,331 @@
+{
+  "url": "https://gastroshows.es/alquiler-espacio-gastronomico-en-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T11:59:43.713864Z",
+  "title": "Alquiler espacio gastronómico en Barcelona con cocina TPB equipada",
+  "meta_description": "El mejor alquiler de espacio gastronómico en Barcelona, privado y totalmente equipado para celebrar tus eventos con quien quieras.",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/alquiler-espacio-gastronomico-en-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "370.7 KB",
+  "headings": {
+    "h1": [
+      "ALQUILER ESPACIO GASTRONÓMICO EN BARCELONA"
+    ],
+    "h2": [
+      "Cómo Alquilar el espacio gastronómico",
+      "qué incluye",
+      "dónde irás",
+      "Imágenes",
+      "Más información",
+      "Porque alquilar el espacio gastronómico Barcelona",
+      "Tu espacio gastronómico ideal en Barcelona",
+      "Alquiler local gastronómico para tus celebraciones",
+      "Creamos actividades gastronómicas para grupos y empresas pensadas para disfrutar en equipo"
+    ],
+    "h3": [
+      "Todos los servicios en un único local gastronómico",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "fechas",
+      "Horario",
+      "Incluye",
+      "Precio"
+    ],
+    "h5": [
+      "Cocina TPB totalmente equipada",
+      "Salón principal y sala de cóctel",
+      "Servicios extra",
+      "Limpieza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Alquiler de espacio gastronómico en Barcelona único",
+    "description": "Celebra tus reuniones o eventos en un ambiente exclusivo. ¡Ven a vernos!. Un espacio para eventos",
+    "url": "https://gastroshows.es/alquiler-espacio-gastronomico-en-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/09/gastroshows_place-5.jpg",
+    "label1": "Tiempo de lectura",
+    "data1": "10 minutos"
+  },
+  "schema_org": [],
+  "word_count": 724,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "alquiler espacio",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "barra para cocteleria",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "alquiler local",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/gastroshows_place-11.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "alquiler espacio gastronomico"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/gastroshows_place.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "gastroshows_place"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/gastroshows_place-20.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "barra cocteles"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/gastroshows_place-11-1.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "gastroshows_place-11 (1)"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2021/11/BeFunky-photo.jpeg",
+      "anchor": "",
+      "rel": "",
+      "title": "alquiler local cocina"
+    },
+    {
+      "url": "https://gastroshows.es/cena-clandestina/",
+      "anchor": "cenas originales,",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/team-building-cocina-barcelona/",
+      "anchor": "teambuildings,",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/talleres-gastronomicos/",
+      "anchor": "talleres para grupos",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-degustacion-en-casa/",
+      "anchor": "degustación en casa.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "actividad gastronómica",
+      "rel": "",
+      "title": "Actividades gastronómicas"
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "contacto con nosotros",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.tpbarcelona.com/",
+      "anchor": "cocina TPB",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://api.whatsapp.com/send?phone=34620269585&text=Hola%20esther%0AMe%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n",
+      "anchor": "¡contáctanos!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.gastroshows.es",
+      "anchor": "nuestra página.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "El mejor alquiler de espacio gastronómico en Barcelona, tenemos el lugar perfecto para ti.",
+      "Nuestro espacio gastronómico es un local privado y polivalente ideal para organizar todo tipo de eventos, ya sean corporativos o particulares. C uenta con una cocina TPB totalmente equipada y dos salas. Una sala de cóctel, ideal para bienvenidas, y un salón el que celebrar tus comidas y cenas privadas. Es luminoso y acogedor. Además, cuenta con wifi y dos baños.",
+      "– Mesas con capacidad de 20 personas sentadas en formato banquete"
+    ],
+    "entity_schema": {}
+  }
+}

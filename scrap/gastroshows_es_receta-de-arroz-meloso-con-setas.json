@@ -1,0 +1,365 @@
+{
+  "url": "https://gastroshows.es/receta-de-arroz-meloso-con-setas/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:40.924029Z",
+  "title": "Receta de fricandó de ternera con todos los trucos y consejor",
+  "meta_description": "Receta de fricandó de ternera desde cómo comprar la carne hasta el tipo de setas que puedes utilizar. La mejor receta para triunfar",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/receta-de-arroz-meloso-con-setas/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "369.4 KB",
+  "headings": {
+    "h1": [
+      "receta de arroz meloso con setas",
+      "1 Comentario"
+    ],
+    "h2": [
+      "receta de arroz meloso con setas",
+      "trucos y consejos para la receta de arroz cremoso de setas",
+      "trucos y consejos para la receta de arroz cremoso de setas",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "Los mejores planes para celebrar halloween y la castanyada en Barcelona"
+    ],
+    "h3": [
+      "Ingredientes para el arroz",
+      "Los mejores arrozes para hacer arroz cremoso de setas",
+      "Los mejores consejos para hacer el arroz cremoso",
+      "¡No dejes de remover el arroz con la cuchara de palo para que extraiga todo el almidón!",
+      "¿Cómo hacer un arroz cremoso y conseguir el punto perfecto?",
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "Personas:",
+      "4",
+      "Tiempo:",
+      "30-60 min",
+      "Dificultad:",
+      "Media",
+      "Temporada:",
+      "Todo el año"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Receta de fricandó de ternera con todos los trucos y consejor",
+    "description": "Receta de fricandó de ternera desde cómo comprar la carne hasta el tipo de setas que puedes utilizar. La mejor receta para triunfar",
+    "url": "https://gastroshows.es/receta-de-arroz-meloso-con-setas/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/09/Diseño-sin-título-4.jpg",
+    "image:width": "600",
+    "image:height": "800",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "admin",
+    "label2": "Tiempo de lectura",
+    "data2": "10 minutos"
+  },
+  "schema_org": [],
+  "word_count": 995,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      "alt": "filmkovas",
+      "title": "",
+      "width": "80",
+      "height": "80"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurante-clandestino-barcelona",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/receta-de-arroz-meloso-con-setas/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "200gr de champiñones",
+          "200gr de portobello",
+          "50gr de trompetas negras secas",
+          "2 cebollas grandes previamente sofritas",
+          "280gr de arroz",
+          "60gr de mantequilla",
+          "1L y medio de caldo de pollo (verduras para caldo, una carcasa de pollo, un hueso de jamón y un hueso salado)",
+          "Aceite de oliva virgen extra",
+          "Sal (al gusto de cada casa)"
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          "Empezamos calentando el aceite de oliva en una olla. Incorporamos los champiñones y los portobello cortados a láminas. Cortamos e Incorporamos las trompetas. Salteamos durante aproximadamente 10 min hasta que su tamaño se haya reducido a la mitad.",
+          "Añadimos el sofrito de cebolla y el arroz. Nacaramos el arroz . Posteriormente, remojamos el arroz con caldo a temperatura ambiente y removemos. Vamos añadiendo caldo de cocción. Corregimos de sal.",
+          "Por último, incorporamos la mantequilla fría y lo dejamos reposar entre 4 y 5 minutos. Y ya estaría listo para comer y disfrutar."
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "La mejor receta receta de arroz meloso con setas, todos los trucos y consejos para que te salga perfecto, esto es, desde cómo comprar el arroz, hasta qué tipo de setas puedes utilizar. Es una de nuestras recetas top en el menú de Gastroshows",
+      "En el vídeo podréis ver cuáles son los mejores trucos para que os quede un arroz cremoso de primera, como: qué arroz escoger, como utilizar la mantequilla, la importancia de nacarar el arroz, las formas de removerlo, cómo utilizar caldo, etc.",
+      "Da igual que sea de carne, setas o de verduras, hay que utilizar siempre un buen caldo. El caldo es el que le va a dar sabor al arroz."
+    ],
+    "entity_schema": {}
+  }
+}

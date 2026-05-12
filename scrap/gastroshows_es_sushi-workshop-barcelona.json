@@ -1,0 +1,275 @@
+{
+  "url": "https://gastroshows.es/sushi-workshop-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:00:32.387274Z",
+  "title": "Sushi workshop Barcelona for groups - Book now | Gastroshows®.",
+  "meta_description": "Book your sushi workshop in Barcelona. Enjoy the Japanese cooking course and create quality sushi cooking with our best chefs!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/en/sushi-workshop-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "368.3 KB",
+  "headings": {
+    "h1": [
+      "sushi workshop barcelona"
+    ],
+    "h2": [
+      "Qué es",
+      "qué incluye",
+      "dónde irás",
+      "Imágenes",
+      "sushi workshop barcelona",
+      "Más información",
+      "Cosas que debes tener en cuenta",
+      "Sushi workshop in barcelona",
+      "What can you find in the sushi barcelona workshop?",
+      "Get out of the routine with a sushi workshop in Barcelona.",
+      "A sushi workshop barcelona for groups",
+      "A tailor-made gastronomic activity"
+    ],
+    "h3": [
+      "The sushi course is fully interactive and you will be able to enjoy a gastronomic activity with a first class chef. In addition, you will be able to discuss the whole experience with your colleagues at a dinner or lunch at the end of the sushi workshop.",
+      "Fun and the desire to have a good time are the basis of the course and, of course, enjoy a good dinner in pure Japanese style.",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "dates",
+      "Duration",
+      "includes",
+      "Price"
+    ],
+    "h5": [
+      "Welcome cocktail",
+      "Cooking workshop",
+      "Tasting",
+      "Awarding of prizes to the winners"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "GASTROSHOWS: GASTRONOMIC ACTIVITIES IN BARCELONA",
+    "description": "✅ Choose your gastronomic activity! combining haute cuisine, music and entertainment. Don't know what to do? Come to our gastronomic show in Barcelona ?",
+    "url": "https://gastroshows.es/en/sushi-workshop-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2020/03/japanese-sushi-4746059_640.jpg",
+    "image:width": "640",
+    "image:height": "423",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Tiempo de lectura",
+    "data1": "10 minutos"
+  },
+  "schema_org": [],
+  "word_count": 766,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "curso de sushi en barcelona",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/sushi-2436928_640.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "taller de sushi barcelona"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2019/09/sushi-2853382_640.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "taller de sushi"
+    },
+    {
+      "url": "https://gastroshows.es/en/",
+      "anchor": "gastronomic activities",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/team-building-cocina-barcelona/",
+      "anchor": "gastronomic activity",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/contact/",
+      "anchor": "Contact us!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/team-building-cocina-barcelona/",
+      "anchor": "cooking workshops",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/original-dinner-in-barcelona/",
+      "anchor": "original gastronomic experiences",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "SUSHI FRESH! Japanese cuisine in the freshest and most original sushi workshop in Barcelona.",
+      "It is a sushi workshop in Barcelona, contest format and in which you will have a great time learning the techniques of this ancient cuisine. In addition, you will have to put your team creativity into practice because there will only be one winner: the one who gets the roll with the coolest design. Ideal for beginners in the learning of this Japanese cuisine.",
+      "We will welcome you with a welcome drink and introduce the cooking team who will explain the dynamics of the course."
+    ],
+    "entity_schema": {}
+  }
+}

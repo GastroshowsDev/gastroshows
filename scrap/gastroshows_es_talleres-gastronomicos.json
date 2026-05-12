@@ -1,0 +1,339 @@
+{
+  "url": "https://gastroshows.es/talleres-gastronomicos/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:09.573708Z",
+  "title": "Talleres gastronómicos en Barcelona - Gastroshows",
+  "meta_description": "Los mejores talleres gastronómicos en Barcelona. Cócteles, catas y mucho más. Visita ahora nuestra amplia variedad en talleres gastronómicos.",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/talleres-gastronomicos/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "299.6 KB",
+  "headings": {
+    "h1": [
+      "talleres gastronómicos"
+    ],
+    "h2": [
+      "talleres gastronómicos que no te puedes perder",
+      "El rey de las tartas",
+      "Sushi fresh!",
+      "los talleres gastronómicos más populares",
+      "Masterchef",
+      "tapatapa",
+      "Sabotaje en la cocina",
+      "¿vino a descubrirlo?",
+      "El taller de coctelería: Cocktail Factory",
+      "cocktail Factory",
+      "porque debes hacer alguno de nuestros telleres",
+      "Actividades team building para empresas y grupos",
+      "Actividades divertidas para grupos",
+      "También puedes pedirnos tu actividad"
+    ],
+    "h3": [
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Las mejores actividades gastronómicas de barcelona",
+    "description": "Actividades para grupos y empresa de alto nivel para disfrutar de la alta gastronomía",
+    "url": "https://gastroshows.es/talleres-gastronomicos/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/04/image-006.jpg",
+    "image:width": "400",
+    "image:height": "400",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Tiempo de lectura",
+    "data1": "4 minutos"
+  },
+  "schema_org": [],
+  "word_count": 588,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20666'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1000",
+      "height": "666"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20423'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "640",
+      "height": "423"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20666'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1000",
+      "height": "666"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20667'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1000",
+      "height": "667"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202560%201707'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "2560",
+      "height": "1707"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20667'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1000",
+      "height": "667"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cursos%20de%20pasteleria%20en%20barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/taller-de-sushi-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/team-building-masterchef/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/curso-de-tapas-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/taller-cocteles-barcelona/",
+      "anchor": "Más información",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-original-clandestina/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-original-clandestina/",
+      "anchor": "eventos privados",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto",
+      "anchor": "contá",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto",
+      "anchor": "ctanos",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/taller-cocteles-barcelona/",
+      "anchor": "talleres de coctelería",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "actividades gastronómicas en barcelona",
+      "rel": "",
+      "title": "actividades gastrómicas en barcelona"
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "Contactanos",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "El team building más dulce y divertido que pondrá a prueba el diseño y creatividad de toda la oficina, ¿qué equipo será el rey de las tartas?",
+      "El curso de cocina japonesa más fresco de Barcelona en el que todo el equipo competirá por descubrir los secretos de esta cocina milenaria.",
+      "Concursantes, tenéis 50 minutos para elaborar todo el menú, ¿estáis listos? 3, 2, 1, a cocinar!"
+    ],
+    "entity_schema": {}
+  }
+}

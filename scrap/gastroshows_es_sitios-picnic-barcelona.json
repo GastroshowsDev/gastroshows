@@ -1,0 +1,427 @@
+{
+  "url": "https://gastroshows.es/sitios-picnic-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:52.875154Z",
+  "title": "Descubre los mejores sitios de Picnic en Barcelona | Gastroshows ®",
+  "meta_description": "Aquí encontrarás los mejores sitios para picnic en Barcelona. Disfruta de un almuerzo al aire libre o una cita romántica, ¡echa un vistazo!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/sitios-picnic-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "453.4 KB",
+  "headings": {
+    "h1": [
+      "Los mejores sitios para Picnic en Barcelona"
+    ],
+    "h2": [
+      "¿Hay algo mejor que un picnic en buena compañía?",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "Los mejores planes para celebrar halloween y la castanyada en Barcelona"
+    ],
+    "h3": [
+      "Sólo para desconectar, en plan romántico con tu pareja o en grupo, el picnic es un auténtico lujo gratuito que puedes disfrutar en Barcelona.",
+      "Almuerzo en el Parque del Turó del Putxet – Carrer de Manacor, 9",
+      "Comida de cuento en el Parque de Cervantes – Av. Diagonal, 706",
+      "De picnic en Barcelona: Parque de la Oreneta – Carrer de Montevideo, 45",
+      "El mejor picnic barbacoa: Parque del Nus de la Trinitat – Carrer de Santa Coloma, 60",
+      "Las mejores comilonas en: Jardines de la Maternitat – Travessera de les Corts, 159",
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Descubre los mejores sitios de Picnic en Barcelona | Gastroshows ®",
+    "description": "Aquí encontrarás los mejores sitios para picnic en Barcelona. Disfruta de un almuerzo al aire libre o una cita romántica, ¡echa un vistazo!",
+    "url": "https://gastroshows.es/sitios-picnic-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/05/alcohol-1853380_640.jpg",
+    "image:width": "640",
+    "image:height": "426",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "4 minutos"
+  },
+  "schema_org": [],
+  "word_count": 1063,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los mejores sitio de picnic en Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      "alt": "Disenador",
+      "title": "",
+      "width": "80",
+      "height": "80"
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      "alt": "admin",
+      "title": "",
+      "width": "80",
+      "height": "80"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/author/esther/",
+      "anchor": "Esther Fernández",
+      "rel": [
+        "author"
+      ],
+      "title": "Mensajes de Esther Fernández"
+    },
+    {
+      "url": "https://gastroshows.es/category/planes-barcelona/",
+      "anchor": "planes barcelona",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/sitios-picnic-barcelona/#respond",
+      "anchor": "2 Comentarios",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/sitios-picnic-barcelona/gastroshows.es",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/10-bares-de-tapas-de-barcelona-por-menos-de-20e/",
+      "anchor": "10 bares de tapas de Barcelona por menos de 20€",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/terrazas-secretas-barcelona/",
+      "anchor": "mejores terrazas secretas de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-diferentes-originales-barcelona/",
+      "anchor": "los planes originales de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/sitios-picnic-barcelona/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/parc-del-turo-del-putxet_92086011938.html",
+      "anchor": "Almuerzo en el Parque del Turó del Putxet – Carrer de Manacor, 9",
+      "rel": [
+        "nofollow",
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/parc-de-cervantes_92086010721.html",
+      "anchor": "Comida de cuento en el Parque de Cervantes – Av. Diagonal, 706",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.barcelonaturisme.com/wv3/en/page/779/parc-de-l-oreneta.html",
+      "anchor": "De picnic en Barcelona: Parque de la Oreneta – Carrer de Montevideo, 45",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.barcelona.cat/es/que-hacer-en-bcn/parques-y-jardines/parque-de-la-trinitat_93188125133.html",
+      "anchor": "El mejor picnic barbacoa: Parque del Nus de la Trinitat – Carrer de Santa Coloma, 60",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/parcs-i-jardins/jardins-de-la-maternitat_95143083146.html",
+      "anchor": "Las mejores comilonas en: Jardines de la Maternitat – Travessera de les Corts, 159",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "http://Gastroshows.es",
+      "anchor": "admin",
+      "rel": [
+        "ugc"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "por Esther Fernández | May 14, 2019 | planes barcelona | 2 Comentarios",
+      "Llega el buen tiempo y con ello las ganas de disfrutar de un almuerzo al aire libre. En Gastroshows nos encanta el buen tiempo, por eso, aquí vais a encontrar los mejores sitios para picnic en Barcelona . Sitios idóneos para estirar el mantel, abrir la cesta y comer mientras te acaricia la brisa. Si te va el tapeo tampoco puedes perderte los 10 bares de tapas de Barcelona por menos de 20€ .",
+      "Que mejor plan que disfrutar de tu comida favorita en un entorno natural, tumbado en el césped y, literalmente, a tu bola. Por no hablar de que se trata de una actividad económica y divertida sin límite de horario , ni de gente, en la que incluso nos pueden acompañar nuestros perretes. Hasta aquí todo bien, pero la pregunta es: ¿Se puede hacer picnic en Barcelona? Sí! ¿No hace falta irse lejos de la ciudad? No!"
+    ],
+    "entity_schema": {}
+  }
+}
