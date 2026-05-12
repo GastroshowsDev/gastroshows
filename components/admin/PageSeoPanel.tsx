@@ -280,16 +280,16 @@ export function PageSeoPanel({ page, onUpdate, openMedia }: Props) {
                      })()} 
                      onChange={(e) => {
                        const isChecked = e.target.checked;
-                       let tags = (page.robots || "index, follow").split(",").map(t => t.trim()).filter(Boolean);
+                       let tags = (page.robots || "index, follow").split(",").map((t: string) => t.trim()).filter(Boolean);
                        
                        if (opt.id === "index") {
-                         tags = tags.filter(t => t !== "index" && t !== "noindex");
+                         tags = tags.filter((t: string) => t !== "index" && t !== "noindex");
                          tags.push(isChecked ? "index" : "noindex");
                        } else if (opt.id === "follow") {
-                         tags = tags.filter(t => t !== "follow" && t !== "nofollow");
+                         tags = tags.filter((t: string) => t !== "follow" && t !== "nofollow");
                          tags.push(isChecked ? "follow" : "nofollow");
                        } else {
-                         tags = tags.filter(t => t !== opt.id);
+                         tags = tags.filter((t: string) => t !== opt.id);
                          if (isChecked) tags.push(opt.id);
                        }
                        
