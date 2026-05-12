@@ -140,7 +140,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
         />
       </div>
 
-      {tag === "button" && (
+      {(tag === "button" || tag === "buttonSecondary") && (
         <div style={{ marginTop: "0.8rem", paddingTop: "0.8rem", borderTop: "1px dashed #DDD" }}>
           <div style={rowStyle}>
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Radio</span>
@@ -153,6 +153,12 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
           </div>
           <div style={rowStyle}>
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Fondo</span>
+            <input 
+              type="color"
+              style={{ width: "30px", height: "20px", padding: 0, border: "none", cursor: "pointer" }} 
+              value={localStyles[tag]?.backgroundColor || "#ffffff"} 
+              onChange={(e) => updateTag(tag, { backgroundColor: e.target.value })}
+            />
             <input 
               style={inputStyle} 
               value={localStyles[tag]?.backgroundColor || ""} 

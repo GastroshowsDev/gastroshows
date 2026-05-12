@@ -27,7 +27,7 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
 
   if (!styles) return <>{children}</>;
 
-  const generateCSS = (tag: string, rules: any) => {
+  const generateCSS = (selector: string, rules: any, important: boolean = false) => {
     if (!rules) return "";
     const mapping: any = {
       fontSize: "font-size",
@@ -45,16 +45,22 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
 
     const cssRules = Object.entries(rules)
       .map(([key, value]) => {
-        if (key === "bold") return value ? "font-weight: bold;" : "";
-        if (key === "italic") return value ? "font-style: italic;" : "";
-        if (key === "underline") return value ? "text-decoration: underline;" : "";
-        if (key === "strikethrough") return value ? "text-decoration: line-through;" : "";
-        return mapping[key] ? `${mapping[key]}: ${value};` : "";
+        if (!value && value !== 0) return "";
+        let rule = "";
+        if (key === "bold") rule = value ? "font-weight: bold" : "";
+        else if (key === "italic") rule = value ? "font-style: italic" : "";
+        else if (key === "underline") rule = value ? "text-decoration: underline" : "";
+        else if (key === "strikethrough") rule = value ? "text-decoration: line-through" : "";
+        else if (mapping[key]) rule = `${mapping[key]}: ${value}`;
+        
+        if (rule && important) return rule + " !important;";
+        if (rule) return rule + ";";
+        return "";
       })
       .filter(r => r !== "")
       .join(" ");
 
-    return `${tag} { ${cssRules} }`;
+    return `${selector} { ${cssRules} }`;
   };
 
   const css = `
@@ -69,20 +75,8 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
     ${generateCSS("button", styles.button)}
     
     /* Global Buttons Classes */
-    .gs-btn-primary { 
-      ${Object.entries(styles.button || {})
-        .map(([key, value]) => {
-          const mapping: any = { backgroundColor: "background-color", color: "color", borderRadius: "border-radius", border: "border" };
-          return mapping[key] ? `${mapping[key]}: ${value} !important;` : "";
-        }).join(" ")}
-    }
-    .gs-btn-secondary { 
-      ${Object.entries(styles.buttonSecondary || {})
-        .map(([key, value]) => {
-          const mapping: any = { backgroundColor: "background-color", color: "color", borderRadius: "border-radius", border: "border" };
-          return mapping[key] ? `${mapping[key]}: ${value} !important;` : "";
-        }).join(" ")}
-    }
+    ${generateCSS(".gs-btn-primary", styles.button, true)}
+    ${generateCSS(".gs-btn-secondary", styles.buttonSecondary, true)}
   `;
 
   return (
