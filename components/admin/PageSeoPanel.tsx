@@ -10,7 +10,7 @@ type Props = {
 };
 
 export function PageSeoPanel({ page, onUpdate, openMedia }: Props) {
-  const [activeTab, setActiveTab] = useState<"general" | "social" | "multimedia" | "performance" | "linking" | "advanced">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "social" | "multimedia" | "performance" | "linking" | "advanced" | "technical">("general");
   const [internalLinks, setInternalLinks] = useState<{title: string, slug: string}[]>([]);
   const [loadingLinks, setLoadingLinks] = useState(false);
 
