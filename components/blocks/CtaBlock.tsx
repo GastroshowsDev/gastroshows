@@ -13,8 +13,8 @@ type Props = {
   content: CtaContent;
   isEditing?: boolean;
   onUpdate?: (newContent: CtaContent) => void;
-  onSelectElement?: (colIndex: number, elIndex: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (path: string) => void;
+  selectedElementPath?: string | null;
 };
 
 export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {

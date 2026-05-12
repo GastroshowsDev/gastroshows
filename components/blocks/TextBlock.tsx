@@ -12,8 +12,8 @@ type Props = {
   content: TextContent;
   isEditing?: boolean;
   onUpdate?: (newContent: TextContent) => void;
-  onSelectElement?: (colIndex: number, elIndex: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (path: string) => void;
+  selectedElementPath?: string | null;
 };
 
 const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
