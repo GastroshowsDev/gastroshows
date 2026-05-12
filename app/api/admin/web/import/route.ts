@@ -16,56 +16,67 @@ export async function POST(req: Request) {
 
     let body = await req.json();
     
-    // Check if it's the "Scrape" format and transform it
+    // Improved Scrape transformation logic
     if (body.url && !body.slug) {
       const urlObj = new URL(body.url);
       const slug = urlObj.pathname === "/" ? "home" : urlObj.pathname.split("/").filter(Boolean).pop() || "imported";
       
-      const elements: any[] = [];
+      const pageBlocks: any[] = [];
       const ogImage = body.open_graph?.image || (body.images && body.images.find((img: any) => !img.src.includes("svg"))?.src) || "";
 
-      // 1. Add Title as Heading
-      elements.push({ 
-        type: "HEADING", 
-        level: 1, 
-        text: body.title || "Página Importada", 
-        styles: { textAlign: "center", marginBottom: "3rem" } 
+      // 1. Hero Block
+      pageBlocks.push({
+        type: "HERO",
+        content: {
+          bgImage: ogImage,
+          title: body.title || "Página Importada",
+          titleAccent: "EXPERIENCIA",
+          overlayOpacity: 60,
+          styles: { minHeight: "70dvh" }
+        }
       });
 
-      // 2. Add OG Image if exists
-      if (ogImage) {
-        elements.push({
-          type: "IMAGE",
-          src: ogImage,
-          alt: body.title || "",
-          styles: { width: "100%", borderRadius: "12px", marginBottom: "3rem" }
-        });
-      }
-
-      // 3. Add Lead Paragraphs as Text
+      // 2. Main Content Section (from geo or headings)
+      const elements: any[] = [];
+      
+      // Add lead paragraphs
       const leadParagraphs = body.geo?.lead_paragraphs || [];
       if (leadParagraphs.length > 0) {
         elements.push({
           type: "TEXT",
           body: leadParagraphs.map((p: string) => `<p>${p}</p>`).join(""),
-          styles: { fontSize: "1.2rem", lineHeight: "1.8", marginBottom: "4rem" }
+          styles: { fontSize: "1.1rem", marginBottom: "2rem" }
         });
       }
 
-      // 4. Add H2 Headings and sub-content
+      // Add Headings and content
       if (body.headings?.h2?.length > 0) {
-        body.headings.h2.forEach((h: string) => {
-          elements.push({
-            type: "HEADING",
-            level: 2,
-            text: h,
-            styles: { marginTop: "3rem", marginBottom: "1.5rem", borderBottom: "1px solid #EEE", paddingBottom: "0.5rem" }
-          });
-          elements.push({
-            type: "TEXT",
-            body: "<p>Contenido importado para esta sección. Puedes editarlo o moverlo.</p>",
-            styles: { color: "#666", marginBottom: "2rem" }
-          });
+        body.headings.h2.forEach((h: string, idx: number) => {
+          elements.push({ type: "HEADING", level: 2, text: h, styles: { marginTop: "2rem" } });
+          elements.push({ type: "TEXT", body: `<p>Contenido detallado para la sección ${idx + 1}.</p>`, styles: { marginBottom: "2rem" } });
+        });
+      }
+
+      pageBlocks.push({
+        type: "SECTION",
+        content: {
+          columns: [{ width: "100%", elements }],
+          styles: { padding: "4rem 2rem" }
+        }
+      });
+
+      // 3. Image Gallery Section (if images available)
+      if (body.images && body.images.length > 3) {
+        const galleryImages = body.images.slice(0, 6).map((img: any) => ({ src: img.src, alt: img.alt || "" }));
+        pageBlocks.push({
+          type: "SECTION",
+          content: {
+            columns: [{ 
+              width: "100%", 
+              elements: [{ type: "IMAGE", src: galleryImages[0].src, alt: galleryImages[0].alt, styles: { width: "100%", borderRadius: "12px" } }] 
+            }],
+            styles: { padding: "4rem 2rem", backgroundColor: "#F9FAFB" }
+          }
         });
       }
 
@@ -75,13 +86,7 @@ export async function POST(req: Request) {
         seoTitle: body.title,
         seoDesc: body.meta_description,
         ogImage: ogImage,
-        blocks: [{
-          type: "SECTION",
-          content: {
-            columns: [{ width: "100%", elements }],
-            styles: { paddingTop: "6rem", paddingBottom: "10rem", maxWidth: "900px" }
-          }
-        }],
+        blocks: pageBlocks,
         oldPath: urlObj.pathname,
         createRedirect: body.createRedirect
       };
