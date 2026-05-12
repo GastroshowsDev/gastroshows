@@ -55,16 +55,17 @@ export function ButtonElement({ element, isEditing = false, onUpdate }: Props) {
         isEditing={isEditing}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        className={`gs-btn-${element.variant || "primary"}`}
         style={{
           display: "inline-block",
           padding: element.size === "lg" ? "1rem 2.5rem" : "0.75rem 1.5rem",
           fontSize: "0.75rem",
           fontWeight: 600,
-          letterSpacing: "0.2em",
+          letterSpacing: "0.22em",
           textTransform: "uppercase",
           textDecoration: "none",
           borderRadius: styles.borderRadius || undefined,
-          transition: "all 0.3s ease",
+          transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
           cursor: "pointer",
           ...getVariantStyles(),
           ...(styles.backgroundColor ? { background: styles.backgroundColor } : {}),

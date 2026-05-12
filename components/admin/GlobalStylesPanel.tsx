@@ -13,6 +13,7 @@ type MasterStyles = {
   p: CommonStyles;
   a: CommonStyles;
   button: CommonStyles;
+  buttonSecondary: CommonStyles;
 };
 
 type Props = {
@@ -186,6 +187,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
       {renderTagEditor("h3", "Título Bloque (H3)")}
       {renderTagEditor("p", "Párrafos (P)")}
       {renderTagEditor("button", "Botones Primarios")}
+      {renderTagEditor("buttonSecondary", "Botones Secundarios")}
       {renderTagEditor("a", "Enlaces")}
       
       <div style={{ padding: "1rem", background: "#F0EBFE", borderRadius: "10px", marginTop: "2rem" }}>

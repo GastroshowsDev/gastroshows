@@ -356,15 +356,13 @@ function HeroButton({
       isEditing={isEditing}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className={primary ? "gs-btn-primary" : "gs-btn-secondary"}
       style={{
         display: "inline-block",
-        backgroundColor: bg,
-        color: primary ? "#0A0A0A" : "#FFFFFF",
-        border: primary ? "none" : `1px solid #FFFFFF`,
-        padding: "1rem 2.8rem",
+        padding: "1.1rem 3rem",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "0.72rem",
-        fontWeight: 600,
+        fontWeight: 700,
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         textDecoration: "none",
@@ -376,6 +374,7 @@ function HeroButton({
             : "0 10px 32px rgba(200,169,110,0.25)"
           : "none",
         transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
       }}
     >
       {children}

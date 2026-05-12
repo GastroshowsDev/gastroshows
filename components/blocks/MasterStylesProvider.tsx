@@ -68,11 +68,18 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
     ${generateCSS("a", styles.a)}
     ${generateCSS("button", styles.button)}
     
-    /* Specific overrides for builder buttons if needed */
-    .gs-master-btn { 
+    /* Global Buttons Classes */
+    .gs-btn-primary { 
       ${Object.entries(styles.button || {})
         .map(([key, value]) => {
-          const mapping: any = { backgroundColor: "background-color", color: "color", borderRadius: "border-radius" };
+          const mapping: any = { backgroundColor: "background-color", color: "color", borderRadius: "border-radius", border: "border" };
+          return mapping[key] ? `${mapping[key]}: ${value} !important;` : "";
+        }).join(" ")}
+    }
+    .gs-btn-secondary { 
+      ${Object.entries(styles.buttonSecondary || {})
+        .map(([key, value]) => {
+          const mapping: any = { backgroundColor: "background-color", color: "color", borderRadius: "border-radius", border: "border" };
           return mapping[key] ? `${mapping[key]}: ${value} !important;` : "";
         }).join(" ")}
     }

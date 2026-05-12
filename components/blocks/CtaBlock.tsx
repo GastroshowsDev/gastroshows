@@ -185,11 +185,9 @@ export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, on
                 isEditing={isEditing}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
+                className="gs-btn-primary"
                 style={{
                   display: "inline-block",
-                  background: hovered ? "#E8D5A8" : "#daa520",
-                  color: "#0A0A0A",
-                  border: "none",
                   padding: "1.1rem 3rem",
                   fontFamily: "var(--font-montserrat), sans-serif",
                   fontSize: "0.72rem",
