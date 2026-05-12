@@ -2,10 +2,20 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 import * as cheerio from "cheerio";
 import axios from "axios";
 
-const prisma = new PrismaClient();
+// Match project's Prisma instantiation logic
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  console.error("❌ DATABASE_URL no encontrada en el entorno.");
+  process.exit(1);
+}
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function scrapePage(url: string) {
   console.log(`🔍 Iniciando scrapeado de: ${url}`);
@@ -28,97 +38,101 @@ async function scrapePage(url: string) {
 
     const blocks: any[] = [];
 
-    // 1. Detectar HERO (Primer elemento visual fuerte)
-    // En gastroshows.es suele ser una sección con id o clase específica
-    const heroSection = $(".wp-block-cover").first();
-    if (heroSection.length) {
-      const bgImg = heroSection.find("img").attr("src") || "";
-      const h1 = heroSection.find("h1").text().trim();
+    // 1. Detectar HERO (Sección con fondo y contenido)
+    const firstSection = $(".et_pb_section").first();
+    const heroBg = firstSection.css("background-image") || "";
+    const heroTitle = firstSection.find("h1").text().trim();
+    
+    if (firstSection.length) {
       blocks.push({
         type: "HERO",
         content: {
-          bgImage: bgImg,
-          title: h1 || title,
-          overlayOpacity: 70,
-          styles: { minHeight: "80dvh" }
+          bgImage: heroBg.replace(/url\(["']?(.*?)["']?\)/, "$1") || ogImage,
+          title: heroTitle || title,
+          overlayOpacity: 60,
+          styles: { minHeight: "70dvh" }
         }
       });
     }
 
-    // 2. Iterar por bloques principales de contenido
-    // WordPress usa clases como .wp-block-group o .wp-block-columns
-    const mainContent = $("main, .entry-content, #content").first();
-    const children = mainContent.children();
-
-    children.each((_, el) => {
-      const $el = $(el);
+    // 2. Iterar por Secciones de Divi
+    $(".et_pb_section").each((idx, section) => {
+      if (idx === 0 && blocks.length > 0) return; // Saltar el hero si ya se procesó
       
-      // Saltamos el hero si ya lo procesamos
-      if ($el.hasClass("wp-block-cover") && blocks.length > 0) return;
+      const $section = $(section);
+      const rows = $section.find(".et_pb_row");
 
-      // COLUMNAS
-      if ($el.hasClass("wp-block-columns")) {
+      rows.each((_, row) => {
+        const $row = $(row);
         const columns: any[] = [];
-        $el.find(".wp-block-column").each((_, col) => {
+        
+        $row.find(".et_pb_column").each((_, col) => {
           const $col = $(col);
           const elements: any[] = [];
           
-          $col.children().each((_, child) => {
-            const $child = $(child);
-            if ($child.is("h1, h2, h3, h4, h5, h6")) {
-              elements.push({ type: "HEADING", level: parseInt($child.prop("tagName").substring(1)), text: $child.text().trim() });
-            } else if ($child.is("p")) {
-              elements.push({ type: "TEXT", body: $child.html() });
-            } else if ($child.find("img").length) {
-              elements.push({ type: "IMAGE", src: $child.find("img").attr("src"), alt: $child.find("img").attr("alt") || "" });
-            } else if ($child.find("a").hasClass("wp-block-button__link")) {
-              elements.push({ type: "BUTTON", text: $child.find("a").text().trim(), link: $child.find("a").attr("href") });
+          // Buscar módulos de Divi dentro de la columna
+          $col.find(".et_pb_module").each((_, module) => {
+            const $mod = $(module);
+            
+            // Texto y Títulos
+            if ($mod.hasClass("et_pb_text")) {
+              $mod.find("h1, h2, h3, h4, p").each((_, textPart) => {
+                const $tp = $(textPart);
+                if ($tp.is("h1, h2, h3, h4")) {
+                  elements.push({ type: "HEADING", level: parseInt($tp.prop("tagName").substring(1)), text: $tp.text().trim() });
+                } else {
+                  elements.push({ type: "TEXT", body: $tp.html() });
+                }
+              });
+            }
+            
+            // Imágenes
+            else if ($mod.hasClass("et_pb_image")) {
+              const $img = $mod.find("img");
+              if ($img.length) {
+                elements.push({ type: "IMAGE", src: $img.attr("src"), alt: $img.attr("alt") || "" });
+              }
+            }
+            
+            // Botones
+            else if ($mod.hasClass("et_pb_button_module_wrapper") || $mod.hasClass("et_pb_button")) {
+              const $btn = $mod.is("a") ? $mod : $mod.find("a");
+              if ($btn.length) {
+                elements.push({ type: "BUTTON", text: $btn.text().trim(), link: $btn.attr("href") });
+              }
+            }
+
+            // Blurbs (Icono + Texto)
+            else if ($mod.hasClass("et_pb_blurb")) {
+              const bTitle = $mod.find(".et_pb_module_header").text().trim();
+              const bContent = $mod.find(".et_pb_blurb_description").html();
+              const bImg = $mod.find(".et_pb_main_blurb_image img").attr("src");
+              
+              if (bImg) elements.push({ type: "IMAGE", src: bImg, alt: bTitle });
+              if (bTitle) elements.push({ type: "HEADING", level: 3, text: bTitle });
+              if (bContent) elements.push({ type: "TEXT", body: bContent });
             }
           });
 
-          columns.push({
-            width: $col.css("flex-basis") || `${100 / $el.find(".wp-block-column").length}%`,
-            elements
-          });
+          if (elements.length > 0) {
+            // Determinar ancho basado en clase de Divi
+            let width = "100%";
+            if ($col.hasClass("et_pb_column_1_2")) width = "50%";
+            else if ($col.hasClass("et_pb_column_1_3")) width = "33.33%";
+            else if ($col.hasClass("et_pb_column_2_3")) width = "66.66%";
+            else if ($col.hasClass("et_pb_column_1_4")) width = "25%";
+
+            columns.push({ width, elements });
+          }
         });
 
-        blocks.push({
-          type: "SECTION",
-          content: { columns, styles: { padding: "4rem 2rem" } }
-        });
-      }
-
-      // GRUPOS (Secciones simples)
-      else if ($el.hasClass("wp-block-group")) {
-        const elements: any[] = [];
-        $el.find("h1, h2, h3, p, img").each((_, item) => {
-          const $item = $(item);
-          if ($item.is("h1, h2, h3")) elements.push({ type: "HEADING", level: 2, text: $item.text().trim() });
-          else if ($item.is("p")) elements.push({ type: "TEXT", body: $item.html() });
-          else if ($item.is("img")) elements.push({ type: "IMAGE", src: $item.attr("src"), alt: $item.attr("alt") || "" });
-        });
-
-        if (elements.length > 0) {
+        if (columns.length > 0) {
           blocks.push({
             type: "SECTION",
-            content: { columns: [{ width: "100%", elements }], styles: { padding: "4rem 2rem" } }
+            content: { columns, styles: { padding: "4rem 2rem" } }
           });
         }
-      }
-
-      // ELEMENTOS SUELTOS
-      else if ($el.is("h1, h2, h3")) {
-        blocks.push({
-          type: "SECTION",
-          content: { columns: [{ width: "100%", elements: [{ type: "HEADING", level: 2, text: $el.text().trim() }] }], styles: { padding: "2rem" } }
-        });
-      }
-      else if ($el.is("p")) {
-        blocks.push({
-          type: "SECTION",
-          content: { columns: [{ width: "100%", elements: [{ type: "TEXT", body: $el.html() }] }], styles: { padding: "1rem 2rem" } }
-        });
-      }
+      });
     });
 
     // 3. Guardar en Base de Datos
