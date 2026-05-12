@@ -194,7 +194,7 @@ export function FloatingActions() {
         <div style={{ position: "relative" }}>
           {!isMobile && <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />}
           <button
-            onClick={openReservation}
+            onClick={() => openReservation()}
             onMouseEnter={() => { setActiveTooltip("reserve"); }}
             onMouseLeave={() => setActiveTooltip(null)}
             style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
