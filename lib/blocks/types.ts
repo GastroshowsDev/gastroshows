@@ -145,6 +145,14 @@ export type ContainerElement = {
   styles?: CommonStyles;
 };
 
+export type IframeElement = {
+  type: "IFRAME";
+  src: string;
+  width?: string;
+  height?: string;
+  styles?: CommonStyles;
+};
+
 export type ElementData = 
   | HeadingElement 
   | ButtonElement 
@@ -155,7 +163,8 @@ export type ElementData =
   | AvailabilityElement
   | ContainerElement
   | ReviewsElement
-  | FormElement;
+  | FormElement
+  | IframeElement;
 
 
 // ── Layout Blocks (Containers) ──────────────────────────────────────────────
@@ -421,6 +430,13 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
       { id: "f4", type: "textarea", label: "Mensaje", placeholder: "¿En qué podemos ayudarte?", required: true, width: "full" }
     ],
     styles: {}
+  },
+  IFRAME: {
+    type: "IFRAME",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    width: "100%",
+    height: "400px",
+    styles: {}
   }
 };
 
@@ -446,4 +462,5 @@ export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
   REVIEWS: { label: "Google Reviews", icon: "⭐" },
   FORM: { label: "Formulario", icon: "📋" },
   CONTAINER: { label: "Contenedor", icon: "📦" },
+  IFRAME: { label: "Iframe", icon: "🖼️" },
 };

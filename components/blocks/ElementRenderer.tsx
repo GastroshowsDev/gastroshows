@@ -88,6 +88,18 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
             selectedElementPath={selectedElementPath}
           />
         );
+      case "IFRAME":
+        return (
+          <div style={{ width: "100%", textAlign: element.styles?.textAlign || "center", margin: `${element.styles?.marginTop || "0px"} 0 ${element.styles?.marginBottom || "0px"}` }}>
+            <iframe 
+              src={element.src} 
+              width={element.width || "100%"} 
+              height={element.height || "400px"}
+              style={{ border: "none", borderRadius: element.styles?.borderRadius || "8px", maxWidth: "100%" }}
+              allowFullScreen
+            />
+          </div>
+        );
       default:
         return <div style={{ color: "red" }}>Unknown Element: {(element as any).type}</div>;
     }
@@ -99,7 +111,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
       <div style={{ position: "relative" }}>
         {renderContent()}
         
-        {isEditing && (element.type === "AVAILABILITY" || element.type === "CALENDAR" || element.type === "REVIEWS" || element.type === "FORM") && (
+        {isEditing && (element.type === "AVAILABILITY" || element.type === "CALENDAR" || element.type === "REVIEWS" || element.type === "FORM" || element.type === "IFRAME") && (
           <>
             <button
               ref={buttonRef}
@@ -319,6 +331,75 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
                         value={parseFloat(element.styles?.fontSize || "0.75")} 
                         onChange={(e) => updateWidget({ styles: { ...element.styles, fontSize: `${e.target.value}rem` } })}
                       />
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Alineación</label>
+                      <select 
+                        value={element.styles?.textAlign || "center"}
+                        onChange={(e) => updateWidget({ styles: { ...element.styles, textAlign: e.target.value as any } })}
+                        style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
+                      >
+                        <option value="left">Izquierda</option>
+                        <option value="center">Centro</option>
+                        <option value="right">Derecha</option>
+                      </select>
+                    </div>
+
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Margen Sup.</label>
+                        <input 
+                          type="text" placeholder="0px"
+                          value={element.styles?.marginTop || ""} 
+                          onChange={(e) => updateWidget({ styles: { ...element.styles, marginTop: e.target.value } })}
+                          style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
+                        />
+                      </div>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Margen Inf.</label>
+                        <input 
+                          type="text" placeholder="0px"
+                          value={element.styles?.marginBottom || ""} 
+                          onChange={(e) => updateWidget({ styles: { ...element.styles, marginBottom: e.target.value } })}
+                          style={{ padding: "0.4rem", fontSize: "0.7rem", borderRadius: "4px", border: "1px solid #D1D5DB" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {element.type === "IFRAME" && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "260px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>URL del Iframe (YouTube, Maps, etc.)</label>
+                      <input 
+                        value={element.src} 
+                        onChange={(e) => updateWidget({ src: e.target.value })}
+                        placeholder="https://..."
+                        style={{ padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem" }}
+                      />
+                    </div>
+                    
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Ancho</label>
+                        <input 
+                          value={element.width} 
+                          onChange={(e) => updateWidget({ width: e.target.value })}
+                          placeholder="100%"
+                          style={{ padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem" }}
+                        />
+                      </div>
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                        <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Alto</label>
+                        <input 
+                          value={element.height} 
+                          onChange={(e) => updateWidget({ height: e.target.value })}
+                          placeholder="400px"
+                          style={{ padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem" }}
+                        />
+                      </div>
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
