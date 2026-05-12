@@ -27,7 +27,7 @@ export function TextElement({ element, isEditing = false, onUpdate }: Props) {
         value={element.body}
         onChange={(v) => onUpdate?.({ ...element, body: v })}
         isEditing={isEditing}
-        tagName="div"
+        tagName="span"
         styles={element.styles}
         onStyleChange={(s) => onUpdate?.({ ...element, styles: { ...element.styles, ...s } })}
         currentTag={Tag}
