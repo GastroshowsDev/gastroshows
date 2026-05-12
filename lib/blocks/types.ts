@@ -30,6 +30,12 @@ export type CommonStyles = {
   fontSize?: string;
   fontWeight?: string | number;
   fontStyle?: "normal" | "italic";
+  fontFamily?: string;
+  textDecoration?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
   letterSpacing?: string;
   lineHeight?: string;
   minHeight?: string;

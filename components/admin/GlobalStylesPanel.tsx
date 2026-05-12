@@ -66,23 +66,68 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
     border: "1px solid #D1D5DB"
   };
 
+  const FONTS = [
+    { label: "Por defecto",  value: "" },
+    { label: "Cormorant",    value: "'Cormorant Garamond', serif" },
+    { label: "Montserrat",   value: "'Montserrat', sans-serif" },
+    { label: "Georgia",      value: "Georgia, serif" },
+    { label: "Arial",        value: "Arial, sans-serif" },
+  ];
+
+  const FBtn = ({ active, onClick, children, title }: any) => (
+    <button 
+      onClick={onClick}
+      title={title}
+      style={{
+        width: "28px", height: "28px", borderRadius: "4px", border: "1px solid #D1D5DB",
+        background: active ? "#875BF7" : "white", color: active ? "white" : "#4B5563",
+        fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", display: "flex", 
+        alignItems: "center", justifyContent: "center", transition: "all 0.1s"
+      }}
+    >
+      {children}
+    </button>
+  );
+
   const renderTagEditor = (tag: keyof MasterStyles, label: string) => (
     <div style={sectionStyle}>
       <label style={titleStyle}>{label}</label>
+      
+      {/* Tipografía */}
       <div style={rowStyle}>
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Fuente</span>
-        <input 
+        <select 
           style={inputStyle} 
-          value={localStyles[tag]?.fontSize || ""} 
-          onChange={(e) => updateTag(tag, { fontSize: e.target.value })}
-          placeholder="Ej: 2rem"
-        />
+          value={localStyles[tag]?.fontFamily || ""} 
+          onChange={(e) => updateTag(tag, { fontFamily: e.target.value })}
+        >
+          {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+        </select>
       </div>
+
+      <div style={rowStyle}>
+        <span style={{ fontSize: "0.6rem", width: "50px" }}>Formato</span>
+        <div style={{ display: "flex", gap: "4px" }}>
+          <FBtn active={localStyles[tag]?.bold} onClick={() => updateTag(tag, { bold: !localStyles[tag]?.bold })} title="Negrita">B</FBtn>
+          <FBtn active={localStyles[tag]?.italic} onClick={() => updateTag(tag, { italic: !localStyles[tag]?.italic })} title="Cursiva">I</FBtn>
+          <FBtn active={localStyles[tag]?.underline} onClick={() => updateTag(tag, { underline: !localStyles[tag]?.underline })} title="Subrayado">U</FBtn>
+        </div>
+        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: "0.6rem" }}>Size</span>
+          <input 
+            style={{ ...inputStyle, width: "50px", flex: "none" }} 
+            value={localStyles[tag]?.fontSize || ""} 
+            onChange={(e) => updateTag(tag, { fontSize: e.target.value })}
+            placeholder="2rem"
+          />
+        </div>
+      </div>
+
       <div style={rowStyle}>
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Color</span>
         <input 
           type="color"
-          style={{ width: "30px", height: "20px", padding: 0, border: "none" }} 
+          style={{ width: "30px", height: "20px", padding: 0, border: "none", cursor: "pointer" }} 
           value={localStyles[tag]?.color || "#000000"} 
           onChange={(e) => updateTag(tag, { color: e.target.value })}
         />
@@ -93,8 +138,9 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
           placeholder="#HEX"
         />
       </div>
+
       {tag === "button" && (
-        <>
+        <div style={{ marginTop: "0.8rem", paddingTop: "0.8rem", borderTop: "1px dashed #DDD" }}>
           <div style={rowStyle}>
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Radio</span>
             <input 
@@ -113,7 +159,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
               placeholder="#HEX"
             />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

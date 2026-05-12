@@ -32,17 +32,25 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
     const mapping: any = {
       fontSize: "font-size",
       fontWeight: "font-weight",
+      fontStyle: "font-style",
       color: "color",
       backgroundColor: "background-color",
       borderRadius: "border-radius",
       textAlign: "text-align",
       fontFamily: "font-family",
       letterSpacing: "letter-spacing",
-      lineHeight: "line-height"
+      lineHeight: "line-height",
+      textDecoration: "text-decoration"
     };
 
     const cssRules = Object.entries(rules)
-      .map(([key, value]) => mapping[key] ? `${mapping[key]}: ${value};` : "")
+      .map(([key, value]) => {
+        if (key === "bold") return value ? "font-weight: bold;" : "";
+        if (key === "italic") return value ? "font-style: italic;" : "";
+        if (key === "underline") return value ? "text-decoration: underline;" : "";
+        if (key === "strikethrough") return value ? "text-decoration: line-through;" : "";
+        return mapping[key] ? `${mapping[key]}: ${value};` : "";
+      })
       .filter(r => r !== "")
       .join(" ");
 
