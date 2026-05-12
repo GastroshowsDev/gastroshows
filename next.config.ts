@@ -16,22 +16,36 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      // Legacy URLs → New optimized URLs (with trailing slash handling)
       { source: "/experiencia", destination: "/cena-clandestina", permanent: true },
       { source: "/experiencia/", destination: "/cena-clandestina", permanent: true },
-      { source: "/menu-degustacion", destination: "/cena-clandestina", permanent: true },
-      { source: "/menu-degustacion/", destination: "/cena-clandestina", permanent: true },
-      { source: "/menu", destination: "/cena-clandestina", permanent: true },
-      { source: "/menu/", destination: "/cena-clandestina", permanent: true },
+      { source: "/menu", destination: "/menu-degustacion", permanent: true },
+      { source: "/menu/", destination: "/menu-degustacion", permanent: true },
       { source: "/faq", destination: "/preguntas-frecuentes", permanent: true },
       { source: "/faq/", destination: "/preguntas-frecuentes", permanent: true },
+
+      // Critical SEO migrations from audit
+      { source: "/mejores-restaurantes-menu-degustacion-barcelona", destination: "/menu-degustacion", permanent: true },
+      { source: "/mejores-restaurantes-menu-degustacion-barcelona/", destination: "/menu-degustacion", permanent: true },
+      { source: "/cena-clandestina-5", destination: "/cena-clandestina", permanent: true },
+      { source: "/cena-clandestina-5/", destination: "/cena-clandestina", permanent: true },
+      { source: "/regalo-experiencia-gastronomica", destination: "/regalo", permanent: true },
+      { source: "/regalo-experiencia-gastronomica/", destination: "/regalo", permanent: true },
+      { source: "/los-mejores-menus-degustacion-para-regalar", destination: "/regalo", permanent: true },
+      { source: "/los-mejores-menus-degustacion-para-regalar/", destination: "/regalo", permanent: true },
+      { source: "/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia", destination: "/restaurantes-michelin", permanent: true },
+      { source: "/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/", destination: "/restaurantes-michelin", permanent: true },
+      { source: "/restaurantes-con-estrella-michelin", destination: "/restaurantes-michelin", permanent: true },
+      { source: "/restaurantes-con-estrella-michelin/", destination: "/restaurantes-michelin", permanent: true },
+
+      // Blog category & tag redirects
       { source: "/category/:path*", destination: "/blog", permanent: true },
       { source: "/tag/:path*", destination: "/blog", permanent: true },
+
+      // Legacy blog date-based URLs → new blog structure
       { source: "/2024/:month/:slug", destination: "/blog/:slug", permanent: true },
       { source: "/2023/:month/:slug", destination: "/blog/:slug", permanent: true },
       { source: "/2022/:month/:slug", destination: "/blog/:slug", permanent: true },
-      { source: "/mejores-restaurantes-menu-degustacion-barcelona", destination: "/blog/mejores-restaurantes-menu-degustacion-barcelona", permanent: true },
-      { source: "/cena-clandestina-5", destination: "/blog/cena-clandestina-barcelona-experiencia-unica", permanent: true },
-      { source: "/restaurantes-con-estrella-michelin", destination: "/blog/restaurantes-estrella-michelin-barcelona", permanent: true },
     ];
   },
 
