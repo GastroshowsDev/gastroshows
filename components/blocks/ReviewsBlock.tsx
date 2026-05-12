@@ -87,7 +87,7 @@ export function ReviewsBlock({ content, isEditing = false, onUpdate }: Props) {
                   <div style={{ borderTop: "1px solid #EAEEF4", paddingTop: "0.8rem" }}>
                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563", display: "block", marginBottom: "0.5rem" }}>Reviews Manuales</label>
                      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", maxHeight: "200px", overflowY: "auto", paddingRight: "4px" }}>
-                        {content.reviews?.map((r, idx) => (
+                        {content.reviews?.map((r: any, idx: number) => (
                           <div key={idx} style={{ padding: "0.4rem", background: "#F9FAFB", borderRadius: "4px", border: "1px solid #EAEEF4", fontSize: "0.65rem", display: "flex", justifyContent: "space-between" }}>
                             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</span>
                             <button onClick={() => {
