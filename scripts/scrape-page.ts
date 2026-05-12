@@ -74,15 +74,43 @@ async function scrapePage(url: string) {
           $col.find(".et_pb_module").each((_, module) => {
             const $mod = $(module);
             
-            // Texto y Títulos
+            // Texto y Títulos (Mejorado para capturar todo el contenido)
             if ($mod.hasClass("et_pb_text")) {
-              $mod.find("h1, h2, h3, h4, p").each((_, textPart) => {
-                const $tp = $(textPart);
-                if ($tp.is("h1, h2, h3, h4")) {
-                  elements.push({ type: "HEADING", level: parseInt($tp.prop("tagName").substring(1)), text: $tp.text().trim() });
+              const inner = $mod.find(".et_pb_text_inner");
+              inner.children().each((_, child) => {
+                const $child = $(child);
+                const tagName = $child.prop("tagName").toLowerCase();
+                
+                if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(tagName)) {
+                  elements.push({ 
+                    type: "HEADING", 
+                    level: parseInt(tagName.substring(1)), 
+                    text: $child.text().trim() 
+                  });
                 } else {
-                  elements.push({ type: "TEXT", body: $tp.html() });
+                  // Capturar cualquier otro bloque como TEXT
+                  elements.push({ 
+                    type: "TEXT", 
+                    body: $child.html() || $child.text().trim() 
+                  });
                 }
+              });
+
+              // Si no hay hijos directos pero hay texto (caso raro en Divi pero posible)
+              if (inner.children().length === 0 && inner.text().trim()) {
+                elements.push({ type: "TEXT", body: inner.html() });
+              }
+            }
+            
+            // Acordeones (Muy común en Gastroshows)
+            else if ($mod.hasClass("et_pb_accordion")) {
+              $mod.find(".et_pb_accordion_item").each((_, item) => {
+                const $item = $(item);
+                const aTitle = $item.find(".et_pb_accordion_item_title").text().trim();
+                const aContent = $item.find(".et_pb_accordion_content").html();
+                
+                if (aTitle) elements.push({ type: "HEADING", level: 4, text: `🔹 ${aTitle}` });
+                if (aContent) elements.push({ type: "TEXT", body: aContent });
               });
             }
             
