@@ -139,8 +139,8 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
               width: "100%",
               height: "100%",
               backgroundImage: `url("${bgImage}")`,
-              backgroundSize: styles.backgroundSize || "auto",
-              backgroundPosition: (bgPos === "cover" ? "center center" : bgPos) as any,
+              backgroundSize: styles.backgroundSize === "auto" ? "100% auto" : (styles.backgroundSize || "cover"),
+              backgroundPosition: "center center",
               backgroundRepeat: "no-repeat",
               opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
               filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
@@ -151,7 +151,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         <style jsx>{`
           @media (max-width: 768px) {
             .gs-section-bg {
-              background-size: cover !important;
+              background-size: ${styles.backgroundSize === "auto" ? "auto 100%" : (styles.backgroundSize || "cover")} !important;
             }
           }
         `}</style>
