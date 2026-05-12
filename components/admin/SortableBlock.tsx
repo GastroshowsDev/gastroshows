@@ -37,25 +37,24 @@ export function SortableBlock({ id, children, isSelected, onClick, onDelete, lab
   };
 
   return (
-    <div ref={setNodeRef} style={style} onClick={onClick}>
+    <div id={`block-${id}`} ref={setNodeRef} style={style} onClick={onClick}>
       {/* Drag Handle Overlay (optional, or make the whole block draggable) */}
       <div 
         {...attributes} 
         {...listeners}
-        onClick={(e) => e.stopPropagation()} // Don't deselect when clicking handle
+        onClick={(e) => e.stopPropagation()} 
         style={{
           position: "absolute",
-          top: "15px",
+          top: "-12px",
           left: "50%",
           transform: "translateX(-50%)",
-          padding: "6px 16px",
+          padding: "2px 8px",
           background: "#875BF7",
           color: "white",
-          borderRadius: "30px",
-          fontSize: "0.7rem",
+          borderRadius: "4px",
+          fontSize: "12px",
           fontWeight: 700,
-          textTransform: "uppercase",
-          boxShadow: "0 4px 15px rgba(135,91,247,0.4)",
+          boxShadow: "0 2px 8px rgba(135,91,247,0.4)",
           opacity: isDragging || isSelected ? 1 : 0,
           visibility: isDragging || isSelected ? "visible" : "hidden",
           transition: "all 0.2s",
@@ -64,11 +63,11 @@ export function SortableBlock({ id, children, isSelected, onClick, onDelete, lab
           pointerEvents: "auto",
           display: "flex",
           alignItems: "center",
-          gap: "6px",
+          justifyContent: "center",
         }}
+        title="Mover bloque"
       >
-        <span>🖐️</span>
-        {isDragging ? "Soltando..." : "Mover bloque"}
+        ⠿
       </div>
 
       {children}

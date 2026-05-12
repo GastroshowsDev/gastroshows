@@ -47,6 +47,7 @@ export type CommonStyles = {
 // ── Atomic Elements ─────────────────────────────────────────────────────────
 
 export type HeadingElement = {
+  id: string;
   type: "HEADING";
   level: 1 | 2 | 3 | 4 | 5 | 6;
   text: string;
@@ -55,6 +56,7 @@ export type HeadingElement = {
 };
 
 export type ButtonElement = {
+  id: string;
   type: "BUTTON";
   text: string;
   link: string;
@@ -64,6 +66,7 @@ export type ButtonElement = {
 };
 
 export type TextElement = {
+  id: string;
   type: "TEXT";
   body: string; // HTML or Markdown
   tagName?: "p" | "div" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
@@ -71,6 +74,7 @@ export type TextElement = {
 };
 
 export type ImageElement = {
+  id: string;
   type: "IMAGE";
   src: string;
   alt: string;
@@ -80,12 +84,14 @@ export type ImageElement = {
 };
 
 export type SpacerElement = {
+  id: string;
   type: "SPACER";
   height: number;
   styles?: CommonStyles;
 };
 
 export type ReviewsElement = {
+  id: string;
   type: "REVIEWS";
   layout?: "grid" | "carousel" | "list";
   reviews: {
@@ -115,6 +121,7 @@ export type FormField = {
 };
 
 export type FormElement = {
+  id: string;
   type: "FORM";
   fields: FormField[];
   submitText: string;
@@ -125,12 +132,14 @@ export type FormElement = {
 };
 
 export type CalendarElement = {
+  id: string;
   type: "CALENDAR";
   color?: string;
   styles?: CommonStyles;
 };
 
 export type AvailabilityElement = {
+  id: string;
   type: "AVAILABILITY";
   title?: string;
   subtitle?: string;
@@ -140,12 +149,14 @@ export type AvailabilityElement = {
 };
 
 export type ContainerElement = {
+  id: string;
   type: "CONTAINER";
   content: SectionContent;
   styles?: CommonStyles;
 };
 
 export type IframeElement = {
+  id: string;
   type: "IFRAME";
   src: string;
   width?: string;
@@ -304,6 +315,9 @@ export type HeaderContent = {
   isTransparent?: boolean;
   ctaText?: string;
   ctaLink?: string;
+  layout?: "default" | "split" | "hamburger" | "centered";
+  showSocials?: boolean;
+  socials?: { platform: string; url: string }[];
   styles?: CommonStyles;
 };
 

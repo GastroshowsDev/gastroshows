@@ -84,62 +84,43 @@ import { AnimatedWrapper } from "./AnimatedWrapper";
 
 import { VerticalResizeHandle } from "../admin/VerticalResizeHandle";
 
+import { getBlockBaseStyles, getBackgroundImageStyles } from "@/utils/blockStyles";
+
 export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const { styles = {} } = content;
   const bgImage = styles.backgroundImage || (content as any).bgImage || (content as any).backgroundImage;
-  const bgPos = styles.backgroundPosition || (content as any).bgPosition || "center";
 
   const handleResize = (deltaY: number) => {
+    // ... resize logic remains same ...
     const currentPadding = styles.paddingBottom || (content as any).paddingBottom || "8rem";
-    let numericValue = 128; // Default 8rem
+    let numericValue = 128;
     let unit = "px";
-
     if (typeof currentPadding === "string") {
       const match = currentPadding.match(/^(\d+(?:\.\d+)?)(.*)$/);
       if (match) {
         numericValue = parseFloat(match[1]);
         unit = match[2] || "px";
-        if (unit === "rem") numericValue *= 16; // Approx conversion
+        if (unit === "rem") numericValue *= 16;
       }
     }
-
     const newValue = Math.max(0, numericValue + deltaY);
     onUpdate?.({
       ...content,
-      styles: {
-        ...styles,
-        paddingBottom: `${newValue}px`
-      }
+      styles: { ...styles, paddingBottom: `${newValue}px` }
     });
   };
 
   return (
     <AnimatedWrapper animation={styles.animation}>
-      <section style={{
-        position: "relative",
-        padding: styles.padding || "0",
-        backgroundColor: styles.backgroundColor || (content as any).bgColor || "transparent",
-        marginTop: styles.marginTop || (content as any).marginTop || "0px",
-        marginBottom: styles.marginBottom || (content as any).marginBottom || "0px",
-        paddingTop: styles.paddingTop || (content as any).paddingTop || "6rem",
-        paddingBottom: styles.paddingBottom || (content as any).paddingBottom || "8rem",
-        paddingLeft: styles.paddingLeft || (content as any).paddingLeft || "2rem",
-        paddingRight: styles.paddingRight || (content as any).paddingRight || "2rem",
-        width: "100%",
-        boxSizing: "border-box",
-        overflow: "visible"
-      }}>
+      <section style={getBlockBaseStyles(styles)}>
         {bgImage && (
           <div className="gs-section-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
             {/* Mirror Layer (Blurred) */}
             {styles.backgroundSize === "mirror" && (
               <div 
                 style={{
-                  position: "absolute",
+                  ...getBackgroundImageStyles(bgImage, { ...styles, backgroundSize: "cover" }),
                   inset: "-20px",
-                  backgroundImage: `url("${bgImage}")`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
                   filter: "blur(40px) brightness(0.7)",
                   opacity: 0.6,
                 }}
@@ -149,16 +130,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
             {/* Main Image Layer */}
             <div 
               className="gs-section-bg"
-              style={{
-                position: "absolute",
-                inset: 0,
-                backgroundImage: `url("${bgImage}")`,
-                backgroundSize: styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize || "cover"),
-                backgroundPosition: "center center",
-                backgroundRepeat: "no-repeat",
-                opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
-                filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
-              }}
+              style={getBackgroundImageStyles(bgImage, styles)}
             />
           </div>
         )}

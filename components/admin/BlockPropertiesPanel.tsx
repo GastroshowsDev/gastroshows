@@ -526,11 +526,11 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           <div style={rowStyle}>
             <label style={labelStyle}>Opciones de Cabecera</label>
             <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400 }}>
-              <input type="checkbox" checked={(content as any).isSticky} onChange={(e) => update({ isSticky: e.target.checked })} />
+              <input type="checkbox" checked={!!(content as any).isSticky} onChange={(e) => update({ isSticky: e.target.checked })} />
               Sticky (Fijar al hacer scroll)
             </label>
             <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, marginTop: "0.5rem" }}>
-              <input type="checkbox" checked={(content as any).isTransparent} onChange={(e) => update({ isTransparent: e.target.checked })} />
+              <input type="checkbox" checked={!!(content as any).isTransparent} onChange={(e) => update({ isTransparent: e.target.checked })} />
               Transparente (Sobre Hero)
             </label>
           </div>

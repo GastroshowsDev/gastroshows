@@ -58,13 +58,15 @@ function SortableElement({
           {...attributes} 
           {...listeners} 
           style={{ 
-            position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", 
-            background: "#875BF7", color: "white", fontSize: "10px", padding: "0 4px", 
+            position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", 
+            background: "#875BF7", color: "white", fontSize: "12px", padding: "2px 8px", 
             borderRadius: "4px", cursor: "grab", display: isDragging ? "none" : "block",
-            zIndex: 20
+            zIndex: 20, boxShadow: "0 2px 8px rgba(135,91,247,0.4)",
+            fontWeight: 700
           }}
+          title="Mover elemento"
         >
-          ⋮⋮
+          ⠿
         </div>
       )}
 
@@ -180,35 +182,46 @@ export function ColumnsRenderer({
             borderRadius: "8px",
             padding: isEditing ? "1rem" : "0",
             background: dragOverCol === colIdx ? "rgba(135, 91, 247, 0.05)" : "transparent",
-            transition: "all 0.2s"
+            transition: "all 0.2s",
+            minWidth: 0,
+            overflow: "hidden"
           }}
         >
-          <SortableContext items={col.elements.map((_, i) => `${blockId}-${colIdx}-${i}`)} strategy={verticalListSortingStrategy}>
-            {col.elements.map((el, elIdx) => (
-              <SortableElement
-                key={`${blockId}-${colIdx}-${elIdx}`}
-                id={`${blockId}-${colIdx}-${elIdx}`}
-                element={el}
-                isEditing={isEditing}
-                isSelected={selectedElementPath === `${blockId}-${colIdx}-${elIdx}`}
-                onSelect={(id) => onSelectElement?.(id)}
-                onUpdate={(newEl) => {
-                  const newCols = [...activeColumns];
-                  if (newEl === ("DELETE" as any)) {
-                    newCols[colIdx].elements.splice(elIdx, 1);
-                  } else {
-                    newCols[colIdx].elements[elIdx] = newEl;
-                  }
-                  onUpdate(newCols);
-                }}
-                onSelectSubElement={onSelectElement}
-                selectedElementPath={selectedElementPath}
-              />
-            ))}
+          <SortableContext 
+            items={col.elements.map((el, i) => el.id || `${blockId}-${colIdx}-${i}`)} 
+            strategy={verticalListSortingStrategy}
+          >
+            {col.elements.map((el, elIdx) => {
+              const elId = el.id || `${blockId}-${colIdx}-${elIdx}`;
+              return (
+                <SortableElement
+                  key={elId}
+                  id={elId}
+                  element={el}
+                  isEditing={isEditing}
+                  isSelected={selectedElementPath === elId}
+                  onSelect={(id) => onSelectElement?.(id)}
+                  onUpdate={(newEl) => {
+                    const newCols = [...activeColumns];
+                    if (newEl === ("DELETE" as any)) {
+                      newCols[colIdx].elements.splice(elIdx, 1);
+                    } else {
+                      newCols[colIdx].elements[elIdx] = newEl;
+                    }
+                    onUpdate(newCols);
+                  }}
+                  onSelectSubElement={onSelectElement}
+                  selectedElementPath={selectedElementPath}
+                />
+              );
+            })}
           </SortableContext>
           
           {isEditing && col.elements.length === 0 && (
-            <div style={{ textAlign: "center", color: "#666", fontSize: "0.7rem", paddingTop: "1rem" }}>
+            <div 
+              id={`col-${blockId}-${colIdx}`}
+              style={{ textAlign: "center", color: "#666", fontSize: "0.7rem", paddingTop: "1rem", border: "1px dashed #444", borderRadius: "4px" }}
+            >
               Suelta elementos aquí
             </div>
           )}

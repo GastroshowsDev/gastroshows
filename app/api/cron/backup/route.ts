@@ -1,20 +1,28 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createBackup } from "@/lib/admin/backup";
 
-// Llamado por Vercel Cron cada día a las 02:00 hora peninsular (01:00 UTC)
-export async function GET(req: NextRequest) {
-  const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+/**
+ * GET /api/cron/backup
+ * Triggered by Vercel Cron or other external scheduler.
+ */
+export async function GET(req: Request) {
+  // 1. Security Check
+  const authHeader = req.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
   try {
-    const id = await createBackup("auto");
-    return NextResponse.json({ ok: true, id });
+    console.log("[cron] Starting scheduled backup...");
+    const id = await createBackup("SYSTEM_AUTO_CRON");
+    console.log(`[cron] Backup completed successfully: ${id}`);
+    
+    return NextResponse.json({ ok: true, id, message: "Backup programado completado" });
   } catch (error) {
+    console.error("[cron] Backup failed:", error);
     return NextResponse.json(
-      { ok: false, error: error instanceof Error ? error.message : "Backup fallido" },
-      { status: 500 },
+      { ok: false, error: error instanceof Error ? error.message : "Error desconocido" },
+      { status: 500 }
     );
   }
 }

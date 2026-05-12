@@ -46,7 +46,7 @@ type Props = {
  * This is the central dispatch component for the page builder.
  */
 export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelectElement, selectedElementPath }: Props) {
-  const { id, type, content } = block;
+  const { id = "temp-id", type, content } = block;
 
   const handleUpdate = (newContent: any) => {
     if (onUpdateBlock) onUpdateBlock(id, newContent);
@@ -175,9 +175,9 @@ export function PageBlockList({
 }) {
   return (
     <MasterStylesProvider>
-      {blocks.map((block) => (
+      {blocks.map((block, idx) => (
         <BlockRenderer 
-          key={block.id} 
+          key={block.id || `block-${idx}`} 
           block={block} 
           isEditing={isEditing} 
           onUpdateBlock={onUpdateBlock} 

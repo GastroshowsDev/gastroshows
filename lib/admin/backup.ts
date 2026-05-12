@@ -9,6 +9,7 @@ export async function createBackup(triggeredBy: string): Promise<string> {
     const [
       customers, venues, events, reservations,
       giftVouchers, paymentSplits, campaigns, emailTemplates, users,
+      pages, pageBlocks,
     ] = await Promise.all([
       prisma.customer.findMany({ orderBy: { createdAt: "asc" } }),
       prisma.venue.findMany(),
@@ -26,6 +27,8 @@ export async function createBackup(triggeredBy: string): Promise<string> {
           // passwordHash excluido intencionadamente
         },
       }),
+      prisma.page.findMany(),
+      prisma.pageBlock.findMany({ orderBy: { order: "asc" } }),
     ]);
 
     const data = {
@@ -34,6 +37,7 @@ export async function createBackup(triggeredBy: string): Promise<string> {
       tables: {
         customers, venues, events, reservations,
         giftVouchers, paymentSplits, campaigns, emailTemplates, users,
+        pages, pageBlocks,
       },
     };
 

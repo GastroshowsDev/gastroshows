@@ -15,7 +15,8 @@ import { PageSeoPanel } from "./PageSeoPanel";
 import { MediaGallery } from "./MediaGallery";
 import { GlobalStylesPanel } from "./GlobalStylesPanel";
 import { SectionPresetModal } from "./SectionPresetModal";
-import { SectionPreset } from "@/lib/blocks/presets";
+import { BlockFloatingToolbar } from "./BlockFloatingToolbar";
+import { SECTION_PRESETS, HEADER_PRESETS, SectionPreset } from "@/lib/blocks/presets";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
 import { 
   DndContext, 
@@ -30,8 +31,10 @@ import {
   arrayMove, 
   SortableContext, 
   verticalListSortingStrategy,
-  sortableKeyboardCoordinates 
+  sortableKeyboardCoordinates,
+  useSortable
 } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { SortableBlock } from "./SortableBlock";
 
@@ -58,7 +61,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeRightTab, setActiveRightTab] = useState<"properties" | "seo" | "global">("properties");
   const [leftTab, setLeftTab] = useState<"insert" | "layers">("insert");
-  const [showPresetModal, setShowPresetModal] = useState(false);
+  const [presetModalMode, setPresetModalMode] = useState<"SECTION" | "HEADER" | null>(null);
+  const [selectedBlockRect, setSelectedBlockRect] = useState<DOMRect | null>(null);
   const [masterStyles, setMasterStyles] = useState<any>({
     h1: { fontSize: "3.5rem", fontWeight: 700, color: "#111827" },
     h2: { fontSize: "2.5rem", fontWeight: 700, color: "#111827" },
@@ -106,42 +110,110 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         const pageData = json.data;
         const migratedBlocks = pageData.blocks.map((block: any) => {
           const content = block.content;
-          if (block.type === "COLUMNS" || (block.type === "SECTION" && !content.columns?.[0]?.elements)) {
-            const rawColumns = content.columns;
-            const oldColumns = Array.isArray(rawColumns) ? rawColumns : (rawColumns ? [rawColumns] : []);
-            const newColumns = oldColumns.map((col: any) => ({
+          
+          // 1. If it's already a modern SECTION with columns and elements, keep it
+          if (block.type === "SECTION" && content.columns?.[0]?.elements) {
+            return block;
+          }
+
+          // 2. Universal Migration for legacy or imported blocks with flat fields
+          // (TEXT, HERO, CTA, COLUMNS, etc.)
+          const elements: any[] = [];
+          
+          // Pull eyebrow
+          if (content.eyebrow) elements.push({ type: "TEXT", body: content.eyebrow, id: `mig_${Math.random()}`, styles: { textAlign: "center", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.2em", color: "#daa520" } });
+          
+          // Pull title
+          if (content.title) elements.push({ type: "HEADING", level: 2, text: content.title, id: `mig_${Math.random()}`, styles: { textAlign: "center" } });
+          
+          // Pull titleAccent
+          if (content.titleAccent) elements.push({ type: "HEADING", level: 3, text: content.titleAccent, id: `mig_${Math.random()}`, styles: { textAlign: "center", fontStyle: "italic", color: "#daa520" } });
+          
+          // Pull body
+          if (content.body) elements.push({ type: "TEXT", body: content.body, id: `mig_${Math.random()}` });
+
+          // Pull buttons (CTA)
+          if (content.ctaPrimaryText) elements.push({ type: "BUTTON", text: content.ctaPrimaryText, link: content.ctaPrimaryLink || "#", variant: "primary", id: `mig_${Math.random()}` });
+          if (content.ctaSecondaryText) elements.push({ type: "BUTTON", text: content.ctaSecondaryText, link: content.ctaSecondaryLink || "#", variant: "outline", id: `mig_${Math.random()}` });
+
+          // 3. Handle legacy COLUMNS (where data was directly on the column)
+          let finalColumns = content.columns;
+          if (block.type === "COLUMNS" || (content.columns && !content.columns[0]?.elements)) {
+            const oldColumns = Array.isArray(content.columns) ? content.columns : (content.columns ? [content.columns] : []);
+            finalColumns = oldColumns.map((col: any) => ({
               width: col.width || `${100 / (oldColumns.length || 1)}%`,
               elements: [
-                ...(col.title ? [{ type: "HEADING", level: 3, text: col.title }] : []),
-                ...(col.text ? [{ type: "TEXT", body: col.text }] : []),
-                ...(col.image ? [{ type: "IMAGE", src: col.image, alt: col.title || "" }] : [])
+                ...(col.title ? [{ type: "HEADING", level: 3, text: col.title, id: `mig_${Math.random()}` }] : []),
+                ...(col.text ? [{ type: "TEXT", body: col.text, id: `mig_${Math.random()}` }] : []),
+                ...(col.image ? [{ type: "IMAGE", src: col.image, alt: col.title || "", id: `mig_${Math.random()}` }] : [])
               ]
             }));
-            return { ...block, type: "SECTION", content: { columns: newColumns, styles: content.styles || { padding: "4rem 2rem" } } };
           }
-          if (block.type === "TEXT" && !content.columns) {
+
+          // If we found any legacy fields or need to wrap elements
+          if (elements.length > 0 || block.type === "TEXT" || block.type === "HERO" || block.type === "CTA" || block.type === "COLUMNS") {
+            const columns = elements.length > 0 ? [{
+              width: "100%",
+              elements: [
+                ...elements,
+                ...(finalColumns?.[0]?.elements || [])
+              ]
+            }] : finalColumns;
+            
             return {
               ...block,
               type: "SECTION",
               content: {
-                columns: [{
-                  width: "100%",
-                  elements: [
-                    ...(content.title ? [{ type: "HEADING", level: 2, text: content.title }] : []),
-                    ...(content.body ? [{ type: "TEXT", body: content.body }] : [])
-                  ]
-                }],
-                styles: content.styles || { padding: "4rem 2rem" }
+                ...content,
+                columns,
+                styles: content.styles || { padding: "5rem 2rem" }
               }
             };
           }
+
           return block;
         });
-        setPage({ ...pageData, blocks: migratedBlocks });
+
+        // 2. Sanitize IDs (for elements missing IDs from old imports)
+        const sanitizedBlocks = sanitizePageData(migratedBlocks);
+        
+        setPage({ ...pageData, blocks: sanitizedBlocks });
       }
       setLoading(false);
     }
     load();
+
+    function sanitizePageData(blocks: BlockData[]): BlockData[] {
+      return blocks.map(block => {
+        if (!block.content.columns) return block;
+        return {
+          ...block,
+          content: {
+            ...block.content,
+            columns: block.content.columns.map((col: any) => ({
+              ...col,
+              elements: sanitizeElements(col.elements)
+            }))
+          }
+        };
+      });
+    }
+
+    function sanitizeElements(elements: ElementData[]): ElementData[] {
+      return (elements || []).map(el => {
+        const newEl = { ...el };
+        if (!newEl.id) {
+          newEl.id = `el_${Math.random().toString(36).substr(2, 9)}`;
+        }
+        if (newEl.type === "CONTAINER" && newEl.content.columns) {
+          newEl.content.columns = newEl.content.columns.map((col: any) => ({
+            ...col,
+            elements: sanitizeElements(col.elements)
+          }));
+        }
+        return newEl;
+      });
+    }
 
     // Load master styles
     async function loadStyles() {
@@ -173,8 +245,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     setSaving(true);
     emitStatus("saving");
     try {
-      await fetch(`/api/admin/pages/${pageId}`, {
-        method: "PATCH",
+      const res = await fetch(`/api/admin/pages/${pageId}/save`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: page.title,
@@ -182,49 +254,94 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           published: page.published,
           seoTitle: page.seoTitle,
           seoDesc: page.seoDesc,
+          blocks: page.blocks
         }),
       });
 
-      await fetch(`/api/admin/pages/${pageId}/blocks`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ blocks: page.blocks }),
-      });
-
-      emitStatus("saved");
+      if (res.ok) {
+        emitStatus("saved");
+      } else {
+        console.error("Save failed");
+        emitStatus("unsaved");
+      }
       
-      // Auto-revert to idle after 8 seconds
       setTimeout(() => emitStatus("idle"), 8000);
+    } catch (e) {
+      console.error(e);
+      emitStatus("unsaved");
     } finally {
       setSaving(false);
     }
   }
 
+  function getInsertionIndex() {
+    if (!page || page.blocks.length === 0) return 0;
+    const container = document.getElementById("gs-editor-canvas-container");
+    if (!container) return page.blocks.length;
+
+    const midPoint = container.scrollTop + (container.clientHeight / 2);
+    
+    let closestIndex = page.blocks.length;
+    let minDistance = Infinity;
+
+    page.blocks.forEach((block, idx) => {
+      const el = document.getElementById(`block-${block.id}`);
+      if (el) {
+        const elMid = el.offsetTop + (el.clientHeight / 2);
+        const distance = Math.abs(midPoint - elMid);
+        if (distance < minDistance) {
+          minDistance = distance;
+          // If the midpoint of the viewport is below the midpoint of the block, 
+          // we want to insert AFTER this block.
+          closestIndex = (midPoint > elMid) ? idx + 1 : idx;
+        }
+      }
+    });
+
+    return closestIndex;
+  }
+
   function addBlock(type: BlockType) {
     if (!page) return;
+    const insertIndex = getInsertionIndex();
     const newBlock: BlockData = {
       id: Math.random().toString(36).substr(2, 9),
       type,
       content: JSON.parse(JSON.stringify(BLOCK_DEFAULTS[type] || {})),
-      order: page.blocks.length,
+      order: insertIndex,
     };
-    updatePageState({ ...page, blocks: [...page.blocks, newBlock] });
+
+    const newBlocks = [...page.blocks];
+    newBlocks.splice(insertIndex, 0, newBlock);
+    
+    updatePageState({ 
+      ...page, 
+      blocks: newBlocks.map((b, i) => ({ ...b, order: i }))
+    });
     setSelectedBlockId(newBlock.id);
     setSelectedElementPath(null);
   }
 
   function addPreset(preset: SectionPreset) {
     if (!page) return;
-    const newBlocks = preset.blocks.map((b, i) => ({
+    const insertIndex = getInsertionIndex();
+    const newBlocksToAdd = preset.blocks.map((b, i) => ({
       id: Math.random().toString(36).substr(2, 9),
       type: b.type,
       content: JSON.parse(JSON.stringify(b.content)),
-      order: page.blocks.length + i,
+      order: insertIndex + i,
     }));
-    updatePageState({ ...page, blocks: [...page.blocks, ...newBlocks] });
-    setSelectedBlockId(newBlocks[0].id);
+
+    const updatedBlocks = [...page.blocks];
+    updatedBlocks.splice(insertIndex, 0, ...newBlocksToAdd);
+
+    updatePageState({ 
+      ...page, 
+      blocks: updatedBlocks.map((b, i) => ({ ...b, order: i }))
+    });
+    setSelectedBlockId(newBlocksToAdd[0].id);
     setSelectedElementPath(null);
-    setShowPresetModal(false);
+    setPresetModalMode(null);
   }
 
   function updateBlockContent(id: string, content: any) {
@@ -250,6 +367,28 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     updatePageState({ ...page, blocks: ordered });
   }
 
+  function duplicateBlock(id: string) {
+    if (!page) return;
+    const index = page.blocks.findIndex((b) => b.id === id);
+    if (index === -1) return;
+
+    const blockToCopy = page.blocks[index];
+    const newBlock = {
+      ...JSON.parse(JSON.stringify(blockToCopy)),
+      id: Math.random().toString(36).substr(2, 9),
+      order: index + 1
+    };
+
+    const newBlocks = [...page.blocks];
+    newBlocks.splice(index + 1, 0, newBlock);
+    
+    updatePageState({ 
+      ...page, 
+      blocks: newBlocks.map((b, i) => ({ ...b, order: i }))
+    });
+    setSelectedBlockId(newBlock.id);
+  }
+
   function deleteBlock(id: string) {
     if (!page || !confirm("¿Borrar este bloque?")) return;
     updatePageState({
@@ -258,6 +397,32 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     });
     if (selectedBlockId === id) setSelectedBlockId(null);
   }
+
+  // Update selected block rect for floating toolbar
+  useEffect(() => {
+    if (!selectedBlockId) {
+      setSelectedBlockRect(null);
+      return;
+    }
+
+    const updateRect = () => {
+      const el = document.getElementById(`block-${selectedBlockId}`);
+      if (el) {
+        setSelectedBlockRect(el.getBoundingClientRect());
+      }
+    };
+
+    updateRect();
+    const container = document.getElementById("gs-editor-canvas-container");
+    if (container) {
+      container.addEventListener("scroll", updateRect);
+      window.addEventListener("resize", updateRect);
+      return () => {
+        container.removeEventListener("scroll", updateRect);
+        window.removeEventListener("resize", updateRect);
+      };
+    }
+  }, [selectedBlockId, page?.blocks]);
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -268,8 +433,11 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
     if (activeId === overId) return;
 
-    // 1. Block Reordering (Top-level)
-    if (!activeId.includes("-")) {
+    // 1. Block Reordering (Top-level blocks have simple IDs, elements usually have - or are UUIDs)
+    const isBlock = page.blocks.some(b => b.id === activeId);
+    const isOverBlock = page.blocks.some(b => b.id === overId);
+
+    if (isBlock && isOverBlock) {
       const oldIndex = page.blocks.findIndex((b) => b.id === activeId);
       const newIndex = page.blocks.findIndex((b) => b.id === overId);
       if (oldIndex !== -1 && newIndex !== -1) {
@@ -279,21 +447,145 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       return;
     }
 
-    // 2. Element Reordering (Cross-container)
-    const sourcePath = activeId;
-    const targetPath = overId;
-
-    const activeEl = getElementByPath(page.blocks, sourcePath);
-    if (!activeEl) return;
+    // 2. Element Movement (Any element to any position)
+    const sourceElement = findElementById(page.blocks, activeId);
+    if (!sourceElement) return;
 
     // Remove from source
-    let newBlocks = updateElementByPath(page.blocks, sourcePath, "DELETE");
+    let newBlocks = removeElementById(page.blocks, activeId);
 
-    // Insert at target
-    // We need a helper to insert at a specific position
-    newBlocks = insertElementByPath(newBlocks, targetPath, activeEl);
+    // Find target block and column
+    // The overId could be an element ID or a column target (col-blockId-colIdx)
+    if (overId.startsWith("col-")) {
+      const parts = overId.split("-");
+      const targetBlockId = parts[1];
+      const targetColIdx = parseInt(parts[2]);
+      newBlocks = insertElementInColumn(newBlocks, targetBlockId, targetColIdx, sourceElement);
+    } else {
+      newBlocks = insertElementNearId(newBlocks, overId, sourceElement);
+    }
 
     updatePageState({ ...page, blocks: newBlocks });
+  }
+
+  function insertElementInColumn(blocks: BlockData[], blockId: string, colIdx: number, element: ElementData): BlockData[] {
+    return blocks.map(block => {
+      if (block.id !== blockId) return block;
+      const newCols = [...(block.content.columns || [])];
+      if (newCols[colIdx]) {
+        newCols[colIdx].elements.push(element);
+      }
+      return { ...block, content: { ...block.content, columns: newCols } };
+    });
+  }
+
+  function findElementById(blocks: BlockData[], id: string): ElementData | null {
+    for (const block of blocks) {
+      if (block.content.columns) {
+        for (const col of block.content.columns) {
+          const found = findInElements(col.elements, id);
+          if (found) return found;
+        }
+      }
+    }
+    return null;
+  }
+
+  function findInElements(elements: ElementData[], id: string): ElementData | null {
+    for (const el of elements) {
+      if (el.id === id) return el;
+      if (el.type === "CONTAINER" && el.content.columns) {
+        for (const col of el.content.columns) {
+          const found = findInElements(col.elements, id);
+          if (found) return found;
+        }
+      }
+    }
+    return null;
+  }
+
+  function removeElementById(blocks: BlockData[], id: string): BlockData[] {
+    return blocks.map(block => ({
+      ...block,
+      content: {
+        ...block.content,
+        columns: block.content.columns?.map((col: any) => ({
+          ...col,
+          elements: removeFromElements(col.elements, id)
+        }))
+      }
+    }));
+  }
+
+  function removeFromElements(elements: ElementData[], id: string): ElementData[] {
+    return elements
+      .filter(el => el.id !== id)
+      .map(el => {
+        if (el.type === "CONTAINER" && el.content.columns) {
+          return {
+            ...el,
+            content: {
+              ...el.content,
+              columns: el.content.columns.map((col: any) => ({
+                ...col,
+                elements: removeFromElements(col.elements, id)
+              }))
+            }
+          };
+        }
+        return el;
+      });
+  }
+
+  function insertElementNearId(blocks: BlockData[], targetId: string, element: ElementData): BlockData[] {
+    return blocks.map(block => {
+      if (!block.content.columns) return block;
+      return {
+        ...block,
+        content: {
+          ...block.content,
+          columns: block.content.columns.map((col: any) => ({
+            ...col,
+            elements: insertInElements(col.elements, targetId, element)
+          }))
+        }
+      };
+    });
+  }
+
+  function insertInElements(elements: ElementData[], targetId: string, element: ElementData): ElementData[] {
+    const newElements: ElementData[] = [];
+    let inserted = false;
+
+    for (const el of elements) {
+      if (el.id === targetId) {
+        newElements.push(element);
+        inserted = true;
+      }
+      
+      if (el.type === "CONTAINER" && el.content.columns) {
+        newElements.push({
+          ...el,
+          content: {
+            ...el.content,
+            columns: el.content.columns.map((col: any) => ({
+              ...col,
+              elements: insertInElements(col.elements, targetId, element)
+            }))
+          }
+        });
+      } else {
+        newElements.push(el);
+      }
+    }
+
+    // If not inserted yet and this was the target (meaning we might be dropping into an empty column)
+    // dnd-kit sometimes gives the column path as overId
+    // But for simplicity, if we reach the end of a list and haven't found it, we don't force it here.
+    // The onDrop handler in ColumnsRenderer handles dropping NEW elements.
+    // Moving EXISTING elements is handled by this DragEnd.
+    
+    return newElements;
   }
 
   function insertElementByPath(blocks: BlockData[], path: string, element: ElementData): BlockData[] {
@@ -566,11 +858,11 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             <>
               <p style={sectionHeaderStyle}>1. Estructura</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                <button onClick={() => addBlock("HEADER")} style={insertButtonStyle("#F0EBFE", "#875BF733")}>
+                <button onClick={() => setPresetModalMode("HEADER")} style={insertButtonStyle("#F0EBFE", "#875BF733")}>
                   <span style={{ fontSize: "1rem" }}>☰</span>
                   <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Menú</span>
                 </button>
-                <button onClick={() => setShowPresetModal(true)} style={insertButtonStyle()}>
+                <button onClick={() => setPresetModalMode("SECTION")} style={insertButtonStyle()}>
                   <span style={{ fontSize: "1rem" }}>🔳</span>
                   <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Sección</span>
                 </button>
@@ -635,28 +927,36 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
               >
                 ✨ Estilos Maestros
               </button>
-              {page.blocks.map((block, i) => (
-                <div
-                  key={block.id}
-                  onClick={() => {
-                    setSelectedBlockId(block.id);
-                    setActiveRightTab("properties");
-                  }}
-                  style={{
-                    padding: "0.6rem 0.8rem", borderRadius: "8px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
-                    background: selectedBlockId === block.id ? "#F0EBFE" : "white", cursor: "pointer",
-                    display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.75rem",
-                    boxShadow: selectedBlockId === block.id ? "0 4px 6px -1px rgba(135, 91, 247, 0.1)" : "none"
-                  }}
-                >
-                  <span style={{ color: "#9CA3AF", fontSize: "0.6rem", width: "12px" }}>{i + 1}</span>
-                  <span style={{ flex: 1, fontWeight: 600, color: selectedBlockId === block.id ? "#875BF7" : "#374151" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
-                  <div style={{ display: "flex", gap: "4px" }}>
-                    <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "up"); }} style={layerButtonStyle}>▲</button>
-                    <button onClick={(e) => { e.stopPropagation(); moveBlock(block.id, "down"); }} style={layerButtonStyle}>▼</button>
-                  </div>
-                </div>
-              ))}
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={(event) => {
+                  const { active, over } = event;
+                  if (over && active.id !== over.id) {
+                    const oldIndex = page.blocks.findIndex(b => b.id === active.id);
+                    const newIndex = page.blocks.findIndex(b => b.id === over.id);
+                    const reordered = arrayMove(page.blocks, oldIndex, newIndex).map((b, i) => ({ ...b, order: i }));
+                    updatePageState({ ...page, blocks: reordered });
+                  }
+                }}
+              >
+                <SortableContext items={page.blocks.map(b => b.id)} strategy={verticalListSortingStrategy}>
+                  {page.blocks.map((block, i) => (
+                    <SidebarSortableItem 
+                      key={block.id}
+                      block={block}
+                      index={i}
+                      isSelected={selectedBlockId === block.id}
+                      onClick={() => {
+                        setSelectedBlockId(block.id);
+                        setActiveRightTab("properties");
+                      }}
+                      onMoveUp={() => moveBlock(block.id, "up")}
+                      onMoveDown={() => moveBlock(block.id, "down")}
+                    />
+                  ))}
+                </SortableContext>
+              </DndContext>
             </div>
           )}
         </div>
@@ -736,7 +1036,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
              <label style={{ fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", marginRight: "1rem" }}>
                 <input 
                   type="checkbox" 
-                  checked={page.published} 
+                  checked={!!page.published} 
                   onChange={(e) => {
                     setPage({ ...page, published: e.target.checked });
                     emitStatus("unsaved");
@@ -808,6 +1108,16 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             }}
           >
              <div style={{ position: "relative" }}>
+               {selectedBlockId && (
+                 <BlockFloatingToolbar 
+                   blockId={selectedBlockId}
+                   onDelete={deleteBlock}
+                   onMove={moveBlock}
+                   onDuplicate={duplicateBlock}
+                   onSettings={() => setActiveRightTab("properties")}
+                   rect={selectedBlockRect}
+                 />
+               )}
                <DndContext
                  sensors={sensors}
                  collisionDetection={closestCenter}
@@ -960,12 +1270,63 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           onClose={() => setShowMedia(false)}
         />
       )}
-      {showPresetModal && (
+      {presetModalMode && (
         <SectionPresetModal 
+          title={presetModalMode === "HEADER" ? "Añadir Menú" : "Añadir Sección"}
+          description={presetModalMode === "HEADER" ? "Elige un diseño para tu cabecera" : "Elige una plantilla para empezar rápidamente"}
+          presets={presetModalMode === "HEADER" ? HEADER_PRESETS : SECTION_PRESETS}
           onSelect={addPreset} 
-          onClose={() => setShowPresetModal(false)} 
+          onClose={() => setPresetModalMode(null)} 
         />
       )}
     </div>
   );
 }
+
+function SidebarSortableItem({ block, index, isSelected, onClick, onMoveUp, onMoveDown }: any) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: block.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    padding: "0.6rem 0.8rem", 
+    borderRadius: "8px", 
+    border: `1px solid ${isSelected ? "#875BF7" : "#E5E7EB"}`,
+    background: isSelected ? "#F0EBFE" : "white", 
+    cursor: "pointer",
+    display: "flex", 
+    alignItems: "center", 
+    gap: "0.6rem", 
+    fontSize: "0.75rem",
+    boxShadow: isSelected ? "0 4px 6px -1px rgba(135, 91, 247, 0.1)" : "none",
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 10 : 1,
+    position: "relative" as const,
+    marginBottom: "0.5rem"
+  };
+
+  const layerButtonStyle = { 
+    border: "none", background: "none", cursor: "pointer", fontSize: "0.6rem", 
+    color: "#9CA3AF", padding: "2px", borderRadius: "4px" 
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} onClick={onClick}>
+      <div {...attributes} {...listeners} style={{ cursor: "grab", color: "#9CA3AF", fontSize: "0.6rem", padding: "4px" }}>⠿</div>
+      <span style={{ color: "#9CA3AF", fontSize: "0.6rem", width: "12px" }}>{index + 1}</span>
+      <span style={{ flex: 1, fontWeight: 600, color: isSelected ? "#875BF7" : "#374151" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
+      <div style={{ display: "flex", gap: "4px" }}>
+        <button onClick={(e) => { e.stopPropagation(); onMoveUp(); }} style={layerButtonStyle}>▲</button>
+        <button onClick={(e) => { e.stopPropagation(); onMoveDown(); }} style={layerButtonStyle}>▼</button>
+      </div>
+    </div>
+  );
+}
+

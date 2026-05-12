@@ -15,8 +15,19 @@ type Props = {
 
 import { InlineText } from "@/components/admin/InlineText";
 
+import { useMasterStyles } from "./MasterStylesProvider";
+
 export function FooterBlock({ id, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
-  const { columns = [], logo, copyright, socialLinks = [], styles = {} } = content;
+  const masterStyles = useMasterStyles();
+  const { 
+    columns = [], 
+    copyright, 
+    socialLinks = [], 
+    styles = {} 
+  } = content;
+  
+  const logo = content.logo || masterStyles?.logoUrl;
+  const logoHeight = content.logoHeight || masterStyles?.logoHeight || "40px";
 
   const updateField = (field: keyof FooterContent, value: any) => {
     onUpdate?.({ ...content, [field]: value });
@@ -45,7 +56,7 @@ export function FooterBlock({ id, content, isEditing = false, onUpdate, onSelect
             onClick={(e) => { if(isEditing) { e.stopPropagation(); onSelectElement?.(`${id}-logo`); } }}
           >
             {logo ? (
-              <img src={logo} alt="Logo" style={{ height: "40px", width: "auto" }} />
+              <img src={logo} alt="Logo" style={{ height: logoHeight, width: "auto" }} />
             ) : (
               <div style={{ fontWeight: 800, fontSize: "1.2rem", letterSpacing: "-0.02em" }}>GASTROSHOWS</div>
             )}

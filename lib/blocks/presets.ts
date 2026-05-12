@@ -1,5 +1,205 @@
 import { BlockData, BLOCK_DEFAULTS } from "./types";
 
+export const HEADER_PRESETS: SectionPreset[] = [
+  {
+    id: "header-minimal",
+    name: "Minimalista Glass",
+    category: "Menú",
+    icon: "🕊️",
+    description: "Limpio, con efecto cristal y logo centrado.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          logoHeight: "40px",
+          links: [
+            { label: "Inicio", href: "/" },
+            { label: "Menú", href: "/menu" },
+            { label: "Reserva", href: "/reservar" }
+          ],
+          styles: { 
+            backgroundColor: "rgba(255,255,255,0.8)", 
+            backdropFilter: "blur(10px)",
+            position: "sticky",
+            top: 0
+          }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-classic",
+    name: "Clásico Premium",
+    category: "Menú",
+    icon: "🏛️",
+    description: "Logo a la izquierda, menú a la derecha.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          links: [
+            { label: "Experiencias", href: "/experiencias" },
+            { label: "Galería", href: "/galeria" },
+            { label: "Contacto", href: "/contacto" }
+          ],
+          ctaText: "RESERVAR",
+          ctaLink: "/reservar",
+          styles: { padding: "1.5rem 4rem" }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-dark-gold",
+    name: "Oscuro y Dorado",
+    category: "Menú",
+    icon: "🌙",
+    description: "Fondo negro con detalles en oro, ideal para Clandestino.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-gold.png",
+          links: [
+            { label: "Vinos", href: "/vinos" },
+            { label: "Cócteles", href: "/cocteles" },
+            { label: "Eventos", href: "/eventos" }
+          ],
+          styles: { 
+            backgroundColor: "#0A0A0A", 
+            color: "#daa520",
+            borderBottom: "1px solid rgba(218,165,32,0.2)"
+          }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-split-logo",
+    name: "Logo Dividido",
+    category: "Menú",
+    icon: "✂️",
+    description: "Logo en el centro con enlaces a ambos lados.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          layout: "split",
+          links: [
+            { label: "Nosotros", href: "/nosotros" },
+            { label: "Ubicación", href: "/donde-estamos" },
+            { label: "Carta", href: "/la-carta" },
+            { label: "Blog", href: "/noticias" }
+          ],
+          styles: { padding: "1rem 2rem" }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-bold-cta",
+    name: "Enfoque Conversión",
+    category: "Menú",
+    icon: "🚀",
+    description: "Botón de reserva destacado y enlaces minimalistas.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          links: [
+            { label: "Qué hacemos", href: "/servicios" },
+            { label: "Opiniones", href: "/reviews" }
+          ],
+          ctaText: "RESERVA TU MESA",
+          ctaLink: "/reservar",
+          styles: { 
+            backgroundColor: "#FFFFFF",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.05)"
+          }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-social",
+    name: "Con Redes Sociales",
+    category: "Menú",
+    icon: "📱",
+    description: "Incluye iconos sociales en la barra superior.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          showSocials: true,
+          socials: [
+            { platform: "instagram", url: "#" },
+            { platform: "facebook", url: "#" }
+          ],
+          links: [
+            { label: "Carta", href: "/la-carta" },
+            { label: "Reserva", href: "/reservar" }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: "header-fullscreen-trigger",
+    name: "Menú Hamburguesa Pro",
+    category: "Menú",
+    icon: "🍔",
+    description: "Solo logo y un botón de menú que despliega a pantalla completa.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-dark.png",
+          layout: "hamburger",
+          links: [
+            { label: "Inicio", href: "/" },
+            { label: "Sobre Nosotros", href: "/nosotros" },
+            { label: "Nuestra Cocina", href: "/cocina" },
+            { label: "Contacto", href: "/contacto" }
+          ],
+          styles: { padding: "1.5rem" }
+        }
+      }
+    ]
+  },
+  {
+    id: "header-transparent-fixed",
+    name: "Transparente sobre Imagen",
+    category: "Menú",
+    icon: "👻",
+    description: "Sin fondo, ideal para colocar sobre un Hero.",
+    blocks: [
+      {
+        type: "HEADER",
+        content: {
+          logo: "/images/logo-light.png",
+          links: [
+            { label: "El Espacio", href: "/espacio" },
+            { label: "Menús", href: "/menus" },
+            { label: "Gift Cards", href: "/regalos" }
+          ],
+          styles: { 
+            backgroundColor: "transparent", 
+            color: "white",
+            position: "absolute",
+            width: "100%",
+            zIndex: 1000
+          }
+        }
+      }
+    ]
+  }
+];
+
 export type SectionPreset = {
   id: string;
   name: string;
@@ -10,63 +210,12 @@ export type SectionPreset = {
 };
 
 export const SECTION_PRESETS: SectionPreset[] = [
-  // ── Banner Principal (Hero) ────────────────────────────────────────────────
   {
-    id: "hero-modern",
-    name: "Hero Elegante",
+    id: "hero-apple-cinematic",
+    name: "Cinemático Pro",
     category: "Banner Principal",
-    icon: "🏔",
-    description: "Título grande con fondo de imagen y botón.",
-    blocks: [
-      {
-        type: "HERO",
-        content: {
-          ...BLOCK_DEFAULTS.HERO,
-          title: "Experiencia Gastronómica",
-          titleAccent: "Inolvidable",
-          subtitle: "Descubre el arte de la cocina en un entorno único.",
-          bgImage: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2070&auto=format&fit=crop",
-        }
-      }
-    ]
-  },
-  {
-    id: "hero-split",
-    name: "Hero Dividido",
-    category: "Banner Principal",
-    icon: "🌓",
-    description: "Contenido a un lado e imagen al otro.",
-    blocks: [
-      {
-        type: "SECTION",
-        content: {
-          columns: [
-            {
-              width: "50%",
-              elements: [
-                { type: "HEADING", level: 1, text: "Sabores Auténticos", styles: { fontSize: "4rem", marginBottom: "1rem" } },
-                { type: "TEXT", body: "Nuestra cocina combina tradición y vanguardia para crear platos que cuentan una historia.", styles: { fontSize: "1.2rem", color: "rgba(0,0,0,0.7)" } },
-                { type: "BUTTON", text: "Reservar Mesa", link: "/reservar", variant: "primary", styles: { marginTop: "2rem" } }
-              ]
-            },
-            {
-              width: "50%",
-              elements: [
-                { type: "IMAGE", src: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop", alt: "Plato gourmet" }
-              ]
-            }
-          ],
-          styles: { padding: "6rem 2rem", backgroundColor: "#FFFFFF" }
-        }
-      }
-    ]
-  },
-  {
-    id: "hero-minimal",
-    name: "Hero Minimal",
-    category: "Banner Principal",
-    icon: "⚪",
-    description: "Diseño limpio y centrado con mucho aire.",
+    icon: "🎬",
+    description: "Diseño estilo Apple con tipografía gigante y fondo inmersivo.",
     blocks: [
       {
         type: "SECTION",
@@ -75,53 +224,96 @@ export const SECTION_PRESETS: SectionPreset[] = [
             {
               width: "100%",
               elements: [
-                { type: "HEADING", level: 1, text: "Gastroshows", styles: { textAlign: "center", fontSize: "5rem", letterSpacing: "0.1em" } },
-                { type: "TEXT", body: "LA EXCELENCIA EN CADA BOCADO", styles: { textAlign: "center", textTransform: "uppercase", letterSpacing: "0.4em", color: "var(--gs-gold)" } },
-                { type: "SPACER", height: 40 },
-                { type: "BUTTON", text: "Explorar Menú", link: "/menu", variant: "outline", styles: { margin: "0 auto", display: "block" } }
+                { type: "HEADING", level: 1, text: "Gastroshows.", styles: { fontSize: "6rem", fontWeight: 900, textAlign: "center", letterSpacing: "-0.04em", marginBottom: "0.5rem", color: "white" } },
+                { type: "HEADING", level: 2, text: "La revolución del sabor.", styles: { fontSize: "2.5rem", fontWeight: 400, textAlign: "center", color: "rgba(255,255,255,0.7)", marginBottom: "3rem" } },
+                { type: "BUTTON", text: "Comenzar Experiencia", variant: "primary", styles: { margin: "0 auto", padding: "1.2rem 3rem", borderRadius: "40px", fontSize: "1.1rem" } }
               ]
             }
           ],
-          styles: { padding: "10rem 2rem" }
+          styles: { 
+            padding: "12rem 2rem", 
+            backgroundImage: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url(https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2000&auto=format&fit=crop)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "90vh",
+            display: "flex",
+            alignItems: "center"
+          }
         }
       }
     ]
   },
   {
-    id: "hero-video",
-    name: "Hero con Video",
+    id: "hero-apple-split",
+    name: "Minimal Split",
     category: "Banner Principal",
-    icon: "🎥",
-    description: "Fondo de video para máximo impacto visual.",
+    icon: "🌓",
+    description: "Contenido a la izquierda, imagen flotante a la derecha.",
     blocks: [
       {
-        type: "HERO",
+        type: "SECTION",
         content: {
-          ...BLOCK_DEFAULTS.HERO,
-          title: "Siente el Fuego",
-          titleAccent: "en Vivo",
-          subtitle: "Cocina abierta y espectáculos gastronómicos cada noche.",
-          bgImage: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
+          columns: [
+            {
+              width: "50%",
+              elements: [
+                { type: "TEXT", body: "NUEVA TEMPORADA", styles: { fontWeight: 700, color: "#875BF7", letterSpacing: "0.2em", fontSize: "0.8rem", marginBottom: "1rem" } },
+                { type: "HEADING", level: 1, text: "Un viaje sensorial.", styles: { fontSize: "4.5rem", fontWeight: 800, lineHeight: 1, marginBottom: "2rem" } },
+                { type: "TEXT", body: "Explora texturas y aromas que desafían lo convencional. Una curaduría de platos diseñada para los paladares más exigentes.", styles: { fontSize: "1.25rem", lineHeight: 1.6, color: "#4B5563", marginBottom: "3rem" } },
+                { type: "BUTTON", text: "Ver el Menú", variant: "primary", styles: { padding: "1rem 2.5rem", borderRadius: "30px" } }
+              ]
+            },
+            {
+              width: "50%",
+              elements: [
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop", styles: { borderRadius: "30px", boxShadow: "0 30px 60px rgba(0,0,0,0.15)", transform: "rotate(2deg)" } }
+              ]
+            }
+          ],
+          styles: { padding: "8rem 4rem", backgroundColor: "#F9FAFB" }
         }
       }
     ]
   },
   {
-    id: "hero-dark",
-    name: "Hero Nocturno",
+    id: "hero-apple-glass",
+    name: "Glassmorphism Dark",
     category: "Banner Principal",
-    icon: "🌙",
-    description: "Colores oscuros y dorados para un ambiente premium.",
+    icon: "💎",
+    description: "Efecto de cristal sobre fondo oscuro y desenfocado.",
     blocks: [
       {
-        type: "HERO",
+        type: "SECTION",
         content: {
-          ...BLOCK_DEFAULTS.HERO,
-          styles: { backgroundColor: "#0A0A0A" },
-          title: "Clandestino",
-          titleAccent: "Cocktail Bar",
-          subtitle: "La noche de Barcelona empieza aquí.",
-          bgImage: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=2069&auto=format&fit=crop",
+          columns: [
+            {
+              width: "100%",
+              elements: [
+                { 
+                  type: "HEADING", 
+                  level: 1, 
+                  text: "Clandestino.", 
+                  styles: { 
+                    textAlign: "center", 
+                    fontSize: "4rem", 
+                    color: "white",
+                    padding: "4rem",
+                    backgroundColor: "rgba(255,255,255,0.05)",
+                    backdropFilter: "blur(20px)",
+                    borderRadius: "40px",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    maxWidth: "800px",
+                    margin: "0 auto"
+                  } 
+                }
+              ]
+            }
+          ],
+          styles: { 
+            padding: "10rem 2rem", 
+            backgroundImage: "url(https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=2000&auto=format&fit=crop)",
+            backgroundSize: "cover"
+          }
         }
       }
     ]
@@ -129,42 +321,26 @@ export const SECTION_PRESETS: SectionPreset[] = [
 
   // ── Presentación Producto ──────────────────────────────────────────────────
   {
-    id: "product-grid",
-    name: "Cuadrícula de Platos",
+    id: "product-apple-grid",
+    name: "Mosaico Editorial",
     category: "Presentación Producto",
-    icon: "🍱",
-    description: "Muestra tus mejores platos en una cuadrícula limpia.",
+    icon: "🎞️",
+    description: "Diseño asimétrico sofisticado para platos estrella.",
     blocks: [
       {
         type: "SECTION",
         content: {
           columns: [
-            { width: "33.33%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2080&auto=format&fit=crop", alt: "Ensalada" }, { type: "HEADING", level: 3, text: "Ensalada Zen", styles: { marginTop: "1rem" } } ] },
-            { width: "33.33%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1567620905732-2d1ec7bb7445?q=80&w=2080&auto=format&fit=crop", alt: "Pancakes" }, { type: "HEADING", level: 3, text: "Dulce Amanecer", styles: { marginTop: "1rem" } } ] },
-            { width: "33.33%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1974&auto=format&fit=crop", alt: "Carne" }, { type: "HEADING", level: 3, text: "Fuego Lento", styles: { marginTop: "1rem" } } ] }
-          ],
-          styles: { padding: "4rem 2rem" }
-        }
-      }
-    ]
-  },
-  {
-    id: "product-highlight",
-    name: "Producto Destacado",
-    category: "Presentación Producto",
-    icon: "🌟",
-    description: "Gran imagen central con descripción detallada.",
-    blocks: [
-      {
-        type: "SECTION",
-        content: {
-          columns: [
-            { width: "100%", elements: [
-              { type: "IMAGE", src: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop", alt: "Chuletón", styles: { height: "400px", borderRadius: "20px" } },
-              { type: "SPACER", height: 30 },
-              { type: "HEADING", level: 2, text: "Nuestra Joya: Chuletón de Buey", styles: { textAlign: "center" } },
-              { type: "TEXT", body: "Madurado durante 45 días en cámara propia para un sabor y textura inigualables.", styles: { textAlign: "center", maxWidth: "800px", margin: "0 auto" } }
-            ]}
+            { width: "60%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1200&auto=format&fit=crop", styles: { borderRadius: "40px", height: "600px" } } ] },
+            { 
+              width: "40%", 
+              elements: [ 
+                { type: "SPACER", height: 100 },
+                { type: "HEADING", level: 3, text: "La frescura en su estado más puro.", styles: { fontSize: "2.5rem", fontWeight: 700, marginBottom: "1.5rem" } },
+                { type: "TEXT", body: "Nuestras ensaladas zen no son solo comida, son una meditación sobre el producto local.", styles: { fontSize: "1.1rem", lineHeight: 1.6, color: "#6B7280" } },
+                { type: "BUTTON", text: "Explorar ingredientes", variant: "outline", styles: { marginTop: "2rem", borderRadius: "20px" } }
+              ] 
+            }
           ],
           styles: { padding: "6rem 2rem" }
         }
@@ -172,72 +348,51 @@ export const SECTION_PRESETS: SectionPreset[] = [
     ]
   },
   {
-    id: "product-zigzag",
-    name: "Zig-Zag de Menú",
+    id: "product-apple-cards",
+    name: "Tarjetas Flotantes Pro",
     category: "Presentación Producto",
-    icon: "🔃",
-    description: "Alterna imagen y texto para un scroll dinámico.",
+    icon: "🗂️",
+    description: "Tarjetas con sombras suaves y bordes redondeados Apple.",
     blocks: [
       {
         type: "SECTION",
         content: {
           columns: [
-            { width: "50%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop", alt: "Entrantes" } ] },
-            { width: "50%", elements: [ { type: "HEADING", level: 3, text: "01. Entrantes del Huerto" }, { type: "TEXT", body: "Ingredientes recolectados al alba para garantizar el máximo frescor en tu mesa." } ] }
+            { 
+              width: "33.33%", 
+              elements: [ 
+                { 
+                  type: "IMAGE", 
+                  src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop", 
+                  styles: { borderRadius: "24px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" } 
+                },
+                { type: "HEADING", level: 4, text: "Pizzas de Autor", styles: { textAlign: "center", marginTop: "1.5rem", fontSize: "1.2rem" } }
+              ] 
+            },
+            { 
+              width: "33.33%", 
+              elements: [ 
+                { 
+                  type: "IMAGE", 
+                  src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop", 
+                  styles: { borderRadius: "24px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" } 
+                },
+                { type: "HEADING", level: 4, text: "Cortes Selectos", styles: { textAlign: "center", marginTop: "1.5rem", fontSize: "1.2rem" } }
+              ] 
+            },
+            { 
+              width: "33.33%", 
+              elements: [ 
+                { 
+                  type: "IMAGE", 
+                  src: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=800&auto=format&fit=crop", 
+                  styles: { borderRadius: "24px", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" } 
+                },
+                { type: "HEADING", level: 4, text: "Pasta Tradicional", styles: { textAlign: "center", marginTop: "1.5rem", fontSize: "1.2rem" } }
+              ] 
+            }
           ],
-          styles: { padding: "4rem 2rem" }
-        }
-      },
-      {
-        type: "SECTION",
-        content: {
-          columns: [
-            { width: "50%", elements: [ { type: "HEADING", level: 3, text: "02. Pesca del Día" }, { type: "TEXT", body: "Directamente desde la lonja a nuestra cocina, respetando los tiempos del mar." } ] },
-            { width: "50%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=2070&auto=format&fit=crop", alt: "Pescado" } ] }
-          ],
-          styles: { padding: "4rem 2rem", backgroundColor: "#F9FAFB" }
-        }
-      }
-    ]
-  },
-  {
-    id: "product-list",
-    name: "Lista de Precios",
-    category: "Presentación Producto",
-    icon: "📜",
-    description: "Estilo carta clásica con precios a la derecha.",
-    blocks: [
-      {
-        type: "SECTION",
-        content: {
-          columns: [
-            { width: "100%", elements: [
-              { type: "HEADING", level: 2, text: "Nuestra Selección", styles: { textAlign: "center", marginBottom: "3rem" } },
-              { type: "TEXT", body: "<div style='display:flex; justify-content:space-between; border-bottom:1px dashed #ccc; padding:10px 0'><span>Burrata de Puglia</span> <span>18€</span></div>" },
-              { type: "TEXT", body: "<div style='display:flex; justify-content:space-between; border-bottom:1px dashed #ccc; padding:10px 0'><span>Carpaccio de Gamba Roja</span> <span>24€</span></div>" },
-              { type: "TEXT", body: "<div style='display:flex; justify-content:space-between; border-bottom:1px dashed #ccc; padding:10px 0'><span>Arroz de Montaña</span> <span>22€</span></div>" }
-            ]}
-          ],
-          styles: { padding: "5rem 2rem" }
-        }
-      }
-    ]
-  },
-  {
-    id: "product-cards",
-    name: "Tarjetas de Menú",
-    category: "Presentación Producto",
-    icon: "🃏",
-    description: "Bloques con sombra y fondo blanco para destacar platos.",
-    blocks: [
-      {
-        type: "SECTION",
-        content: {
-          columns: [
-            { width: "50%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop", alt: "Pizza", styles: { borderRadius: "15px" } }, { type: "HEADING", level: 3, text: "Pizzas de Autor" } ] },
-            { width: "50%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1563379091339-03b21bc4a4f8?q=80&w=2020&auto=format&fit=crop", alt: "Pasta", styles: { borderRadius: "15px" } }, { type: "HEADING", level: 3, text: "Pastas Caseras" } ] }
-          ],
-          styles: { padding: "4rem 2rem" }
+          styles: { padding: "6rem 4rem" }
         }
       }
     ]
@@ -575,6 +730,78 @@ export const SECTION_PRESETS: SectionPreset[] = [
     ]
   },
 
+  // ── Testimonios Pro ────────────────────────────────────────────────────────
+  {
+    id: "testimonial-apple-minimal",
+    name: "Cita Editorial",
+    category: "Testimonios",
+    icon: "🖋️",
+    description: "Cita grande con tipografía elegante y autor minimalista.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            {
+              width: "100%",
+              elements: [
+                { type: "TEXT", body: "“", styles: { fontSize: "8rem", color: "#875BF7", lineHeight: 0, textAlign: "center", height: "4rem", display: "block" } },
+                { type: "HEADING", level: 2, text: "La mejor cena clandestina que he vivido jamás. El misterio y el sabor se funden en uno.", styles: { fontSize: "2.5rem", fontWeight: 300, fontStyle: "italic", textAlign: "center", maxWidth: "800px", margin: "0 auto 2rem" } },
+                { type: "TEXT", body: "— CARLOS RODRÍGUEZ, CRÍTICO GASTRONÓMICO", styles: { textAlign: "center", fontWeight: 700, letterSpacing: "0.2em", fontSize: "0.8rem", color: "#6B7280" } }
+              ]
+            }
+          ],
+          styles: { padding: "8rem 2rem", backgroundColor: "white" }
+        }
+      }
+    ]
+  },
+  {
+    id: "stats-apple-bold",
+    name: "Cifras de Impacto",
+    category: "Otros",
+    icon: "📊",
+    description: "Grandes números para mostrar el éxito de tu restaurante.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "15k", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center" } }, { type: "TEXT", body: "Visitantes satisfechos", styles: { textAlign: "center", color: "#6B7280" } } ] },
+            { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "45", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center", color: "#875BF7" } }, { type: "TEXT", body: "Eventos exclusivos", styles: { textAlign: "center", color: "#6B7280" } } ] },
+            { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "3", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center" } }, { type: "TEXT", body: "Soles Repsol", styles: { textAlign: "center", color: "#6B7280" } } ] }
+          ],
+          styles: { padding: "8rem 2rem", backgroundColor: "#F9FAFB" }
+        }
+      }
+    ]
+  },
+  {
+    id: "gallery-apple-mosaic",
+    name: "Mosaico Apple Gallery",
+    category: "Otros",
+    icon: "🖼️",
+    description: "Galería asimétrica inspirada en la App Store.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            { width: "66.66%", elements: [ { type: "IMAGE", src: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop", styles: { borderRadius: "24px", height: "500px" } } ] },
+            { 
+              width: "33.33%", 
+              elements: [ 
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=600&auto=format&fit=crop", styles: { borderRadius: "24px", height: "240px", marginBottom: "20px" } },
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1550966842-2849a2830a28?q=80&w=600&auto=format&fit=crop", styles: { borderRadius: "24px", height: "240px" } }
+              ] 
+            }
+          ],
+          styles: { padding: "4rem 2rem" }
+        }
+      }
+    ]
+  },
+
   // ── 10 Tipos Adicionales ───────────────────────────────────────────────────
   {
     id: "extra-features",
@@ -796,6 +1023,152 @@ export const SECTION_PRESETS: SectionPreset[] = [
             ], styles: { padding: "3rem", background: "white", border: "2px solid var(--gs-gold)", borderRadius: "20px" } }
           ],
           styles: { padding: "6rem 2rem", gap: "2rem" }
+        }
+      }
+    ]
+  },
+  {
+    id: "innovative-glass",
+    name: "Glassmorphism Moderno",
+    category: "Otros",
+    icon: "💎",
+    description: "Diseño con efecto cristal sobre fondo degradado.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            {
+              width: "100%",
+              elements: [
+                { type: "HEADING", level: 2, text: "Innovación en cada detalle", styles: { textAlign: "center", color: "white" } },
+                { type: "CONTAINER", content: {
+                  columns: [{ width: "100%", elements: [
+                    { type: "TEXT", body: "Nuestra tecnología nos permite crear experiencias únicas que desafían los límites de lo convencional.", styles: { textAlign: "center", fontSize: "1.1rem" } },
+                    { type: "BUTTON", text: "Saber más", link: "#", variant: "outline", styles: { margin: "1.5rem auto", display: "block" } }
+                  ]}],
+                  styles: { 
+                    backgroundColor: "rgba(255, 255, 255, 0.15)", 
+                    backdropFilter: "blur(20px)", 
+                    borderRadius: "24px", 
+                    padding: "3rem", 
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)"
+                  }
+                }}
+              ]
+            }
+          ],
+          styles: { 
+            padding: "8rem 2rem", 
+            backgroundImage: "linear-gradient(135deg, #875BF7 0%, #daa520 100%)",
+            backgroundSize: "cover"
+          }
+        }
+      }
+    ]
+  },
+  {
+    id: "innovative-mosaic",
+    name: "Mosaico Dark Luxury",
+    category: "Otros",
+    icon: "🧱",
+    description: "Cuadrícula asimétrica para una presentación de lujo.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            {
+              width: "60%",
+              elements: [
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1550966842-2849a2830a28?q=80&w=1000&auto=format&fit=crop", styles: { height: "500px", borderRadius: "12px" } }
+              ]
+            },
+            {
+              width: "40%",
+              elements: [
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800&auto=format&fit=crop", styles: { height: "240px", borderRadius: "12px", marginBottom: "20px" } },
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=800&auto=format&fit=crop", styles: { height: "240px", borderRadius: "12px" } }
+              ]
+            }
+          ],
+          styles: { padding: "6rem 2rem", backgroundColor: "#0A0A0A", gap: "20px" }
+        }
+      }
+    ]
+  },
+  {
+    id: "innovative-floating",
+    name: "Editorial Flotante",
+    category: "Otros",
+    icon: "🗞️",
+    description: "Elementos que se solapan con sombras profundas.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            {
+              width: "50%",
+              elements: [
+                { type: "IMAGE", src: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?q=80&w=800&auto=format&fit=crop", styles: { borderRadius: "4px", boxShadow: "0 50px 100px -20px rgba(0,0,0,0.25)" } }
+              ]
+            },
+            {
+              width: "50%",
+              elements: [
+                { type: "CONTAINER", content: {
+                  columns: [{ width: "100%", elements: [
+                    { type: "HEADING", level: 2, text: "La Belleza en la Simplicidad", styles: { marginBottom: "1.5rem", fontSize: "2.5rem" } },
+                    { type: "TEXT", body: "Creemos que lo esencial no necesita adornos. Cada ingrediente, cada color y cada textura tiene su propio lenguaje." }
+                  ]}],
+                  styles: {
+                    padding: "4rem",
+                    backgroundColor: "white",
+                    marginTop: "4rem",
+                    marginLeft: "-4rem",
+                    boxShadow: "0 30px 60px -12px rgba(0,0,0,0.15)",
+                    borderRadius: "8px",
+                    position: "relative",
+                    zIndex: 2
+                  }
+                }}
+              ]
+            }
+          ],
+          styles: { padding: "8rem 2rem" }
+        }
+      }
+    ]
+  },
+  {
+    id: "innovative-cinema",
+    name: "Cinemático Full-Width",
+    category: "Otros",
+    icon: "🎞️",
+    description: "Imagen a pantalla completa con texto minimalista.",
+    blocks: [
+      {
+        type: "SECTION",
+        content: {
+          columns: [
+            {
+              width: "100%",
+              elements: [
+                { type: "SPACER", height: 300 },
+                { type: "HEADING", level: 1, text: "Pasión por lo que hacemos", styles: { color: "white", textAlign: "center", fontSize: "4rem", fontWeight: 900, textTransform: "uppercase" } },
+                { type: "SPACER", height: 300 }
+              ]
+            }
+          ],
+          styles: { 
+            padding: "0",
+            backgroundImage: "url(https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed"
+          }
         }
       }
     ]

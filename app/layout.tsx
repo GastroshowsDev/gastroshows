@@ -55,6 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 
 export default async function RootLayout({
@@ -72,7 +73,9 @@ export default async function RootLayout({
     >
       <head>
         <SeoHead />
-        <script
+        <Script
+          id="theme-switcher"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {

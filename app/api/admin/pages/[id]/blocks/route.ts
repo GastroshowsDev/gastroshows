@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -19,6 +21,9 @@ type BlockInput = {
  * This is simpler and safer than incremental updates for a visual editor.
  */
 export async function PUT(req: Request, { params }: RouteContext) {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+
   try {
     const { id } = await params;
     const { blocks } = (await req.json()) as { blocks: BlockInput[] };

@@ -1,6 +1,10 @@
-"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import { useEffect, useState } from "react";
+const MasterStylesContext = createContext<any>(null);
+
+export function useMasterStyles() {
+  return useContext(MasterStylesContext);
+}
 
 export function MasterStylesProvider({ children }: { children: React.ReactNode }) {
   const [styles, setStyles] = useState<any>(null);
@@ -15,11 +19,20 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
         } catch (e) {
           console.error("Failed to parse master styles", e);
         }
+      } else {
+        // Defaults if none found
+        setStyles({
+          h1: { fontSize: "3.5rem", fontWeight: 700, color: "#111827" },
+          h2: { fontSize: "2.5rem", fontWeight: 700, color: "#111827" },
+          h3: { fontSize: "1.75rem", fontWeight: 600, color: "#111827" },
+          p: { fontSize: "1rem", color: "#4B5563" },
+          button: { backgroundColor: "#875BF7", color: "#FFFFFF", borderRadius: "8px" },
+          a: { color: "#875BF7" }
+        });
       }
     }
     load();
 
-    // Listen for updates from the builder
     const handleUpdate = () => load();
     window.addEventListener("master-styles-updated", handleUpdate);
     return () => window.removeEventListener("master-styles-updated", handleUpdate);
@@ -74,15 +87,14 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
     ${generateCSS("a", styles.a)}
     ${generateCSS("button", styles.button)}
     
-    /* Global Buttons Classes */
     ${generateCSS(".gs-btn-primary", styles.button, true)}
     ${generateCSS(".gs-btn-secondary", styles.buttonSecondary, true)}
   `;
 
   return (
-    <>
+    <MasterStylesContext.Provider value={styles}>
       <style dangerouslySetInnerHTML={{ __html: css }} />
       {children}
-    </>
+    </MasterStylesContext.Provider>
   );
 }

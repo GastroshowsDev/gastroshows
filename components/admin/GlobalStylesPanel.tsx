@@ -4,6 +4,8 @@ import { useState } from "react";
 import { CommonStyles } from "@/lib/blocks/types";
 
 type MasterStyles = {
+  logoUrl?: string;
+  logoHeight?: string;
   h1: CommonStyles;
   h2: CommonStyles;
   h3: CommonStyles;
@@ -188,6 +190,33 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
         </button>
       </div>
       
+      <div style={sectionStyle}>
+        <label style={titleStyle}>Logotipo Global</label>
+        <div style={rowStyle}>
+          <span style={{ fontSize: "0.6rem", width: "50px" }}>URL</span>
+          <input 
+            style={inputStyle} 
+            value={localStyles.logoUrl || ""} 
+            onChange={(e) => setLocalStyles(prev => ({ ...prev, logoUrl: e.target.value }))}
+            placeholder="https://.../logo.png"
+          />
+        </div>
+        <div style={rowStyle}>
+          <span style={{ fontSize: "0.6rem", width: "50px" }}>Altura</span>
+          <input 
+            style={inputStyle} 
+            value={localStyles.logoHeight || ""} 
+            onChange={(e) => setLocalStyles(prev => ({ ...prev, logoHeight: e.target.value }))}
+            placeholder="40px"
+          />
+        </div>
+        {localStyles.logoUrl && (
+          <div style={{ marginTop: "0.5rem", display: "flex", justifyContent: "center", padding: "0.5rem", background: "white", borderRadius: "4px" }}>
+            <img src={localStyles.logoUrl} style={{ height: localStyles.logoHeight || "40px", width: "auto" }} alt="Logo Preview" />
+          </div>
+        )}
+      </div>
+
       {renderTagEditor("h1", "Título Principal (H1)")}
       {renderTagEditor("h2", "Título Sección (H2)")}
       {renderTagEditor("h3", "Título Bloque (H3)")}
