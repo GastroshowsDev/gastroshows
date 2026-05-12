@@ -188,6 +188,7 @@ export type HeroContent = {
   bgPosition?: string;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   columns?: ColumnData[]; // To allow adding elements
+  styles?: CommonStyles;
 };
 
 
@@ -212,6 +213,7 @@ export type TextContent = {
   italic?: boolean;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
   columns?: ColumnData[]; // To allow adding elements
+  styles?: CommonStyles;
 };
 
 export type StepsContent = {
@@ -250,6 +252,7 @@ export type CtaContent = {
   bgPosition?: string;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   columns?: ColumnData[]; // To allow adding elements
+  styles?: CommonStyles;
 };
 
 

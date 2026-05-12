@@ -53,7 +53,11 @@ export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, on
             fill
             loading="lazy"
             className="gs-bg-image"
-            style={{ objectFit: "cover", objectPosition: content.bgPosition || "center 30%", "--img-brightness": brightness } as any}
+            style={{ 
+              objectFit: (content.styles?.backgroundSize || "cover") as any, 
+              objectPosition: content.styles?.backgroundPosition || content.bgPosition || "center 30%", 
+              "--img-brightness": brightness 
+            } as any}
             sizes="100vw"
           />
           <div

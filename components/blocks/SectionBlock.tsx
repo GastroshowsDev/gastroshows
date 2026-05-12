@@ -90,35 +90,49 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
   return (
     <AnimatedWrapper animation={styles.animation}>
       <section style={{
+        position: "relative",
         padding: styles.padding || "0",
         backgroundColor: styles.backgroundColor || (content as any).bgColor || "transparent",
-        backgroundImage: bgImage ? `url("${bgImage}")` : "none",
-        backgroundSize: bgPos === "cover" ? "cover" : "cover",
-        backgroundPosition: bgPos === "cover" ? "center center" : bgPos,
-        backgroundRepeat: "no-repeat",
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
-        filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
         marginTop: styles.marginTop || (content as any).marginTop || "0px",
         marginBottom: styles.marginBottom || (content as any).marginBottom || "0px",
         paddingTop: styles.paddingTop || (content as any).paddingTop || "6rem",
         paddingBottom: styles.paddingBottom || (content as any).paddingBottom || "8rem",
         paddingLeft: styles.paddingLeft || (content as any).paddingLeft || "2rem",
         paddingRight: styles.paddingRight || (content as any).paddingRight || "2rem",
+        width: "100%",
         boxSizing: "border-box",
+        overflow: "hidden"
       }}>
-        <ColumnsRenderer 
-          blockId={blockId}
-          columns={content.columns}
-          isEditing={isEditing}
-          fullWidth={content.fullWidth}
-          onUpdate={(newCols) => onUpdate?.({ ...content, columns: newCols })}
-          onSelectElement={onSelectElement}
-          selectedElementPath={selectedElementPath}
-        />
+        {bgImage && (
+          <div 
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url("${bgImage}")`,
+              backgroundSize: styles.backgroundSize || "cover",
+              backgroundPosition: (bgPos === "cover" ? "center center" : bgPos) as any,
+              backgroundRepeat: "no-repeat",
+              opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
+              filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
+              zIndex: 0,
+            }}
+          />
+        )}
+        
+        <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
+          <ColumnsRenderer 
+            blockId={blockId}
+            columns={content.columns}
+            isEditing={isEditing}
+            fullWidth={content.fullWidth}
+            onUpdate={(newCols) => onUpdate?.({ ...content, columns: newCols })}
+            onSelectElement={onSelectElement}
+            selectedElementPath={selectedElementPath}
+          />
+        </div>
       </section>
     </AnimatedWrapper>
   );

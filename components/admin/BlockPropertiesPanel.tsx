@@ -434,6 +434,19 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           </div>
 
           <div style={rowStyle}>
+            <label style={labelStyle}>Tamaño Fondo</label>
+            <select 
+              value={(content as any).styles?.backgroundSize || "cover"} 
+              onChange={(e) => updateStyles(content, { backgroundSize: e.target.value })}
+              style={inputStyle}
+            >
+              <option value="cover">Cubrir (Cover)</option>
+              <option value="contain">Contener (Contain)</option>
+              <option value="auto">Original (Auto)</option>
+            </select>
+          </div>
+
+          <div style={rowStyle}>
             <label style={labelStyle}>Posición Fondo</label>
             <select 
               value={(content as any).styles?.backgroundPosition || (content as any).bgPosition || "center"} 
@@ -444,11 +457,14 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               style={inputStyle}
             >
               <option value="center">Centro</option>
-              <option value="cover">Completo (Se adapta)</option>
               <option value="top">Arriba</option>
               <option value="bottom">Abajo</option>
               <option value="left">Izquierda</option>
               <option value="right">Derecha</option>
+              <option value="top left">Arriba Izquierda</option>
+              <option value="top right">Arriba Derecha</option>
+              <option value="bottom left">Abajo Izquierda</option>
+              <option value="bottom right">Abajo Derecha</option>
             </select>
           </div>
 
