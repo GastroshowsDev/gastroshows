@@ -87,77 +87,81 @@ export async function POST(req: Request) {
       };
     }
 
-    const { title, slug, seoTitle, seoDesc, blocks, ogImage, createRedirect, oldPath } = body;
+    let items = Array.isArray(body) ? body : [body];
+    const results = [];
 
-    if (!title || !slug) {
-      return NextResponse.json({ ok: false, error: "Title and slug are required" }, { status: 400 });
-    }
+    for (const item of items) {
+      const { title, slug, seoTitle, seoDesc, blocks, ogImage, createRedirect, oldPath } = item;
 
-    // Clean slug
-    const cleanSlug = slug
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9-]/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
+      if (!title || !slug) continue;
 
-    const result = await prisma.$transaction(async (tx) => {
-      // 1. Create or Update Page
-      let page = await tx.page.findUnique({ where: { slug: cleanSlug } });
+      // Clean slug
+      const cleanSlug = slug
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
 
-      if (page) {
-        page = await tx.page.update({
-          where: { id: page.id },
-          data: {
-            title,
-            seoTitle: seoTitle || title,
-            seoDesc: seoDesc || null,
-            ogImage: ogImage || null,
-            updatedAt: new Date(),
-          },
-        });
-        await tx.pageBlock.deleteMany({ where: { pageId: page.id } });
-      } else {
-        page = await tx.page.create({
-          data: {
-            title,
-            slug: cleanSlug,
-            seoTitle: seoTitle || title,
-            seoDesc: seoDesc || null,
-            ogImage: ogImage || null,
-            published: false,
-          },
-        });
-      }
+      const result = await prisma.$transaction(async (tx) => {
+        // 1. Create or Update Page
+        let page = await tx.page.findUnique({ where: { slug: cleanSlug } });
 
-      // 2. Create Blocks
-      if (blocks && Array.isArray(blocks)) {
-        for (let i = 0; i < blocks.length; i++) {
-          const b = blocks[i];
-          await tx.pageBlock.create({
+        if (page) {
+          page = await tx.page.update({
+            where: { id: page.id },
             data: {
-              pageId: page.id,
-              type: b.type || "SECTION",
-              content: b.content || {},
-              order: i,
+              title,
+              seoTitle: seoTitle || title,
+              seoDesc: seoDesc || null,
+              ogImage: ogImage || null,
+              updatedAt: new Date(),
+            },
+          });
+          await tx.pageBlock.deleteMany({ where: { pageId: page.id } });
+        } else {
+          page = await tx.page.create({
+            data: {
+              title,
+              slug: cleanSlug,
+              seoTitle: seoTitle || title,
+              seoDesc: seoDesc || null,
+              ogImage: ogImage || null,
+              published: false,
             },
           });
         }
-      }
 
-      // 3. Create Redirect if requested
-      if (createRedirect && oldPath && oldPath !== `/${cleanSlug}`) {
-        await tx.redirect.upsert({
-          where: { fromPath: oldPath },
-          update: { toPath: `/${cleanSlug}` },
-          create: { fromPath: oldPath, toPath: `/${cleanSlug}` },
-        });
-      }
+        // 2. Create Blocks
+        if (blocks && Array.isArray(blocks)) {
+          for (let i = 0; i < blocks.length; i++) {
+            const b = blocks[i];
+            await tx.pageBlock.create({
+              data: {
+                pageId: page.id,
+                type: b.type || "SECTION",
+                content: b.content || {},
+                order: i,
+              },
+            });
+          }
+        }
 
-      return page;
-    });
+        // 3. Create Redirect if requested
+        if (createRedirect && oldPath && oldPath !== `/${cleanSlug}`) {
+          await tx.redirect.upsert({
+            where: { fromPath: oldPath },
+            update: { toPath: `/${cleanSlug}` },
+            create: { fromPath: oldPath, toPath: `/${cleanSlug}` },
+          });
+        }
 
-    return NextResponse.json({ ok: true, data: result });
+        return page;
+      });
+      results.push(result);
+    }
+
+    return NextResponse.json({ ok: true, data: results[0], count: results.length });
   } catch (err: any) {
     console.error("[api] POST /admin/web/import failed:", err);
     return NextResponse.json({ ok: false, error: err.message || "Failed to import page" }, { status: 500 });

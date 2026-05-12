@@ -113,6 +113,40 @@ export function PagesList() {
           >
             <span>🔍</span> Ajustes SEO
           </Link>
+          <button
+            onClick={async () => {
+              try {
+                const res = await fetch("/api/admin/web/export");
+                const json = await res.json();
+                if (json.ok) {
+                  const blob = new Blob([JSON.stringify(json.data, null, 2)], { type: "application/json" });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `pages_export_${new Date().toISOString().split("T")[0]}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }
+              } catch (err) {
+                alert("Error al exportar las páginas");
+              }
+            }}
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "white",
+              color: "var(--color-admin-text)",
+              border: "1px solid var(--color-admin-border)",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.82rem"
+            }}
+          >
+            <span>📤</span> Exportar JSON
+          </button>
           <Link
             href="/admin/web/import"
             style={{
