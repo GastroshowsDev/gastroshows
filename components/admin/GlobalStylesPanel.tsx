@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { CommonStyles } from "@/lib/blocks/types";
 
 type MasterStyles = {
@@ -19,9 +20,18 @@ type Props = {
   onUpdate: (styles: MasterStyles) => void;
 };
 
-export function GlobalStylesPanel({ styles, onUpdate }: Props) {
+export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
+  const [localStyles, setLocalStyles] = useState(initialStyles);
+  const [isSaving, setIsSaving] = useState(false);
+
   const updateTag = (tag: keyof MasterStyles, newStyles: CommonStyles) => {
-    onUpdate({ ...styles, [tag]: { ...styles[tag], ...newStyles } });
+    setLocalStyles(prev => ({ ...prev, [tag]: { ...prev[tag], ...newStyles } }));
+  };
+
+  const handleApply = async () => {
+    setIsSaving(true);
+    await onUpdate(localStyles);
+    setIsSaving(false);
   };
 
   const sectionStyle = {
@@ -63,7 +73,7 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Fuente</span>
         <input 
           style={inputStyle} 
-          value={styles[tag]?.fontSize || ""} 
+          value={localStyles[tag]?.fontSize || ""} 
           onChange={(e) => updateTag(tag, { fontSize: e.target.value })}
           placeholder="Ej: 2rem"
         />
@@ -73,12 +83,12 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
         <input 
           type="color"
           style={{ width: "30px", height: "20px", padding: 0, border: "none" }} 
-          value={styles[tag]?.color || "#000000"} 
+          value={localStyles[tag]?.color || "#000000"} 
           onChange={(e) => updateTag(tag, { color: e.target.value })}
         />
         <input 
           style={inputStyle} 
-          value={styles[tag]?.color || ""} 
+          value={localStyles[tag]?.color || ""} 
           onChange={(e) => updateTag(tag, { color: e.target.value })}
           placeholder="#HEX"
         />
@@ -89,7 +99,7 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Radio</span>
             <input 
               style={inputStyle} 
-              value={styles[tag]?.borderRadius || ""} 
+              value={localStyles[tag]?.borderRadius || ""} 
               onChange={(e) => updateTag(tag, { borderRadius: e.target.value })}
               placeholder="Ej: 8px"
             />
@@ -98,7 +108,7 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Fondo</span>
             <input 
               style={inputStyle} 
-              value={styles[tag]?.backgroundColor || ""} 
+              value={localStyles[tag]?.backgroundColor || ""} 
               onChange={(e) => updateTag(tag, { backgroundColor: e.target.value })}
               placeholder="#HEX"
             />
@@ -110,7 +120,20 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
 
   return (
     <div style={{ padding: "1.5rem" }}>
-      <h3 style={{ fontSize: "1rem", fontWeight: 800, marginBottom: "1.5rem" }}>Estilos Maestros</h3>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+        <h3 style={{ fontSize: "1rem", fontWeight: 800, margin: 0 }}>Estilos Maestros</h3>
+        <button 
+          onClick={handleApply}
+          disabled={isSaving}
+          style={{
+            padding: "0.5rem 1rem", background: "#875BF7", color: "white", border: "none",
+            borderRadius: "6px", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer",
+            boxShadow: "0 2px 4px rgba(135,91,247,0.2)"
+          }}
+        >
+          {isSaving ? "Aplicando..." : "Aplicar Cambios"}
+        </button>
+      </div>
       
       {renderTagEditor("h1", "Título Principal (H1)")}
       {renderTagEditor("h2", "Título Sección (H2)")}
@@ -121,7 +144,7 @@ export function GlobalStylesPanel({ styles, onUpdate }: Props) {
       
       <div style={{ padding: "1rem", background: "#F0EBFE", borderRadius: "10px", marginTop: "2rem" }}>
         <p style={{ fontSize: "0.65rem", color: "#875BF7", margin: 0, lineHeight: 1.5 }}>
-          <strong>Nota:</strong> Estos estilos se aplican globalmente a todos los elementos que no tengan estilos específicos definidos.
+          <strong>Nota:</strong> Al pulsar "Aplicar Cambios", los estilos se guardarán y se reflejarán en todos los elementos que no tengan estilos locales específicos.
         </p>
       </div>
     </div>

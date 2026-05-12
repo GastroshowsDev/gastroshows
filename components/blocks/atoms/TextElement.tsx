@@ -18,10 +18,9 @@ export function TextElement({ element, isEditing = false, onUpdate }: Props) {
       style={{
         margin: styles.margin || "0 0 1rem 0",
         padding: styles.padding || "0",
-        color: styles.color || "rgba(245,240,232,0.8)",
+        color: styles.color || undefined,
         textAlign: styles.textAlign || "inherit",
-        fontSize: "1rem",
-        lineHeight: 1.7,
+        fontSize: styles.fontSize || undefined,
       }}
     >
       <InlineText

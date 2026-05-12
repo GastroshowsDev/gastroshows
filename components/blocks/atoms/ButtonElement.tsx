@@ -63,10 +63,12 @@ export function ButtonElement({ element, isEditing = false, onUpdate }: Props) {
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           textDecoration: "none",
-          borderRadius: styles.borderRadius || "9999px",
+          borderRadius: styles.borderRadius || undefined,
           transition: "all 0.3s ease",
           cursor: "pointer",
           ...getVariantStyles(),
+          ...(styles.backgroundColor ? { background: styles.backgroundColor } : {}),
+          ...(styles.color ? { color: styles.color } : {}),
         }}
       >
         <InlineText
