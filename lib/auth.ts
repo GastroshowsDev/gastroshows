@@ -80,7 +80,4 @@ export const authOptions: NextAuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  ...(process.env.VERCEL_URL && !process.env.NEXTAUTH_URL
-    ? { url: `https://${process.env.VERCEL_URL}` }
-    : {}),
 };
