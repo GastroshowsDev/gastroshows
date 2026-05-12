@@ -5,6 +5,7 @@ import { Menu, Globe } from "lucide-react";
 import { 
   BlockType, 
   BlockData, 
+  ElementData,
   BLOCK_DEFAULTS, 
   BLOCK_LABELS, 
   ELEMENT_LABELS 
