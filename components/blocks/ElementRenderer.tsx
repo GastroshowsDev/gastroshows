@@ -121,7 +121,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
                 setShowConfig(!showConfig);
               }}
               style={{
-                position: "absolute", top: "-15px", left: "50%", transform: "translateX(-50%)",
+                position: "absolute", top: "-12px", right: "-12px",
                 width: "24px", height: "24px", borderRadius: "50%",
                 background: "#875BF7", color: "white", border: "none",
                 display: "flex", alignItems: "center", justifyContent: "center",
