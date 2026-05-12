@@ -58,7 +58,7 @@ export function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Navegación</span>
               <span onClick={openGift} style={linkStyle}>Regalar Experiencia</span>
-              <span onClick={openReservation} style={linkStyle}>Reservar Mesa</span>
+              <span onClick={() => openReservation()} style={linkStyle}>Reservar Mesa</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <span style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.25em", color: "var(--gs-gold)", fontWeight: 700, marginBottom: "0.5rem" }}>Legal</span>

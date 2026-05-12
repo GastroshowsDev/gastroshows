@@ -14,6 +14,7 @@ export type CommonStyles = {
   textAlign?: "left" | "center" | "right";
   color?: string;
   boxShadow?: string;
+  backdropFilter?: string;
   textShadow?: string;
   animation?: string;
   opacity?: number;
@@ -39,6 +40,11 @@ export type CommonStyles = {
   letterSpacing?: string;
   lineHeight?: string;
   minHeight?: string;
+  border?: string;
+  borderTop?: string;
+  borderBottom?: string;
+  borderLeft?: string;
+  borderRight?: string;
 };
 
 
@@ -323,6 +329,7 @@ export type HeaderContent = {
 
 export type FooterContent = {
   logo?: string;
+  logoHeight?: string;
   copyright: string;
   columns: {
     title: string;
@@ -394,6 +401,7 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
   },
   FOOTER: {
     logo: "",
+    logoHeight: "40px",
     copyright: "© 2024 Gastroshows. Todos los derechos reservados.",
     columns: [
       { title: "Empresa", links: [{ label: "Nosotros", href: "/nosotros" }] },

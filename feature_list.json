@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "feature": "Infraestructura Harness",
+    "description": "Implementar el sistema de control y trazabilidad basado en el paradigma de Harness Engineering.",
+    "status": "in_progress",
+    "priority": "high"
+  },
+  {
+    "id": 2,
+    "feature": "Edición In-Context: Colores y Estilos",
+    "description": "Permitir cambiar colores y estilos directamente desde el lienzo sin usar el panel lateral.",
+    "status": "pending",
+    "priority": "medium"
+  },
+  {
+    "id": 3,
+    "feature": "Optimización de Widgets (Disponibilidad)",
+    "description": "Refactorizar el widget de disponibilidad para que use el nuevo sistema de IDs y sea 100% móvil entre contenedores.",
+    "status": "pending",
+    "priority": "high"
+  },
+  {
+    "id": 4,
+    "feature": "Sistema de Animaciones Globales",
+    "description": "Implementar un selector de animaciones de entrada (fade, slide, zoom) aplicable a cualquier elemento.",
+    "status": "pending",
+    "priority": "low"
+  },
+  {
+    "id": 5,
+    "feature": "Auditoría de Seguridad y Roles",
+    "description": "Verificar que todos los endpoints de admin estén protegidos correctamente contra accesos no autorizados.",
+    "status": "pending",
+    "priority": "high"
+  }
+]
