@@ -22,7 +22,7 @@ type ApiResponse = {
   days: DayData[];
 };
 
-import { BookingCalendar } from "./reservation/BookingCalendar";
+import { BookingCalendar } from "../reservation/BookingCalendar";
 
 export function CalendarWidget() {
   const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
