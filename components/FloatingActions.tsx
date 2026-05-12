@@ -137,7 +137,7 @@ export function FloatingActions() {
       {/* Promo Bubble (WA style) */}
       {showNotification && hasPromo && (
         <div 
-          onClick={openReservation}
+          onClick={() => openReservation()}
           style={{
             background: "#daa520", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
             borderRadius: "18px 18px 4px 18px", fontSize: isMobile ? "0.75rem" : "0.82rem", fontWeight: 600,

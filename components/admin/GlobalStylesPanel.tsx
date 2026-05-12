@@ -28,7 +28,16 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
   const [isSaving, setIsSaving] = useState(false);
 
   const updateTag = (tag: keyof MasterStyles, newStyles: CommonStyles) => {
-    setLocalStyles(prev => ({ ...prev, [tag]: { ...prev[tag], ...newStyles } }));
+    setLocalStyles(prev => {
+      const current = prev[tag];
+      const currentObj = (typeof current === 'object' && current !== null) ? current : {};
+      return { ...prev, [tag]: { ...currentObj, ...newStyles } };
+    });
+  };
+
+  const getStyles = (tag: keyof MasterStyles): CommonStyles => {
+    const val = localStyles[tag];
+    return (typeof val === 'object' && val !== null) ? val as CommonStyles : {};
   };
 
   const handleApply = async () => {
@@ -101,7 +110,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Fuente</span>
         <select 
           style={inputStyle} 
-          value={localStyles[tag]?.fontFamily || ""} 
+          value={getStyles(tag).fontFamily || ""} 
           onChange={(e) => updateTag(tag, { fontFamily: e.target.value })}
         >
           {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
@@ -111,15 +120,15 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
       <div style={rowStyle}>
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Formato</span>
         <div style={{ display: "flex", gap: "4px" }}>
-          <FBtn active={localStyles[tag]?.bold} onClick={() => updateTag(tag, { bold: !localStyles[tag]?.bold })} title="Negrita">B</FBtn>
-          <FBtn active={localStyles[tag]?.italic} onClick={() => updateTag(tag, { italic: !localStyles[tag]?.italic })} title="Cursiva">I</FBtn>
-          <FBtn active={localStyles[tag]?.underline} onClick={() => updateTag(tag, { underline: !localStyles[tag]?.underline })} title="Subrayado">U</FBtn>
+          <FBtn active={getStyles(tag).bold} onClick={() => updateTag(tag, { bold: !getStyles(tag).bold })} title="Negrita">B</FBtn>
+          <FBtn active={getStyles(tag).italic} onClick={() => updateTag(tag, { italic: !getStyles(tag).italic })} title="Cursiva">I</FBtn>
+          <FBtn active={getStyles(tag).underline} onClick={() => updateTag(tag, { underline: !getStyles(tag).underline })} title="Subrayado">U</FBtn>
         </div>
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <span style={{ fontSize: "0.6rem" }}>Size</span>
           <input 
             style={{ ...inputStyle, width: "50px", flex: "none" }} 
-            value={localStyles[tag]?.fontSize || ""} 
+            value={getStyles(tag).fontSize || ""} 
             onChange={(e) => updateTag(tag, { fontSize: e.target.value })}
             placeholder="2rem"
           />
@@ -131,12 +140,12 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
         <input 
           type="color"
           style={{ width: "30px", height: "20px", padding: 0, border: "none", cursor: "pointer" }} 
-          value={localStyles[tag]?.color || "#000000"} 
+          value={getStyles(tag).color || "#000000"} 
           onChange={(e) => updateTag(tag, { color: e.target.value })}
         />
         <input 
           style={inputStyle} 
-          value={localStyles[tag]?.color || ""} 
+          value={getStyles(tag).color || ""} 
           onChange={(e) => updateTag(tag, { color: e.target.value })}
           placeholder="#HEX"
         />
@@ -148,7 +157,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
             <span style={{ fontSize: "0.6rem", width: "50px" }}>Radio</span>
             <input 
               style={inputStyle} 
-              value={localStyles[tag]?.borderRadius || ""} 
+              value={getStyles(tag).borderRadius || ""} 
               onChange={(e) => updateTag(tag, { borderRadius: e.target.value })}
               placeholder="Ej: 8px"
             />
@@ -158,12 +167,12 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
             <input 
               type="color"
               style={{ width: "30px", height: "20px", padding: 0, border: "none", cursor: "pointer" }} 
-              value={localStyles[tag]?.backgroundColor || "#ffffff"} 
+              value={getStyles(tag).backgroundColor || "#ffffff"} 
               onChange={(e) => updateTag(tag, { backgroundColor: e.target.value })}
             />
             <input 
               style={inputStyle} 
-              value={localStyles[tag]?.backgroundColor || ""} 
+              value={getStyles(tag).backgroundColor || ""} 
               onChange={(e) => updateTag(tag, { backgroundColor: e.target.value })}
               placeholder="#HEX"
             />

@@ -123,19 +123,20 @@ export function ColumnsRenderer({
     const defaults = BLOCK_DEFAULTS[type as keyof typeof BLOCK_DEFAULTS];
     
     if (defaults) {
-      newEl = JSON.parse(JSON.stringify(defaults));
+      newEl = { id: Math.random().toString(36).substr(2, 9), ...JSON.parse(JSON.stringify(defaults)) };
     } else if (type === "HEADING") {
-      newEl = { type: "HEADING", text: "Nuevo Título", level: 2, styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "HEADING", text: "Nuevo Título", level: 2, styles: {} };
     } else if (type === "BUTTON") {
-      newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#", variant: "primary", size: "md", styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "BUTTON", text: "Nuevo Botón", link: "#", variant: "primary", size: "md", styles: {} };
     } else if (type === "TEXT") {
-      newEl = { type: "TEXT", body: "Nuevo bloque de texto", styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "TEXT", body: "Nuevo bloque de texto", styles: {} };
     } else if (type === "IMAGE") {
-      newEl = { type: "IMAGE", src: "", alt: "", styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "IMAGE", src: "", alt: "", styles: {} };
     } else if (type === "SPACER") {
-      newEl = { type: "SPACER", height: 40, styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "SPACER", height: 40, styles: {} };
     } else if (type === "AVAILABILITY") {
       newEl = { 
+        id: Math.random().toString(36).substr(2, 9),
         type: "AVAILABILITY", 
         title: "Hay {total} plazas libres esta semana", 
         subtitle: "DISPONIBILIDAD", 
@@ -143,9 +144,10 @@ export function ColumnsRenderer({
         styles: {} 
       };
     } else if (type === "CALENDAR") {
-      newEl = { type: "CALENDAR", styles: {} };
+      newEl = { id: Math.random().toString(36).substr(2, 9), type: "CALENDAR", styles: {} };
     } else if (type === "CONTAINER") {
       newEl = { 
+        id: Math.random().toString(36).substr(2, 9),
         type: "CONTAINER", 
         content: { 
           columns: [{ width: "100%", elements: [] }],
