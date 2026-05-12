@@ -852,7 +852,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                     }
                     const newBlocks = updateElementByPath(page.blocks, selectedElementPath, newEl);
                     updatePageState({ ...page, blocks: newBlocks });
-                    if (newEl === "DELETE") setSelectedElementPath(null);
+                    if ((newEl as any) === "DELETE") setSelectedElementPath(null);
                   }}
                   openMedia={(callback) => {
                     setMediaCallback(() => callback);

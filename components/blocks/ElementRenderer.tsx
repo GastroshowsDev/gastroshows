@@ -69,7 +69,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
       case "AVAILABILITY":
         return (
           <AvailabilityWidget 
-            title={element.title}
+            title={element.title || ""}
             subtitle={element.subtitle}
             buttonText={element.buttonText}
             buttonColor={element.buttonColor}

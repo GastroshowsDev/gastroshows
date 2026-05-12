@@ -114,6 +114,26 @@ export type FormElement = {
   styles?: CommonStyles;
 };
 
+export type CalendarElement = {
+  type: "CALENDAR";
+  styles?: CommonStyles;
+};
+
+export type AvailabilityElement = {
+  type: "AVAILABILITY";
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonColor?: string;
+  styles?: CommonStyles;
+};
+
+export type ContainerElement = {
+  type: "CONTAINER";
+  content: SectionContent;
+  styles?: CommonStyles;
+};
+
 export type ElementData = 
   | HeadingElement 
   | ButtonElement 
