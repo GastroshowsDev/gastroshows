@@ -440,7 +440,8 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               onChange={(e) => updateStyles(content, { backgroundSize: e.target.value })}
               style={inputStyle}
             >
-              <option value="auto">Original (Auto)</option>
+              <option value="auto">Original (Adaptativo)</option>
+              <option value="mirror">Efecto Espejo (Blur)</option>
               <option value="cover">Cubrir (Cover)</option>
               <option value="contain">Contener (Contain)</option>
             </select>

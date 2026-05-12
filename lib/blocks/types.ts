@@ -9,7 +9,7 @@ export type CommonStyles = {
   margin?: string;
   backgroundColor?: string;
   backgroundImage?: string;
-  backgroundSize?: "cover" | "contain" | "auto";
+  backgroundSize?: "cover" | "contain" | "auto" | "mirror";
   borderRadius?: string;
   textAlign?: "left" | "center" | "right";
   color?: string;

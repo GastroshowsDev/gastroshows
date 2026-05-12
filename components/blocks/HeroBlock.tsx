@@ -104,18 +104,33 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
         }}
       >
         {content.bgImage && (
-          <>
+          <div className="gs-hero-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+             {/* Mirror Layer (Blurred) */}
+             {(content.styles?.backgroundSize === "mirror") && (
+              <div 
+                style={{
+                  position: "absolute",
+                  inset: "-20px",
+                  backgroundImage: `url("${content.bgImage}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  filter: "blur(50px) brightness(0.6)",
+                  opacity: 0.8,
+                }}
+              />
+            )}
+
+            {/* Main Image Layer */}
             <div 
               className="gs-hero-bg-div" 
               style={{ 
                 position: "absolute",
                 inset: 0,
                 backgroundImage: `url("${content.bgImage}")`,
-                backgroundSize: (content.styles?.backgroundSize === "auto") ? "100% auto" : (content.styles?.backgroundSize || "cover"),
+                backgroundSize: (content.styles?.backgroundSize === "mirror") ? "contain" : ((content.styles?.backgroundSize === "auto") ? "100% auto" : (content.styles?.backgroundSize || "cover")),
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 filter: `brightness(${brightness})`,
-                zIndex: 0
               }} 
             />
             <style jsx>{`
@@ -125,7 +140,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
                 }
               }
             `}</style>
-          </>
+          </div>
         )}
       </div>
 

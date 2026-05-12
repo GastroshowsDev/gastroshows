@@ -130,23 +130,37 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         overflow: "hidden"
       }}>
         {bgImage && (
-          <div 
-            className="gs-section-bg"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundImage: `url("${bgImage}")`,
-              backgroundSize: styles.backgroundSize === "auto" ? "100% auto" : (styles.backgroundSize || "cover"),
-              backgroundPosition: "center center",
-              backgroundRepeat: "no-repeat",
-              opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
-              filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
-              zIndex: 0,
-            }}
-          />
+          <div className="gs-section-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+            {/* Mirror Layer (Blurred) */}
+            {styles.backgroundSize === "mirror" && (
+              <div 
+                style={{
+                  position: "absolute",
+                  inset: "-20px",
+                  backgroundImage: `url("${bgImage}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  filter: "blur(40px) brightness(0.7)",
+                  opacity: 0.6,
+                }}
+              />
+            )}
+            
+            {/* Main Image Layer */}
+            <div 
+              className="gs-section-bg"
+              style={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `url("${bgImage}")`,
+                backgroundSize: styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize === "auto" ? "100% auto" : (styles.backgroundSize || "cover")),
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
+                filter: styles.brightness ? `brightness(${styles.brightness})` : ((content as any).brightness ? `brightness(${(content as any).brightness})` : "none"),
+              }}
+            />
+          </div>
         )}
         <style jsx>{`
           @media (max-width: 768px) {
