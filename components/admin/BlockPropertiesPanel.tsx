@@ -436,13 +436,13 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           <div style={rowStyle}>
             <label style={labelStyle}>Tamaño Fondo</label>
             <select 
-              value={(content as any).styles?.backgroundSize || "cover"} 
+              value={(content as any).styles?.backgroundSize || "auto"} 
               onChange={(e) => updateStyles(content, { backgroundSize: e.target.value })}
               style={inputStyle}
             >
+              <option value="auto">Original (Auto)</option>
               <option value="cover">Cubrir (Cover)</option>
               <option value="contain">Contener (Contain)</option>
-              <option value="auto">Original (Auto)</option>
             </select>
           </div>
 

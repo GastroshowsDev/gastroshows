@@ -131,6 +131,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
       }}>
         {bgImage && (
           <div 
+            className="gs-section-bg"
             style={{
               position: "absolute",
               top: 0,
@@ -138,7 +139,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
               width: "100%",
               height: "100%",
               backgroundImage: `url("${bgImage}")`,
-              backgroundSize: styles.backgroundSize || "cover",
+              backgroundSize: styles.backgroundSize || "auto",
               backgroundPosition: (bgPos === "cover" ? "center center" : bgPos) as any,
               backgroundRepeat: "no-repeat",
               opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
@@ -147,6 +148,13 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
             }}
           />
         )}
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .gs-section-bg {
+              background-size: cover !important;
+            }
+          }
+        `}</style>
         
         <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
           <ColumnsRenderer 

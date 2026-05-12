@@ -104,18 +104,27 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
         }}
       >
         {content.bgImage && (
-          <Image 
-            src={content.bgImage} 
-            alt="" 
-            fill 
-            priority 
-            className="gs-bg-image" 
-            style={{ 
-              objectFit: (content.styles?.backgroundSize || "cover") as any, 
-              objectPosition: content.styles?.backgroundPosition || content.bgPosition || "center", 
-              "--img-brightness": brightness 
-            } as any} 
-          />
+          <>
+            <Image 
+              src={content.bgImage} 
+              alt="" 
+              fill 
+              priority 
+              className="gs-hero-bg-img" 
+              style={{ 
+                objectFit: (content.styles?.backgroundSize || "auto") as any, 
+                objectPosition: content.styles?.backgroundPosition || content.bgPosition || "center", 
+                "--img-brightness": brightness 
+              } as any} 
+            />
+            <style jsx>{`
+              @media (max-width: 768px) {
+                :global(.gs-hero-bg-img) {
+                  object-fit: cover !important;
+                }
+              }
+            `}</style>
+          </>
         )}
       </div>
 
