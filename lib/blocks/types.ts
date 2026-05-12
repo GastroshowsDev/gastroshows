@@ -32,6 +32,7 @@ export type CommonStyles = {
   fontStyle?: "normal" | "italic";
   letterSpacing?: string;
   lineHeight?: string;
+  minHeight?: string;
 };
 
 
@@ -86,11 +87,14 @@ export type ReviewsElement = {
     text: string;
     rating: number;
     date?: string;
-    image?: string;
+    avatar?: string;
   }[];
   showStars?: boolean;
   showDates?: boolean;
-  placeId?: string; // For future real integration
+  useGoogleReviews?: boolean;
+  googlePlaceId?: string;
+  minRating?: number;
+  sortBy?: "latest" | "random";
   styles?: CommonStyles;
 };
 

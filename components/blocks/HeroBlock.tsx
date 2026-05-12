@@ -25,6 +25,8 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
+import { VerticalResizeHandle } from "../admin/VerticalResizeHandle";
+
 export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -35,6 +37,31 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
     if (onUpdate) {
       onUpdate({ ...content, [field]: value });
     }
+  };
+
+  const handleResize = (deltaY: number) => {
+    const currentHeight = (content as any).styles?.minHeight || (content as any).minHeight || "100dvh";
+    let numericValue = 800; // Default fallback
+    
+    if (typeof currentHeight === "string") {
+      const match = currentHeight.match(/^(\d+(?:\.\d+)?)(.*)$/);
+      if (match) {
+        numericValue = parseFloat(match[1]);
+        const unit = match[2] || "px";
+        if (unit === "dvh" || unit === "vh") numericValue = (numericValue / 100) * window.innerHeight;
+      }
+    } else if (typeof currentHeight === "number") {
+      numericValue = currentHeight;
+    }
+
+    const newValue = Math.max(200, numericValue + deltaY);
+    onUpdate?.({
+      ...content,
+      styles: {
+        ...content.styles,
+        minHeight: `${newValue}px`
+      }
+    });
   };
 
   useEffect(() => {
@@ -52,7 +79,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
     <section
       style={{
         position: "relative",
-        minHeight: "100dvh",
+        minHeight: (content as any).styles?.minHeight || (content as any).minHeight || "100dvh",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -65,6 +92,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
         paddingBottom: (content as any).paddingBottom || "0px",
       }}
     >
+      {/* ... existing layers ... */}
       {/* Background and Overlay */}
       <div
         ref={parallaxRef}
@@ -102,6 +130,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
 
       {/* Content */}
       <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", width: "100%", padding: "4rem 2rem" }}>
+        {/* ... content ... */}
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <div 
@@ -271,6 +300,10 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
           selectedElementPath={selectedElementPath}
         />
       </div>
+
+      {isEditing && (
+        <VerticalResizeHandle onResize={handleResize} onResizeEnd={() => {}} />
+      )}
     </section>
   );
 }

@@ -82,10 +82,36 @@ function SortableElement({
 import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 
+import { VerticalResizeHandle } from "../admin/VerticalResizeHandle";
+
 export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const { styles = {} } = content;
   const bgImage = styles.backgroundImage || (content as any).bgImage || (content as any).backgroundImage;
   const bgPos = styles.backgroundPosition || (content as any).bgPosition || "center";
+
+  const handleResize = (deltaY: number) => {
+    const currentPadding = styles.paddingBottom || (content as any).paddingBottom || "8rem";
+    let numericValue = 128; // Default 8rem
+    let unit = "px";
+
+    if (typeof currentPadding === "string") {
+      const match = currentPadding.match(/^(\d+(?:\.\d+)?)(.*)$/);
+      if (match) {
+        numericValue = parseFloat(match[1]);
+        unit = match[2] || "px";
+        if (unit === "rem") numericValue *= 16; // Approx conversion
+      }
+    }
+
+    const newValue = Math.max(0, numericValue + deltaY);
+    onUpdate?.({
+      ...content,
+      styles: {
+        ...styles,
+        paddingBottom: `${newValue}px`
+      }
+    });
+  };
 
   return (
     <AnimatedWrapper animation={styles.animation}>
@@ -133,6 +159,10 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
             selectedElementPath={selectedElementPath}
           />
         </div>
+
+        {isEditing && (
+          <VerticalResizeHandle onResize={handleResize} onResizeEnd={() => {}} />
+        )}
       </section>
     </AnimatedWrapper>
   );
