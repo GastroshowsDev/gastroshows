@@ -127,7 +127,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
                 position: "absolute",
                 inset: 0,
                 backgroundImage: `url("${content.bgImage}")`,
-                backgroundSize: (content.styles?.backgroundSize === "mirror") ? "contain" : ((content.styles?.backgroundSize === "auto") ? "100% auto" : (content.styles?.backgroundSize || "cover")),
+                backgroundSize: (content.styles?.backgroundSize === "mirror") ? "contain" : (content.styles?.backgroundSize || "cover"),
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 filter: `brightness(${brightness})`,
@@ -136,7 +136,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
             <style jsx>{`
               @media (max-width: 768px) {
                 .gs-hero-bg-div {
-                  background-size: ${(content.styles?.backgroundSize === "auto") ? "auto 100%" : (content.styles?.backgroundSize || "cover")} !important;
+                  background-size: ${(content.styles?.backgroundSize === "mirror") ? "contain" : (content.styles?.backgroundSize || "cover")} !important;
                 }
               }
             `}</style>

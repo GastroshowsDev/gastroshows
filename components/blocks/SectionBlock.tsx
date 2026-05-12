@@ -153,7 +153,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
                 position: "absolute",
                 inset: 0,
                 backgroundImage: `url("${bgImage}")`,
-                backgroundSize: styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize === "auto" ? "100% auto" : (styles.backgroundSize || "cover")),
+                backgroundSize: styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize || "cover"),
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 opacity: styles.opacity ?? (((content as any).overlayOpacity ?? 100) / 100),
@@ -165,7 +165,7 @@ export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate
         <style jsx>{`
           @media (max-width: 768px) {
             .gs-section-bg {
-              background-size: ${styles.backgroundSize === "auto" ? "auto 100%" : (styles.backgroundSize || "cover")} !important;
+              background-size: ${styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize || "cover")} !important;
             }
           }
         `}</style>
