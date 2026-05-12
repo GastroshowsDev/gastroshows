@@ -158,6 +158,8 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
  * Renders an array of blocks in order.
  * Used by the dynamic page route.
  */
+import { MasterStylesProvider } from "./MasterStylesProvider";
+
 export function PageBlockList({ 
   blocks, 
   isEditing = false, 
@@ -172,7 +174,7 @@ export function PageBlockList({
   selectedElementPath?: string | null
 }) {
   return (
-    <>
+    <MasterStylesProvider>
       {blocks.map((block) => (
         <BlockRenderer 
           key={block.id} 
@@ -183,6 +185,6 @@ export function PageBlockList({
           selectedElementPath={selectedElementPath}
         />
       ))}
-    </>
+    </MasterStylesProvider>
   );
 }

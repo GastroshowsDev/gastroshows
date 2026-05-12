@@ -13,6 +13,9 @@ import {
 import { BlockPropertiesPanel } from "./BlockPropertiesPanel";
 import { PageSeoPanel } from "./PageSeoPanel";
 import { MediaGallery } from "./MediaGallery";
+import { GlobalStylesPanel } from "./GlobalStylesPanel";
+import { SectionPresetModal } from "./SectionPresetModal";
+import { SectionPreset } from "@/lib/blocks/presets";
 import { PageBlockList } from "@/components/blocks/BlockRenderer";
 import { 
   DndContext, 
@@ -53,7 +56,17 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   const [mediaCallback, setMediaCallback] = useState<((url: string) => void) | null>(null);
   const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">("desktop");
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [activeRightTab, setActiveRightTab] = useState<"properties" | "seo">("properties");
+  const [activeRightTab, setActiveRightTab] = useState<"properties" | "seo" | "global">("properties");
+  const [leftTab, setLeftTab] = useState<"insert" | "layers">("insert");
+  const [showPresetModal, setShowPresetModal] = useState(false);
+  const [masterStyles, setMasterStyles] = useState<any>({
+    h1: { fontSize: "3.5rem", fontWeight: 700, color: "#111827" },
+    h2: { fontSize: "2.5rem", fontWeight: 700, color: "#111827" },
+    h3: { fontSize: "1.75rem", fontWeight: 600, color: "#111827" },
+    p: { fontSize: "1rem", color: "#4B5563" },
+    button: { backgroundColor: "#875BF7", color: "#FFFFFF", borderRadius: "8px" },
+    a: { color: "#875BF7" }
+  });
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -129,7 +142,31 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       setLoading(false);
     }
     load();
+
+    // Load master styles
+    async function loadStyles() {
+      const res = await fetch("/api/admin/settings");
+      const json = await res.json();
+      if (json.master_styles) {
+        try {
+          setMasterStyles(JSON.parse(json.master_styles));
+        } catch (e) {
+          console.error("Failed to parse master styles", e);
+        }
+      }
+    }
+    loadStyles();
   }, [pageId]);
+
+  async function saveMasterStyles(newStyles: any) {
+    setMasterStyles(newStyles);
+    await fetch("/api/admin/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: "master_styles", value: JSON.stringify(newStyles) })
+    });
+    window.dispatchEvent(new CustomEvent("master-styles-updated"));
+  }
 
   async function save() {
     if (!page) return;
@@ -174,6 +211,20 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     updatePageState({ ...page, blocks: [...page.blocks, newBlock] });
     setSelectedBlockId(newBlock.id);
     setSelectedElementPath(null);
+  }
+
+  function addPreset(preset: SectionPreset) {
+    if (!page) return;
+    const newBlocks = preset.blocks.map((b, i) => ({
+      id: Math.random().toString(36).substr(2, 9),
+      type: b.type,
+      content: JSON.parse(JSON.stringify(b.content)),
+      order: page.blocks.length + i,
+    }));
+    updatePageState({ ...page, blocks: [...page.blocks, ...newBlocks] });
+    setSelectedBlockId(newBlocks[0].id);
+    setSelectedElementPath(null);
+    setShowPresetModal(false);
   }
 
   function updateBlockContent(id: string, content: any) {
@@ -419,7 +470,6 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
   }
 
   const [sidebarWidth, setSidebarWidth] = useState(280);
-  const [leftTab, setLeftTab] = useState<"insert" | "layers">("insert");
   const isResizing = useRef(false);
 
   // Sidebar Styles Helpers
@@ -520,7 +570,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                   <span style={{ fontSize: "1rem" }}>☰</span>
                   <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Menú</span>
                 </button>
-                <button onClick={() => addBlock("SECTION")} style={insertButtonStyle()}>
+                <button onClick={() => setShowPresetModal(true)} style={insertButtonStyle()}>
                   <span style={{ fontSize: "1rem" }}>🔳</span>
                   <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Sección</span>
                 </button>
@@ -571,10 +621,27 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             </>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <button
+                onClick={() => {
+                  setSelectedBlockId(null);
+                  setActiveRightTab("global" as any);
+                }}
+                style={{
+                  padding: "0.8rem", borderRadius: "10px", border: "2px dashed #875BF7",
+                  background: activeRightTab === "global" ? "#F0EBFE" : "transparent",
+                  color: "#875BF7", fontWeight: 700, fontSize: "0.75rem", cursor: "pointer",
+                  marginBottom: "1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"
+                }}
+              >
+                ✨ Estilos Maestros
+              </button>
               {page.blocks.map((block, i) => (
                 <div
                   key={block.id}
-                  onClick={() => setSelectedBlockId(block.id)}
+                  onClick={() => {
+                    setSelectedBlockId(block.id);
+                    setActiveRightTab("properties");
+                  }}
                   style={{
                     padding: "0.6rem 0.8rem", borderRadius: "8px", border: `1px solid ${selectedBlockId === block.id ? "#875BF7" : "#E5E7EB"}`,
                     background: selectedBlockId === block.id ? "#F0EBFE" : "white", cursor: "pointer",
@@ -832,7 +899,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         </div>
 
         <div style={{ flex: 1, overflowY: "auto" }}>
-          {activeRightTab === "properties" ? (
+          {activeRightTab === "global" ? (
+            <GlobalStylesPanel styles={masterStyles} onUpdate={saveMasterStyles} />
+          ) : activeRightTab === "properties" ? (
             selectedBlock ? (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div style={{ padding: "0.8rem", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -889,6 +958,12 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             setShowMedia(false);
           }}
           onClose={() => setShowMedia(false)}
+        />
+      )}
+      {showPresetModal && (
+        <SectionPresetModal 
+          onSelect={addPreset} 
+          onClose={() => setShowPresetModal(false)} 
         />
       )}
     </div>
