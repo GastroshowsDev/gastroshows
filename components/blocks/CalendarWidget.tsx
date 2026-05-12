@@ -24,7 +24,7 @@ type ApiResponse = {
 
 import { BookingCalendar } from "../reservation/BookingCalendar";
 
-export function CalendarWidget() {
+export function CalendarWidget({ color = "#daa520" }: { color?: string }) {
   const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
   const [loading, setLoading] = useState(true);
   const { openReservation } = usePageActions();
@@ -69,7 +69,7 @@ export function CalendarWidget() {
         fontSize: "0.75rem", 
         letterSpacing: "0.3em", 
         textTransform: "uppercase", 
-        color: "var(--gs-gold)", 
+        color: color, 
         marginBottom: "2rem",
         textAlign: "center",
         fontWeight: 600
@@ -83,6 +83,7 @@ export function CalendarWidget() {
         onChange={(date) => openReservation(date)}
         allowedDays={[3, 4, 5, 6]}
         privateDays={[0, 1, 2]}
+        themeColor={color}
       />
 
       <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(200,169,110,0.1)", textAlign: "center" }}>

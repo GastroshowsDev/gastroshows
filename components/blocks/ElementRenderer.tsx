@@ -45,7 +45,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
       case "SPACER":
         return <div style={{ height: element.height }} />;
       case "CALENDAR":
-        return <CalendarWidget />;
+        return <CalendarWidget color={element.color} />;
       case "FORM":
         return (
           <FormWidget 
@@ -293,9 +293,28 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
                   </>
                 )}
                 {element.type === "CALENDAR" && (
-                  <p style={{ fontSize: "0.7rem", color: "#6B7280", fontStyle: "italic" }}>
-                    El widget de calendario se conecta automáticamente con la disponibilidad en vivo de TuriTop. Configura los estilos visuales en el panel derecho.
-                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem", width: "250px" }}>
+                    <p style={{ fontSize: "0.7rem", color: "#6B7280", fontStyle: "italic", marginBottom: "0.5rem" }}>
+                      El widget de calendario se conecta automáticamente con la disponibilidad en vivo de TuriTop.
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                      <label style={{ fontSize: "0.6rem", fontWeight: 700, color: "#4B5563" }}>Color de Acento</label>
+                      <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                        <input 
+                          type="color"
+                          value={element.color || "#daa520"} 
+                          onChange={(e) => updateWidget({ color: e.target.value })}
+                          style={{ width: "30px", height: "30px", border: "none", cursor: "pointer", background: "none" }}
+                        />
+                        <input 
+                          type="text"
+                          value={element.color || "#daa520"} 
+                          onChange={(e) => updateWidget({ color: e.target.value })}
+                          style={{ flex: 1, padding: "0.4rem", borderRadius: "4px", border: "1px solid #D1D5DB", fontSize: "0.7rem" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 )}
               </WidgetConfigPopup>
             )}

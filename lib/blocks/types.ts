@@ -126,6 +126,7 @@ export type FormElement = {
 
 export type CalendarElement = {
   type: "CALENDAR";
+  color?: string;
   styles?: CommonStyles;
 };
 
@@ -381,7 +382,7 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
   BUTTON: { type: "BUTTON", text: "Clic Aquí", link: "#", variant: "primary", size: "md", styles: {} },
   TEXT: { type: "TEXT", body: "Escribe tu contenido aquí.", styles: {} },
   IMAGE: { type: "IMAGE", src: "", alt: "", styles: {} },
-  CALENDAR: { type: "CALENDAR", styles: {} },
+  CALENDAR: { type: "CALENDAR", color: "#daa520", styles: {} },
   AVAILABILITY: { 
     type: "AVAILABILITY", 
     title: "Hay {total} plazas libres esta semana", 
