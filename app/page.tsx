@@ -486,10 +486,10 @@ export default async function Home() {
                   color: "var(--gs-gold)",
                   marginBottom: "0.75rem",
                 }}>
-                  {item.q}
+                  {item.question}
                 </h3>
                 <p style={{ color: "rgba(245,240,232,0.75)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
-                  {item.a}
+                  {item.answer}
                 </p>
               </div>
             ))}
