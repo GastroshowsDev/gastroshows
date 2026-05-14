@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PaymentButton } from "./PaymentButton";
 
-const GOLD = "#C8A96E";
+const GOLD = "#daa520";
 const DARK2 = "#1A1A1A";
 const DARK = "#111111";
 const OFFWHITE = "#F5F0E8";
@@ -173,7 +173,7 @@ export function GiftModal({ open, onClose }: Props) {
         }}>
           <div>
             <div style={smallLabel}>Vale regalo</div>
-            <div style={serifTitle}>Regalar la experiencia</div>
+            <div style={{ ...serifTitle, color: "var(--gs-text)" }}>Regalar la experiencia</div>
           </div>
           <button onClick={handleClose} style={closeBtn}>✕</button>
         </div>

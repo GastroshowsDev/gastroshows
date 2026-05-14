@@ -137,7 +137,7 @@ export function FloatingActions() {
       {/* Promo Bubble (WA style) */}
       {showNotification && hasPromo && (
         <div 
-          onClick={openReservation}
+          onClick={() => openReservation()}
           style={{
             background: "#C8A96E", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
             borderRadius: "18px 18px 4px 18px", fontSize: isMobile ? "0.75rem" : "0.82rem", fontWeight: 600,
@@ -194,7 +194,7 @@ export function FloatingActions() {
         <div style={{ position: "relative" }}>
           {!isMobile && <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />}
           <button
-            onClick={openReservation}
+            onClick={() => openReservation()}
             onMouseEnter={() => { setActiveTooltip("reserve"); }}
             onMouseLeave={() => setActiveTooltip(null)}
             style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}

@@ -12,10 +12,16 @@ type Page = {
   _count: { blocks: number };
 };
 
+import { CreatePageModal } from "./CreatePageModal";
+import { MigratePageModal } from "./MigratePageModal";
+
 export function PagesList() {
   const [pages, setPages] = useState<Page[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [migrating, setMigrating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMigrateModalOpen, setIsMigrateModalOpen] = useState(false);
 
   async function fetchPages() {
     setLoading(true);
@@ -30,13 +36,30 @@ export function PagesList() {
 
   useEffect(() => { fetchPages(); }, []);
 
-  async function createPage() {
-    const title = prompt("Título de la nueva página:");
-    if (!title) return;
-    
-    const slug = prompt("URL de la página (slug):", title.toLowerCase().replace(/\s+/g, "-"));
-    if (!slug) return;
+  async function handleMigratePage(url: string) {
+    setMigrating(true);
+    try {
+      const res = await fetch("/api/admin/web/migrate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        alert("Página migrada con éxito");
+        fetchPages();
+      } else {
+        alert(json.error || "Error al migrar la página");
+      }
+    } catch (err) {
+      alert("Error de conexión al migrar");
+    } finally {
+      setMigrating(false);
+      setIsMigrateModalOpen(false);
+    }
+  }
 
+  async function handleCreatePage({ title, slug }: { title: string; slug: string }) {
     setCreating(true);
     try {
       const res = await fetch("/api/admin/pages", {
@@ -52,25 +75,86 @@ export function PagesList() {
       }
     } finally {
       setCreating(false);
+      setIsModalOpen(false);
     }
   }
 
-  async function deletePage(id: string, slug: string) {
-    if (slug === "home") return alert("No puedes borrar la página de inicio");
-    if (!confirm(`¿Estás seguro de que quieres borrar la página "${slug}"?`)) return;
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isDeletingBulk, setIsDeletingBulk] = useState(false);
 
-    const res = await fetch(`/api/admin/pages/${id}`, { method: "DELETE" });
-    if (res.ok) fetchPages();
+  const toggleAll = () => {
+    if (selectedIds.length === pages.length - 1) { // -1 for home
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(pages.filter(p => p.slug !== "home").map(p => p.id));
+    }
+  };
+
+  const toggleOne = (id: string) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  async function handleBulkDelete() {
+    if (!confirm(`¿Estás seguro de que quieres borrar las ${selectedIds.length} páginas seleccionadas?`)) return;
+    setIsDeletingBulk(true);
+    try {
+      const res = await fetch("/api/admin/pages", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: selectedIds }),
+      });
+      if (res.ok) {
+        setSelectedIds([]);
+        fetchPages();
+      }
+    } finally {
+      setIsDeletingBulk(false);
+    }
   }
 
   return (
     <div style={{ padding: "2rem", background: "#F4F6FA", minHeight: "100vh" }}>
+      <CreatePageModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onConfirm={handleCreatePage} 
+      />
+
+      <MigratePageModal 
+        isOpen={isMigrateModalOpen}
+        onClose={() => setIsMigrateModalOpen(false)}
+        onConfirm={handleMigratePage}
+        loading={migrating}
+      />
+
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <div>
           <h1 style={{ fontSize: "1.75rem", fontWeight: 600, color: "var(--color-admin-text)" }}>Páginas del sitio</h1>
           <p style={{ fontSize: "0.88rem", color: "var(--color-admin-muted)" }}>Gestiona las páginas y su contenido visual.</p>
         </div>
         <div style={{ display: "flex", gap: "0.75rem" }}>
+          {selectedIds.length > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              disabled={isDeletingBulk}
+              style={{
+                padding: "0.6rem 1.25rem",
+                background: "#EF4444",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                fontWeight: 600,
+                cursor: "pointer",
+                fontSize: "0.82rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                boxShadow: "0 4px 12px rgba(239, 68, 68, 0.25)"
+              }}
+            >
+              <span>🗑</span> {isDeletingBulk ? "Borrando..." : `Borrar ${selectedIds.length} seleccionadas`}
+            </button>
+          )}
           <Link
             href="/admin/web/redirects"
             style={{
@@ -90,27 +174,27 @@ export function PagesList() {
           >
             <span>🔗</span> Redirecciones
           </Link>
-          <Link
-            href="/admin/seo"
+          <button
+            onClick={() => setIsMigrateModalOpen(true)}
+            disabled={migrating}
             style={{
               padding: "0.6rem 1.25rem",
               background: "white",
-              color: "var(--color-admin-text)",
+              color: "#4B5563",
               border: "1px solid var(--color-admin-border)",
               borderRadius: "8px",
               fontWeight: 600,
               cursor: "pointer",
-              textDecoration: "none",
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
               fontSize: "0.82rem"
             }}
           >
-            <span>🔍</span> Ajustes SEO
-          </Link>
+            <span>📥</span> {migrating ? "Migrando..." : "Importar desde Gastroshows"}
+          </button>
           <button
-            onClick={createPage}
+            onClick={() => setIsModalOpen(true)}
             disabled={creating}
             style={{
               padding: "0.6rem 1.25rem",
@@ -123,8 +207,6 @@ export function PagesList() {
               transition: "opacity 0.2s",
               fontSize: "0.82rem"
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             {creating ? "Creando..." : "+ Nueva página"}
           </button>
@@ -138,6 +220,14 @@ export function PagesList() {
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid #EAEEF4", background: "#F9FAFB" }}>
+                <th style={{ padding: "1rem 1.5rem", width: "40px" }}>
+                  <input 
+                    type="checkbox" 
+                    checked={selectedIds.length > 0 && selectedIds.length === pages.filter(p => p.slug !== "home").length} 
+                    onChange={toggleAll}
+                    style={{ cursor: "pointer" }}
+                  />
+                </th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Título</th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>URL (Slug)</th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Bloques</th>
@@ -147,7 +237,20 @@ export function PagesList() {
             </thead>
             <tbody>
               {pages.map((page) => (
-                <tr key={page.id} style={{ borderBottom: "1px solid #EAEEF4" }}>
+                <tr key={page.id} style={{ 
+                  borderBottom: "1px solid #EAEEF4",
+                  background: selectedIds.includes(page.id) ? "#F0EBFE" : "transparent"
+                }}>
+                  <td style={{ padding: "1rem 1.5rem" }}>
+                    {page.slug !== "home" && (
+                      <input 
+                        type="checkbox" 
+                        checked={selectedIds.includes(page.id)} 
+                        onChange={() => toggleOne(page.id)}
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
+                  </td>
                   <td style={{ padding: "1rem 1.5rem" }}>
                     <div style={{ fontWeight: 600, color: "#111827" }}>{page.title}</div>
                     <div style={{ fontSize: "0.75rem", color: "#9CA3AF" }}>Actualizado: {new Date(page.updatedAt).toLocaleDateString()}</div>
@@ -171,7 +274,7 @@ export function PagesList() {
                         href={`/admin/web/pages/${page.id}/editor`}
                         style={{ color: "var(--color-admin-accent)", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}
                       >
-                        Editar visualmente
+                        Editar
                       </Link>
                       <a
                         href={page.slug === "home" ? "/" : `/${page.slug}`}
@@ -179,16 +282,8 @@ export function PagesList() {
                         rel="noopener noreferrer"
                         style={{ color: "var(--color-admin-muted)", textDecoration: "none", fontSize: "0.85rem" }}
                       >
-                        Ver página
+                        Ver
                       </a>
-                      {page.slug !== "home" && (
-                        <button
-                          onClick={() => deletePage(page.id, page.slug)}
-                          style={{ border: "none", background: "none", color: "#EF4444", cursor: "pointer", padding: 0, fontSize: "0.85rem" }}
-                        >
-                          Borrar
-                        </button>
-                      )}
                     </div>
                   </td>
                 </tr>

@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/auth-helpers";
 import { prisma } from "@/lib/prisma";
 
 /**
  * GET /api/admin/pages — List all pages
  */
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+  
   try {
     const pages = await prisma.page.findMany({
       orderBy: { updatedAt: "desc" },
@@ -23,6 +27,9 @@ export async function GET() {
  * POST /api/admin/pages — Create a new page
  */
 export async function POST(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = (await req.json()) as {
       title: string;
@@ -62,5 +69,42 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("[api] POST /admin/pages failed:", err);
     return NextResponse.json({ ok: false, error: "Failed to create page" }, { status: 500 });
+  }
+}
+
+/**
+ * DELETE /api/admin/pages — Bulk delete pages
+ */
+export async function DELETE(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
+  try {
+    const { ids } = (await req.json()) as { ids: string[] };
+    
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json({ ok: false, error: "No IDs provided" }, { status: 400 });
+    }
+
+    // Protection: Do not delete home page
+    const pagesToDelete = await prisma.page.findMany({
+      where: { id: { in: ids }, slug: { not: "home" } },
+      select: { id: true }
+    });
+
+    const finalIds = pagesToDelete.map(p => p.id);
+
+    if (finalIds.length === 0) {
+      return NextResponse.json({ ok: true, message: "No deletable pages found" });
+    }
+
+    await prisma.page.deleteMany({
+      where: { id: { in: finalIds } }
+    });
+
+    return NextResponse.json({ ok: true, deletedCount: finalIds.length });
+  } catch (err) {
+    console.error("[api] DELETE /admin/pages failed:", err);
+    return NextResponse.json({ ok: false, error: "Failed to delete pages" }, { status: 500 });
   }
 }

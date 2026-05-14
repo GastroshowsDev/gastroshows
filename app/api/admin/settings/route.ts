@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireAdmin } from "@/lib/auth-helpers";
+import { requireAdmin, requireStaff } from "@/lib/auth-helpers";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   try {
     const settings = await prisma.setting.findMany();
     const config = settings.reduce((acc, curr) => ({

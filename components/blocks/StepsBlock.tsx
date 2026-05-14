@@ -18,6 +18,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
   };
 
   const primaryColor = content.accentColor || "var(--gs-gold)";
+  const TitleTag = content.titleTag || "h2";
 
   return (
     <section style={{ padding: "6rem 2rem 8rem", background: "var(--gs-bg)", position: "relative" }}>
@@ -30,7 +31,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
           style={{ fontSize: "0.75rem", letterSpacing: "0.4em", textTransform: "uppercase", color: primaryColor, marginBottom: "1.2rem" }}
         />
 
-        <h2 style={{
+        <TitleTag style={{
           fontFamily: "var(--font-cormorant), Georgia, serif",
           fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
           fontWeight: 300,
@@ -44,6 +45,8 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
             value={content.title}
             onChange={(v) => updateField("title", v)}
             isEditing={isEditing}
+            currentTag={TitleTag}
+            onTagChange={(t) => updateField("titleTag", t)}
           />
           <br />
           <InlineText
@@ -62,7 +65,7 @@ export function StepsBlock({ content, isEditing = false, onUpdate }: Props) {
 
             }}
           />
-        </h2>
+        </TitleTag>
       </div>
 
       <div 

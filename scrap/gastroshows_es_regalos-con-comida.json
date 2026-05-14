@@ -1,0 +1,399 @@
+{
+  "url": "https://gastroshows.es/regalos-con-comida/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:17.284374Z",
+  "title": "Regalos con comida, la opción más sabrosa y original!",
+  "meta_description": "En este post encontrarás un listado de regalos con comida muy originales con los que sorprenderás a foodies y cocinillas. ¡Echa un vistazo!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/regalos-con-comida/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "358.6 KB",
+  "headings": {
+    "h1": [
+      "REGALOS CON COMIDA"
+    ],
+    "h2": [
+      "Regalos con comida deliciosos y originales para cocinillas y productos gourmet para amantes de la gastronomía",
+      "REGALA ORO LÍQUIDO: Aceite Ed’o Ultra Premium",
+      "DÍSELO CON CHOCOLATE COMO CLAUDIO",
+      "LA VIDA ES MEJOR CON SALSEO",
+      "EL KIT GASTRONÓMICO PARA DARSE UN HOMENAJE EN CASA",
+      "LA CESTA PANADERA: regalos con comida panarra",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "Los mejores planes para celebrar halloween y la castanyada en Barcelona"
+    ],
+    "h3": [
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Regalos con comida, la opción más sabrosa y original!",
+    "description": "En este post encontrarás un listado de regalos con comida muy originales con los que sorprenderás a foodies y cocinillas. ¡Echa un vistazo!",
+    "url": "https://gastroshows.es/regalos-con-comida/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2021/01/regalos-con-comida.jpg",
+    "image:width": "1280",
+    "image:height": "853",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "6 minutos"
+  },
+  "schema_org": [],
+  "word_count": 1181,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "montate una cena en casa",
+      "title": "cena en casa para parejas",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20667'%3E%3C/svg%3E",
+      "alt": "curso de tapas barcelona",
+      "title": "taller de tapas barcelona",
+      "width": "1000",
+      "height": "667"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "experiencia gastronómica única.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/experiencia-gastronomica-en-casa/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/experiencia-gastronomica-en-casa/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "experiencias gastronómicas",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-degustacion-en-casa/",
+      "anchor": "#gastroshowsencasa",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-degustacion-en-casa/",
+      "anchor": "Escoge aquí",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-degustacion-en-casa/",
+      "anchor": "Reservar",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalos-con-comida/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://edo-oliveoil.com/collections/ultra-premium-collection",
+      "anchor": "dejate seducir por este oro líquido",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.claudiocorallo.com/index.php?lang=es",
+      "anchor": "Claudio Corallo",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "No te pasa a veces que tienes que hacer un regalo original, pero se te han acabado las ideas. Hoy en día, todos tenemos de todo y nada nos hace falta nada. Por ello, cada vez más, se apuesta por regalar experiencias . Se nos abre un mundo nuevo de posibilidades, ya no regalamos objetos, regalamos recuerdos. Una buena opción son los regalos con comida, o lo que es lo mismo, productos gourmet dispuestos de tal forma para que su destinatario viva una experiencia. Ya sea en caja regalo, en cesta regalo a domicilio o un envoltorios de ensueño, es algo que no dejará indiferente a nadie. Suena bien, no? Pues vamos al grano, aquí encontratarás un kit gastronómico perfecto para montarte un menú degustación o un aceite de oliva de categoría ultra premium , entre otros. Regalos para amantes de la gastronomía, para foodies o para aquellos que solo quieran vivir una experiencia gastronómica única.",
+      "Los Aceites de Oliva Virgen Extra ed’o son la esencia más pura de la naturaleza transformada en oro líquido. Un proceso que se lleva a cabo sólo una semana al año , el momento de máximo esplendor de la oliva, lo cual resulta en una producción muy limitada que garantiza un nivel de acidez de los más bajos y máximas propiedades organolépticas .",
+      "Estos dos elixires están hechos de 100% Arbequina y tienen la Certificación de la Denominación de Origen Protegida Siurana (España). Se envasan en botellas de cristal completamente opacas para mantener las propiedades nutricionales naturales de los aceites de oliva perfectamente preservadas."
+    ],
+    "entity_schema": {}
+  }
+}

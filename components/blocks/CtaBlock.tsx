@@ -5,21 +5,26 @@ import { useState } from "react";
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 import { SmartLink } from "./SmartLink";
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 import type { CtaContent } from "@/lib/blocks/types";
 
 type Props = { 
+  id: string;
   content: CtaContent;
   isEditing?: boolean;
   onUpdate?: (newContent: CtaContent) => void;
+  onSelectElement?: (path: string) => void;
+  selectedElementPath?: string | null;
 };
 
-export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
+export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const [hovered, setHovered] = useState(false);
 
-  const handleUpdate = (field: keyof CtaContent, value: string) => {
+  const handleUpdate = (field: keyof CtaContent, value: any) => {
     if (onUpdate) onUpdate({ ...content, [field]: value });
   };
 
+  const TitleTag = content.titleTag || "h2";
   const overlayOpacity = (content as any).overlayOpacity ?? 1;
   const brightness = (content as any).brightness ?? 1;
 
@@ -30,14 +35,15 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
         minHeight: "400px",
         overflow: "hidden",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         background: content.bgImage ? "transparent" : "var(--gs-bg)",
         marginTop: (content as any).marginTop || "0px",
         marginBottom: (content as any).marginBottom || "0px",
         paddingTop: (content as any).paddingTop || "0px",
         paddingBottom: (content as any).paddingBottom || "0px",
       }}
-
     >
       {content.bgImage && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
@@ -47,11 +53,13 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             fill
             loading="lazy"
             className="gs-bg-image"
-            style={{ objectFit: "cover", objectPosition: content.bgPosition || "center 30%", "--img-brightness": brightness } as any}
+            style={{ 
+              objectFit: (content.styles?.backgroundSize || "cover") as any, 
+              objectPosition: content.styles?.backgroundPosition || content.bgPosition || "center 30%", 
+              "--img-brightness": brightness 
+            } as any}
             sizes="100vw"
           />
-
-
           <div
             style={{
               position: "absolute",
@@ -62,16 +70,15 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
         </div>
       )}
 
-
       <div
         style={{
           position: "relative",
           zIndex: 1,
           width: "100%",
-          maxWidth: "1100px",
+          maxWidth: content.fullWidth ? "100%" : "1100px",
           margin: "0 auto",
           padding: "5rem 2rem",
-          textAlign: content.bgImage ? "left" : "center",
+          textAlign: (content.styles?.textAlign as any) || (content.bgImage ? "left" : "center"),
         }}
       >
         {content.eyebrow !== undefined && (
@@ -98,11 +105,10 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
               />
             </div>
           </AnimatedWrapper>
-
         )}
 
         <AnimatedWrapper animation={content.titleAnim || "fade-in"}>
-          <h2
+          <TitleTag
             style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: "clamp(2rem, 4vw, 3.2rem)",
@@ -119,6 +125,8 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
               isEditing={isEditing}
               styles={content.titleStyles}
               onStyleChange={(s) => onUpdate?.({ ...content, titleStyles: { ...content.titleStyles, ...s } })}
+              currentTag={TitleTag}
+              onTagChange={(t) => handleUpdate("titleTag", t)}
               dataField="title"
             />
             {(content.titleAccent || isEditing) && (
@@ -130,9 +138,7 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                   textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
                     ? "none" 
                     : "var(--gs-gold-shadow)"
-
                 }}>
-
                   <InlineText
                     tagName="span"
                     value={content.titleAccent || ""}
@@ -142,11 +148,10 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                     onStyleChange={(s) => onUpdate?.({ ...content, titleAccentStyles: { ...content.titleAccentStyles, ...s } })}
                     dataField="titleAccent"
                   />
-
                 </em>
               </>
             )}
-          </h2>
+          </TitleTag>
         </AnimatedWrapper>
 
         {content.body !== undefined && (
@@ -170,7 +175,6 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
               />
             </div>
           </AnimatedWrapper>
-
         )}
 
         {(content.buttonText || isEditing) && (
@@ -181,11 +185,9 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
+                className="gs-btn-primary"
                 style={{
                   display: "inline-block",
-                  background: hovered ? "#E8D5A8" : "#C8A96E",
-                  color: "#0A0A0A",
-                  border: "none",
                   padding: "1.1rem 3rem",
                   fontFamily: "var(--font-montserrat), sans-serif",
                   fontSize: "0.72rem",
@@ -212,6 +214,19 @@ export function CtaBlock({ content, isEditing = false, onUpdate }: Props) {
             </div>
           </AnimatedWrapper>
         )}
+
+        {/* Unlock elements support */}
+        <div style={{ marginTop: "3rem" }}>
+          <ColumnsRenderer 
+            blockId={blockId}
+            columns={content.columns || []}
+            isEditing={isEditing}
+            fullWidth={content.fullWidth}
+            onUpdate={(newCols) => handleUpdate("columns", newCols)}
+            onSelectElement={onSelectElement}
+            selectedElementPath={selectedElementPath}
+          />
+        </div>
       </div>
     </section>
   );

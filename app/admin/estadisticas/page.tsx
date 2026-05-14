@@ -112,11 +112,11 @@ async function getStats() {
 }
 
 // NUEVA PALETA GOLD EDITION
-const ACCENT     = "#efb810"; // Oro Principal
+const ACCENT     = "#daa520"; // Oro Maestro (Mostaza)
 const GOLD_DEEP  = "#c5a028"; // Oro Profundo
 const BRONZE     = "#b8860b"; // Bronce
 const AMBER_SOFT = "#f4d03f"; // Ámbar Suave
-const BERTRAND   = "#C8A96E"; 
+const BERTRAND   = "#daa520"; 
 const URGELL     = "#a67c00"; 
 
 function StatCard({ label, value, sub, accent }: { label: string; value: string | number; sub?: string; accent: string }) {

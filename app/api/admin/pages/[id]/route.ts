@@ -41,6 +41,13 @@ export async function PATCH(req: Request, { params }: RouteContext) {
       seoTitle?: string;
       seoDesc?: string;
       ogImage?: string;
+      ogType?: string;
+      twitterCard?: string;
+      robots?: string;
+      canonical?: string;
+      hreflang?: any;
+      schemaOrg?: any;
+      noIndexAfter?: string | null;
     };
 
     // Normalize slug if provided
@@ -71,6 +78,13 @@ export async function PATCH(req: Request, { params }: RouteContext) {
         ...(body.seoTitle !== undefined && { seoTitle: body.seoTitle }),
         ...(body.seoDesc !== undefined && { seoDesc: body.seoDesc }),
         ...(body.ogImage !== undefined && { ogImage: body.ogImage }),
+        ...(body.ogType !== undefined && { ogType: body.ogType }),
+        ...(body.twitterCard !== undefined && { twitterCard: body.twitterCard }),
+        ...(body.robots !== undefined && { robots: body.robots }),
+        ...(body.canonical !== undefined && { canonical: body.canonical }),
+        ...(body.hreflang !== undefined && { hreflang: body.hreflang }),
+        ...(body.schemaOrg !== undefined && { schemaOrg: body.schemaOrg }),
+        ...(body.noIndexAfter !== undefined && { noIndexAfter: body.noIndexAfter ? new Date(body.noIndexAfter) : null }),
       },
     });
 

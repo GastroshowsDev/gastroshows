@@ -9,9 +9,9 @@ const MONTH_NAMES = [
 ];
 const DAY_NAMES = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
 
-const GOLD = "#C8A96E";
-const OFFWHITE = "#F5F0E8";
-const LIGHT = "#888888";
+const GOLD = "#daa520";
+const OFFWHITE = "var(--gs-text)";
+const LIGHT = "var(--gs-muted)";
 
 type Props = {
   value: string | null;
@@ -19,6 +19,7 @@ type Props = {
   onChange: (date: string) => void;
   allowedDays?: number[]; // [1, 2, 3, 4, 5, 6, 0]
   privateDays?: number[]; // Days that show as private dinner instead of just unavailable
+  themeColor?: string;
 };
 
 export function BookingCalendar({
@@ -26,7 +27,8 @@ export function BookingCalendar({
   holidays,
   onChange,
   allowedDays = [3, 4, 5, 6],
-  privateDays = []
+  privateDays = [],
+  themeColor
 }: Props) {
   const today = new Date();
   const [viewYear, setViewYear] = useState(today.getFullYear());
@@ -93,11 +95,11 @@ export function BookingCalendar({
   return (
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem" }}>
-        <button onClick={prevMonth} disabled={isCurrentMonth} style={calNavBtnStyle(isCurrentMonth)}>‹</button>
+        <button onClick={prevMonth} disabled={isCurrentMonth} style={calNavBtnStyle(isCurrentMonth, themeColor)}>‹</button>
         <span style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.3rem", fontWeight: 300, color: OFFWHITE, textTransform: "capitalize" }}>
           {MONTH_NAMES[viewMonth]} {viewYear}
         </span>
-        <button onClick={nextMonth} disabled={isMaxMonth} style={calNavBtnStyle(isMaxMonth)}>›</button>
+        <button onClick={nextMonth} disabled={isMaxMonth} style={calNavBtnStyle(isMaxMonth, themeColor)}>›</button>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px" }}>
@@ -109,6 +111,7 @@ export function BookingCalendar({
           const day = i + 1;
           const status = dayStatus(day);
           const clickable = status === "available" || status === "selected" || status === "private";
+          const primaryColor = themeColor || GOLD;
           return (
             <button
               type="button"
@@ -130,9 +133,9 @@ export function BookingCalendar({
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "0.96rem",
-                border: status === "selected" ? `1px solid ${GOLD}` : (status === "private" ? `1px dashed rgba(200,169,110,0.4)` : (status === "available" ? `1px solid rgba(255,255,255,0.1)` : "1px solid transparent")),
-                background: status === "selected" ? GOLD : (status === "available" ? "rgba(255,255,255,0.03)" : "transparent"),
-                color: status === "selected" ? "black" : (status === "private" ? "rgba(200,169,110,0.7)" : (status === "available" ? OFFWHITE : "rgba(245,240,232,0.15)")),
+                border: status === "selected" ? `1px solid ${primaryColor}` : (status === "private" ? `1px dashed rgba(200,169,110,0.4)` : (status === "available" ? `1px solid rgba(255,255,255,0.1)` : "1px solid transparent")),
+                background: status === "selected" ? primaryColor : (status === "available" ? "rgba(255,255,255,0.03)" : "transparent"),
+                color: status === "selected" ? "black" : (status === "private" ? "rgba(200,169,110,0.7)" : (status === "available" ? "var(--gs-text)" : "var(--gs-text-sub)")),
                 fontWeight: status === "selected" ? 600 : 300,
                 width: "100%",
                 padding: 0,
@@ -147,11 +150,12 @@ export function BookingCalendar({
   );
 }
 
-function calNavBtnStyle(disabled: boolean): React.CSSProperties {
+function calNavBtnStyle(disabled: boolean, themeColor?: string): React.CSSProperties {
+  const primaryColor = themeColor || GOLD;
   return {
     background: "none",
     border: "1px solid rgba(200,169,110,0.2)",
-    color: disabled ? "rgba(200,169,110,0.3)" : GOLD,
+    color: disabled ? "rgba(200,169,110,0.3)" : primaryColor,
     width: "34px",
     height: "34px",
     cursor: disabled ? "not-allowed" : "pointer",

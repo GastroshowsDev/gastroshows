@@ -19,22 +19,28 @@ export function ImageElement({ element, isEditing = false, onUpdate }: Props) {
       position: "relative"
     }}>
       {element.src ? (
-        <div style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
+        <div style={{ 
+          position: "relative", 
+          display: "block", 
+          width: "100%",
+          maxWidth: "100%",
+          overflow: "hidden",
+          borderRadius: styles.borderRadius || "4px",
+        }}>
           <img 
             src={element.src} 
             alt={element.alt} 
             style={{ 
+              width: "100%",
               maxWidth: "100%", 
               height: "auto", 
-              borderRadius: styles.borderRadius || "4px",
               display: "block",
               opacity: styles.opacity ?? 1,
               filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
-              objectPosition: styles.backgroundPosition || "center"
+              objectFit: styles.backgroundPosition === "cover" ? "cover" : "unset",
+              objectPosition: styles.backgroundPosition === "cover" ? "center" : (styles.backgroundPosition || "center")
             }} 
           />
-
-
         </div>
       ) : (
         <div style={{ 

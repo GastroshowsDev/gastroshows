@@ -33,6 +33,11 @@ export default function LoginPage() {
       return;
     }
 
+    if (!result?.ok) {
+      setError("No se pudo iniciar sesión. Prueba a limpiar las cookies o usa otro navegador.");
+      return;
+    }
+
     router.push("/admin/live");
   }
 
@@ -64,8 +69,7 @@ export default function LoginPage() {
             </div>
           ) : (
             <form onSubmit={(e) => void handleForgot(e)} className="space-y-4">
-              <div className="space-y-1">
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-300">
                   Email
                 </label>
                 <input
@@ -74,9 +78,8 @@ export default function LoginPage() {
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
                   autoComplete="email"
-                  className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800"
+                  className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
                 />
-              </div>
               <button
                 type="submit"
                 disabled={forgotStatus === "sending"}
@@ -106,7 +109,7 @@ export default function LoginPage() {
         </h1>
         <form onSubmit={(e) => void handleSubmit(e)} className="space-y-4">
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-300">
               Email
             </label>
             <input
@@ -114,11 +117,11 @@ export default function LoginPage() {
               type="email"
               required
               autoComplete="email"
-              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800"
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             />
           </div>
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-300">
               Contraseña
             </label>
             <input
@@ -126,7 +129,7 @@ export default function LoginPage() {
               type="password"
               required
               autoComplete="current-password"
-              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800"
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             />
           </div>
           {error && (

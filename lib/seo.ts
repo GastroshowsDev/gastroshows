@@ -56,9 +56,16 @@ const DEFAULTS: SeoSettingsData = {
 
 export async function getSeoSettings(): Promise<SeoSettingsData> {
   try {
-    const row = await prisma.seoSettings.findUnique({ where: { id: "default" } });
+    // Adding a timeout to prevent site-wide hangs if DB is unresponsive
+    const row = await Promise.race([
+      prisma.seoSettings.findUnique({ where: { id: "default" } }),
+      new Promise<null>((resolve) => 
+        setTimeout(() => resolve(null), 5000)
+      )
+    ]);
     return row ?? DEFAULTS;
-  } catch {
+  } catch (error) {
+    console.error("SEO settings error:", error);
     return DEFAULTS;
   }
 }

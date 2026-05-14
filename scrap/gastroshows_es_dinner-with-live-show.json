@@ -1,0 +1,295 @@
+{
+  "url": "https://gastroshows.es/dinner-with-live-show/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:58.841764Z",
+  "title": "Live dinner show in Barcelona in a private space ✅Gastroshows",
+  "meta_description": "If you are looking for a live dinner show in Barcelona with haute cuisine, wine pairing and in a private space, contact us and come and enjoy!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/en/dinner-with-live-show/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "423.7 KB",
+  "headings": {
+    "h1": [
+      "DINNER with live show"
+    ],
+    "h2": [
+      "Qué es",
+      "qué incluye",
+      "dónde irás",
+      "Imágenes",
+      "LIVE DINNER SHOW",
+      "Más información",
+      "Cosas que debes tener en cuenta",
+      "Live dinner show",
+      "Original dinner with show in Barcelona",
+      "Special dinner in Barcelona with live music, DJ or tailor-made performances",
+      "A gastronomic experience",
+      "We look forward to seeing you at the live dinner show"
+    ],
+    "h3": [
+      "Tell us what live show you need and we’ll take care of it.",
+      "We love to take care of every detail",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "dates",
+      "Duration",
+      "includes",
+      "Price"
+    ],
+    "h5": [
+      "Welcome cocktail",
+      "Tasting menu",
+      "Wine Pairing",
+      "Premium gins"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Live dinner show in Barcelona in a private space ✅Gastroshows",
+    "description": "If you are looking for a live dinner show in Barcelona with haute cuisine, wine pairing and in a private space, contact us and come and enjoy!",
+    "url": "https://gastroshows.es/en/dinner-with-live-show/",
+    "site_name": "Gastroshows - experiencias gastronómicas"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Tiempo de lectura",
+    "data1": "15 minutos"
+  },
+  "schema_org": [],
+  "word_count": 884,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "actividades para grupos barcelona",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20284'%3E%3C/svg%3E",
+      "alt": "cena con showcooking",
+      "title": "",
+      "width": "400",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2020/03/Captura-de-pantalla-2020-03-23-a-las-20.39.57.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "cena con showcooking barcelona"
+    },
+    {
+      "url": "https://gastroshows.es/wp-content/uploads/2020/03/Gastroshow_075.jpg",
+      "anchor": "",
+      "rel": "",
+      "title": "cena con chef privado"
+    },
+    {
+      "url": "https://gastroshows.es/en/",
+      "anchor": "gastronomic experience",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-espectaculo/",
+      "anchor": "different and original dinner",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-espectaculo/",
+      "anchor": "spectacular tasting",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/contact/",
+      "anchor": "contact",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "original dinner in Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/original-dinner-in-barcelona/",
+      "anchor": "original plans",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/original-dinner-in-barcelona/",
+      "anchor": "different night",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/?page_id=8297",
+      "anchor": "gastronomic activity",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "A haute cuisine dinner that you will enjoy with the best live show of music, dance or magic, you choose!",
+      "We will welcome you with a welcome drink and start the experience.",
+      "We serve a tasting menu of between 8 and 12 dishes prepared with carefully selected seasonal and local products. In addition, you will see it prepared live by a private chef who will accompany you all night long."
+    ],
+    "entity_schema": {}
+  }
+}

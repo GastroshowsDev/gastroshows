@@ -1,0 +1,362 @@
+{
+  "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:44.924886Z",
+  "title": "5 lugares para comer en Barcelona este verano",
+  "meta_description": "Descubre lugares para comer como un local en Barcelona este verano 2025, sin turistas ni guías Michelin. ¡Explora la ciudad!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "294.8 KB",
+  "headings": {
+    "h1": [
+      "5 lugares para comer en Barcelona este verano",
+      "1. PACO MERALGO: TAPAS SIN TRADUCCIÓN",
+      "2. BAR CANYI: DONDE EL VINO MANDA",
+      "3. BAR LA PLATA: LA GLORIA EN TRES TAPAS",
+      "4.GRANJA ELENA: EL DESAYUNO QUE SE GANA",
+      "5. GASTROSHOWS: LO QUE NO SE CUENTA, SE COCINA."
+    ],
+    "h3": [
+      "Barcelona esconde lugares que debes conocer",
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "Recent Posts"
+    ],
+    "h5": [
+      "Descubre rincones gastronómicos secretos de Barcelona. Tapas, bocatas y una cena clandestina que no encontrarás en la Guía Michelin."
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "5 lugares para comer en Barcelona este verano",
+    "description": "Descubre lugares para comer como un local en Barcelona este verano 2025, sin turistas ni guías Michelin. ¡Explora la ciudad!",
+    "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/",
+    "site_name": "Gastroshows - experiencias gastronómicas"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "3 minutos"
+  },
+  "schema_org": [],
+  "word_count": 547,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20860%20797'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "WhatsApp Image 2025-05-07 at 19.18.11",
+      "width": "860",
+      "height": "797"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20599%20688'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "WhatsApp Image 2025-05-07 at 19.20.43",
+      "width": "599",
+      "height": "688"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20579%20513'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "WhatsApp Image 2025-05-07 at 19.30.48",
+      "width": "579",
+      "height": "513"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20783%20772'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "WhatsApp Image 2025-05-09 at 19.20.49",
+      "width": "783",
+      "height": "772"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%201350'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "14 _ ADS - 3",
+      "width": "1080",
+      "height": "1350"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/author/esther/",
+      "anchor": "Esther Fernández",
+      "rel": [
+        "author"
+      ],
+      "title": "Mensajes de Esther Fernández"
+    },
+    {
+      "url": "https://gastroshows.es/category/cenas-en-barcelona/",
+      "anchor": "Cenas en Barcelona",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/category/planes-barcelona/",
+      "anchor": "planes barcelona",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/category/plans-barcelona/",
+      "anchor": "plans barcelona",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/#respond",
+      "anchor": "0 Comentarios",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/restaurantpacomeralgo.com",
+      "anchor": "restaurantpacomeralgo.com",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/barlaplata.com",
+      "anchor": "barlaplata.com",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "https://gastroshows.es/",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/lugares-comer-en-barcelona-este-verano/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/estopa-piromusical-barcelona-merce-2025/",
+      "anchor": "Estopa pondrá banda sonora al Piromusical de la Mercè 2025",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://www.instagram.com/gastroshows/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    },
+    {
+      "url": "https://www.instagram.com/barcanyi/",
+      "anchor": "https://www.instagram.com/barcanyi/",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.instagram.com/granjaelena1974/?hl=es",
+      "anchor": "https://www.instagram.com/granjaelena1974/?hl=es",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Los Mejores Menús de Mediodía de Barcelona",
+          "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+          "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+          "Estopa pondrá banda sonora al Piromusical de la Mercè 2025"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "por Esther Fernández | May 7, 2025 | Cenas en Barcelona , planes barcelona , plans barcelona | 0 Comentarios",
+      "En esta ciudad, comer es un acto íntimo, casi ritual. Para quienes evitan las rutas turísticas y prefieren descubrir la esencia de un barrio a través de su pan, su vino y su silencio, hay rincones que guardan historias más sabrosas que cualquier estrella Michelin.",
+      "Si te preguntas dónde comer en Barcelona como un local este verano —de verdad, sin filtros ni traducciones forzadas—, aquí tienes una guía pensada para ti. Sin menús en inglés. Sin fotos en las paredes. Y con un final inesperado que no encontrarás en TripAdvisor."
+    ],
+    "entity_schema": {}
+  }
+}

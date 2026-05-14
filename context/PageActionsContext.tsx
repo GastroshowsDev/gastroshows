@@ -3,13 +3,14 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type PageActionsContextType = {
-  openReservation: () => void;
+  openReservation: (date?: string) => void;
   openGift: () => void;
   openVisit: () => void;
   closeReservation: () => void;
   closeGift: () => void;
   closeVisit: () => void;
   reservationOpen: boolean;
+  reservationDate: string | null;
   giftOpen: boolean;
   visitOpen: boolean;
   isActionValid: (action: string) => boolean;
@@ -19,13 +20,21 @@ const PageActionsContext = createContext<PageActionsContextType | undefined>(und
 
 export function PageActionsProvider({ children }: { children: ReactNode }) {
   const [reservationOpen, setReservationOpen] = useState(false);
+  const [reservationDate, setReservationDate] = useState<string | null>(null);
   const [giftOpen, setGiftOpen] = useState(false);
   const [visitOpen, setVisitOpen] = useState(false);
 
-  const openReservation = () => setReservationOpen(true);
+  const openReservation = (date?: string) => {
+    if (date) setReservationDate(date);
+    setReservationOpen(true);
+  };
   const openGift = () => setGiftOpen(true);
   const openVisit = () => setVisitOpen(true);
-  const closeReservation = () => setReservationOpen(false);
+  
+  const closeReservation = () => {
+    setReservationOpen(false);
+    setReservationDate(null);
+  };
   const closeGift = () => setGiftOpen(false);
   const closeVisit = () => setVisitOpen(false);
 
@@ -47,6 +56,7 @@ export function PageActionsProvider({ children }: { children: ReactNode }) {
         closeGift, 
         closeVisit,
         reservationOpen, 
+        reservationDate,
         giftOpen, 
         visitOpen,
         isActionValid 

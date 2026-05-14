@@ -22,116 +22,92 @@ type ApiResponse = {
   days: DayData[];
 };
 
-export function CalendarWidget() {
-  const [data, setData] = useState<ApiResponse | null>(null);
+import { BookingCalendar } from "../reservation/BookingCalendar";
+
+export function CalendarWidget({ color = "#daa520", styles = {} }: { color?: string, styles?: any }) {
+  const [holidays, setHolidays] = useState<{ date: string; recurring: boolean }[]>([]);
   const [loading, setLoading] = useState(true);
   const { openReservation } = usePageActions();
 
   useEffect(() => {
-    async function fetchAvailability() {
+    async function fetchData() {
       try {
-        const res = await fetch("/api/public/availability");
+        const res = await fetch("/api/public/holidays");
         const json = await res.json();
-        if (json.ok) setData(json);
+        setHolidays(json || []);
       } catch (e) {
-        console.error("Error fetching availability:", e);
+        console.error("Error fetching holidays:", e);
       } finally {
         setLoading(false);
       }
     }
-    fetchAvailability();
+    fetchData();
   }, []);
 
   if (loading) {
     return (
-      <div style={{ padding: "2rem", textAlign: "center", background: "rgba(255,255,255,0.03)", borderRadius: "8px" }}>
-        <div style={{ color: "var(--gs-gold)", fontSize: "0.8rem", letterSpacing: "0.1em" }}>CARGANDO DISPONIBILIDAD...</div>
+      <div style={{ padding: "3rem", textAlign: "center", background: "rgba(255,255,255,0.02)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="gs-loader" style={{ margin: "0 auto 1rem" }} />
+        <div style={{ color: "var(--gs-gold)", fontSize: "0.7rem", letterSpacing: "0.2em", fontWeight: 600 }}>CARGANDO CALENDARIO...</div>
       </div>
     );
   }
 
-  if (!data || data.days.length === 0) return null;
-
   return (
     <div style={{ 
-      background: "var(--gs-bg2)", 
-      border: "1px solid var(--gs-border)", 
-      borderRadius: "4px",
-      padding: "1.5rem",
+      background: "var(--gs-bg, #0a0a0a)", 
+      border: "1px solid rgba(200,169,110,0.3)", 
+      borderRadius: "8px",
+      padding: "2rem",
       width: "100%",
-      maxWidth: "400px",
-      margin: "1rem auto"
+      maxWidth: "450px",
+      margin: `${styles.marginTop || "0px"} auto ${styles.marginBottom || "0px"}`,
+      boxShadow: "0 20px 50px rgba(0,0,0,0.3)",
+      textAlign: styles.textAlign || "center"
     }}>
       <h4 style={{ 
-        fontSize: "0.65rem", 
-        letterSpacing: "0.2em", 
+        fontSize: styles.fontSize || "0.75rem", 
+        letterSpacing: "0.3em", 
         textTransform: "uppercase", 
-        color: "var(--gs-gold)", 
-        marginBottom: "1.2rem",
-        textAlign: "center"
+        color: color, 
+        marginBottom: "2rem",
+        textAlign: styles.textAlign || "center",
+        fontWeight: 600
       }}>
-        Próximas Plazas Libres
+        Disponibilidad en Vivo
       </h4>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-        {data.days.map((day) => (
-          <div key={day.date} style={{ 
-            display: "flex", 
-            justifyContent: "space-between", 
-            alignItems: "center",
-            paddingBottom: "0.75rem",
-            borderBottom: "1px solid rgba(255,255,255,0.05)"
-          }}>
-            <div>
-              <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "var(--gs-text)" }}>{day.dayShort} {day.dayNum}</span>
-            </div>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              {day.shifts.map((shift) => (
-                <button
-                  key={shift.shift}
-                  onClick={openReservation}
-                  disabled={shift.isFull}
-                  style={{
-                    padding: "0.3rem 0.6rem",
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
-                    borderRadius: "2px",
-                    border: "1px solid",
-                    borderColor: shift.isFull ? "rgba(229,115,115,0.2)" : "var(--gs-gold)",
-                    background: shift.isFull ? "transparent" : "rgba(218,165,32,0.1)",
-                    color: shift.isFull ? "#E57373" : "var(--gs-gold)",
-                    cursor: shift.isFull ? "not-allowed" : "pointer",
-                    transition: "all 0.2s",
-                    opacity: shift.isFull ? 0.5 : 1
-                  }}
-                >
-                  {shift.shift === "NOON" ? "☀" : "🌙"} {shift.isFull ? "Lleno" : `${shift.available}`}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      <BookingCalendar 
+        value={null}
+        holidays={holidays}
+        onChange={(date) => openReservation(date)}
+        allowedDays={[3, 4, 5, 6]}
+        privateDays={[0, 1, 2]}
+        themeColor={color}
+      />
 
-      <button 
-        onClick={openReservation}
-        style={{
-          width: "100%",
-          marginTop: "1.5rem",
-          padding: "0.8rem",
-          background: "var(--gs-gold)",
-          color: "#000",
-          border: "none",
-          borderRadius: "2px",
-          fontSize: "0.65rem",
-          fontWeight: 700,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          cursor: "pointer"
-        }}
-      >
-        Reservar mesa
-      </button>
+      <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(200,169,110,0.1)", textAlign: "center" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--gs-text-muted)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+          Selecciona una fecha disponible para iniciar tu reserva. <br/>
+          De Miércoles a Sábado.
+        </p>
+        <button 
+          onClick={() => openReservation()}
+          className="gs-btn-primary"
+          style={{
+            width: "100%",
+            padding: "1rem",
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            borderRadius: "99px",
+            cursor: "pointer"
+          }}
+        >
+          Ver disponibilidad general
+        </button>
+      </div>
     </div>
   );
 }

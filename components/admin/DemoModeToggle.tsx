@@ -123,7 +123,7 @@ export function DemoModeToggle() {
             
             <p style={{ color: "var(--color-admin-muted)", fontSize: "0.85rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
               Para confirmar el cambio a modo <strong>{isDemo ? "DIRECTO (Pagos reales)" : "SIMULADO"}</strong>, escribe la palabra:
-              <br/><span style={{ color: "#efb810", fontWeight: 700, fontSize: "1.1rem" }}>{requiredWord}</span>
+              <br/><span style={{ color: "var(--gs-accent)", fontWeight: 700, fontSize: "1.1rem" }}>{requiredWord}</span>
             </p>
 
             <input
@@ -156,7 +156,7 @@ export function DemoModeToggle() {
                 onClick={confirmChange}
                 style={{
                   flex: 1, padding: "0.75rem", 
-                  background: isMatch ? "#efb810" : "var(--color-admin-bg)", 
+                  background: isMatch ? "var(--gs-accent)" : "var(--color-admin-bg)", 
                   color: isMatch ? "#fff" : "var(--color-admin-muted)", 
                   border: "none", borderRadius: "10px", cursor: isMatch ? "pointer" : "not-allowed",
                   fontWeight: 700, transition: "all 0.3s", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"

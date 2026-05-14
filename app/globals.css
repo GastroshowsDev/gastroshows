@@ -2,7 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-gold: #C8A96E;
+  --color-gold: #daa520;
   --color-gold-light: #E8D5A8;
   --color-gold-dark: #9A7A45;
   --color-gs-black: #0A0A0A;
@@ -16,38 +16,34 @@
   --font-sans: var(--font-montserrat), system-ui, sans-serif;
 }
 
-/* ── Public site palette — GastroShows Design System ── */
+/* ── Public site palette (dark default) ── */
 :root {
-  /* Backgrounds: negro profundo, nunca puro #000 */
-  --gs-bg:  #050505;
-  --gs-bg2: #0A0A0A;
+  --gs-bg: #0A0A0A;
+  --gs-bg2: #111111;
   --gs-bg3: #0D0D0D;
-
-  /* Texto: off-white cálido */
   --gs-text: #F5F0E8;
   --gs-text-muted: rgba(245, 240, 232, 0.82);
-  --gs-text-sub:   rgba(245, 240, 232, 0.55);
-  --gs-muted:      rgba(245, 240, 232, 0.45);
+  --gs-text-sub: rgba(245, 240, 232, 0.75);
+  --gs-muted: #A8A49E;
+  --gs-gold: #daa520;
+  --gs-gold-hover: #E8D5A8;
+  --gs-border: rgba(200, 169, 110, 0.1);
+  --gs-border-hover: rgba(200, 169, 110, 0.3);
+  --gs-card-hover: rgba(200, 169, 110, 0.03);
+  --gs-gold-shadow: 0 0 13px rgba(0, 0, 0, 0.4);
 
-  /* Dorado envejecido — acento, no fondo */
-  --gs-gold:        #C8A96E;
-  --gs-gold-bright: #C8A96E;
-  --gs-gold-hover:  #D9BC8A;
-  --gs-gold-subtle: rgba(200, 169, 110, 0.08);
-
-  /* Bordes */
-  --gs-border:       rgba(200, 169, 110, 0.10);
-  --gs-border-hover: rgba(200, 169, 110, 0.28);
-  --gs-card-hover:   rgba(200, 169, 110, 0.03);
-  --gs-gold-shadow:  0 0 20px rgba(200, 169, 110, 0.12);
+  --gs-accent: #daa520; /* Color Mostaza Maestro */
+  --gs-accent-light: #fef8e7;
+  --gs-accent-soft: rgba(218, 165, 32, 0.15);
+  --gs-accent-border: rgba(218, 165, 32, 0.3);
 
   /* ── Admin panel palette (light default) ── */
   --color-admin-bg: #F4F6FA;
   --color-admin-surface: #FFFFFF;
   --color-admin-border: #EAEEF4;
-  --color-admin-accent: #efb810;
+  --color-admin-accent: var(--gs-accent);
   --color-admin-accent-hover: #d4a30e;
-  --color-admin-accent-light: #fef8e7;
+  --color-admin-accent-light: var(--gs-accent-light);
   --color-admin-text: #1A1A2E;
   --color-admin-muted: #6B7280;
   --color-admin-sidebar: #FFFFFF;
@@ -56,26 +52,26 @@
 /* ── Clandestino mode (public site) ── */
 :root.revelado {
   --gs-bg: #FAF8F3;
-  --gs-bg2: #EDE9E0;
-  --gs-bg3: #F3EFE6;
-  --gs-text: #100E0B;
-  --gs-text-muted: rgba(16, 14, 11, 0.78);
-  --gs-text-sub: rgba(16, 14, 11, 0.68);
-  --gs-muted: #3C3830;
-  --gs-gold: #C8A96E;
-  --gs-gold-hover: #b8860b;
-  --gs-border: rgba(218, 165, 32, 0.28);
-  --gs-border-hover: rgba(218, 165, 32, 0.58);
-  --gs-card-hover: rgba(218, 165, 32, 0.07);
-  --gs-gold-shadow: none;
+  --gs-bg2: #F1EFE9;
+  --gs-bg3: #EBE7DD;
+  --gs-text: #080705;
+  --gs-text-muted: #2A2824;
+  --gs-text-sub: #3C3830;
+  --gs-muted: #5D584F;
+  --gs-gold: #b8860b;
+  --gs-gold-hover: #916a08;
+  --gs-border: rgba(184, 134, 11, 0.35);
+  --gs-border-hover: rgba(184, 134, 11, 0.65);
+  --gs-card-hover: rgba(184, 134, 11, 0.08);
+  --gs-gold-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
   /* Admin stays light in light mode */
   --color-admin-bg: #F4F6FA;
   --color-admin-surface: #FFFFFF;
   --color-admin-border: #EAEEF4;
-  --color-admin-accent: #efb810;
+  --color-admin-accent: var(--gs-accent);
   --color-admin-accent-hover: #d4a30e;
-  --color-admin-accent-light: #fef8e7;
+  --color-admin-accent-light: var(--gs-accent-light);
   --color-admin-text: #1A1A2E;
   --color-admin-muted: #6B7280;
   --color-admin-sidebar: #FFFFFF;
@@ -91,7 +87,7 @@
   --gs-text-muted: rgba(245, 240, 232, 0.82);
   --gs-text-sub: rgba(245, 240, 232, 0.75);
   --gs-muted: #A8A49E;
-  --gs-gold: #C8A96E;
+  --gs-gold: #daa520;
   --gs-gold-hover: #E8D5A8;
   --gs-border: rgba(200, 169, 110, 0.1);
   --gs-border-hover: rgba(200, 169, 110, 0.3);
@@ -102,12 +98,111 @@
   --color-admin-bg: #0F1117;
   --color-admin-surface: #1A1D27;
   --color-admin-border: #252836;
-  --color-admin-accent: #efb810;
+  --color-admin-accent: var(--gs-accent);
   --color-admin-accent-hover: #d4a30e;
-  --color-admin-accent-light: #f6efe0;
+  --color-admin-accent-light: var(--gs-accent-light);
   --color-admin-text: #E8EAF0;
   --color-admin-muted: #8B93A7;
   --color-admin-sidebar: #141620;
+}
+
+/* ── Palette: Organic Elegance ── */
+[data-palette="organic-elegance"] {
+  --gs-bg: #FDFBF7;
+  --gs-bg2: #F1F3EF;
+  --gs-bg3: #E8EAE6;
+  --gs-text: #1C1F1A;
+  --gs-accent: #D4A316;
+  --gs-accent-hover: #B8860B;
+  --gs-muted: #78866B;
+  --gs-border: rgba(120, 134, 107, 0.2);
+  --gs-surface: #FFFFFF;
+}
+
+/* ── Palette: Sunset Gastro ── */
+[data-palette="sunset-gastro"] {
+  --gs-bg: #FEFAF6;
+  --gs-bg2: #F9EFE7;
+  --gs-bg3: #F0E2D6;
+  --gs-text: #2D241E;
+  --gs-accent: #D35400;
+  --gs-accent-hover: #E67E22;
+  --gs-muted: #8E735B;
+  --gs-border: rgba(211, 84, 0, 0.15);
+  --gs-surface: #FFFFFF;
+}
+
+/* ── Palette: Oceanic Mist ── */
+[data-palette="oceanic-mist"] {
+  --gs-bg: #F4F7F9;
+  --gs-bg2: #EBF0F3;
+  --gs-bg3: #DEE5E9;
+  --gs-text: #1B262C;
+  --gs-accent: #0F4C75;
+  --gs-accent-hover: #3282B8;
+  --gs-muted: #5A7A8E;
+  --gs-border: rgba(15, 76, 117, 0.15);
+  --gs-surface: #FFFFFF;
+}
+
+/* ── Artistic & Spatial Effects (Picasso/Space) ── */
+.gs-glass-spatial {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  position: relative;
+  overflow: hidden;
+}
+
+.gs-glass-spatial::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
+  animation: gs-nebula-rotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gs-nebula-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.gs-picasso-mask {
+  clip-path: polygon(2% 5%, 95% 0%, 100% 92%, 5% 100%, 0% 45%);
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gs-picasso-mask:hover {
+  clip-path: polygon(0% 0%, 100% 5%, 92% 100%, 0% 95%, 5% 50%);
+}
+
+.gs-3d-lift {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+.gs-3d-lift:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateZ(20px);
+}
+
+.gs-reveal-text {
+  mask-image: linear-gradient(to right, white 50%, transparent 50%);
+  mask-size: 200% 100%;
+  mask-position: 100% 0;
+  transition: mask-position 0.8s ease-out;
+}
+
+.gs-reveal-text.active {
+  mask-position: 0 0;
+}
+
+.gs-cosmic-glow {
+  text-shadow: 0 0 10px rgba(218, 165, 32, 0.3), 0 0 20px rgba(218, 165, 32, 0.1);
 }
 
 *,
@@ -126,13 +221,26 @@ body {
   transition: background 0.8s ease, color 0.8s ease;
 }
 
-/* ── Images: always sharp ── */
+/* ── Image blur in Clandestino mode ── */
 :root {
   --img-brightness: 1;
 }
 
-img {
-  transition: opacity 0.3s ease;
+img:not(.no-blur), 
+.gs-bg-image {
+  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+}
+
+:root.clandestino img:not(.no-blur),
+:root.clandestino .gs-bg-image {
+  filter: blur(20px) grayscale(0.3) brightness(calc(0.65 * var(--img-brightness)));
+  opacity: 0.55;
+}
+
+:root.revelado img,
+:root.revelado .gs-bg-image {
+  filter: blur(0) grayscale(0) brightness(calc(1.15 * var(--img-brightness))) contrast(1.05);
+  opacity: 1;
 }
 
 
@@ -301,7 +409,7 @@ button:active::after,
 }
 
 @keyframes gs-pulse {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 184, 16, 0.4); }
-  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 184, 16, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 184, 16, 0); }
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218, 165, 32, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(218, 165, 32, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(218, 165, 32, 0); }
 }

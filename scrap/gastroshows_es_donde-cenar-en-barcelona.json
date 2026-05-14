@@ -1,0 +1,455 @@
+{
+  "url": "https://gastroshows.es/donde-cenar-en-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:26.946460Z",
+  "title": "Donde cenar en Barcelona: los sitios más secretos de la ciudad",
+  "meta_description": "En este post descubrirás dónde cenar en Barcelona en los sitios más secretos y divertidos de la ciudad. Si estás listo, ¡echa un vistazo!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/donde-cenar-en-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "361.8 KB",
+  "headings": {
+    "h1": [
+      "Donde cenar en Barcelona"
+    ],
+    "h2": [
+      "El Cercle: donde cenar en Barcelona con dos sabores",
+      "ADAGIO TAPAS: CENA TAPEO DE ENSUEÑO",
+      "BAR CENTRO GALLEGO DE BARCELONA: GALICIA EN BARCELONA",
+      "La cena clandestina de Gastroshows: DONDE CENAR Y VIVIR UNA EXPERIENCIA",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "Estopa pondrá banda sonora al Piromusical de la Mercè 2025",
+      "La Mercè 2025 en Barcelona: guía completa de la fiesta mayor"
+    ],
+    "h3": [
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "Donde cenar en Barcelona: los sitios más secretos de la ciudad",
+    "description": "En este post descubrirás dónde cenar en Barcelona en los sitios más secretos y divertidos de la ciudad. Si estás listo, ¡echa un vistazo!",
+    "url": "https://gastroshows.es/donde-cenar-en-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2020/03/Gemma_50aniv_004ccc-e1635246085364.jpg",
+    "image:width": "435",
+    "image:height": "652",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "5 minutos"
+  },
+  "schema_org": [],
+  "word_count": 1090,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "montate una cena en casa",
+      "title": "cena en casa para parejas",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "curso de tapas barcelona",
+      "title": "taller de tapas barcelona",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%20667'%3E%3C/svg%3E",
+      "alt": "la cena clandestina",
+      "title": "cena clandestina Barcelona",
+      "width": "1000",
+      "height": "667"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "Estopa pondrá banda sonora al Piromusical de la Mercè 2025",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20250'%3E%3C/svg%3E",
+      "alt": "La Mercè 2025 en Barcelona: guía completa de la fiesta mayor",
+      "title": "",
+      "width": "400",
+      "height": "250"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "restaurantes de estrella michelín de Barcelona por menos de 50€",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-restaurantes-menu-degustacion-barcelona/",
+      "anchor": "los mejores restaurantes con menú degustación de Barcelona.",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/experiencia-gastronomica-en-casa/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/experiencia-gastronomica-en-casa/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-degustacion-en-casa/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-secreta/",
+      "anchor": "Reserva tu fecha",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/cena-clandestina/",
+      "anchor": "Ver más",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/estopa-piromusical-barcelona-merce-2025/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/estopa-piromusical-barcelona-merce-2025/",
+      "anchor": "Estopa pondrá banda sonora al Piromusical de la Mercè 2025",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/la-merce-2025-barcelona-guia-completa/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/la-merce-2025-barcelona-guia-completa/",
+      "anchor": "La Mercè 2025 en Barcelona: guía completa de la fiesta mayor",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/donde-cenar-en-barcelona/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "http://www.elcerclerestaurant.com/",
+      "anchor": "El Cercle",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.google.com/search?q=adagio+tapas&rlz=1C5CHFA_enES885ES902&oq=adagio+tapas&aqs=chrome..69i57j0i22i30j69i60.2559j1j9&sourceid=chrome&ie=UTF-8",
+      "anchor": "Adagio tapas",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.google.com/search?q=El+Mirador+del+Palau&rlz=1C5CHFA_enES885ES902&oq=El+Mirador+del+Palau&aqs=chrome..69i57j46i175i199j0i22i30j69i64.897j0j9&sourceid=chrome&ie=UTF-8",
+      "anchor": "Mirador de Palau",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://centrogalegobarcelona.com/",
+      "anchor": "Centro Galego de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "Tenemos la suerte de vivir en una ciudad con una gastronomía y unos cocineros y cocineras excelentes . Encontrar un buen restaurante acogedor, romántico, para ir en pareja o con amigos y con una buena relación calidad-precio es incluso tarea fácil. No obstante, a veces no solo queremos saber donde cenar bien en Barcelona, si no que buscamos una experiencia que vaya más allá de la gastronomía . En este post te proponemos cinco lugares de Barcelona en los que podrás vivir una noche especial y única . La perfecta conjunción entre buena comida y ambiente inigualable.  En Gastroshows estamos siempre creando y pensando en nuevas experiencias gastronómicas. También puedes consultar nuestra propuesta de restaurantes de estrella michelín de Barcelona por menos de 50€ o los mejores restaurantes con menú degustación de Barcelona.",
+      "El Cercle es el restaurante del Real Círculo Artístico de Barcelona , al pie del Portal de Àngel, en pleno Barcelona Centro. Seguro que muchas veces habías pasado por ahí y no te habías planteado que era un sitio donde cenar en Barcelona, uno de los más secretos.",
+      "Lo que no es un secreto es que en este espacio dominan la cocina, y no solo una . si no más. Tienen dos cartas : una catalana y una japonesa. La catalana la podréis degustar en el comedor principal, con aires de señorío. La japonesa, en una barra al estilo tradicional nipón."
+    ],
+    "entity_schema": {}
+  }
+}

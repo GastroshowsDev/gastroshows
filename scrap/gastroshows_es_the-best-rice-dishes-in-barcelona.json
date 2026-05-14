@@ -1,0 +1,437 @@
+{
+  "url": "https://gastroshows.es/the-best-rice-dishes-in-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:32.999185Z",
+  "title": "The best rice dishes in Barcelona -% Gastroshows®.",
+  "meta_description": "Here you will discover the best rice dishes in Barcelona. Sea or mountain classics and many gastronomic novelties, you'll see!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/en/the-best-rice-dishes-in-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "450.1 KB",
+  "headings": {
+    "h1": [
+      "The best rice dishes in Barcelona"
+    ],
+    "h2": [
+      "Rice, a classic",
+      "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "Los Mejores Menús de Mediodía de Barcelona",
+      "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "Los mejores planes para celebrar halloween y la castanyada en Barcelona"
+    ],
+    "h3": [
+      "THE BEST RICE DISHES BARCELONA",
+      "Enviar comentario Cancelar la respuesta",
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ],
+    "h4": [
+      "CRUIX (l’Eixample)",
+      "ARROSSERIA XÀTIVA (Les Corts)",
+      "MANÁ 75º (La Barceloneta)",
+      "PEZ VELA (La Barceloneta)",
+      "LA BARCELONETA RESTAURANT (La Barceloneta)"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "The best rice dishes in Barcelona -% Gastroshows®.",
+    "description": "Here you will discover the best rice dishes in Barcelona. Sea or mountain classics and many gastronomic novelties, you'll see!",
+    "url": "https://gastroshows.es/en/the-best-rice-dishes-in-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/01/WhatsApp-Image-2019-01-29-at-13.21.28.jpeg",
+    "image:width": "1024",
+    "image:height": "768",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "3 minutos"
+  },
+  "schema_org": [],
+  "word_count": 717,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      "alt": "",
+      "title": "",
+      "width": "427",
+      "height": "284"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los Mejores Menús de Mediodía de Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201080%20675'%3E%3C/svg%3E",
+      "alt": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "title": "",
+      "width": "1080",
+      "height": "675"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/author/esther/",
+      "anchor": "Esther Fernández",
+      "rel": [
+        "author"
+      ],
+      "title": "Mensajes de Esther Fernández"
+    },
+    {
+      "url": "https://gastroshows.es/category/cooking-courses-and-workshops/",
+      "anchor": "cooking courses and workshops",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/category/restaurants-barcelona/",
+      "anchor": "restaurants barcelona",
+      "rel": [
+        "category",
+        "tag"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/the-best-rice-dishes-in-barcelona/#respond",
+      "anchor": "0 Comentarios",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/buddha-bowls/",
+      "anchor": "budah bowl",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/cheap-tapas-bars-in-barcelona/",
+      "anchor": "cheap tapas bars in Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/",
+      "anchor": "6 Michelin-starred restaurants in Barcelona for less than 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/",
+      "anchor": "¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/mejores-menus-del-dia-de-barcelona/",
+      "anchor": "Los Mejores Menús de Mediodía de Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/black-friday-2025-guia-descuentos/",
+      "anchor": "Black Friday 2025 y Cyber Monday: guía rápida para comprar bien",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/planes-para-halloween-castanyada-en-barcelona/",
+      "anchor": "Los mejores planes para celebrar halloween y la castanyada en Barcelona",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/the-best-rice-dishes-in-barcelona/#respond",
+      "anchor": "Cancelar la respuesta",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://es.wikipedia.org/wiki/Arroz_salvaje",
+      "anchor": "wild",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://es.wikipedia.org/wiki/Basmati",
+      "anchor": "basmati",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "http://www.cruixrestaurant.com/es/cruix/",
+      "anchor": "CRUIX (l’Eixample)",
+      "rel": [
+        "nofollow",
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.grupxativa.com/arrosseria/",
+      "anchor": "ARROSSERIA XÀTIVA (Les Corts)",
+      "rel": [
+        "nofollow"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://mana75.es/?utm_source=google&utm_medium=organic&utm_campaign=gmb-listing",
+      "anchor": "MANÁ 75º (La Barceloneta)",
+      "rel": [
+        "nofollow",
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://grupotragaluz.com/restaurante/pez-vela//",
+      "anchor": "PEZ VELA (La Barceloneta)",
+      "rel": [
+        "nofollow",
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "http://restaurantbarceloneta.com/es/el-restaurante/",
+      "anchor": "LA BARCELONETA RESTAURANT (La Barceloneta)",
+      "rel": [
+        "nofollow",
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "por Esther Fernández | Abr 19, 2023 | cooking courses and workshops , restaurants barcelona | 0 Comentarios",
+      "What to say, at this point, about rice that we don’t already know. It is a nutritious and economical food , as well as a perfect base for any lunch or dinner. At Gastroshows we have it clear: dry, creamy or brothy, it is always a good option .",
+      "It can be found in so many varieties and cooked in so many different ways, that it is an ingredient that can accompany so many recipes and dishes. From the traditional Valencian paella with bomba rice, to sushi rice for a budah bowl , to a summer salad with wild or basmati rice."
+    ],
+    "entity_schema": {}
+  }
+}

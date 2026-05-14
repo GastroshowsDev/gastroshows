@@ -5,11 +5,16 @@ import type { TextContent } from "@/lib/blocks/types";
 import { getHoverStyles } from "@/lib/blocks/animations";
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
+import { LayoutHandles } from "../admin/LayoutHandles";
 
 type Props = { 
+  id: string;
   content: TextContent;
   isEditing?: boolean;
   onUpdate?: (newContent: TextContent) => void;
+  onSelectElement?: (path: string) => void;
+  selectedElementPath?: string | null;
 };
 
 const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
@@ -19,11 +24,12 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
-export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
+export function TextBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const align = content.alignment ?? "center";
   const [ready, setReady] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [typedBody, setTypedBody] = useState("");
+  const TitleTag = content.titleTag || "h2";
 
   const updateField = (field: keyof TextContent, value: any) => {
     if (onUpdate) {
@@ -36,10 +42,6 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
   }, []);
 
   useEffect(() => {
-    // Typewriter legacy support
-    if (content.animation === "typewriter" && ready) {
-       // ... keep if needed ...
-    }
     setTypedBody(content.body || "");
   }, [content.body, content.animation, ready]);
 
@@ -47,16 +49,20 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
 
   return (
     <section
+      className="layout-handle-container"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        padding: "5rem 2rem 6rem",
+        padding: content.styles?.padding || "5rem 2rem 6rem",
+        marginTop: content.styles?.marginTop || "0px",
+        marginBottom: content.styles?.marginBottom || "0px",
         background: "var(--gs-bg)",
         transition: "background 0.3s",
+        position: "relative",
         ...hoverStyles,
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: align }}>
+      <div style={{ maxWidth: content.fullWidth ? "100%" : "1100px", margin: "0 auto", textAlign: align }}>
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <InlineText
@@ -81,7 +87,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
 
         {(content.title || isEditing) && (
           <AnimatedWrapper animation={content.titleAnim || content.animation || "fade-in"}>
-            <h2
+            <TitleTag
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "clamp(2rem, 4vw, 3.2rem)",
@@ -99,6 +105,8 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 isEditing={isEditing}
                 styles={content.titleStyles}
                 onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
+                currentTag={TitleTag}
+                onTagChange={(t) => updateField("titleTag", t)}
                 dataField="title"
                 placeholder="Título"
               />
@@ -118,7 +126,7 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                   />
                 </>
               )}
-            </h2>
+            </TitleTag>
           </AnimatedWrapper>
         )}
 
@@ -129,9 +137,10 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
                 fontSize: "1.1rem",
                 lineHeight: "1.7",
                 color: "rgba(245,240,232,0.7)",
-                maxWidth: "1100px",
+                maxWidth: content.fullWidth ? "100%" : "1100px",
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
+                marginBottom: "3rem"
               }}
               className={shouldHaveShadow(content.body) ? "shadow-revelado-dark" : ""}
             >
@@ -148,7 +157,25 @@ export function TextBlock({ content, isEditing = false, onUpdate }: Props) {
             </div>
           </AnimatedWrapper>
         )}
+
+        {/* Extra elements support */}
+        <ColumnsRenderer 
+          blockId={blockId}
+          columns={content.columns || []}
+          isEditing={isEditing}
+          fullWidth={content.fullWidth}
+          onUpdate={(newCols) => updateField("columns", newCols)}
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+        />
       </div>
+      {isEditing && (
+        <LayoutHandles 
+          styles={content.styles || {}} 
+          onUpdate={(s) => updateField("styles", { ...content.styles, ...s })} 
+          isEditing={isEditing} 
+        />
+      )}
     </section>
   );
 }

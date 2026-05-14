@@ -9,11 +9,13 @@ export type CommonStyles = {
   margin?: string;
   backgroundColor?: string;
   backgroundImage?: string;
-  backgroundSize?: "cover" | "contain" | "auto";
+  backgroundVideo?: string;
+  backgroundSize?: "cover" | "contain" | "auto" | "mirror";
   borderRadius?: string;
   textAlign?: "left" | "center" | "right";
   color?: string;
   boxShadow?: string;
+  backdropFilter?: string;
   textShadow?: string;
   animation?: string;
   opacity?: number;
@@ -30,8 +32,22 @@ export type CommonStyles = {
   fontSize?: string;
   fontWeight?: string | number;
   fontStyle?: "normal" | "italic";
+  fontFamily?: string;
+  textDecoration?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
   letterSpacing?: string;
   lineHeight?: string;
+  minHeight?: string;
+  border?: string;
+  borderTop?: string;
+  borderBottom?: string;
+  borderLeft?: string;
+  borderRight?: string;
+  parallaxSpeed?: number;
+  backgroundParallax?: boolean;
 };
 
 
@@ -40,6 +56,7 @@ export type CommonStyles = {
 // ── Atomic Elements ─────────────────────────────────────────────────────────
 
 export type HeadingElement = {
+  id: string;
   type: "HEADING";
   level: 1 | 2 | 3 | 4 | 5 | 6;
   text: string;
@@ -48,6 +65,7 @@ export type HeadingElement = {
 };
 
 export type ButtonElement = {
+  id: string;
   type: "BUTTON";
   text: string;
   link: string;
@@ -57,12 +75,15 @@ export type ButtonElement = {
 };
 
 export type TextElement = {
+  id: string;
   type: "TEXT";
   body: string; // HTML or Markdown
+  tagName?: "p" | "div" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   styles?: CommonStyles;
 };
 
 export type ImageElement = {
+  id: string;
   type: "IMAGE";
   src: string;
   alt: string;
@@ -72,13 +93,83 @@ export type ImageElement = {
 };
 
 export type SpacerElement = {
+  id: string;
   type: "SPACER";
   height: number;
   styles?: CommonStyles;
 };
 
+export type ReviewsElement = {
+  id: string;
+  type: "REVIEWS";
+  layout?: "grid" | "carousel" | "list";
+  reviews: {
+    name: string;
+    text: string;
+    rating: number;
+    date?: string;
+    avatar?: string;
+  }[];
+  showStars?: boolean;
+  showDates?: boolean;
+  useGoogleReviews?: boolean;
+  googlePlaceId?: string;
+  minRating?: number;
+  sortBy?: "latest" | "random";
+  styles?: CommonStyles;
+};
+
+export type FormField = {
+  id: string;
+  type: "text" | "email" | "tel" | "textarea" | "select" | "checkbox";
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  options?: string[]; // For select
+  width?: "full" | "half";
+};
+
+export type FormElement = {
+  id: string;
+  type: "FORM";
+  fields: FormField[];
+  submitText: string;
+  successMessage: string;
+  actionType: "EMAIL" | "WEBHOOK" | "REDIRECT";
+  actionValue: string;
+  styles?: CommonStyles;
+};
+
 export type CalendarElement = {
+  id: string;
   type: "CALENDAR";
+  color?: string;
+  styles?: CommonStyles;
+};
+
+export type AvailabilityElement = {
+  id: string;
+  type: "AVAILABILITY";
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonColor?: string;
+  styles?: CommonStyles;
+};
+
+export type ContainerElement = {
+  id: string;
+  type: "CONTAINER";
+  content: SectionContent;
+  styles?: CommonStyles;
+};
+
+export type IframeElement = {
+  id: string;
+  type: "IFRAME";
+  src: string;
+  width?: string;
+  height?: string;
   styles?: CommonStyles;
 };
 
@@ -88,7 +179,12 @@ export type ElementData =
   | TextElement 
   | ImageElement 
   | SpacerElement
-  | CalendarElement;
+  | CalendarElement
+  | AvailabilityElement
+  | ContainerElement
+  | ReviewsElement
+  | FormElement
+  | IframeElement;
 
 
 // ── Layout Blocks (Containers) ──────────────────────────────────────────────
@@ -130,6 +226,10 @@ export type HeroContent = {
   ctaPrimaryAnim?: string;
   ctaSecondaryAnim?: string;
   bgPosition?: string;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
+  styles?: CommonStyles;
 };
 
 
@@ -152,6 +252,10 @@ export type TextContent = {
   color?: string;
   bold?: boolean;
   italic?: boolean;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
+  styles?: CommonStyles;
 };
 
 export type StepsContent = {
@@ -160,6 +264,7 @@ export type StepsContent = {
   titleAccent: string;
   accentColor?: string;
   steps: { day: string; eyebrow: string; title: string; body: string }[];
+  titleTag?: "h1" | "h2" | "h3" | "h4";
 };
 
 export type AvailabilityContent = {
@@ -187,6 +292,10 @@ export type CtaContent = {
   bodyAnim?: string;
   buttonAnim?: string;
   bgPosition?: string;
+  titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
+  styles?: CommonStyles;
 };
 
 
@@ -202,6 +311,40 @@ export type GalleryContent = {
   images: { src: string; alt: string; label?: string }[];
 };
 
+export type NavLink = {
+  label: string;
+  href: string;
+  children?: NavLink[];
+  isCTA?: boolean;
+};
+
+export type HeaderContent = {
+  logo?: string;
+  logoHeight?: string;
+  logoLink?: string;
+  links: NavLink[];
+  isSticky?: boolean;
+  isTransparent?: boolean;
+  ctaText?: string;
+  ctaLink?: string;
+  layout?: "default" | "split" | "hamburger" | "centered";
+  showSocials?: boolean;
+  socials?: { platform: string; url: string }[];
+  styles?: CommonStyles;
+};
+
+export type FooterContent = {
+  logo?: string;
+  logoHeight?: string;
+  copyright: string;
+  columns: {
+    title: string;
+    links: { label: string; href: string }[];
+  }[];
+  socialLinks?: { platform: string; url: string }[];
+  styles?: CommonStyles;
+};
+
 export type SpacerContent = {
   height: number;
   gradient?: "none" | "dark-to-light" | "light-to-dark";
@@ -210,15 +353,19 @@ export type SpacerContent = {
 // ── Core Block Data ──────────────────────────────────────────────────────────
 
 export type BlockType = 
-  | "SECTION"      // The new universal container
-  | "HERO"         // Legacy preset
-  | "STEPS"        // Legacy preset
-  | "AVAILABILITY" // Widget preset
-  | "TEXT"         // Legacy
-  | "IMAGE"        // Legacy
-  | "GALLERY"      // Legacy
-  | "CTA"          // Legacy
-  | "SPACER";      // Legacy
+  | "HEADER"
+  | "FOOTER"
+  | "SECTION"
+  | "HERO"
+  | "STEPS"
+  | "AVAILABILITY"
+  | "TEXT"
+  | "IMAGE"
+  | "GALLERY"
+  | "CTA"
+  | "SPACER"
+  | "REVIEWS"
+  | "FORM";
 
 export type BlockContent =
   | SectionContent
@@ -229,6 +376,8 @@ export type BlockContent =
   | ImageContent
   | GalleryContent
   | SpacerContent
+  | ReviewsElement
+  | FormElement
   | any;
 
 export type BlockData = {
@@ -242,8 +391,28 @@ export type BlockData = {
 
 export const BLOCK_DEFAULTS: Record<string, any> = {
   SECTION: {
+    fullWidth: false,
+    styles: { padding: "4rem 2rem" }
+  },
+  HEADER: {
+    logo: "",
+    logoHeight: "40px",
+    links: [
+      { label: "Inicio", href: "/" },
+      { label: "Servicios", href: "/servicios", children: [] },
+      { label: "Contacto", href: "/contacto" }
+    ],
+    isSticky: true,
+    isTransparent: false,
+    styles: {}
+  },
+  FOOTER: {
+    logo: "",
+    logoHeight: "40px",
+    copyright: "© 2024 Gastroshows. Todos los derechos reservados.",
     columns: [
-      { width: "100%", elements: [] }
+      { title: "Empresa", links: [{ label: "Nosotros", href: "/nosotros" }] },
+      { title: "Legal", links: [{ label: "Privacidad", href: "/privacidad" }] }
     ],
     styles: { padding: "4rem 2rem" }
   },
@@ -251,23 +420,66 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
   BUTTON: { type: "BUTTON", text: "Clic Aquí", link: "#", variant: "primary", size: "md", styles: {} },
   TEXT: { type: "TEXT", body: "Escribe tu contenido aquí.", styles: {} },
   IMAGE: { type: "IMAGE", src: "", alt: "", styles: {} },
-  AVAILABILITY: {
-    title: "Hay {total} plazas libres esta semana",
-    subtitle: "DISPONIBILIDAD",
-    buttonText: "Reservar ahora",
-    buttonColor: ""
+  CALENDAR: { type: "CALENDAR", color: "var(--gs-accent)", styles: {} },
+  AVAILABILITY: { 
+    type: "AVAILABILITY", 
+    title: "Hay {total} plazas libres esta semana", 
+    subtitle: "DISPONIBILIDAD", 
+    buttonText: "Reservar ahora", 
+    styles: {} 
   },
-  CALENDAR: { type: "CALENDAR", styles: {} },
+  CONTAINER: { 
+    type: "CONTAINER", 
+    content: { 
+      columns: [{ width: "100%", elements: [] }],
+      fullWidth: false,
+      styles: { padding: "2rem" }
+    },
+    styles: { marginTop: "2rem" } 
+  },
+  REVIEWS: { 
+    type: "REVIEWS", 
+    layout: "grid", 
+    reviews: [
+      { name: "Juan Pérez", text: "Excelente comida y ambiente. El servicio fue impecable.", rating: 5, date: "Hace 2 semanas" },
+      { name: "María García", text: "Una experiencia gastronómica única. Muy recomendado.", rating: 5, date: "Hace 1 mes" },
+      { name: "Carlos Ruiz", text: "Todo perfecto, volveremos sin duda.", rating: 4, date: "Hace 3 días" }
+    ],
+    showStars: true,
+    showDates: true,
+    styles: {} 
+  },
+  FORM: {
+    type: "FORM",
+    submitText: "Enviar mensaje",
+    successMessage: "¡Gracias! Hemos recibido tu mensaje correctamente.",
+    fields: [
+      { id: "f1", type: "text", label: "Nombre", placeholder: "Tu nombre...", required: true, width: "half" },
+      { id: "f2", type: "email", label: "Email", placeholder: "tu@email.com", required: true, width: "half" },
+      { id: "f3", type: "tel", label: "Teléfono", placeholder: "600 000 000", required: false, width: "full" },
+      { id: "f4", type: "textarea", label: "Mensaje", placeholder: "¿En qué podemos ayudarte?", required: true, width: "full" }
+    ],
+    styles: {}
+  },
+  IFRAME: {
+    type: "IFRAME",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    width: "100%",
+    height: "400px",
+    styles: {}
+  }
 };
 
 
-
 export const BLOCK_LABELS: Record<string, { label: string; icon: string; description: string }> = {
-  SECTION:      { label: "Sección (Layout)",     icon: "⏹",  description: "Contenedor de 1 a 4 columnas" },
-  COLUMNS:      { label: "Columnas (Antiguo)",   icon: "⫽",  description: "Bloque de columnas antiguo" },
-  HERO:         { label: "Hero (Preset)",        icon: "🏔",  description: "Cabecera clásica" },
-  STEPS:        { label: "Ritual (Preset)",      icon: "📧",  description: "Flujo de emails D-4" },
-  AVAILABILITY:{ label: "Disponibilidad",       icon: "📅",  description: "Calendario en vivo" },
+  HEADER:       { label: "Menú",            icon: "☰",  description: "Cabecera con navegación y logo" },
+  FOOTER:       { label: "Footer",          icon: "🏁",  description: "Pie de página con enlaces y copyright" },
+  SECTION:      { label: "Sección",         icon: "🔳",  description: "Contenedor universal de columnas" },
+  HERO:         { label: "Hero (Preset)",   icon: "🏔",  description: "Cabecera de alto impacto" },
+  STEPS:        { label: "Ritual (Preset)", icon: "📧",  description: "Secuencia de pasos o emails" },
+  AVAILABILITY: { label: "Disponibilidad",  icon: "📅",  description: "Panel de disponibilidad en vivo" },
+  REVIEWS:      { label: "Google Reviews",  icon: "⭐",  description: "Muestra las reseñas de Google" },
+  FORM:         { label: "Formulario",      icon: "📋",  description: "Captura de leads y contacto" },
 };
 
 export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
@@ -275,6 +487,10 @@ export const ELEMENT_LABELS: Record<string, { label: string; icon: string }> = {
   BUTTON:  { label: "Botón",  icon: "🔘" },
   TEXT:    { label: "Texto",  icon: "T" },
   IMAGE:   { label: "Imagen", icon: "🖼" },
-  CALENDAR: { label: "Calendario", icon: "📅" },
+  CALENDAR: { label: "Calendario", icon: "📆" },
+  AVAILABILITY: { label: "Disponibilidad", icon: "📅" },
+  REVIEWS: { label: "Google Reviews", icon: "⭐" },
+  FORM: { label: "Formulario", icon: "📋" },
+  CONTAINER: { label: "Contenedor", icon: "📦" },
+  IFRAME: { label: "Iframe", icon: "🖼️" },
 };
-

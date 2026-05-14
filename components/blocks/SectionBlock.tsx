@@ -24,8 +24,8 @@ type Props = {
   content: SectionContent;
   isEditing?: boolean;
   onUpdate?: (newContent: SectionContent) => void;
-  onSelectElement?: (colIndex: number, elIndex: number) => void;
-  selectedElementPath?: { col: number; el: number } | null;
+  onSelectElement?: (id: string) => void;
+  selectedElementPath?: string | null;
 };
 
 // Sortable Wrapper for Elements
@@ -52,7 +52,7 @@ function SortableElement({
     opacity: isDragging ? 0.5 : 1,
     position: "relative" as const,
     cursor: isEditing ? "pointer" : "default",
-    border: isEditing && isSelected ? "2px solid #875BF7" : (isEditing ? "1px dashed transparent" : "none"),
+    border: isEditing && isSelected ? "2px solid var(--gs-accent)" : (isEditing ? "1px dashed transparent" : "none"),
     borderRadius: "4px",
     padding: isEditing ? "2px" : "0",
     zIndex: isDragging ? 10 : 1,
@@ -66,7 +66,7 @@ function SortableElement({
           {...listeners} 
           style={{ 
             position: "absolute", top: -8, left: "50%", transform: "translateX(-50%)", 
-            background: "#875BF7", color: "white", fontSize: "10px", padding: "0 4px", 
+            background: "var(--gs-accent)", color: "white", fontSize: "10px", padding: "0 4px", 
             borderRadius: "4px", cursor: "grab", display: isDragging ? "none" : "block",
             zIndex: 20
           }}
@@ -74,137 +74,129 @@ function SortableElement({
           ⋮⋮
         </div>
       )}
-      <ElementRenderer element={element} isEditing={isEditing} onUpdate={onUpdate} />
+      <ElementRenderer id={id} element={element} isEditing={isEditing} onUpdate={onUpdate} />
     </div>
   );
 }
 
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 
+import { LayoutHandles } from "../admin/LayoutHandles";
+
+import { getBlockBaseStyles, getBackgroundImageStyles } from "@/utils/blockStyles";
+
 export function SectionBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
-  // ... state and sensors ...
-  const [dragOverCol, setDragOverCol] = useState<number | null>(null);
-
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
-
-  // --- Drag & Drop Handlers ---
-  const handleDragEnd = (event: DragEndEvent, colIdx: number) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = parseInt((active.id as string).split("-").pop() || "0");
-    const newIndex = parseInt((over.id as string).split("-").pop() || "0");
-
-    const newCols = [...content.columns];
-    newCols[colIdx].elements = arrayMove(newCols[colIdx].elements, oldIndex, newIndex);
-    onUpdate?.({ ...content, columns: newCols });
-  };
-
-  const onDrop = (e: React.DragEvent, colIdx: number) => {
-    e.preventDefault();
-    setDragOverCol(null);
-    const type = e.dataTransfer.getData("elementType");
-    if (!type) return;
-
-    // Create new element based on type with all required properties
-    let newEl: ElementData;
-    if (type === "HEADING") {
-      newEl = { type: "HEADING", text: "Nuevo Título", level: 2, styles: {} };
-    } else if (type === "BUTTON") {
-      newEl = { type: "BUTTON", text: "Nuevo Botón", link: "#", variant: "primary", size: "md", styles: {} };
-    } else if (type === "TEXT") {
-      newEl = { type: "TEXT", body: "Nuevo bloque de texto", styles: {} };
-    } else if (type === "IMAGE") {
-      newEl = { type: "IMAGE", src: "", alt: "", styles: {} };
-    } else if (type === "SPACER") {
-      newEl = { type: "SPACER", height: 40, styles: {} };
-    } else if (type === "CALENDAR") {
-      newEl = { type: "CALENDAR", styles: {} };
-    } else return;
-
-
-    const newCols = [...content.columns];
-    newCols[colIdx].elements.push(newEl);
-    onUpdate?.({ ...content, columns: newCols });
-  };
-
   const { styles = {} } = content;
+  const bgImage = styles.backgroundImage || (content as any).bgImage || (content as any).backgroundImage;
+  const bgVideo = styles.backgroundVideo;
+
+  const handleUpdateStyles = (newStyles: any) => {
+    onUpdate?.({
+      ...content,
+      styles: { ...styles, ...newStyles }
+    });
+  };
 
   return (
     <AnimatedWrapper animation={styles.animation}>
-      <section style={{
-        padding: styles.padding || "4rem 2rem",
-        backgroundColor: styles.backgroundColor || "transparent",
-        backgroundImage: styles.backgroundImage ? `url(${styles.backgroundImage})` : "none",
-        backgroundSize: styles.backgroundSize || "cover",
-        backgroundPosition: styles.backgroundPosition || "center",
-        position: "relative",
-        opacity: styles.opacity ?? 1,
-        filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
-        marginTop: styles.marginTop || "0px",
-        marginBottom: styles.marginBottom || "0px",
-        marginLeft: styles.marginLeft || "0px",
-        marginRight: styles.marginRight || "0px",
-        paddingTop: styles.paddingTop || "6rem",
-        paddingBottom: styles.paddingBottom || "8rem",
-        paddingLeft: styles.paddingLeft || "2rem",
-        paddingRight: styles.paddingRight || "2rem",
-      }}>
+      <section className="layout-handle-container" style={getBlockBaseStyles(styles)}>
+        {(bgImage || bgVideo) && (
+          <div className="gs-section-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+            {(() => {
+              if (bgVideo) {
+                const videoStr = bgVideo || "";
+                
+                // YouTube logic
+                const ytMatch = videoStr.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+                if (ytMatch && ytMatch[1]) {
+                  const ytId = ytMatch[1];
+                  return (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&showinfo=0&rel=0`}
+                      style={{ width: "100vw", height: "56.25vw", minHeight: "100vh", minWidth: "177.77vh", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", pointerEvents: "none", border: "none" }}
+                      allow="autoplay; encrypted-media"
+                    />
+                  );
+                }
 
+                // Google Drive logic
+                const driveMatch = videoStr.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
+                if (driveMatch && driveMatch[1]) {
+                  const driveId = driveMatch[1];
+                  return (
+                    <iframe
+                      src={`https://drive.google.com/file/d/${driveId}/preview?autoplay=1`}
+                      style={{ width: "100vw", height: "56.25vw", minHeight: "100vh", minWidth: "177.77vh", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", pointerEvents: "none", border: "none" }}
+                      allow="autoplay"
+                    />
+                  );
+                }
 
-        <div 
-          style={{
-            maxWidth: content.fullWidth ? "100%" : "1200px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: `var(--gs-stack, repeat(${content.columns.length}, 1fr))`,
-            gap: "var(--gs-gap, 2rem)"
-          } as React.CSSProperties}
-        >
+                // Native Video (mp4, webm, etc) or custom URLs
+                return (
+                  <video 
+                    src={bgVideo} 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                );
+              }
 
-          {content.columns.map((col, colIdx) => (
-            <div
-              key={colIdx}
-              onDragOver={(e) => { e.preventDefault(); setDragOverCol(colIdx); }}
-              onDragLeave={() => setDragOverCol(null)}
-              onDrop={(e) => onDrop(e, colIdx)}
-              style={{
-                minHeight: isEditing ? "100px" : "auto",
-                border: isEditing ? `1px dashed ${dragOverCol === colIdx ? "#875BF7" : "#333"}` : "none",
-                borderRadius: "8px",
-                padding: isEditing ? "1rem" : "0",
-                background: dragOverCol === colIdx ? "rgba(135, 91, 247, 0.05)" : "transparent",
-                transition: "all 0.2s"
-              }}
-            >
-              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={(e) => handleDragEnd(e, colIdx)}>
-                <SortableContext items={col.elements.map((_, i) => `${blockId}-${colIdx}-${i}`)} strategy={verticalListSortingStrategy}>
-                  {col.elements.map((el, elIdx) => (
-                    <SortableElement
-                      key={`${blockId}-${colIdx}-${elIdx}`}
-                      id={`${blockId}-${colIdx}-${elIdx}`}
-                      element={el}
-                      isEditing={isEditing}
-                      isSelected={selectedElementPath?.col === colIdx && selectedElementPath?.el === elIdx}
-                      onSelect={() => onSelectElement?.(colIdx, elIdx)}
-                      onUpdate={(newEl) => {
-                        const newCols = [...content.columns];
-                        newCols[colIdx].elements[elIdx] = newEl;
-                        onUpdate?.({ ...content, columns: newCols });
+              return (
+                <>
+                  {/* Mirror Layer (Blurred) */}
+                  {styles.backgroundSize === "mirror" && (
+                    <div 
+                      style={{
+                        ...getBackgroundImageStyles(bgImage, { ...styles, backgroundSize: "cover" }),
+                        inset: "-20px",
+                        filter: "blur(40px) brightness(0.7)",
+                        opacity: 0.6,
                       }}
                     />
-                  ))}
-                </SortableContext>
-              </DndContext>
-              
-              {isEditing && col.elements.length === 0 && (
-                <div style={{ textAlign: "center", color: "#666", fontSize: "0.8rem", paddingTop: "2rem" }}>
-                  Suelta aquí un elemento
-                </div>
-              )}
-            </div>
-          ))}
+                  )}
+                  
+                  {/* Main Image Layer */}
+                  <div 
+                    className="gs-section-bg"
+                    style={getBackgroundImageStyles(bgImage, styles)}
+                  />
+                </>
+              );
+            })()}
+          </div>
+        )}
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .gs-section-bg {
+              background-size: ${styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize || "cover")} !important;
+            }
+          }
+        `}</style>
+        
+        <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
+          <ColumnsRenderer 
+            blockId={blockId}
+            columns={content.columns}
+            isEditing={isEditing}
+            fullWidth={content.fullWidth}
+            onUpdate={(newCols) => onUpdate?.({ ...content, columns: newCols })}
+            onSelectElement={onSelectElement}
+            selectedElementPath={selectedElementPath}
+          />
         </div>
+
+        {isEditing && (
+          <LayoutHandles 
+            styles={styles} 
+            onUpdate={handleUpdateStyles} 
+            isEditing={isEditing} 
+          />
+        )}
       </section>
     </AnimatedWrapper>
   );

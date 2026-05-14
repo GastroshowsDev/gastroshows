@@ -1,16 +1,10 @@
-import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
-
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-function adminOnly() {
-  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-}
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
-  if (!session || (session.user as { role?: string })?.role !== "ADMIN") return adminOnly();
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
   try {
     const settings = await prisma.seoSettings.findUnique({ where: { id: "default" } });
@@ -21,8 +15,8 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session || (session.user as { role?: string })?.role !== "ADMIN") return adminOnly();
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
 
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object") {

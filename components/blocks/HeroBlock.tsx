@@ -2,16 +2,20 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import type { HeroContent } from "@/lib/blocks/types";
+import type { HeroContent, ColumnData } from "@/lib/blocks/types";
 
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 import { SmartLink } from "./SmartLink";
+import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
 
 type Props = {
+  id: string;
   content: HeroContent;
   isEditing?: boolean;
   onUpdate?: (newContent: HeroContent) => void;
+  onSelectElement?: (path: string) => void;
+  selectedElementPath?: string | null;
 };
 
 const SHADOW_PHRASES = ["experiencias únicas", "que une a cualquier equipo"];
@@ -21,10 +25,13 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
-export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
+import { LayoutHandles } from "../admin/LayoutHandles";
+
+export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [typedTitle, setTypedTitle] = useState("");
+  const TitleTag = content.titleTag || "h1";
 
   const updateField = (field: keyof HeroContent, value: any) => {
     if (onUpdate) {
@@ -32,28 +39,30 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
     }
   };
 
+  const handleUpdateStyles = (newStyles: any) => {
+    onUpdate?.({
+      ...content,
+      styles: { ...content.styles, ...newStyles }
+    });
+  };
+
   useEffect(() => {
     setReady(true);
-    // ... scroll logic ...
   }, []);
 
   useEffect(() => {
-    // ... typewriter logic ...
-    if (content.animation === "typewriter" && ready) {
-       // keep legacy typewriter if selected
-    }
     setTypedTitle(content.title);
   }, [content.title, content.animation, ready]);
 
   const opacity = (content.overlayOpacity ?? 70) / 100;
   const brightness = (content as any).brightness ?? 1;
 
-
   return (
     <section
+      className="layout-handle-container"
       style={{
         position: "relative",
-        minHeight: "100dvh",
+        minHeight: (content as any).styles?.minHeight || (content as any).minHeight || "100dvh",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -65,9 +74,9 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         paddingTop: (content as any).paddingTop || "0px",
         paddingBottom: (content as any).paddingBottom || "0px",
       }}
-
     >
-      {/* ... parallax and overlay ... */}
+      {/* ... existing layers ... */}
+      {/* Background and Overlay */}
       <div
         ref={parallaxRef}
         style={{
@@ -78,11 +87,44 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         }}
       >
         {content.bgImage && (
-          <Image src={content.bgImage} alt="" fill priority className="gs-bg-image" style={{ objectFit: "cover", objectPosition: content.bgPosition || "center", "--img-brightness": brightness } as any} />
+          <div className="gs-hero-bg-container" style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0 }}>
+             {/* Mirror Layer (Blurred) */}
+             {(content.styles?.backgroundSize === "mirror") && (
+              <div 
+                style={{
+                  position: "absolute",
+                  inset: "-20px",
+                  backgroundImage: `url("${content.bgImage}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  filter: "blur(50px) brightness(0.6)",
+                  opacity: 0.8,
+                }}
+              />
+            )}
+
+            {/* Main Image Layer */}
+            <div 
+              className="gs-hero-bg-div" 
+              style={{ 
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `url("${content.bgImage}")`,
+                backgroundSize: (content.styles?.backgroundSize === "mirror") ? "contain" : (content.styles?.backgroundSize || "cover"),
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                filter: `brightness(${brightness})`,
+              }} 
+            />
+            <style jsx>{`
+              @media (max-width: 768px) {
+                .gs-hero-bg-div {
+                  background-size: ${(content.styles?.backgroundSize === "mirror") ? "contain" : (content.styles?.backgroundSize || "cover")} !important;
+                }
+              }
+            `}</style>
+          </div>
         )}
-
-
-
       </div>
 
       <div
@@ -95,7 +137,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
       />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", padding: "0 2rem" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: content.fullWidth ? "100%" : "1100px", width: "100%", padding: "4rem 2rem" }}>
+        {/* ... content ... */}
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <div 
@@ -132,12 +175,10 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
         )}
 
         <AnimatedWrapper animation={content.titleAnim || content.animation || "fade-in"}>
-          <h1
+          <TitleTag
             style={{
               fontFamily: "var(--font-cormorant), Georgia, serif",
               fontSize: "clamp(1.5rem, 8vw, 6rem)",
-
-
               fontWeight: 300,
               letterSpacing: "0.04em",
               lineHeight: 1.05,
@@ -153,6 +194,8 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               isEditing={isEditing}
               styles={content.titleStyles}
               onStyleChange={(s) => updateField("titleStyles", { ...content.titleStyles, ...s })}
+              currentTag={TitleTag}
+              onTagChange={(t) => updateField("titleTag", t)}
               dataField="title"
               placeholder="Título principal"
             />
@@ -170,17 +213,16 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
                   dataField="titleAccent"
                   placeholder="Acento"
                   style={{ 
-                    color: "#C8A96E", 
+                    color: "var(--gs-accent)", 
                     fontStyle: "italic",
                     textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
                       ? "none" 
                       : "var(--gs-gold-shadow)"
                   }}
-
                 />
               </>
             )}
-          </h1>
+          </TitleTag>
         </AnimatedWrapper>
 
         {(content.subtitle || isEditing) && (
@@ -208,7 +250,6 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
               />
             </div>
           </AnimatedWrapper>
-
         )}
 
         {/* CTAs */}
@@ -218,6 +259,7 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
             gap: "1rem",
             justifyContent: "center",
             flexWrap: "wrap",
+            marginBottom: "3rem"
           }}
         >
           {(content.ctaPrimaryText || isEditing) && (
@@ -255,7 +297,27 @@ export function HeroBlock({ content, isEditing = false, onUpdate }: Props) {
             </AnimatedWrapper>
           )}
         </div>
+
+        {/* Extra Elements (The "Unlock") */}
+        <ColumnsRenderer 
+          blockId={blockId}
+          columns={content.columns || []}
+          isEditing={isEditing}
+          fullWidth={content.fullWidth}
+          onUpdate={(newCols) => updateField("columns", newCols)}
+          onSelectElement={onSelectElement}
+          selectedElementPath={selectedElementPath}
+        />
       </div>
+
+      {isEditing && (
+        <LayoutHandles 
+          styles={content.styles || {}} 
+          onUpdate={handleUpdateStyles} 
+          isEditing={isEditing} 
+          showMinHeight 
+        />
+      )}
     </section>
   );
 }
@@ -274,7 +336,7 @@ function HeroButton({
   const [hovered, setHovered] = useState(false);
 
   const bg = primary
-    ? hovered ? "#E8D5A8" : "#C8A96E"
+    ? hovered ? "var(--gs-accent-light)" : "var(--gs-accent)"
     : hovered ? "rgba(200,169,110,0.6)" : "rgba(200,169,110,0.4)";
 
   return (
@@ -283,15 +345,13 @@ function HeroButton({
       isEditing={isEditing}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className={primary ? "gs-btn-primary" : "gs-btn-secondary"}
       style={{
         display: "inline-block",
-        backgroundColor: bg,
-        color: primary ? "#0A0A0A" : "#FFFFFF",
-        border: primary ? "none" : `1px solid #FFFFFF`,
-        padding: "1rem 2.8rem",
+        padding: "1.1rem 3rem",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "0.72rem",
-        fontWeight: 600,
+        fontWeight: 700,
         letterSpacing: "0.22em",
         textTransform: "uppercase",
         textDecoration: "none",
@@ -303,6 +363,7 @@ function HeroButton({
             : "0 10px 32px rgba(200,169,110,0.25)"
           : "none",
         transition: "all 0.3s cubic-bezier(0.16,1,0.3,1)",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
       }}
     >
       {children}

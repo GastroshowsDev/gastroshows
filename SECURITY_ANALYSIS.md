@@ -27,6 +27,25 @@ catch (err: any) {
 
 ---
 
+### 1a. **Middleware Logic Inactive**
+**Location**: `proxy.ts`
+**Risk**: Next.js only recognizes `middleware.ts` (root or src). The file `proxy.ts` is ignored by the framework.
+**Impact**: 
+- **NO** security headers (X-Frame-Options, etc.)
+- **NO** role-based redirection for `/admin` pages
+- **NO** centralized auth protection for `/api/admin`
+**Priority**: 🔴 **CRITICAL**
+
+---
+
+### 1b. **Inconsistent Role Checks in Admin API**
+**Location**: `app/api/admin/pages`, `app/api/admin/holidays`, `app/api/admin/employees`
+**Risk**: These endpoints check `if (!session)` but do not verify if the user has the `ADMIN` role. 
+**Impact**: Users with `LIVE` role (staff) can modify pages, delete data, and change system configurations intended only for admins.
+**Priority**: 🔴 **CRITICAL**
+
+---
+
 ### 2. **No Rate Limiting on Public Endpoints**
 **Location**: `app/api/public/availability/route.ts`, `app/api/reservations/normal/route.ts`
 **Risk**: 

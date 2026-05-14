@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Send, Users, CheckCircle2, Loader2, Megaphone, Info } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Send, Users, CheckCircle2, Loader2, Megaphone, Info, ChevronDown } from "lucide-react";
 
 const SEGMENTS = [
   {
@@ -45,11 +45,41 @@ export default function CampanasPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [result, setResult] = useState<{ sentCount: number; total: number } | null>(null);
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [templatesLoading, setTemplatesLoading] = useState(true);
+  const [showTemplateDropdown, setShowTemplateDropdown] = useState(false);
   const [campaign, setCampaign] = useState({
     subject: "",
     content: "",
     segment: "attended",
   });
+
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
+
+  async function fetchTemplates() {
+    try {
+      const res = await fetch("/api/admin/templates");
+      const json = await res.json();
+      if (json.ok && json.data) {
+        setTemplates(json.data);
+      }
+    } catch {
+      /* silent */
+    } finally {
+      setTemplatesLoading(false);
+    }
+  }
+
+  function selectTemplate(template: any) {
+    setCampaign({
+      ...campaign,
+      subject: template.subject || "",
+      content: template.content || template.htmlContent || "",
+    });
+    setShowTemplateDropdown(false);
+  }
 
   async function handleSend() {
     const seg = SEGMENTS.find(s => s.id === campaign.segment);
@@ -133,6 +163,40 @@ export default function CampanasPage() {
                 placeholder={"<p>Hola {{NOMBRE}},</p>\n<p>...</p>"}
                 className="w-full h-80 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg px-4 py-4 font-mono text-sm resize-none"
               />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Plantilla Email</label>
+              <div className="relative">
+                <button
+                  onClick={() => setShowTemplateDropdown(!showTemplateDropdown)}
+                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg px-4 py-3 text-left flex items-center justify-between hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
+                >
+                  <span className="text-zinc-700 dark:text-zinc-300">
+                    {templatesLoading ? "Cargando plantillas..." : templates.length === 0 ? "No hay plantillas disponibles" : "Selecciona una plantilla"}
+                  </span>
+                  <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform ${showTemplateDropdown ? "rotate-180" : ""}`} />
+                </button>
+
+                {showTemplateDropdown && !templatesLoading && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-lg z-10 max-h-64 overflow-y-auto">
+                    {templates.length === 0 ? (
+                      <div className="p-4 text-sm text-zinc-500 text-center">No hay plantillas disponibles</div>
+                    ) : (
+                      templates.map((template) => (
+                        <button
+                          key={template.key || template.id}
+                          onClick={() => selectTemplate(template)}
+                          className="w-full text-left px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 border-b border-zinc-100 dark:border-zinc-800 last:border-b-0 transition-colors"
+                        >
+                          <div className="font-semibold text-sm text-zinc-900 dark:text-white">{template.key}</div>
+                          <div className="text-xs text-zinc-500 mt-1 line-clamp-1">{template.subject}</div>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

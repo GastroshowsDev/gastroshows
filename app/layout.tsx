@@ -55,6 +55,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { SiteNav } from "@/components/SiteNav";
 import { GoogleTagManager } from "@/components/tracking/GoogleTagManager";
@@ -78,7 +79,21 @@ export default async function RootLayout({
       <head>
         <SeoHead />
         <GoogleTagManager />
+        <script
+          id="theme-switcher"
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('gs-theme') || 'clandestino';
+                const html = document.documentElement;
+                html.classList.remove('clandestino', 'revelado');
+                html.classList.add(theme);
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
+
       <body className="min-h-full flex flex-col">
         <GoogleAnalytics />
         <MetaPixel />

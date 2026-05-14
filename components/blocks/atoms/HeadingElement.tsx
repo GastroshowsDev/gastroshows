@@ -18,12 +18,10 @@ export function HeadingElement({ element, isEditing = false, onUpdate }: Props) 
       style={{
         margin: styles.margin || "0 0 1.5rem 0",
         padding: styles.padding || "0",
-        color: styles.color || "var(--gs-text)",
+        color: styles.color || undefined,
         textAlign: styles.textAlign || "inherit",
-        fontFamily: "var(--font-cormorant), Georgia, serif",
-        fontWeight: 300,
-        lineHeight: 1.2,
-        fontSize: `calc(1em * ${7 - element.level} * 0.4 + 1rem)`, // Dynamic scaling
+        fontSize: styles.fontSize || undefined,
+        fontWeight: styles.fontWeight || undefined,
       }}
     >
       <InlineText
@@ -31,6 +29,13 @@ export function HeadingElement({ element, isEditing = false, onUpdate }: Props) 
         onChange={(v) => onUpdate?.({ ...element, text: v })}
         isEditing={isEditing}
         tagName="span"
+        styles={element.styles}
+        onStyleChange={(s) => onUpdate?.({ ...element, styles: { ...element.styles, ...s } })}
+        currentTag={Tag}
+        onTagChange={(t) => {
+          const level = parseInt(t.replace("h", ""));
+          if (!isNaN(level)) onUpdate?.({ ...element, level: level as any });
+        }}
       />
       {element.accentText && (
         <span style={{ color: "var(--gs-gold)", fontStyle: "italic", marginLeft: "0.5rem" }}>

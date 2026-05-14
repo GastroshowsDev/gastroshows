@@ -3,14 +3,117 @@
 import React, { useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-const FONTS = [
-  { label: "Por defecto",  value: "" },
-  { label: "Cormorant",    value: "'Cormorant Garamond', serif" },
-  { label: "Montserrat",   value: "'Montserrat', sans-serif" },
-  { label: "Georgia",      value: "Georgia, serif" },
-  { label: "Arial",        value: "Arial, sans-serif" },
-  { label: "Courier New",  value: "'Courier New', monospace" },
-];
+import { FONTS } from "@/lib/constants/fonts";
+
+const FontSelector = ({ value, onChange }: { value: string, onChange: (v: string) => void }) => {
+  const [search, setSearch] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+
+  const filtered = FONTS.filter(f => 
+    f.label.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const currentLabel = FONTS.find(f => f.value === value)?.label || "Por defecto";
+
+  const updateCoords = () => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setCoords({
+        top: rect.top,
+        left: rect.left,
+        width: rect.width
+      });
+    }
+  };
+
+  return (
+    <div ref={containerRef} style={{ position: "relative" }}>
+      <input
+        type="text"
+        spellCheck={false}
+        autoComplete="off"
+        placeholder={currentLabel}
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setIsOpen(true);
+          updateCoords();
+        }}
+        onFocus={() => {
+          setIsOpen(true);
+          updateCoords();
+        }}
+        style={{
+          background: "#222",
+          border: "1px solid #333",
+          borderRadius: "6px",
+          color: "#fff",
+          padding: "4px 8px",
+          fontSize: "0.7rem",
+          outline: "none",
+          height: "26px",
+          width: "110px",
+          transition: "border-color 0.2s"
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--gs-accent)"}
+        onMouseLeave={(e) => e.currentTarget.style.borderColor = "#333"}
+      />
+      
+      {isOpen && typeof document !== 'undefined' && createPortal(
+        <div style={{
+          position: "fixed",
+          top: coords.top + 30,
+          left: coords.left,
+          zIndex: 999999,
+          background: "#111",
+          border: "1px solid #333",
+          borderRadius: "10px",
+          maxHeight: "250px",
+          overflowY: "auto",
+          width: "180px",
+          boxShadow: "0 15px 30px rgba(0,0,0,0.7)",
+          animation: "fade-in 0.2s ease-out"
+        }}>
+          {filtered.length > 0 ? filtered.map(f => (
+            <div
+              key={f.value}
+              onClick={() => {
+                onChange(f.value);
+                setSearch("");
+                setIsOpen(false);
+              }}
+              style={{
+                padding: "8px 12px",
+                cursor: "pointer",
+                fontSize: "0.75rem",
+                color: value === f.value ? "var(--gs-accent)" : "#eee",
+                fontFamily: f.value || "inherit",
+                borderBottom: "1px solid #222",
+                transition: "background 0.1s"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#222";
+                e.currentTarget.style.color = "var(--gs-accent)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                if (value !== f.value) e.currentTarget.style.color = "#eee";
+              }}
+            >
+              {f.label}
+            </div>
+          )) : (
+            <div style={{ padding: "10px", fontSize: "0.7rem", color: "#666", textAlign: "center" }}>Sin resultados</div>
+          )}
+        </div>,
+        document.body
+      )}
+      {isOpen && <div onClick={() => setIsOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 999998 }} />}
+    </div>
+  );
+};
 
 const ANIMATIONS = [
   { label: "Ninguna",  value: "" },
@@ -31,6 +134,8 @@ type Props = {
   placeholder?: string;
   dataField?: string;
   styles?: any;
+  currentTag?: string;
+  onTagChange?: (newTag: any) => void;
 };
 
 export function InlineText({
@@ -44,6 +149,8 @@ export function InlineText({
   placeholder,
   dataField,
   styles = {},
+  currentTag,
+  onTagChange,
 }: Props) {
   const elementRef  = useRef<HTMLElement>(null);
   const toolbarRef  = useRef<HTMLDivElement>(null);
@@ -86,7 +193,11 @@ export function InlineText({
   }, [showToolbar]);
 
   if (!isEditing) {
-    return React.createElement(tagName, { style, className, "data-field": dataField }, value || placeholder);
+    const el = React.createElement(tagName, { style, className, "data-field": dataField }, value || placeholder);
+    if (styles.link) {
+      return <a href={styles.link} style={{ textDecoration: "none", color: "inherit" }}>{el}</a>;
+    }
+    return el;
   }
 
   const refreshRect = () => {
@@ -160,7 +271,7 @@ export function InlineText({
             width:        "24px",
             height:       "24px",
             borderRadius: "50%",
-            background:   showToolbar ? "#6B46C1" : "#875BF7",
+            background:   showToolbar ? "var(--gs-accent)" : "var(--gs-accent)",
             color:        "white",
             border:       "none",
             fontSize:     "18px",
@@ -170,7 +281,7 @@ export function InlineText({
             justifyContent: "center",
             cursor:       "pointer",
             zIndex:       99998,
-            boxShadow:    "0 2px 10px rgba(135,91,247,0.45)",
+            boxShadow:    "0 2px 10px var(--gs-accent-light)",
             transition:   "background 0.15s, transform 0.15s",
             transform:    showToolbar ? "rotate(45deg)" : "none",
             userSelect:   "none",
@@ -212,15 +323,10 @@ export function InlineText({
         >
           {/* Fuente */}
           <TGroup label="Fuente">
-            <select
+            <FontSelector
               value={styles.fontFamily || ""}
-              onChange={(e) => sc({ fontFamily: e.target.value })}
-              style={selStyle}
-            >
-              {FONTS.map(f => (
-                <option key={f.value} value={f.value}>{f.label}</option>
-              ))}
-            </select>
+              onChange={(v) => sc({ fontFamily: v })}
+            />
           </TGroup>
 
           <Sep />
@@ -243,6 +349,10 @@ export function InlineText({
               <FBtn active={styles.bold}          onClick={() => sc({ bold: !styles.bold })}          title="Negrita"><strong>B</strong></FBtn>
               <FBtn active={styles.italic}        onClick={() => sc({ italic: !styles.italic })}      title="Cursiva"><em style={{ fontStyle: "italic" }}>I</em></FBtn>
               <FBtn active={styles.underline}     onClick={() => sc({ underline: !styles.underline })} title="Subrayado"><span style={{ textDecoration: "underline" }}>U</span></FBtn>
+              <FBtn active={styles.link}            onClick={() => {
+                const url = prompt("Introduce la URL del enlace:", styles.link || "");
+                sc({ link: url || undefined });
+              }} title="Enlace">🔗</FBtn>
               <FBtn active={styles.strikethrough} onClick={() => sc({ strikethrough: !styles.strikethrough })} title="Tachado"><span style={{ textDecoration: "line-through" }}>S</span></FBtn>
             </div>
           </TGroup>
@@ -363,6 +473,29 @@ export function InlineText({
               ))}
             </select>
           </TGroup>
+
+          {onTagChange && (
+            <>
+              <Sep />
+              <TGroup label="Etiqueta (SEO)">
+                <select
+                  value={currentTag || tagName}
+                  onChange={(e) => onTagChange(e.target.value)}
+                  style={{ ...selStyle, borderColor: "var(--gs-accent)", color: "var(--gs-accent)" }}
+                >
+                  <option value="h1">H1</option>
+                  <option value="h2">H2</option>
+                  <option value="h3">H3</option>
+                  <option value="h4">H4</option>
+                  <option value="h5">H5</option>
+                  <option value="h6">H6</option>
+                  <option value="p">P (Párrafo)</option>
+                  <option value="div">DIV</option>
+                  <option value="span">SPAN</option>
+                </select>
+              </TGroup>
+            </>
+          )}
         </div>,
         document.body
       )
@@ -373,7 +506,7 @@ export function InlineText({
     : style?.textShadow;
 
   return (
-    <div style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
+    <span style={{ position: "relative", display: "inline-block", maxWidth: "100%" }}>
       {plusButton}
       {toolbar}
 
@@ -394,8 +527,8 @@ export function InlineText({
           borderRadius: "inherit",
           padding:    "0 4px",
           transition: "background 0.2s, border 0.2s",
-          background: isFocused ? "rgba(135,91,247,0.04)" : "transparent",
-          border:     isFocused ? "1px dashed rgba(135,91,247,0.2)" : "1px dashed transparent",
+          background: isFocused ? "var(--gs-accent-light)" : "transparent",
+          border:     isFocused ? "1px dashed var(--gs-accent)" : "1px dashed transparent",
           ...styles,
           textShadow,
           fontWeight:     styles.bold          ? 700         : (styles.fontWeight  || style?.fontWeight),
@@ -409,7 +542,7 @@ export function InlineText({
         "data-placeholder": placeholder,
         "data-field": dataField,
       })}
-    </div>
+    </span>
   );
 }
 
@@ -445,9 +578,9 @@ function FBtn({
       style={{
         width:       "26px",
         height:      "26px",
-        background:  active ? "#875BF7" : "#1d1d1d",
+        background:  active ? "var(--gs-accent)" : "#1d1d1d",
         color:       active ? "#fff"    : "#888",
-        border:      `1px solid ${active ? "#875BF7" : "#2e2e2e"}`,
+        border:      `1px solid ${active ? "var(--gs-accent)" : "#2e2e2e"}`,
         borderRadius: "5px",
         cursor:      "pointer",
         fontSize:    "12px",

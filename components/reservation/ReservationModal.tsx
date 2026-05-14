@@ -99,11 +99,18 @@ const INITIAL: FormState = {
   payFull: false,
 };
 
-type Props = { open: boolean; onClose: () => void };
+type Props = { open: boolean; onClose: () => void; initialDate?: string | null };
 
-export function ReservationModal({ open, onClose }: Props) {
+export function ReservationModal({ open, onClose, initialDate }: Props) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [form, setForm] = useState<FormState>(INITIAL);
+
+  // Set initial date when modal opens with one
+  useEffect(() => {
+    if (open && initialDate) {
+      setForm(prev => ({ ...prev, date: initialDate }));
+    }
+  }, [open, initialDate]);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);

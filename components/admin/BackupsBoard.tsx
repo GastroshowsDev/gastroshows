@@ -158,10 +158,12 @@ export function BackupsBoard() {
   const [loadingBackups, setLoadingBackups] = useState(true);
   const [loadingStats, setLoadingStats] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [restoringId, setRestoringId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [confirmRestoreId, setConfirmRestoreId] = useState<string | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const loadBackups = useCallback(async () => {
@@ -227,6 +229,25 @@ export function BackupsBoard() {
       URL.revokeObjectURL(url);
     } finally {
       setDownloadingId(null);
+    }
+  }
+
+  async function handleRestore(id: string) {
+    setRestoringId(id);
+    setConfirmRestoreId(null);
+    try {
+      const res = await fetch(`/api/admin/backups/${id}/restore`, { method: "POST" });
+      const json = await res.json() as { ok: boolean; error?: string };
+      if (json.ok) {
+        alert("Restauración completada con éxito. La página se recargará.");
+        window.location.reload();
+      } else {
+        setError(json.error ?? "Error al restaurar el backup");
+      }
+    } catch (e) {
+      setError("Error de red al restaurar");
+    } finally {
+      setRestoringId(null);
     }
   }
 
@@ -378,19 +399,54 @@ export function BackupsBoard() {
                       </td>
                       <td style={{ padding: "0.65rem 0.75rem" }}>
                         <div style={{ display: "flex", gap: "0.4rem" }}>
-                          {b.status === "SUCCESS" && (
-                            <button
-                              onClick={() => void handleDownload(b.id)}
-                              disabled={downloadingId === b.id}
-                              style={{
-                                padding: "3px 10px", borderRadius: 6, fontSize: "0.72rem", fontWeight: 600,
-                                border: "1px solid var(--color-admin-accent)", color: "var(--color-admin-accent)",
-                                background: "transparent", cursor: "pointer",
-                              }}
-                            >
-                              {downloadingId === b.id ? "…" : "↓ Descargar"}
-                            </button>
-                          )}
+                              <button
+                                onClick={() => void handleDownload(b.id)}
+                                disabled={downloadingId === b.id}
+                                style={{
+                                  padding: "3px 10px", borderRadius: 6, fontSize: "0.72rem", fontWeight: 600,
+                                  border: "1px solid var(--color-admin-accent)", color: "var(--color-admin-accent)",
+                                  background: "transparent", cursor: "pointer",
+                                }}
+                              >
+                                {downloadingId === b.id ? "…" : "↓ Descargar"}
+                              </button>
+                              
+                              {confirmRestoreId === b.id ? (
+                                <>
+                                  <button
+                                    onClick={() => void handleRestore(b.id)}
+                                    disabled={restoringId === b.id}
+                                    style={{
+                                      padding: "3px 10px", borderRadius: 6, fontSize: "0.72rem", fontWeight: 600,
+                                      border: "1px solid #D97706", color: "#fff", background: "#D97706", cursor: "pointer",
+                                    }}
+                                  >
+                                    {restoringId === b.id ? "Restaurando..." : "¡Confirmar Restauración!"}
+                                  </button>
+                                  <button
+                                    onClick={() => setConfirmRestoreId(null)}
+                                    style={{
+                                      padding: "3px 8px", borderRadius: 6, fontSize: "0.72rem",
+                                      border: "1px solid var(--color-admin-border)", color: "var(--color-admin-muted)",
+                                      background: "transparent", cursor: "pointer",
+                                    }}
+                                  >
+                                    Cancelar
+                                  </button>
+                                </>
+                              ) : (
+                                <button
+                                  onClick={() => setConfirmRestoreId(b.id)}
+                                  disabled={restoringId !== null}
+                                  style={{
+                                    padding: "3px 10px", borderRadius: 6, fontSize: "0.72rem", fontWeight: 600,
+                                    border: "1px solid #D97706", color: "#D97706",
+                                    background: "transparent", cursor: "pointer",
+                                  }}
+                                >
+                                  Restaurar
+                                </button>
+                              )}
                           {confirmDeleteId === b.id ? (
                             <>
                               <button

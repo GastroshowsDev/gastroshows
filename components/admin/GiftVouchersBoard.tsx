@@ -72,7 +72,7 @@ export function GiftVouchersBoard({ initialVouchers, totalCount }: GiftVouchersB
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           { label: "Total Registros", value: totalCount, sub: "En toda la base de datos", color: "text-zinc-900 dark:text-zinc-50" },
-          { label: "Importe en Rango", value: `${totalRevenue.toFixed(0)}€`, sub: "Suma del rango actual", color: "text-[#efb810]" },
+          { label: "Importe en Rango", value: `${totalRevenue.toFixed(0)}€`, sub: "Suma del rango actual", color: "text-[var(--gs-accent)]" },
           { label: "Canjeados (Rango)", value: redeemedCount, sub: "Ya disfrutados", color: "text-emerald-600" },
           { label: "Pendientes (Rango)", value: pendingCount, sub: "Por disfrutar", color: "text-amber-600" },
         ].map((stat, i) => (
@@ -92,7 +92,7 @@ export function GiftVouchersBoard({ initialVouchers, totalCount }: GiftVouchersB
             placeholder="Filtrar en este rango (comprador o token)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 outline-none focus:ring-2 focus:ring-[#efb810]/20"
+            className="w-full px-3 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 outline-none focus:ring-2 focus:ring-[var(--gs-accent)]/20"
           />
         </div>
         <select
@@ -106,7 +106,7 @@ export function GiftVouchersBoard({ initialVouchers, totalCount }: GiftVouchersB
         </select>
         <button
           onClick={() => { setSearch(""); setStatusFilter("all"); }}
-          className="px-4 py-2 text-xs font-bold text-[#efb810] hover:bg-[#efb810]/10 rounded-lg transition-colors"
+          className="px-4 py-2 text-xs font-bold text-[var(--gs-accent)] hover:bg-[var(--gs-accent)]/10 rounded-lg transition-colors"
         >
           Limpiar Filtros
         </button>
@@ -150,7 +150,7 @@ export function GiftVouchersBoard({ initialVouchers, totalCount }: GiftVouchersB
                       <div className="text-[11px] text-zinc-500">{v.purchaser.email}</div>
                     </td>
                     <td className="px-4 py-4 text-zinc-600 dark:text-zinc-400">{v.guests}</td>
-                    <td className="px-4 py-4 font-bold text-[#efb810]">{Number(v.totalAmount).toFixed(0)}€</td>
+                    <td className="px-4 py-4 font-bold text-[var(--gs-accent)]">{Number(v.totalAmount).toFixed(0)}€</td>
                     <td className="px-4 py-4">
                       {v.redeemedAt ? (
                         <div className="flex flex-col">
@@ -179,7 +179,7 @@ export function GiftVouchersBoard({ initialVouchers, totalCount }: GiftVouchersB
                             navigator.clipboard.writeText(url);
                             alert("Enlace copiado al portapapeles");
                           }}
-                          className="p-2 text-zinc-400 hover:text-[#efb810] transition-colors"
+                          className="p-2 text-zinc-400 hover:text-[var(--gs-accent)] transition-colors"
                           title="Copiar enlace de reserva"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>

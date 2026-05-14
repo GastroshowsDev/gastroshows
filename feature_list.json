@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "feature": "Infraestructura Harness",
+    "description": "Implementar el sistema de control y trazabilidad basado en el paradigma de Harness Engineering.",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 2,
+    "feature": "Layout Orgánico y Movilidad Flexible",
+    "description": "Implementar un sistema de tiradores (handles) intuitivos para controlar márgenes y paddings de forma visual en todos los niveles de contenedores.",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 3,
+    "feature": "Optimización de Widgets (Disponibilidad)",
+    "description": "Refactorizar el widget de disponibilidad para que use el nuevo sistema de IDs y sea 100% móvil entre contenedores.",
+    "status": "pending",
+    "priority": "high"
+  },
+  {
+    "id": 4,
+    "feature": "Sistema de Animaciones Globales",
+    "description": "Implementar un selector de animaciones de entrada (fade, slide, zoom) aplicable a cualquier elemento.",
+    "status": "pending",
+    "priority": "low"
+  },
+  {
+    "id": 5,
+    "feature": "Auditoría de Seguridad y Roles",
+    "description": "Verificar que todos los endpoints de admin estén protegidos correctamente contra accesos no autorizados.",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 6,
+    "feature": "Migración de Páginas desde UI",
+    "description": "Implementar botón y lógica para migrar páginas de gastroshows.es directamente desde el panel de administración.",
+    "status": "done",
+    "priority": "medium"
+  },
+  {
+    "id": 7,
+    "feature": "Legibilidad y Contraste (Modo Revelado)",
+    "description": "Auditoría y corrección de contraste en todos los widgets y elementos para asegurar legibilidad en el modo claro.",
+    "status": "done",
+    "priority": "high"
+  }
+]

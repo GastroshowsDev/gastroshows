@@ -1,0 +1,367 @@
+{
+  "url": "https://gastroshows.es/the-best-terraces-in-barcelona/",
+  "status_code": 200,
+  "error": "",
+  "scraped_at": "2026-05-12T12:01:36.962198Z",
+  "title": "The best terraces in Barcelona - A must-see stop",
+  "meta_description": "In this post you will find the best terraces in Barcelona with a unique atmosphere. Plus, you can go any day of the year!",
+  "meta_robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  "meta_keywords": "",
+  "meta_viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+  "canonical": "https://gastroshows.es/en/the-best-terraces-in-barcelona/",
+  "hreflang": [],
+  "lang": "es",
+  "charset": "UTF-8",
+  "x_robots_tag": "",
+  "redirect_url": "",
+  "page_speed_hint": "293.0 KB",
+  "headings": {
+    "h1": [
+      "The best terraces in Barcelona"
+    ],
+    "h2": [
+      "Terraces, or rather, utopian places and romantic gardens that teleport you away",
+      "CAFÉ D’ESTIU – Gothic Quarter",
+      "TORRE ROSA – Sant Andreu",
+      "THE GARDEN OF THE SOUL – Eixample",
+      "LA CASETA DEL MIGDIA – Montjuïc",
+      "TERRAZA DEL OLIVIA – Ciutat Vella",
+      "TERRAZA DEL NERI – Ciutat Vella"
+    ],
+    "h3": [
+      "Acerca de Gastroshows",
+      "Contacto",
+      "Pago de confianza"
+    ]
+  },
+  "open_graph": {
+    "locale": "es_ES",
+    "type": "article",
+    "title": "The best terraces in Barcelona - A must-see stop",
+    "description": "In this post you will find the best terraces in Barcelona with a unique atmosphere. Plus, you can go any day of the year!",
+    "url": "https://gastroshows.es/en/the-best-terraces-in-barcelona/",
+    "site_name": "Gastroshows - experiencias gastronómicas",
+    "image": "https://gastroshows.es/wp-content/uploads/2019/03/alma-hotels-hero-b-1300x865.jpg",
+    "image:width": "1300",
+    "image:height": "865",
+    "image:type": "image/jpeg"
+  },
+  "twitter_card": {
+    "card": "summary_large_image",
+    "label1": "Escrito por",
+    "data1": "Esther Fernández",
+    "label2": "Tiempo de lectura",
+    "data2": "10 minutos"
+  },
+  "schema_org": [],
+  "word_count": 856,
+  "images": [
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "813",
+      "height": "146"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2054'%3E%3C/svg%3E",
+      "alt": "logo gastroshows",
+      "title": "",
+      "width": "300",
+      "height": "54"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201300%20865'%3E%3C/svg%3E",
+      "alt": "have a drink or a snack in barcelona",
+      "title": "terraces barcelona",
+      "width": "1300",
+      "height": "865"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "",
+      "height": ""
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201100%20300'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "1100",
+      "height": "300"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20338'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "",
+      "width": "600",
+      "height": "338"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20813%20146'%3E%3C/svg%3E",
+      "alt": "",
+      "title": "Gastroshows_red_150",
+      "width": "813",
+      "height": "146"
+    }
+  ],
+  "links_internal": [
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/",
+      "anchor": "REGALA",
+      "rel": "",
+      "title": "Regala experiencia gastronómica"
+    },
+    {
+      "url": "https://gastroshows.es/actividades-gastronomicas/",
+      "anchor": "GRUPOS",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/regalo-experiencia-gastronomica/#canjea",
+      "anchor": "CANJEA",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/contacto/",
+      "anchor": "CONTACTO",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/things-to-do-with-your-partner-at-home/",
+      "anchor": "here",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/clandestine-dinner-barcelona/",
+      "anchor": "clandestine dinner",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/en/",
+      "anchor": "Gastroshows",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/noticias-blog/",
+      "anchor": "Blog y noticias",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://gastroshows.es/aviso-legal/",
+      "anchor": "Condiciones generales",
+      "rel": "",
+      "title": ""
+    }
+  ],
+  "links_external": [
+    {
+      "url": "https://g.page/MuseuFredericMares?share",
+      "anchor": "CAFÉ D’ESTIU – Gothic Quarter",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://g.page/MuseuFredericMares?share",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://g.page/MuseuFredericMares?share",
+      "anchor": "Marès Museum",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "http://www.torrerosa.com/",
+      "anchor": "TORRE ROSA – Sant Andreu",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.torrerosa.com/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.torrerosa.com/",
+      "anchor": "Torre Rosa",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://almahotels.com/barcelona/restaurante-jardin-del-alma/",
+      "anchor": "THE GARDEN OF THE SOUL – Eixample",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://almahotels.com/barcelona/restaurante-jardin-del-alma-2/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://almahotels.com/barcelona/restaurante-jardin-del-alma-2/",
+      "anchor": "Hotel Alma de Barcelona",
+      "rel": [
+        "noopener",
+        "noreferrer"
+      ],
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/pages/La-Caseta-del-Migdia/166606190042956",
+      "anchor": "LA CASETA DEL MIGDIA – Montjuïc",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.lacaseta.org/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.lacaseta.org/",
+      "anchor": "Caseta del Migdia",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.oliviaplazahotel.com/ca/",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.oliviaplazahotel.com/ca/",
+      "anchor": "Terrace of the Olivia Hotel",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.hotelneri.com/es/gastronomia/terraza",
+      "anchor": "TERRAZA DEL NERI – Ciutat Vella",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.hotelneri.com/es/gastronomia/terraza",
+      "anchor": "",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.hotelneri.com/es/gastronomia/terraza",
+      "anchor": "terrace of the Hotel Neri",
+      "rel": "",
+      "title": ""
+    },
+    {
+      "url": "https://www.facebook.com/gastroshowsbarcelona/",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Facebook"
+    },
+    {
+      "url": "https://www.instagram.com/gastroshows/?hl=es",
+      "anchor": "Seguir",
+      "rel": "",
+      "title": "Seguir en Instagram"
+    }
+  ],
+  "geo": {
+    "faq": [],
+    "tables": [],
+    "lists": [
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          "REGALA",
+          "GRUPOS",
+          "CANJEA",
+          "CONTACTO"
+        ]
+      }
+    ],
+    "definitions": [],
+    "lead_paragraphs": [
+      "Undoubtedly, this year the terraces of Barcelona are fashionable . And it’s not going to be a momentary thing, far from it. Terraces are going to be the main protagonists for the rest of the year. And it is no wonder, considering that some of the ones we have in our city. They are places with the perfect atmosphere to disconnect, so beautiful that they are ideal for a date and with a good menu to share a drink and something else. . In addition, it does not matter that it is winter, because being well conditioned, it is a pleasure to sit in the fresh air and enjoy the sunshine and the views. Here are the best terraces in Barcelona that we consider a must stop whether you are from here or just here for a few days. But if what you are looking for are plans at home, you can also check here here our post with the best plans. And if you’re in the mood for a clandestine clandestine dinner you can’t miss our experience in Gastroshows . You choose!",
+      "Don’t you know the Marès Museum ? If so, you will not forget it now. Because inside the restaurant there is a quiet and beautiful terrace that offers a menu with different healthy options.",
+      "So if you are strolling through the Gothic Quarter and need to take a break on the way, this is a must stop. Depending on the time of day and time of year it may be a little more crowded, but even so, it is still a good option."
+    ],
+    "entity_schema": {}
+  }
+}

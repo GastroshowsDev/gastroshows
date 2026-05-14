@@ -11,24 +11,28 @@ type Props = {
 
 export function TextElement({ element, isEditing = false, onUpdate }: Props) {
   const { styles = {} } = element;
+  const Tag = element.tagName || "div";
 
   return (
-    <div
+    <Tag
       style={{
         margin: styles.margin || "0 0 1rem 0",
         padding: styles.padding || "0",
-        color: styles.color || "rgba(245,240,232,0.8)",
+        color: styles.color || undefined,
         textAlign: styles.textAlign || "inherit",
-        fontSize: "1rem",
-        lineHeight: 1.7,
+        fontSize: styles.fontSize || undefined,
       }}
     >
       <InlineText
         value={element.body}
         onChange={(v) => onUpdate?.({ ...element, body: v })}
         isEditing={isEditing}
-        tagName="div"
+        tagName="span"
+        styles={element.styles}
+        onStyleChange={(s) => onUpdate?.({ ...element, styles: { ...element.styles, ...s } })}
+        currentTag={Tag}
+        onTagChange={(t) => onUpdate?.({ ...element, tagName: t })}
       />
-    </div>
+    </Tag>
   );
 }

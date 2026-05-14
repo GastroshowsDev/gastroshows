@@ -59,34 +59,34 @@ model Event {
 }
 
 model Reservation {
-  id            String            @id @default(cuid())
-  type          ReservationType
-  customerId    String
-  eventId       String?
-  venueId       String?
-  guests        Int
-  totalAmount   Decimal           @db.Decimal(10, 2)
-  paidAmount    Decimal           @default(0) @db.Decimal(10, 2)
-  paymentStatus PaymentStatus     @default(PARTIAL)
-  status        ReservationStatus @default(PENDING)
-  groupRef      String?
-  mergedGroupId String?
-  isFirstVisit  Boolean           @default(true)
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
-  visitDate     DateTime?
-  visitTime     String?
-  emailQueue    EmailQueue[]
-  giftVoucher   GiftVoucher?
-  paymentSplits PaymentSplit[]
-  customer      Customer          @relation(fields: [customerId], references: [id])
-  event         Event?            @relation(fields: [eventId], references: [id], onDelete: Restrict)
-  venue         Venue?            @relation(fields: [venueId], references: [id])
-  tableAssignments TableAssignment[]
+  id                 String              @id @default(cuid())
+  type               ReservationType
+  customerId         String
+  eventId            String?
+  venueId            String?
+  guests             Int
+  totalAmount        Decimal             @db.Decimal(10, 2)
+  paidAmount         Decimal             @default(0) @db.Decimal(10, 2)
+  paymentStatus      PaymentStatus       @default(PARTIAL)
+  status             ReservationStatus   @default(PENDING)
+  groupRef           String?
+  mergedGroupId      String?
+  isFirstVisit       Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  visitDate          DateTime?
+  visitTime          String?
+  source             String?
+  comments           String?
+  turitopId          String?             @unique
+  emailQueue         EmailQueue[]
+  giftVoucher        GiftVoucher?
+  paymentSplits      PaymentSplit[]
+  customer           Customer            @relation(fields: [customerId], references: [id])
+  event              Event?              @relation(fields: [eventId], references: [id], onDelete: Restrict)
+  venue              Venue?              @relation(fields: [venueId], references: [id])
+  tableAssignments   TableAssignment[]
   workflowExecutions WorkflowExecution[]
-  source        String?
-  comments      String?
-  turitopId     String?           @unique
 
   @@index([eventId, status])
   @@index([venueId, createdAt])
@@ -248,10 +248,10 @@ model Campaign {
 model Workflow {
   id          String              @id @default(cuid())
   name        String
-  trigger     String              // Ej: "RESERVATION_CONFIRMED", "VISIT_REQUESTED"
+  trigger     String
   description String?
   active      Boolean             @default(true)
-  steps       Json                // Array de { type: "email" | "wait", delayDays?: number, templateKey?: string }
+  steps       Json
   createdAt   DateTime            @default(now())
   updatedAt   DateTime            @updatedAt
   executions  WorkflowExecution[]
@@ -262,28 +262,35 @@ model WorkflowExecution {
   workflowId    String
   reservationId String
   currentStep   Int         @default(0)
-  status        String      @default("RUNNING") // RUNNING, COMPLETED, CANCELLED
+  status        String      @default("RUNNING")
   nextStepAt    DateTime
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  workflow      Workflow    @relation(fields: [workflowId], references: [id])
   reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  workflow      Workflow    @relation(fields: [workflowId], references: [id])
 
   @@index([status, nextStepAt])
   @@index([reservationId])
 }
 
 model Page {
-  id        String      @id @default(cuid())
-  title     String
-  slug      String      @unique
-  published Boolean     @default(false)
-  seoTitle  String?
-  seoDesc   String?
-  ogImage   String?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  blocks    PageBlock[]
+  id           String      @id @default(cuid())
+  title        String
+  slug         String      @unique
+  published    Boolean     @default(false)
+  seoTitle     String?
+  seoDesc      String?
+  ogImage      String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  canonical    String?
+  hreflang     Json?
+  noIndexAfter DateTime?
+  ogType       String?     @default("website")
+  robots       String?     @default("index, follow")
+  schemaOrg    Json?
+  twitterCard  String?     @default("summary_large_image")
+  blocks       PageBlock[]
 }
 
 model PageBlock {
@@ -363,6 +370,93 @@ model PromotionConfig {
   updatedAt    DateTime @updatedAt
 }
 
+model Space {
+  id        String   @id @default(cuid())
+  name      String
+  venueId   String
+  createdAt DateTime @default(now())
+  venue     Venue    @relation(fields: [venueId], references: [id])
+  tables    Table[]
+}
+
+model Table {
+  id          String            @id @default(cuid())
+  spaceId     String
+  identifier  String
+  type        TableType         @default(TABLE)
+  shape       TableShape        @default(RECTANGLE)
+  x           Float
+  y           Float
+  width       Float
+  height      Float
+  rotation    Float             @default(0)
+  capacity    Int
+  isFixed     Boolean           @default(false)
+  space       Space             @relation(fields: [spaceId], references: [id])
+  assignments TableAssignment[]
+}
+
+model TableAssignment {
+  id            String      @id @default(cuid())
+  tableId       String
+  reservationId String
+  eventId       String
+  reservation   Reservation @relation(fields: [reservationId], references: [id])
+  table         Table       @relation(fields: [tableId], references: [id])
+
+  @@unique([tableId, reservationId, eventId])
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model BookingIntent {
+  id            String              @id @default(cuid())
+  name          String
+  phone         String
+  email         String
+  allergies     String?
+  previousVisit Boolean             @default(false)
+  newsletter    Boolean             @default(false)
+  comments      String?
+  groupRef      String?
+  isFirstVisit  Boolean             @default(true)
+  date          DateTime
+  shift         Shift
+  guests        Int
+  eventId       String?
+  totalAmount   Decimal             @db.Decimal(10, 2)
+  amountDue     Decimal             @db.Decimal(10, 2)
+  payFull       Boolean             @default(false)
+  orderId       String?             @unique
+  status        BookingIntentStatus @default(AWAITING_PAYMENT)
+  expiresAt     DateTime
+  createdAt     DateTime            @default(now())
+
+  @@index([status, expiresAt])
+  @@index([orderId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  table     String
+  recordId  String
+  details   String?
+  ipAddress String?
+  userAgent String?
+  success   Boolean  @default(true)
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+  @@index([table, createdAt])
+}
+
 enum UserRole {
   ADMIN
   LIVE
@@ -415,84 +509,15 @@ enum CustomerType {
   EMPRESA
 }
 
-model Space {
-  id        String   @id @default(cuid())
-  name      String   // Ej: "Sala Principal", "Terraza"
-  venueId   String
-  venue     Venue    @relation(fields: [venueId], references: [id])
-  tables    Table[]
-  createdAt DateTime @default(now())
-}
-
-model Table {
-  id           String            @id @default(cuid())
-  spaceId      String
-  space        Space             @relation(fields: [spaceId], references: [id])
-  identifier   String            // Ej: "Mesa 1", "Barra Columnas"
-  type         TableType         @default(TABLE)
-  shape        TableShape        @default(RECTANGLE)
-  x            Float             // Posición para el mapa
-  y            Float
-  width        Float
-  height       Float
-  rotation     Float             @default(0)
-  capacity     Int
-  isFixed      Boolean           @default(false)
-  assignments  TableAssignment[]
-}
-
 enum TableType {
-  TABLE       // Mesas para sentarse
-  DECORATIVE  // Como tu barra de cócteles fija
+  TABLE
+  DECORATIVE
 }
 
 enum TableShape {
   RECTANGLE
   ROUND
   SQUARE
-}
-
-model TableAssignment {
-  id            String      @id @default(cuid())
-  tableId       String
-  table         Table       @relation(fields: [tableId], references: [id])
-  reservationId String
-  reservation   Reservation @relation(fields: [reservationId], references: [id])
-  eventId       String
-  
-  @@unique([tableId, reservationId, eventId])
-}
-
-model Setting {
-  key   String @id
-  value String
-}
-
-model BookingIntent {
-  id            String              @id @default(cuid())
-  name          String
-  phone         String
-  email         String
-  allergies     String?
-  previousVisit Boolean             @default(false)
-  newsletter    Boolean             @default(false)
-  comments      String?
-  groupRef      String?
-  isFirstVisit  Boolean             @default(true)
-  date          DateTime
-  shift         Shift
-  guests        Int
-  eventId       String?
-  totalAmount   Decimal             @db.Decimal(10, 2)
-  amountDue     Decimal             @db.Decimal(10, 2)
-  payFull       Boolean             @default(false)
-  orderId       String?             @unique
-  status        BookingIntentStatus @default(AWAITING_PAYMENT)
-  expiresAt     DateTime
-  createdAt     DateTime            @default(now())
-
-  @@index([status, expiresAt])
-  @@index([orderId])
 }
 
 enum BookingIntentStatus {
@@ -506,22 +531,4 @@ enum PaymentStatus {
   PARTIAL
   COMPLETED
   GIFT
-}
-
-model AuditLog {
-  id        String   @id @default(cuid())
-  userId    String   // Admin user ID who performed the action
-  action    String   // e.g., "DELETE_RESERVATION", "UPDATE_USER", "CHANGE_PASSWORD"
-  table     String   // Table name: "Reservation", "User", "Campaign", etc.
-  recordId  String   // ID of the affected record
-  details   String?  // JSON: who changed what, from what to what
-  ipAddress String?  // Source IP
-  userAgent String?  // Browser/client info
-  success   Boolean  @default(true)
-  error     String?  // If action failed
-  createdAt DateTime @default(now())
-
-  @@index([userId, createdAt])
-  @@index([action, createdAt])
-  @@index([table, createdAt])
 }
