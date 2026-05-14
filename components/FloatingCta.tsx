@@ -20,7 +20,7 @@ export function FloatingCta() {
       <button
         onClick={openGift}
         style={{
-          background: "transparent",
+          background: "rgba(10,10,10,0.8)",
           border: "1px solid var(--gs-gold)",
           color: "var(--gs-gold)",
           padding: "0.75rem 1.5rem",
@@ -32,7 +32,6 @@ export function FloatingCta() {
           cursor: "pointer",
           boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
           backdropFilter: "blur(8px)",
-          background: "rgba(10,10,10,0.8)",
         } as React.CSSProperties}
       >
         Regalar
