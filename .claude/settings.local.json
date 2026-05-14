@@ -64,7 +64,12 @@
       "Bash(find ~/Downloads -name \"*Performance*\" -o -name \"*Search*\" 2>/dev/null | head -20)",
       "Read(//c/Users/mcgri/Downloads/**)",
       "Bash(tasklist)",
-      "Bash(findstr node *)"
+      "Bash(findstr node *)",
+      "Bash(Select-Object -Last 50)",
+      "PowerShell(Stop-Process -Id 23404 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(npm run dev)",
+      "mcp__claude_ai_Supabase__get_project",
+      "Bash(pkill -f \"next dev\")"
     ],
     "additionalDirectories": [
       "C:\\Users\\renat\\Documents\\Github\\gastroshows\\app\\api\\admin\\visits\\[id]",

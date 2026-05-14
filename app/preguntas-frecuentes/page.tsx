@@ -253,12 +253,6 @@ export default function PreguntasFrecuentes() {
                 borderRadius: "2px",
                 transition: "all 0.3s ease",
               }}
-              hoverStyle={(e) => {
-                e.style.opacity = "0.9";
-              }}
-              unhoverStyle={(e) => {
-                e.style.opacity = "1";
-              }}
             >
               Contacta con Nosotros
             </InteractiveLink>
@@ -279,12 +273,6 @@ export default function PreguntasFrecuentes() {
                 display: "inline-block",
                 borderRadius: "2px",
                 transition: "all 0.3s ease",
-              }}
-              hoverStyle={(e) => {
-                e.style.background = "rgba(218,165,32,0.1)";
-              }}
-              unhoverStyle={(e) => {
-                e.style.background = "transparent";
               }}
             >
               Ver Experiencia
