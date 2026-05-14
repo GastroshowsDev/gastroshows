@@ -110,14 +110,7 @@ export default async function Home() {
               boxShadow: "0 8px 32px rgba(218,165,32,0.3)",
               transition: "all 0.3s ease",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 12px 40px rgba(218,165,32,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 8px 32px rgba(218,165,32,0.3)";
-            }}>
+>
               📅 Reservar Experiencia
             </Link>
 
@@ -135,12 +128,7 @@ export default async function Home() {
               display: "inline-block",
               transition: "all 0.3s ease",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "rgba(218,165,32,0.1)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-            }}>
+>
               🎁 Regalar Experiencia
             </Link>
           </div>
@@ -223,14 +211,7 @@ export default async function Home() {
                 background: "rgba(218,165,32,0.03)",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(218,165,32,0.08)";
-                e.currentTarget.style.transform = "translateX(8px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(218,165,32,0.03)";
-                e.currentTarget.style.transform = "translateX(0)";
-              }}>
+>
                 <div style={{ fontSize: "2.8rem", marginBottom: "1rem" }}>{item.icon}</div>
                 <h3 style={{
                   fontFamily: "var(--font-cormorant), Georgia, serif",
