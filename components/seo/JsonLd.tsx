@@ -187,3 +187,51 @@ export function articleSchema({
     ...(image ? { image: { "@type": "ImageObject", url: image } } : {}),
   };
 }
+
+export function menuSchema({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    name,
+    description,
+    restaurant: {
+      "@type": "Restaurant",
+      name: "GastroShows",
+      url: "https://gastroshows.es",
+    },
+  };
+}
+
+export function productSchema({
+  name,
+  description,
+  price,
+}: {
+  name: string;
+  description: string;
+  price: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    description,
+    brand: {
+      "@type": "Brand",
+      name: "GastroShows",
+    },
+    offers: {
+      "@type": "Offer",
+      price: price.toString(),
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      url: "https://gastroshows.es/regalo",
+    },
+  };
+}
