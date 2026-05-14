@@ -80,11 +80,11 @@ export default async function RootLayout({
         <GoogleTagManager />
       </head>
       <body className="min-h-full flex flex-col">
+        <GoogleAnalytics />
+        <MetaPixel />
+        <TikTokPixel />
+        <SeoBodyScripts />
         <Providers>
-          <GoogleAnalytics />
-          <MetaPixel />
-          <TikTokPixel />
-          <SeoBodyScripts />
           <SiteNav />
           <div style={{ paddingTop: "60px" }}>
             {children}
