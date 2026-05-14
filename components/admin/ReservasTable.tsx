@@ -33,9 +33,9 @@ const STATUS_LABEL: Record<StatusKey, string> = {
 };
 
 const STATUS_COLOR: Record<StatusKey, { bg: string; color: string }> = {
-  PENDING:       { bg: "#FEF3C7", color: "#D97706" },
+  PENDING:       { bg: "var(--gs-accent-light)", color: "var(--gs-accent)" },
   CONFIRMED:     { bg: "#DCFCE7", color: "#16A34A" },
-  CHECKED_IN:    { bg: "#F0EBFE", color: "#875BF7" },
+  CHECKED_IN:    { bg: "#F0EBFE", color: "var(--gs-accent)" },
   CANCELLED:     { bg: "#F1F5F9", color: "#6B7280" },
   PAYMENT_FAILED:{ bg: "#FEE2E2", color: "#DC2626" },
 };
@@ -92,9 +92,9 @@ const S = {
     borderRadius: "20px",
     fontSize: "0.76rem",
     fontWeight: 500,
-    border: `1px solid ${active ? (color ?? "var(--color-admin-accent)") : "var(--color-admin-border)"}`,
+    border: `1px solid ${active ? (color ?? "var(--gs-accent)") : "var(--color-admin-border)"}`,
     color: active ? "#fff" : "var(--color-admin-muted)",
-    background: active ? (color ?? "var(--color-admin-accent)") : "var(--color-admin-surface)",
+    background: active ? (color ?? "var(--gs-accent)") : "var(--color-admin-surface)",
     cursor: "pointer",
     transition: "all 0.15s",
   }),
@@ -182,7 +182,7 @@ const S = {
     fontSize: "0.7rem",
     fontWeight: 700,
     letterSpacing: "0.08em",
-    color: "var(--color-admin-accent)",
+    color: "var(--gs-accent)",
     textTransform: "uppercase" as const,
     marginBottom: "0.75rem",
   },
@@ -260,9 +260,9 @@ function FilterDropdown<T extends string>({
           padding: "0.3rem 0.75rem",
           borderRadius: "20px",
           fontSize: "0.76rem", fontWeight: 500,
-          border: `1px solid ${isFiltered ? "var(--color-admin-accent)" : "var(--color-admin-border)"}`,
-          color: isFiltered ? "var(--color-admin-accent)" : "var(--color-admin-muted)",
-          background: isFiltered ? "var(--color-admin-accent-light)" : "var(--color-admin-surface)",
+          border: `1px solid ${isFiltered ? "var(--gs-accent)" : "var(--color-admin-border)"}`,
+          color: isFiltered ? "var(--gs-accent)" : "var(--color-admin-muted)",
+          background: isFiltered ? "var(--gs-accent-light)" : "var(--color-admin-surface)",
           cursor: "pointer", transition: "all 0.15s",
         }}
       >
@@ -298,9 +298,9 @@ function FilterDropdown<T extends string>({
               style={{
                 display: "block", width: "100%", textAlign: "left",
                 padding: "0.5rem 0.9rem", fontSize: "0.78rem",
-                color: active === o.value ? "var(--color-admin-accent)" : "var(--color-admin-text)",
+                color: active === o.value ? "var(--gs-accent)" : "var(--color-admin-text)",
                 fontWeight: active === o.value ? 600 : 400,
-                background: active === o.value ? "var(--color-admin-accent-light)" : "none",
+                background: active === o.value ? "var(--gs-accent-light)" : "none",
                 border: "none", cursor: "pointer",
               }}
               onMouseEnter={(e) => { if (active !== o.value) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-admin-bg)"; }}
@@ -878,7 +878,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           display: "flex", alignItems: "center", gap: "0.75rem",
           fontSize: "0.82rem", flexShrink: 0,
         }}>
-          <span style={{ fontWeight: 600, color: "var(--color-admin-accent)" }}>
+          <span style={{ fontWeight: 600, color: "var(--gs-accent)" }}>
             {selectedCount} reserva{selectedCount !== 1 ? "s" : ""} seleccionada{selectedCount !== 1 ? "s" : ""}
           </span>
           <button
@@ -891,7 +891,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
             <button
               onClick={handleMerge}
               disabled={merging}
-              style={{ marginLeft: "auto", padding: "0.3rem 1rem", borderRadius: 6, border: "none", background: "var(--color-admin-accent)", color: "#fff", fontSize: "0.76rem", cursor: merging ? "not-allowed" : "pointer", opacity: merging ? 0.7 : 1, fontWeight: 600 }}
+              style={{ marginLeft: "auto", padding: "0.3rem 1rem", borderRadius: 6, border: "none", background: "var(--gs-accent)", color: "#fff", fontSize: "0.76rem", cursor: merging ? "not-allowed" : "pointer", opacity: merging ? 0.7 : 1, fontWeight: 600 }}
             >
               {merging ? "Fusionando..." : "Fusionar reservas"}
             </button>
@@ -997,7 +997,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                     onClick={() => openEdit(r)}
                     style={{
                       cursor: "pointer",
-                      background: isSelected ? "var(--color-admin-accent-light)" : "transparent",
+                      background: isSelected ? "var(--gs-accent-light)" : "transparent",
                       transition: "background 0.1s",
                     }}
                     onMouseEnter={(e) => { if (!isSelected) (e.currentTarget as HTMLTableRowElement).style.background = "var(--color-admin-bg)"; }}
@@ -1031,14 +1031,14 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                         </div>
                       )}
                       {r.groupRef && !r.mergedGroupId && (
-                        <div style={{ fontSize: "0.7rem", color: "#D97706", marginTop: "0.2rem", fontWeight: 500, display: "inline-block", background: "#FEF3C7", padding: "2px 6px", borderRadius: "4px" }}>
+                        <div style={{ fontSize: "0.7rem", color: "var(--gs-accent)", marginTop: "0.2rem", fontWeight: 500, display: "inline-block", background: "var(--gs-accent-light)", padding: "2px 6px", borderRadius: "4px" }}>
                           Relacionada: {r.groupRef}
                         </div>
                       )}
                       {r.mergedGroupId && (
                         <div 
                           onClick={(e) => { e.stopPropagation(); setGroupViewId(r.mergedGroupId!); }}
-                          style={{ fontSize: "0.7rem", color: "#0891B2", marginTop: "0.2rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem", background: "#CFFAFE", padding: "2px 6px", borderRadius: "4px", cursor: "pointer" }}
+                          style={{ fontSize: "0.7rem", color: "var(--gs-accent)", marginTop: "0.2rem", fontWeight: 600, display: "inline-flex", alignItems: "center", gap: "0.3rem", background: "var(--gs-accent-light)", padding: "2px 6px", borderRadius: "4px", cursor: "pointer" }}
                           title="Ver grupo"
                         >
                           🔗 Grupo Fusionado
@@ -1059,9 +1059,9 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                           style={{
                             padding: "2px 6px",
                             borderRadius: "14px",
-                            border: `1px solid ${r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-border)"}`,
-                            background: r.venue ? (getVenueDisplay(r.venue.name).bg) : r.status === "CONFIRMED" ? "#FFFBEB" : "transparent",
-                            color: r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "#D97706" : "var(--color-admin-muted)",
+                            border: `1px solid ${r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "var(--gs-accent)" : "var(--color-admin-border)"}`,
+                            background: r.venue ? (getVenueDisplay(r.venue.name).bg) : r.status === "CONFIRMED" ? "var(--gs-accent-light)" : "transparent",
+                            color: r.venue ? (getVenueDisplay(r.venue.name).color) : r.status === "CONFIRMED" ? "var(--gs-accent)" : "var(--color-admin-muted)",
                             fontSize: "0.72rem", fontWeight: 600, cursor: "pointer", outline: "none",
                           }}
                         >
@@ -1071,7 +1071,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                           ))}
                         </select>
                         {r.status === "CONFIRMED" && !r.venue && (
-                          <div style={{ position: "absolute", top: "-8px", right: "-4px", background: "#D97706", width: "14px", height: "14px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.6rem", fontWeight: 800, border: "1px solid #fff" }} title="Local pendiente de asignar">!</div>
+                          <div style={{ position: "absolute", top: "-8px", right: "-4px", background: "var(--gs-accent)", width: "14px", height: "14px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "0.6rem", fontWeight: 800, border: "1px solid #fff" }} title="Local pendiente de asignar">!</div>
                         )}
                       </div>
 
@@ -1083,8 +1083,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
                         return (
                           <span style={{
                             padding: "2px 8px", borderRadius: 14, fontSize: "0.72rem", fontWeight: 600,
-                            background: isPaid ? "#DCFCE7" : "#FEF3C7",
-                            color: isPaid ? "#16A34A" : "#D97706",
+                            background: isPaid ? "#DCFCE7" : "var(--gs-accent-light)",
+                            color: isPaid ? "#16A34A" : "var(--gs-accent)",
                           }}>
                             {isPaid ? "Pagado" : "Parcial"}
                           </span>

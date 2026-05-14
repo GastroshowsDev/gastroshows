@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { GOOGLE_FONTS_URL } from "@/lib/constants/fonts";
 
 const MasterStylesContext = createContext<any>(null);
 
@@ -15,7 +16,15 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
       const json = await res.json();
       if (json.master_styles) {
         try {
-          setStyles(JSON.parse(json.master_styles));
+          const parsed = JSON.parse(json.master_styles);
+          setStyles(parsed);
+          
+          // Aplicar paleta al body/html
+          if (parsed.paletteId) {
+            document.documentElement.setAttribute("data-palette", parsed.paletteId);
+          } else {
+            document.documentElement.removeAttribute("data-palette");
+          }
         } catch (e) {
           console.error("Failed to parse master styles", e);
         }
@@ -93,7 +102,10 @@ export function MasterStylesProvider({ children }: { children: React.ReactNode }
 
   return (
     <MasterStylesContext.Provider value={styles}>
-      <style dangerouslySetInnerHTML={{ __html: css }} />
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('${GOOGLE_FONTS_URL}');
+        ${css}
+      ` }} />
       {children}
     </MasterStylesContext.Provider>
   );

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Menu, Globe } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Menu, Globe, ArrowLeft } from "lucide-react";
 import { 
   BlockType, 
   BlockData, 
@@ -49,6 +50,7 @@ type PageData = {
 };
 
 export function PageBuilderEditor({ pageId }: { pageId: string }) {
+  const router = useRouter();
   const [page, setPage] = useState<PageData | null>(null);
   const [history, setHistory] = useState<PageData[]>([]);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
@@ -68,8 +70,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
     h2: { fontSize: "2.5rem", fontWeight: 700, color: "#111827" },
     h3: { fontSize: "1.75rem", fontWeight: 600, color: "#111827" },
     p: { fontSize: "1rem", color: "#4B5563" },
-    button: { backgroundColor: "#875BF7", color: "#FFFFFF", borderRadius: "8px" },
-    a: { color: "#875BF7" }
+    button: { backgroundColor: "var(--gs-accent)", color: "#FFFFFF", borderRadius: "8px" },
+    a: { color: "var(--gs-accent)" }
   });
 
   const sensors = useSensors(
@@ -114,6 +116,11 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
           // 1. If it's already a modern SECTION with columns and elements, keep it
           if (block.type === "SECTION" && content.columns?.[0]?.elements) {
             return block;
+          }
+          
+          // Skip migration for specific modern blocks
+          if (block.type === "HEADER" || block.type === "FOOTER" || block.type === "STEPS") {
+             return block;
           }
 
           // 2. Universal Migration for legacy or imported blocks with flat fields
@@ -433,7 +440,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
     if (activeId === overId) return;
 
-    // 1. Block Reordering (Top-level blocks have simple IDs, elements usually have - or are UUIDs)
+    // 1. Block Reordering
     const isBlock = page.blocks.some(b => b.id === activeId);
     const isOverBlock = page.blocks.some(b => b.id === overId);
 
@@ -447,21 +454,24 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       return;
     }
 
-    // 2. Element Movement (Any element to any position)
+    // 2. Element Movement
     const sourceElement = findElementById(page.blocks, activeId);
     if (!sourceElement) return;
 
     // Remove from source
     let newBlocks = removeElementById(page.blocks, activeId);
 
-    // Find target block and column
-    // The overId could be an element ID or a column target (col-blockId-colIdx)
+    // Find target
     if (overId.startsWith("col-")) {
       const parts = overId.split("-");
       const targetBlockId = parts[1];
       const targetColIdx = parseInt(parts[2]);
       newBlocks = insertElementInColumn(newBlocks, targetBlockId, targetColIdx, sourceElement);
+    } else if (isOverBlock) {
+      // If dropped over a block but not a column specifically, add to first column
+      newBlocks = insertElementInColumn(newBlocks, overId, 0, sourceElement);
     } else {
+      // Dropped over another element
       newBlocks = insertElementNearId(newBlocks, overId, sourceElement);
     }
 
@@ -821,7 +831,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
       {/* Sidebar Izquierda */}
       <aside style={{ width: "260px", background: "white", borderRight: "1px solid #EAEEF4", display: "flex", flexDirection: "column", flexShrink: 0 }}>
         <div style={{ padding: "1.2rem", borderBottom: "1px solid #EAEEF4", display: "flex", alignItems: "center", gap: "0.8rem" }}>
-          <div style={{ width: "32px", height: "32px", background: "#875BF7", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 900 }}>G</div>
+          <div style={{ width: "32px", height: "32px", background: "var(--gs-accent)", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontWeight: 900 }}>G</div>
           <h2 style={{ fontSize: "0.9rem", fontWeight: 700, margin: 0, color: "#111827" }}>Builder</h2>
         </div>
 
@@ -832,8 +842,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             style={{ 
               flex: 1, padding: "0.75rem", fontSize: "0.7rem", fontWeight: 700, border: "none", 
               background: leftTab === "insert" ? "white" : "#F9FAFB",
-              color: leftTab === "insert" ? "#875BF7" : "#6B7280",
-              borderBottom: leftTab === "insert" ? "2px solid #875BF7" : "none",
+              color: leftTab === "insert" ? "var(--gs-accent)" : "#6B7280",
+              borderBottom: leftTab === "insert" ? "2px solid var(--gs-accent)" : "none",
               cursor: "pointer"
             }}
           >
@@ -844,8 +854,8 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             style={{ 
               flex: 1, padding: "0.75rem", fontSize: "0.7rem", fontWeight: 700, border: "none", 
               background: leftTab === "layers" ? "white" : "#F9FAFB",
-              color: leftTab === "layers" ? "#875BF7" : "#6B7280",
-              borderBottom: leftTab === "layers" ? "2px solid #875BF7" : "none",
+              color: leftTab === "layers" ? "var(--gs-accent)" : "#6B7280",
+              borderBottom: leftTab === "layers" ? "2px solid var(--gs-accent)" : "none",
               cursor: "pointer"
             }}
           >
@@ -858,7 +868,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             <>
               <p style={sectionHeaderStyle}>1. Estructura</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                <button onClick={() => setPresetModalMode("HEADER")} style={insertButtonStyle("#F0EBFE", "#875BF733")}>
+                <button onClick={() => setPresetModalMode("HEADER")} style={insertButtonStyle("var(--gs-accent-light)", "var(--gs-accent-soft)")}>
                   <span style={{ fontSize: "1rem" }}>☰</span>
                   <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Menú</span>
                 </button>
@@ -874,7 +884,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
 
               <p style={sectionHeaderStyle}>2. Elementos</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                {Object.entries(ELEMENT_LABELS).filter(([type]) => type !== "AVAILABILITY" && type !== "CALENDAR").map(([type, info]) => (
+                {Object.entries(ELEMENT_LABELS)
+                  .filter(([type]) => !["AVAILABILITY", "CALENDAR", "REVIEWS", "FORM"].includes(type))
+                  .map(([type, info]) => (
                   <div
                     key={type}
                     draggable
@@ -882,31 +894,27 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                     style={draggableItemStyle()}
                   >
                     <span style={{ fontSize: "0.9rem" }}>{info.icon}</span>
-                    <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>{info.label}</span>
+                    <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "#4B5563" }}>{info.label}</span>
                   </div>
                 ))}
               </div>
 
               <p style={sectionHeaderStyle}>3. Widgets</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
-                <button onClick={() => addBlock("AVAILABILITY")} style={insertButtonStyle()}>
-                  <span style={{ fontSize: "1rem" }}>📅</span>
-                  <span style={{ fontSize: "0.6rem", fontWeight: 600 }}>Disponibilidad</span>
-                </button>
-                
                 {[
-                  { type: "REVIEWS",  label: "Google Reviews", icon: "⭐" },
-                  { type: "FORM",     label: "Formulario",     icon: "📋" },
-                  { type: "CALENDAR", label: "Calendario",     icon: "📆" }
+                  { type: "AVAILABILITY", label: "Disponibilidad", icon: "📅" },
+                  { type: "REVIEWS",      label: "Google Reviews", icon: "⭐" },
+                  { type: "FORM",         label: "Formulario",     icon: "📋" },
+                  { type: "CALENDAR",     label: "Calendario",     icon: "📆" }
                 ].map((widget) => (
                   <div
                     key={widget.type}
                     draggable
                     onDragStart={(e) => e.dataTransfer.setData("elementType", widget.type)}
-                    style={draggableItemStyle("#F0EBFE", "#875BF733")}
+                    style={draggableItemStyle()}
                   >
                     <span style={{ fontSize: "0.9rem" }}>{widget.icon}</span>
-                    <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "#875BF7" }}>{widget.label}</span>
+                    <span style={{ fontSize: "0.6rem", fontWeight: 600, color: "#4B5563" }}>{widget.label}</span>
                   </div>
                 ))}
               </div>
@@ -919,9 +927,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                   setActiveRightTab("global" as any);
                 }}
                 style={{
-                  padding: "0.8rem", borderRadius: "10px", border: "2px dashed #875BF7",
-                  background: activeRightTab === "global" ? "#F0EBFE" : "transparent",
-                  color: "#875BF7", fontWeight: 700, fontSize: "0.75rem", cursor: "pointer",
+                  padding: "0.8rem", borderRadius: "10px", border: "2px dashed var(--gs-accent)",
+                  background: activeRightTab === "global" ? "var(--gs-accent-light)" : "transparent",
+                  color: "var(--gs-accent)", fontWeight: 700, fontSize: "0.75rem", cursor: "pointer",
                   marginBottom: "1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem"
                 }}
               >
@@ -966,9 +974,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             onClick={save}
             disabled={saving}
             style={{ 
-              width: "100%", padding: "0.75rem", background: "#875BF7", color: "white", 
+              width: "100%", padding: "0.75rem", background: "var(--gs-accent)", color: "white", 
               border: "none", borderRadius: "10px", fontWeight: 700, cursor: "pointer", 
-              fontSize: "0.8rem", boxShadow: "0 4px 12px rgba(135, 91, 247, 0.25)",
+              fontSize: "0.8rem", boxShadow: "0 4px 12px rgba(218, 165, 32, 0.25)",
               transition: "transform 0.1s active"
             }}
           >
@@ -982,23 +990,30 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
         <div style={{ padding: "1rem 2rem", background: "white", borderBottom: "1px solid #EAEEF4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <button
-              onClick={() => window.dispatchEvent(new CustomEvent("gs-toggle-sidebar"))}
+              onClick={() => router.push("/admin/web/pages")}
               style={{
-                background: "none",
+                background: "var(--gs-accent)",
                 border: "none",
                 padding: "0.5rem",
                 cursor: "pointer",
-                color: "var(--color-admin-text)",
+                color: "white",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: "6px",
-                marginRight: "0.5rem"
+                borderRadius: "50%",
+                marginRight: "0.5rem",
+                boxShadow: "0 2px 8px rgba(218, 165, 32, 0.2)"
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-admin-bg)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.1)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(218, 165, 32, 0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(218, 165, 32, 0.2)";
+              }}
             >
-              <Menu size={20} />
+              <ArrowLeft size={18} />
             </button>
 
             <input
@@ -1021,7 +1036,10 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             
             {/* UNDO BUTTON */}
             <button 
-              onClick={undo} 
+              onMouseDown={(e) => {
+                e.preventDefault();
+                undo();
+              }}
               disabled={history.length === 0}
               style={{ 
                 marginLeft: "2rem", padding: "0.4rem 0.8rem", background: "#F3F4F6", border: "1px solid #D1D5DB", 
@@ -1065,9 +1083,9 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "scale(1.05)";
-                  e.currentTarget.style.borderColor = "#efb810";
-                  e.currentTarget.style.background = "#fef8e7";
-                  e.currentTarget.style.color = "#efb810";
+                  e.currentTarget.style.borderColor = "var(--gs-accent)";
+                  e.currentTarget.style.background = "var(--gs-accent-light)";
+                  e.currentTarget.style.color = "var(--gs-accent)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "scale(1)";
@@ -1124,7 +1142,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                  onDragStart={({ active }) => setActiveId(active.id as string)}
                  onDragEnd={(e) => { handleDragEnd(e); setActiveId(null); }}
                  onDragCancel={() => setActiveId(null)}
-                 modifiers={activeId?.includes("-") ? [] : [restrictToVerticalAxis]}
+                 modifiers={page.blocks.some(b => b.id === activeId) ? [restrictToVerticalAxis] : []}
                >
                  <SortableContext
                    items={page.blocks.map((b) => b.id)}
@@ -1163,7 +1181,7 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
                             setSelectedBlockId(blockId);
                             setSelectedElementPath(id);
                           }}
-                          selectedElementPath={selectedElementPath}
+                          selectedElementPath={selectedElementPath?.startsWith(block.id) ? selectedElementPath : null}
                         />
                       </SortableBlock>
                     ))}
@@ -1189,20 +1207,20 @@ export function PageBuilderEditor({ pageId }: { pageId: string }) {
             background: "transparent",
             transition: "background 0.2s"
           }}
-          onMouseEnter={(e) => e.currentTarget.style.background = "#875BF733"}
+          onMouseEnter={(e) => e.currentTarget.style.background = "var(--gs-accent-soft)"}
           onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
         />
 
         <div style={{ display: "flex", borderBottom: "1px solid #EAEEF4" }}>
           <button 
             onClick={() => setActiveRightTab("properties")}
-            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "properties" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "properties" ? "2px solid #875BF7" : "none", color: activeRightTab === "properties" ? "#875BF7" : "#6B7280" }}
+            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "properties" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "properties" ? "2px solid var(--gs-accent)" : "none", color: activeRightTab === "properties" ? "var(--gs-accent)" : "#6B7280" }}
           >
             Propiedades
           </button>
           <button 
             onClick={() => setActiveRightTab("seo")}
-            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "seo" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "seo" ? "2px solid #875BF7" : "none", color: activeRightTab === "seo" ? "#875BF7" : "#6B7280" }}
+            style={{ flex: 1, padding: "0.8rem", border: "none", background: activeRightTab === "seo" ? "white" : "#F9FAFB", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", borderBottom: activeRightTab === "seo" ? "2px solid var(--gs-accent)" : "none", color: activeRightTab === "seo" ? "var(--gs-accent)" : "#6B7280" }}
           >
             SEO
           </button>
@@ -1298,8 +1316,8 @@ function SidebarSortableItem({ block, index, isSelected, onClick, onMoveUp, onMo
     transition,
     padding: "0.6rem 0.8rem", 
     borderRadius: "8px", 
-    border: `1px solid ${isSelected ? "#875BF7" : "#E5E7EB"}`,
-    background: isSelected ? "#F0EBFE" : "white", 
+    border: `1px solid ${isSelected ? "var(--gs-accent)" : "#E5E7EB"}`,
+    background: isSelected ? "var(--gs-accent-light)" : "white", 
     cursor: "pointer",
     display: "flex", 
     alignItems: "center", 
@@ -1321,7 +1339,7 @@ function SidebarSortableItem({ block, index, isSelected, onClick, onMoveUp, onMo
     <div ref={setNodeRef} style={style} onClick={onClick}>
       <div {...attributes} {...listeners} style={{ cursor: "grab", color: "#9CA3AF", fontSize: "0.6rem", padding: "4px" }}>⠿</div>
       <span style={{ color: "#9CA3AF", fontSize: "0.6rem", width: "12px" }}>{index + 1}</span>
-      <span style={{ flex: 1, fontWeight: 600, color: isSelected ? "#875BF7" : "#374151" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
+      <span style={{ flex: 1, fontWeight: 600, color: isSelected ? "var(--gs-accent)" : "#374151" }}>{BLOCK_LABELS[block.type]?.label || block.type}</span>
       <div style={{ display: "flex", gap: "4px" }}>
         <button onClick={(e) => { e.stopPropagation(); onMoveUp(); }} style={layerButtonStyle}>▲</button>
         <button onClick={(e) => { e.stopPropagation(); onMoveDown(); }} style={layerButtonStyle}>▼</button>

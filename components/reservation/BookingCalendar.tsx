@@ -10,8 +10,8 @@ const MONTH_NAMES = [
 const DAY_NAMES = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"];
 
 const GOLD = "#daa520";
-const OFFWHITE = "#F5F0E8";
-const LIGHT = "#888888";
+const OFFWHITE = "var(--gs-text)";
+const LIGHT = "var(--gs-muted)";
 
 type Props = {
   value: string | null;
@@ -135,7 +135,7 @@ export function BookingCalendar({
                 fontSize: "0.96rem",
                 border: status === "selected" ? `1px solid ${primaryColor}` : (status === "private" ? `1px dashed rgba(200,169,110,0.4)` : (status === "available" ? `1px solid rgba(255,255,255,0.1)` : "1px solid transparent")),
                 background: status === "selected" ? primaryColor : (status === "available" ? "rgba(255,255,255,0.03)" : "transparent"),
-                color: status === "selected" ? "black" : (status === "private" ? "rgba(200,169,110,0.7)" : (status === "available" ? OFFWHITE : "rgba(245,240,232,0.15)")),
+                color: status === "selected" ? "black" : (status === "private" ? "rgba(200,169,110,0.7)" : (status === "available" ? "var(--gs-text)" : "var(--gs-text-sub)")),
                 fontWeight: status === "selected" ? 600 : 300,
                 width: "100%",
                 padding: 0,

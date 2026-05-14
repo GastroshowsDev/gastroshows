@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireStaff } from "@/lib/auth-helpers";
 
 export async function POST(request: Request) {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json() as {
       name: string; email: string; phone: string;

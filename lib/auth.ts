@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
       options: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict" as const, // CSRF protection
+        sameSite: "lax" as const, // "strict" bloqueaba cookies en Firefox/Brave o al llegar desde links externos
         path: "/",
       },
     },

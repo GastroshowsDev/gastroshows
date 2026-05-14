@@ -6,6 +6,7 @@ import {
   getRecentReservationsForLive,
   getReservationsForServiceDay,
 } from "@/lib/admin/live-data";
+import { requireStaff } from "@/lib/auth-helpers";
 
 const querySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(40),
@@ -17,6 +18,9 @@ const querySchema = z.object({
 });
 
 export async function GET(request: Request) {
+  const auth = await requireStaff();
+  if (!auth.ok) return auth.response;
+
   const { searchParams } = new URL(request.url);
   const parsed = querySchema.safeParse({
     limit: searchParams.get("limit") ?? undefined,

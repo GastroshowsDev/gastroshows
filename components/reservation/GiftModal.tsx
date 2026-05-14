@@ -173,7 +173,7 @@ export function GiftModal({ open, onClose }: Props) {
         }}>
           <div>
             <div style={smallLabel}>Vale regalo</div>
-            <div style={serifTitle}>Regalar la experiencia</div>
+            <div style={{ ...serifTitle, color: "var(--gs-text)" }}>Regalar la experiencia</div>
           </div>
           <button onClick={handleClose} style={closeBtn}>✕</button>
         </div>

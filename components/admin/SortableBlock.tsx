@@ -30,7 +30,7 @@ export function SortableBlock({ id, children, isSelected, onClick, onDelete, lab
     position: isSticky ? "sticky" : "relative",
     top: isSticky ? 0 : undefined,
     cursor: "pointer",
-    outline: isSelected ? "3px solid #875BF7" : "none",
+    outline: isSelected ? "3px solid var(--gs-accent)" : "none",
     outlineOffset: "-3px",
     zIndex: isDragging ? 100 : isSticky ? 1100 : isSelected ? 10 : 1,
     opacity: isDragging ? 0.4 : 1,
@@ -49,12 +49,12 @@ export function SortableBlock({ id, children, isSelected, onClick, onDelete, lab
           left: "50%",
           transform: "translateX(-50%)",
           padding: "2px 8px",
-          background: "#875BF7",
+          background: "var(--gs-accent)",
           color: "white",
           borderRadius: "4px",
           fontSize: "12px",
           fontWeight: 700,
-          boxShadow: "0 2px 8px rgba(135,91,247,0.4)",
+          boxShadow: "0 2px 8px rgba(218,165,32,0.4)",
           opacity: isDragging || isSelected ? 1 : 0,
           visibility: isDragging || isSelected ? "visible" : "hidden",
           transition: "all 0.2s",
@@ -76,7 +76,7 @@ export function SortableBlock({ id, children, isSelected, onClick, onDelete, lab
       {isSelected && !isDragging && (
         <div style={{
           position: "absolute", top: 0, right: 0, padding: "0.5rem",
-          background: "#875BF7", color: "white", fontSize: "0.6rem", fontWeight: 700,
+          background: "var(--gs-accent)", color: "white", fontSize: "0.6rem", fontWeight: 700,
           textTransform: "uppercase", pointerEvents: "none", zIndex: 21
         }}>
           {label}

@@ -30,7 +30,7 @@ Sistema de rutas etiquetado para navegación eficiente del código. Cada entrada
 | Route Tag | File | What | Key Function |
 |-----------|------|------|--------------|
 | `AuthHelpers` | `lib/auth-helpers.ts` | Role validation utilities | `requireAdmin()`, `requireStaff()` |
-| `AuthMiddleware` | `proxy.ts` | Request filtering + role whitelist | LIVE/ADMIN role enforcement |
+| `AuthMiddleware` | `middleware.ts` | Request filtering + role whitelist | LIVE/ADMIN role enforcement |
 | `AuthSession` | `lib/auth.ts` | Session type definitions | `AuthorizedSession`, `Role` type |
 
 ---

@@ -69,8 +69,8 @@ export const HEADER_PRESETS: SectionPreset[] = [
           ],
           styles: { 
             backgroundColor: "#0A0A0A", 
-            color: "#daa520",
-            borderBottom: "1px solid rgba(218,165,32,0.2)"
+            color: "var(--gs-accent)",
+            borderBottom: "1px solid var(--gs-accent-light)"
           }
         }
       }
@@ -257,7 +257,7 @@ export const SECTION_PRESETS: SectionPreset[] = [
             {
               width: "50%",
               elements: [
-                { type: "TEXT", body: "NUEVA TEMPORADA", styles: { fontWeight: 700, color: "#875BF7", letterSpacing: "0.2em", fontSize: "0.8rem", marginBottom: "1rem" } },
+                { type: "TEXT", body: "NUEVA TEMPORADA", styles: { fontWeight: 700, color: "var(--gs-accent)", letterSpacing: "0.2em", fontSize: "0.8rem", marginBottom: "1rem" } },
                 { type: "HEADING", level: 1, text: "Un viaje sensorial.", styles: { fontSize: "4.5rem", fontWeight: 800, lineHeight: 1, marginBottom: "2rem" } },
                 { type: "TEXT", body: "Explora texturas y aromas que desafían lo convencional. Una curaduría de platos diseñada para los paladares más exigentes.", styles: { fontSize: "1.25rem", lineHeight: 1.6, color: "#4B5563", marginBottom: "3rem" } },
                 { type: "BUTTON", text: "Ver el Menú", variant: "primary", styles: { padding: "1rem 2.5rem", borderRadius: "30px" } }
@@ -595,7 +595,7 @@ export const SECTION_PRESETS: SectionPreset[] = [
               { type: "FORM", content: { fields: [ { id: "e1", type: "email", label: "Email", placeholder: "tu@email.com", width: "full" } ], submitText: "Unirse" } }
             ]}
           ],
-          styles: { padding: "4rem 2rem", backgroundColor: "#F0EBFE" }
+          styles: { padding: "4rem 2rem", backgroundColor: "var(--gs-accent-light)" }
         }
       }
     ]
@@ -745,7 +745,7 @@ export const SECTION_PRESETS: SectionPreset[] = [
             {
               width: "100%",
               elements: [
-                { type: "TEXT", body: "“", styles: { fontSize: "8rem", color: "#875BF7", lineHeight: 0, textAlign: "center", height: "4rem", display: "block" } },
+                { type: "TEXT", body: "“", styles: { fontSize: "8rem", color: "var(--gs-accent)", lineHeight: 0, textAlign: "center", height: "4rem", display: "block" } },
                 { type: "HEADING", level: 2, text: "La mejor cena clandestina que he vivido jamás. El misterio y el sabor se funden en uno.", styles: { fontSize: "2.5rem", fontWeight: 300, fontStyle: "italic", textAlign: "center", maxWidth: "800px", margin: "0 auto 2rem" } },
                 { type: "TEXT", body: "— CARLOS RODRÍGUEZ, CRÍTICO GASTRONÓMICO", styles: { textAlign: "center", fontWeight: 700, letterSpacing: "0.2em", fontSize: "0.8rem", color: "#6B7280" } }
               ]
@@ -768,7 +768,7 @@ export const SECTION_PRESETS: SectionPreset[] = [
         content: {
           columns: [
             { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "15k", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center" } }, { type: "TEXT", body: "Visitantes satisfechos", styles: { textAlign: "center", color: "#6B7280" } } ] },
-            { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "45", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center", color: "#875BF7" } }, { type: "TEXT", body: "Eventos exclusivos", styles: { textAlign: "center", color: "#6B7280" } } ] },
+            { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "45", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center", color: "var(--gs-accent)" } }, { type: "TEXT", body: "Eventos exclusivos", styles: { textAlign: "center", color: "#6B7280" } } ] },
             { width: "33.33%", elements: [ { type: "HEADING", level: 2, text: "3", styles: { fontSize: "5rem", fontWeight: 900, textAlign: "center" } }, { type: "TEXT", body: "Soles Repsol", styles: { textAlign: "center", color: "#6B7280" } } ] }
           ],
           styles: { padding: "8rem 2rem", backgroundColor: "#F9FAFB" }
@@ -1061,7 +1061,7 @@ export const SECTION_PRESETS: SectionPreset[] = [
           ],
           styles: { 
             padding: "8rem 2rem", 
-            backgroundImage: "linear-gradient(135deg, #875BF7 0%, #daa520 100%)",
+            backgroundImage: "linear-gradient(135deg, #daa520 0%, #B8860B 100%)",
             backgroundSize: "cover"
           }
         }

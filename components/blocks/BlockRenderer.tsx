@@ -32,7 +32,6 @@ const FooterBlock = dynamic(() => import("./FooterBlock").then(mod => mod.Footer
 const ReviewsBlock = dynamic(() => import("./ReviewsBlock").then(mod => mod.ReviewsBlock));
 const FormBlock = dynamic(() => import("./FormBlock").then(mod => mod.FormBlock));
 
-
 type Props = {
   block: BlockData;
   isEditing?: boolean;
@@ -41,11 +40,13 @@ type Props = {
   selectedElementPath?: string | null;
 };
 
+import React, { memo } from "react";
+
 /**
  * Renders a single block based on its type.
  * This is the central dispatch component for the page builder.
  */
-export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelectElement, selectedElementPath }: Props) {
+export const BlockRenderer = memo(function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelectElement, selectedElementPath }: Props) {
   const { id = "temp-id", type, content } = block;
 
   const handleUpdate = (newContent: any) => {
@@ -152,7 +153,13 @@ export function BlockRenderer({ block, isEditing = false, onUpdateBlock, onSelec
       }
       return null;
   }
-}
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.block === nextProps.block &&
+    prevProps.isEditing === nextProps.isEditing &&
+    prevProps.selectedElementPath === nextProps.selectedElementPath
+  );
+});
 
 /**
  * Renders an array of blocks in order.

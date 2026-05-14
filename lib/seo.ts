@@ -59,8 +59,8 @@ export async function getSeoSettings(): Promise<SeoSettingsData> {
     // Adding a timeout to prevent site-wide hangs if DB is unresponsive
     const row = await Promise.race([
       prisma.seoSettings.findUnique({ where: { id: "default" } }),
-      new Promise<null>((_, reject) => 
-        setTimeout(() => reject(new Error("Timeout")), 3000)
+      new Promise<null>((resolve) => 
+        setTimeout(() => resolve(null), 5000)
       )
     ]);
     return row ?? DEFAULTS;

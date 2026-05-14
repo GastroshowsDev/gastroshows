@@ -13,12 +13,15 @@ type Page = {
 };
 
 import { CreatePageModal } from "./CreatePageModal";
+import { MigratePageModal } from "./MigratePageModal";
 
 export function PagesList() {
   const [pages, setPages] = useState<Page[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [migrating, setMigrating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMigrateModalOpen, setIsMigrateModalOpen] = useState(false);
 
   async function fetchPages() {
     setLoading(true);
@@ -32,6 +35,29 @@ export function PagesList() {
   }
 
   useEffect(() => { fetchPages(); }, []);
+
+  async function handleMigratePage(url: string) {
+    setMigrating(true);
+    try {
+      const res = await fetch("/api/admin/web/migrate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      const json = await res.json();
+      if (json.ok) {
+        alert("Página migrada con éxito");
+        fetchPages();
+      } else {
+        alert(json.error || "Error al migrar la página");
+      }
+    } catch (err) {
+      alert("Error de conexión al migrar");
+    } finally {
+      setMigrating(false);
+      setIsMigrateModalOpen(false);
+    }
+  }
 
   async function handleCreatePage({ title, slug }: { title: string; slug: string }) {
     setCreating(true);
@@ -94,6 +120,13 @@ export function PagesList() {
         onConfirm={handleCreatePage} 
       />
 
+      <MigratePageModal 
+        isOpen={isMigrateModalOpen}
+        onClose={() => setIsMigrateModalOpen(false)}
+        onConfirm={handleMigratePage}
+        loading={migrating}
+      />
+
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <div>
           <h1 style={{ fontSize: "1.75rem", fontWeight: 600, color: "var(--color-admin-text)" }}>Páginas del sitio</h1>
@@ -141,6 +174,25 @@ export function PagesList() {
           >
             <span>🔗</span> Redirecciones
           </Link>
+          <button
+            onClick={() => setIsMigrateModalOpen(true)}
+            disabled={migrating}
+            style={{
+              padding: "0.6rem 1.25rem",
+              background: "white",
+              color: "#4B5563",
+              border: "1px solid var(--color-admin-border)",
+              borderRadius: "8px",
+              fontWeight: 600,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.82rem"
+            }}
+          >
+            <span>📥</span> {migrating ? "Migrando..." : "Importar desde Gastroshows"}
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
             disabled={creating}

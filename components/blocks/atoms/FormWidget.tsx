@@ -49,10 +49,10 @@ export function FormWidget({ fields = [], submitText = "Enviar", successMessage,
     width: "100%",
     padding: "0.75rem 1rem",
     borderRadius: "8px",
-    border: "1px solid #EAEEF4",
+    border: "1px solid var(--gs-border)",
     fontSize: "0.95rem",
-    color: "#111827",
-    background: "white",
+    color: "var(--gs-text)",
+    background: "var(--gs-bg3)",
     outline: "none",
     transition: "all 0.2s",
     boxSizing: "border-box"
@@ -68,7 +68,7 @@ export function FormWidget({ fields = [], submitText = "Enviar", successMessage,
             display: "flex", flexDirection: "column", gap: "0.4rem"
           }}
         >
-          <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "#374151" }}>
+          <label style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--gs-text-muted)" }}>
             {field.label} {field.required && <span style={{ color: "#EF4444" }}>*</span>}
           </label>
           
@@ -96,7 +96,7 @@ export function FormWidget({ fields = [], submitText = "Enviar", successMessage,
                 required={field.required}
                 onChange={(e) => setFormData({ ...formData, [field.id]: e.target.checked })}
               />
-              <span style={{ fontSize: "0.85rem", color: "#4B5563" }}>{field.placeholder}</span>
+              <span style={{ fontSize: "0.85rem", color: "var(--gs-text-sub)" }}>{field.placeholder}</span>
             </div>
           ) : (
             <input 

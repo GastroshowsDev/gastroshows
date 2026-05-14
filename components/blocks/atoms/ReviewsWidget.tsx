@@ -39,11 +39,11 @@ export function ReviewsWidget({ layout = "grid", reviews = [], showStars = true,
     <div style={gridStyle}>
       {items.map((review, i) => (
         <div key={i} style={{
-          background: "white",
+          background: "var(--gs-bg2)",
           padding: "1.5rem",
           borderRadius: "16px",
-          border: "1px solid #EAEEF4",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+          border: "1px solid var(--gs-border)",
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
           display: "flex",
           flexDirection: "column",
           gap: "0.75rem",
@@ -51,15 +51,15 @@ export function ReviewsWidget({ layout = "grid", reviews = [], showStars = true,
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <div style={{ 
-              width: "40px", height: "40px", borderRadius: "50%", background: "#F3F4F6", 
-              display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#6B7280",
+              width: "40px", height: "40px", borderRadius: "50%", background: "var(--gs-bg3)", 
+              display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "var(--gs-text-muted)",
               overflow: "hidden"
             }}>
               {review.image ? <img src={review.image} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : review.name[0]}
             </div>
             <div>
-              <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#111827" }}>{review.name}</div>
-              {showDates && review.date && <div style={{ fontSize: "0.75rem", color: "#9CA3AF" }}>{review.date}</div>}
+              <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--gs-text)" }}>{review.name}</div>
+              {showDates && review.date && <div style={{ fontSize: "0.75rem", color: "var(--gs-text-muted)" }}>{review.date}</div>}
             </div>
             <div style={{ marginLeft: "auto", background: "white", borderRadius: "50%", padding: "4px" }}>
               <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo.svg" alt="Google" style={{ width: "16px" }} />
@@ -80,7 +80,7 @@ export function ReviewsWidget({ layout = "grid", reviews = [], showStars = true,
           )}
 
           <p style={{ 
-            fontSize: "0.88rem", color: "#4B5563", lineHeight: "1.6", margin: 0,
+            fontSize: "0.88rem", color: "var(--gs-text-sub)", lineHeight: "1.6", margin: 0,
             fontStyle: "italic", display: "-webkit-box", WebkitLineClamp: 4, WebkitBoxOrient: "vertical", overflow: "hidden"
           }}>
             "{review.text}"

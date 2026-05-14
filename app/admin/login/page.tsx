@@ -33,6 +33,11 @@ export default function LoginPage() {
       return;
     }
 
+    if (!result?.ok) {
+      setError("No se pudo iniciar sesión. Prueba a limpiar las cookies o usa otro navegador.");
+      return;
+    }
+
     router.push("/admin/live");
   }
 

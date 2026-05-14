@@ -34,6 +34,7 @@ export function getBackgroundImageStyles(imageUrl: string, styles: CommonStyles 
     backgroundSize: styles.backgroundSize === "mirror" ? "contain" : (styles.backgroundSize || "cover"),
     backgroundPosition: styles.backgroundPosition || "center center",
     backgroundRepeat: "no-repeat",
+    backgroundAttachment: styles.backgroundParallax ? "fixed" : "scroll",
     opacity: styles.opacity ?? 1,
     filter: styles.brightness ? `brightness(${styles.brightness})` : "none",
     zIndex: 0,

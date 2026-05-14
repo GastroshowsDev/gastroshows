@@ -73,9 +73,8 @@ export default async function RootLayout({
     >
       <head>
         <SeoHead />
-        <Script
+        <script
           id="theme-switcher"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {

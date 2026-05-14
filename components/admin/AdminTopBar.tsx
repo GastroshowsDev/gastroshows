@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { DemoModeToggle } from "./DemoModeToggle";
-import { ChefHat, Globe } from "lucide-react";
+import { Menu, Globe } from "lucide-react";
 
 function SaveStatusIndicator() {
   const [status, setStatus] = useState<"idle" | "unsaved" | "saving" | "saved">("idle");
@@ -69,14 +69,14 @@ export function AdminTopBar({ onMenuClick, isMenuOpen }: { onMenuClick?: () => v
             width: "40px",
             height: "40px",
             borderRadius: "50%",
-            background: "#efb810",
+            background: "var(--gs-accent)",
             color: "#fff",
             border: "none",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 4px 12px rgba(239, 184, 16, 0.25)",
+            boxShadow: "0 4px 12px rgba(218, 165, 32, 0.25)",
             transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
             visibility: isMenuOpen ? "hidden" : "visible",
             opacity: isMenuOpen ? 0 : 1,
@@ -84,20 +84,20 @@ export function AdminTopBar({ onMenuClick, isMenuOpen }: { onMenuClick?: () => v
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = "scale(1.1)";
-            e.currentTarget.style.boxShadow = "0 6px 20px rgba(239, 184, 16, 0.4)";
+            e.currentTarget.style.boxShadow = "0 6px 20px rgba(218, 165, 32, 0.4)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.boxShadow = "0 4px 12px rgba(239, 184, 16, 0.25)";
+            e.currentTarget.style.boxShadow = "0 4px 12px rgba(218, 165, 32, 0.25)";
           }}
         >
-          <ChefHat size={20} />
+          <Menu size={20} />
         </button>
 
         {/* Logo/Label junto al botón (Opcional, muy discreto) */}
         {!isMenuOpen && (
           <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--color-admin-text)", opacity: 0.8 }}>
-            Gastro<span style={{ color: "#efb810" }}>Shows</span>
+            Gastro<span style={{ color: "var(--gs-accent)" }}>Shows</span>
           </div>
         )}
       </div>
@@ -127,9 +127,9 @@ export function AdminTopBar({ onMenuClick, isMenuOpen }: { onMenuClick?: () => v
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = "scale(1.05)";
-            e.currentTarget.style.borderColor = "var(--color-admin-accent)";
-            e.currentTarget.style.background = "var(--color-admin-accent-light)";
-            e.currentTarget.style.color = "var(--color-admin-accent)";
+            e.currentTarget.style.borderColor = "var(--gs-accent)";
+            e.currentTarget.style.background = "var(--gs-accent-light)";
+            e.currentTarget.style.color = "var(--gs-accent)";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = "scale(1)";

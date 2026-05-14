@@ -6,6 +6,7 @@ import { getHoverStyles } from "@/lib/blocks/animations";
 import { InlineText } from "@/components/admin/InlineText";
 import { AnimatedWrapper } from "./AnimatedWrapper";
 import { ColumnsRenderer } from "./atoms/ColumnsRenderer";
+import { LayoutHandles } from "../admin/LayoutHandles";
 
 type Props = { 
   id: string;
@@ -48,16 +49,20 @@ export function TextBlock({ id: blockId, content, isEditing = false, onUpdate, o
 
   return (
     <section
+      className="layout-handle-container"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        padding: "5rem 2rem 6rem",
+        padding: content.styles?.padding || "5rem 2rem 6rem",
+        marginTop: content.styles?.marginTop || "0px",
+        marginBottom: content.styles?.marginBottom || "0px",
         background: "var(--gs-bg)",
         transition: "background 0.3s",
+        position: "relative",
         ...hoverStyles,
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: align }}>
+      <div style={{ maxWidth: content.fullWidth ? "100%" : "1100px", margin: "0 auto", textAlign: align }}>
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
             <InlineText
@@ -132,7 +137,7 @@ export function TextBlock({ id: blockId, content, isEditing = false, onUpdate, o
                 fontSize: "1.1rem",
                 lineHeight: "1.7",
                 color: "rgba(245,240,232,0.7)",
-                maxWidth: "1100px",
+                maxWidth: content.fullWidth ? "100%" : "1100px",
                 margin: content.alignment === "center" ? "0 auto" : "0",
                 whiteSpace: "pre-wrap",
                 marginBottom: "3rem"
@@ -158,11 +163,19 @@ export function TextBlock({ id: blockId, content, isEditing = false, onUpdate, o
           blockId={blockId}
           columns={content.columns || []}
           isEditing={isEditing}
+          fullWidth={content.fullWidth}
           onUpdate={(newCols) => updateField("columns", newCols)}
           onSelectElement={onSelectElement}
           selectedElementPath={selectedElementPath}
         />
       </div>
+      {isEditing && (
+        <LayoutHandles 
+          styles={content.styles || {}} 
+          onUpdate={(s) => updateField("styles", { ...content.styles, ...s })} 
+          isEditing={isEditing} 
+        />
+      )}
     </section>
   );
 }

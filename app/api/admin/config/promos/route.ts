@@ -1,7 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 export async function PATCH(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const { wedThuActive } = await req.json();
 

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { CommonStyles } from "@/lib/blocks/types";
+import { PALETTES, Palette } from "@/lib/constants/palettes";
+import { FONTS } from "@/lib/constants/fonts";
 
 type MasterStyles = {
   logoUrl?: string;
@@ -16,6 +18,7 @@ type MasterStyles = {
   a: CommonStyles;
   button: CommonStyles;
   buttonSecondary: CommonStyles;
+  paletteId?: string;
 };
 
 type Props = {
@@ -44,6 +47,18 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
     setIsSaving(true);
     await onUpdate(localStyles);
     setIsSaving(false);
+  };
+
+  const handleSelectPalette = (palette: Palette) => {
+    setLocalStyles(prev => ({
+      ...prev,
+      paletteId: palette.id,
+      h1: { ...prev.h1, color: palette.colors.heading },
+      h2: { ...prev.h2, color: palette.colors.heading },
+      h3: { ...prev.h3, color: palette.colors.heading },
+      p: { ...prev.p, color: palette.colors.text },
+      button: { ...prev.button, backgroundColor: palette.colors.accent, color: "#FFFFFF" },
+    }));
   };
 
   const sectionStyle = {
@@ -78,13 +93,73 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
     border: "1px solid #D1D5DB"
   };
 
-  const FONTS = [
-    { label: "Por defecto",  value: "" },
-    { label: "Cormorant",    value: "'Cormorant Garamond', serif" },
-    { label: "Montserrat",   value: "'Montserrat', sans-serif" },
-    { label: "Georgia",      value: "Georgia, serif" },
-    { label: "Arial",        value: "Arial, sans-serif" },
-  ];
+  const FontSelector = ({ value, onChange }: { value: string, onChange: (v: string) => void }) => {
+    const [search, setSearch] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const filtered = FONTS.filter(f => 
+      f.label.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const currentLabel = FONTS.find(f => f.value === value)?.label || "Por defecto";
+
+    return (
+      <div style={{ position: "relative", flex: 1 }}>
+        <div style={{ display: "flex", gap: "4px" }}>
+          <input
+            type="text"
+            placeholder={currentLabel}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setIsOpen(true);
+            }}
+            onFocus={() => setIsOpen(true)}
+            style={{ ...inputStyle, width: "100%" }}
+          />
+          {search && (
+            <button 
+              onClick={() => { setSearch(""); setIsOpen(false); }}
+              style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", border: "none", background: "none", cursor: "pointer", color: "#9CA3AF" }}
+            >✕</button>
+          )}
+        </div>
+
+        {isOpen && (
+          <div style={{
+            position: "absolute", top: "100%", left: 0, right: 0, zIndex: 1000,
+            background: "white", border: "1px solid #D1D5DB", borderRadius: "8px",
+            marginTop: "4px", maxHeight: "200px", overflowY: "auto",
+            boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)"
+          }}>
+            {filtered.length > 0 ? filtered.map(f => (
+              <div
+                key={f.value}
+                onClick={() => {
+                  onChange(f.value);
+                  setSearch("");
+                  setIsOpen(false);
+                }}
+                style={{
+                  padding: "0.6rem 0.8rem", cursor: "pointer", fontSize: "0.75rem",
+                  background: value === f.value ? "#F3F4F6" : "transparent",
+                  fontFamily: f.value || "inherit",
+                  borderBottom: "1px solid #F3F4F6"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = "#F9FAFB"}
+                onMouseLeave={(e) => e.currentTarget.style.background = value === f.value ? "#F3F4F6" : "transparent"}
+              >
+                {f.label}
+              </div>
+            )) : (
+              <div style={{ padding: "0.6rem", fontSize: "0.7rem", color: "#9CA3AF" }}>No hay resultados</div>
+            )}
+          </div>
+        )}
+        {isOpen && <div onClick={() => setIsOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 999 }} />}
+      </div>
+    );
+  };
 
   const FBtn = ({ active, onClick, children, title }: any) => (
     <button 
@@ -92,7 +167,7 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
       title={title}
       style={{
         width: "28px", height: "28px", borderRadius: "4px", border: "1px solid #D1D5DB",
-        background: active ? "#875BF7" : "white", color: active ? "white" : "#4B5563",
+        background: active ? "var(--gs-accent)" : "white", color: active ? "white" : "#4B5563",
         fontSize: "0.7rem", fontWeight: 700, cursor: "pointer", display: "flex", 
         alignItems: "center", justifyContent: "center", transition: "all 0.1s"
       }}
@@ -108,13 +183,10 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
       {/* Tipografía */}
       <div style={rowStyle}>
         <span style={{ fontSize: "0.6rem", width: "50px" }}>Fuente</span>
-        <select 
-          style={inputStyle} 
+        <FontSelector 
           value={getStyles(tag).fontFamily || ""} 
-          onChange={(e) => updateTag(tag, { fontFamily: e.target.value })}
-        >
-          {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
-        </select>
+          onChange={(v) => updateTag(tag, { fontFamily: v })}
+        />
       </div>
 
       <div style={rowStyle}>
@@ -190,15 +262,43 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
           onClick={handleApply}
           disabled={isSaving}
           style={{
-            padding: "0.5rem 1rem", background: "#875BF7", color: "white", border: "none",
+            padding: "0.5rem 1rem", background: "var(--gs-accent)", color: "white", border: "none",
             borderRadius: "6px", fontSize: "0.7rem", fontWeight: 700, cursor: "pointer",
-            boxShadow: "0 2px 4px rgba(135,91,247,0.2)"
+            boxShadow: "0 2px 4px rgba(218,165,32,0.2)"
           }}
         >
           {isSaving ? "Aplicando..." : "Aplicar Cambios"}
         </button>
       </div>
       
+      <div style={sectionStyle}>
+        <label style={titleStyle}>Paletas de Color</label>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.75rem" }}>
+          {PALETTES.map(p => (
+            <button
+              key={p.id}
+              onClick={() => handleSelectPalette(p)}
+              style={{
+                padding: "0.75rem",
+                borderRadius: "8px",
+                border: localStyles.paletteId === p.id ? "2px solid var(--gs-accent)" : "1px solid #D1D5DB",
+                background: "white",
+                cursor: "pointer",
+                textAlign: "left",
+                transition: "all 0.2s"
+              }}
+            >
+              <div style={{ fontSize: "0.7rem", fontWeight: 700, marginBottom: "0.5rem" }}>{p.name}</div>
+              <div style={{ display: "flex", gap: "2px" }}>
+                {[p.colors.bg, p.colors.accent, p.colors.heading, p.colors.muted].map(c => (
+                  <div key={c} style={{ width: "12px", height: "12px", borderRadius: "2px", background: c }} />
+                ))}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div style={sectionStyle}>
         <label style={titleStyle}>Logotipo Global</label>
         <div style={rowStyle}>
@@ -234,8 +334,8 @@ export function GlobalStylesPanel({ styles: initialStyles, onUpdate }: Props) {
       {renderTagEditor("buttonSecondary", "Botones Secundarios")}
       {renderTagEditor("a", "Enlaces")}
       
-      <div style={{ padding: "1rem", background: "#F0EBFE", borderRadius: "10px", marginTop: "2rem" }}>
-        <p style={{ fontSize: "0.65rem", color: "#875BF7", margin: 0, lineHeight: 1.5 }}>
+      <div style={{ padding: "1rem", background: "var(--gs-accent-light)", borderRadius: "10px", marginTop: "2rem" }}>
+        <p style={{ fontSize: "0.65rem", color: "var(--gs-accent)", margin: 0, lineHeight: 1.5 }}>
           <strong>Nota:</strong> Al pulsar "Aplicar Cambios", los estilos se guardarán y se reflejarán en todos los elementos que no tengan estilos locales específicos.
         </p>
       </div>

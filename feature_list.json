@@ -3,15 +3,15 @@
     "id": 1,
     "feature": "Infraestructura Harness",
     "description": "Implementar el sistema de control y trazabilidad basado en el paradigma de Harness Engineering.",
-    "status": "in_progress",
+    "status": "done",
     "priority": "high"
   },
   {
     "id": 2,
-    "feature": "Edición In-Context: Colores y Estilos",
-    "description": "Permitir cambiar colores y estilos directamente desde el lienzo sin usar el panel lateral.",
-    "status": "pending",
-    "priority": "medium"
+    "feature": "Layout Orgánico y Movilidad Flexible",
+    "description": "Implementar un sistema de tiradores (handles) intuitivos para controlar márgenes y paddings de forma visual en todos los niveles de contenedores.",
+    "status": "done",
+    "priority": "high"
   },
   {
     "id": 3,
@@ -31,7 +31,21 @@
     "id": 5,
     "feature": "Auditoría de Seguridad y Roles",
     "description": "Verificar que todos los endpoints de admin estén protegidos correctamente contra accesos no autorizados.",
-    "status": "pending",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 6,
+    "feature": "Migración de Páginas desde UI",
+    "description": "Implementar botón y lógica para migrar páginas de gastroshows.es directamente desde el panel de administración.",
+    "status": "done",
+    "priority": "medium"
+  },
+  {
+    "id": 7,
+    "feature": "Legibilidad y Contraste (Modo Revelado)",
+    "description": "Auditoría y corrección de contraste en todos los widgets y elementos para asegurar legibilidad en el modo claro.",
+    "status": "done",
     "priority": "high"
   }
 ]

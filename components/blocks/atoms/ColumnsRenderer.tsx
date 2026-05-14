@@ -6,7 +6,9 @@ import {
   verticalListSortingStrategy, 
   useSortable 
 } from "@dnd-kit/sortable";
+import { useDroppable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import { LayoutHandles } from "../../admin/LayoutHandles";
 
 type Props = {
   blockId: string;
@@ -52,7 +54,19 @@ function SortableElement({
   };
 
   return (
-    <div ref={setNodeRef} style={style} onClick={(e) => { if(isEditing) { e.stopPropagation(); onSelect(id); } }}>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      className={`layout-handle-container ${isSelected ? "is-selected" : ""} ${element.type === "TEXT" || element.type === "HEADING" ? "no-handles" : ""}`}
+      onClick={(e) => { 
+        if(isEditing) { 
+          if (element.type !== "TEXT" && element.type !== "HEADING") {
+            e.stopPropagation();
+          }
+          onSelect(id); 
+        } 
+      }}
+    >
       {isEditing && (
         <div 
           {...attributes} 
@@ -64,7 +78,8 @@ function SortableElement({
             zIndex: 20, boxShadow: "0 2px 8px rgba(135,91,247,0.4)",
             fontWeight: 700
           }}
-          title="Mover elemento"
+          onClick={(e) => { e.stopPropagation(); onSelect(id); }}
+          title="Mover y seleccionar elemento"
         >
           ⠿
         </div>
@@ -94,6 +109,92 @@ function SortableElement({
         onSelectElement={onSelectSubElement}
         selectedElementPath={selectedElementPath}
       />
+      
+      {isEditing && isSelected && element.type !== "TEXT" && element.type !== "HEADING" && (
+        <LayoutHandles 
+          styles={element.styles || {}} 
+          onUpdate={(newStyles) => onUpdate({ ...element, styles: { ...element.styles, ...newStyles } })}
+          isEditing={isEditing}
+        />
+      )}
+    </div>
+  );
+}
+
+function ColumnContainer({
+  blockId,
+  colIdx,
+  col,
+  isEditing,
+  onUpdate,
+  onSelectElement,
+  selectedElementPath,
+  activeColumns
+}: {
+  blockId: string,
+  colIdx: number,
+  col: ColumnData,
+  isEditing: boolean,
+  onUpdate: (newCols: ColumnData[]) => void,
+  onSelectElement?: (id: string) => void,
+  selectedElementPath?: string | null,
+  activeColumns: ColumnData[]
+}) {
+  const columnId = `col-${blockId}-${colIdx}`;
+  const { setNodeRef, isOver } = useDroppable({
+    id: columnId,
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        minHeight: isEditing ? "80px" : "auto",
+        border: isEditing ? `1px dashed ${isOver ? "#875BF7" : "#333"}` : "none",
+        borderRadius: "8px",
+        padding: isEditing ? "1rem" : "0",
+        background: isOver ? "rgba(135, 91, 247, 0.08)" : "transparent",
+        transition: "all 0.2s",
+        minWidth: 0,
+        overflow: "hidden",
+        position: "relative"
+      }}
+    >
+      <SortableContext 
+        items={col.elements.map((el, i) => el.id || `${blockId}-${colIdx}-${i}`)} 
+        strategy={verticalListSortingStrategy}
+      >
+        {col.elements.map((el, elIdx) => {
+          const elId = el.id || `${blockId}-${colIdx}-${elIdx}`;
+          return (
+            <SortableElement
+              key={elId}
+              id={elId}
+              element={el}
+              isEditing={isEditing}
+              isSelected={selectedElementPath === elId}
+              onSelect={(id) => onSelectElement?.(id)}
+              onUpdate={(newEl) => {
+                const newCols = [...activeColumns];
+                if (newEl === ("DELETE" as any)) {
+                  newCols[colIdx].elements.splice(elIdx, 1);
+                } else {
+                  newCols[colIdx].elements[elIdx] = newEl;
+                }
+                onUpdate(newCols);
+              }}
+              onSelectSubElement={onSelectElement}
+              selectedElementPath={selectedElementPath}
+            />
+          );
+        })}
+      </SortableContext>
+      
+      {isEditing && col.elements.length === 0 && (
+        <div style={{ textAlign: "center", color: "#666", fontSize: "0.7rem", paddingTop: "1rem", border: "1px dashed #444", borderRadius: "4px" }}>
+          Suelta elementos aquí
+        </div>
+      )}
     </div>
   );
 }
@@ -107,15 +208,12 @@ export function ColumnsRenderer({
   selectedElementPath,
   fullWidth = false
 }: Props) {
-  const [dragOverCol, setDragOverCol] = useState<number | null>(null);
-
   // Fallback for missing columns
   const activeColumns = columns.length > 0 ? columns : [{ width: "100%", elements: [] }];
 
-  const onDrop = (e: React.DragEvent, colIdx: number) => {
+  const onDropNative = (e: React.DragEvent, colIdx: number) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragOverCol(null);
     const type = e.dataTransfer.getData("elementType");
     if (!type) return;
 
@@ -173,60 +271,17 @@ export function ColumnsRenderer({
       } as React.CSSProperties}
     >
       {activeColumns.map((col, colIdx) => (
-        <div
-          key={colIdx}
-          onDragOver={(e) => { e.preventDefault(); setDragOverCol(colIdx); }}
-          onDragLeave={() => setDragOverCol(null)}
-          onDrop={(e) => onDrop(e, colIdx)}
-          style={{
-            minHeight: isEditing ? "80px" : "auto",
-            border: isEditing ? `1px dashed ${dragOverCol === colIdx ? "#875BF7" : "#333"}` : "none",
-            borderRadius: "8px",
-            padding: isEditing ? "1rem" : "0",
-            background: dragOverCol === colIdx ? "rgba(135, 91, 247, 0.05)" : "transparent",
-            transition: "all 0.2s",
-            minWidth: 0,
-            overflow: "hidden"
-          }}
-        >
-          <SortableContext 
-            items={col.elements.map((el, i) => el.id || `${blockId}-${colIdx}-${i}`)} 
-            strategy={verticalListSortingStrategy}
-          >
-            {col.elements.map((el, elIdx) => {
-              const elId = el.id || `${blockId}-${colIdx}-${elIdx}`;
-              return (
-                <SortableElement
-                  key={elId}
-                  id={elId}
-                  element={el}
-                  isEditing={isEditing}
-                  isSelected={selectedElementPath === elId}
-                  onSelect={(id) => onSelectElement?.(id)}
-                  onUpdate={(newEl) => {
-                    const newCols = [...activeColumns];
-                    if (newEl === ("DELETE" as any)) {
-                      newCols[colIdx].elements.splice(elIdx, 1);
-                    } else {
-                      newCols[colIdx].elements[elIdx] = newEl;
-                    }
-                    onUpdate(newCols);
-                  }}
-                  onSelectSubElement={onSelectElement}
-                  selectedElementPath={selectedElementPath}
-                />
-              );
-            })}
-          </SortableContext>
-          
-          {isEditing && col.elements.length === 0 && (
-            <div 
-              id={`col-${blockId}-${colIdx}`}
-              style={{ textAlign: "center", color: "#666", fontSize: "0.7rem", paddingTop: "1rem", border: "1px dashed #444", borderRadius: "4px" }}
-            >
-              Suelta elementos aquí
-            </div>
-          )}
+        <div key={colIdx} onDragOver={(e) => e.preventDefault()} onDrop={(e) => onDropNative(e, colIdx)}>
+          <ColumnContainer
+            blockId={blockId}
+            colIdx={colIdx}
+            col={col}
+            isEditing={isEditing}
+            onUpdate={onUpdate}
+            onSelectElement={onSelectElement}
+            selectedElementPath={selectedElementPath}
+            activeColumns={activeColumns}
+          />
         </div>
       ))}
     </div>

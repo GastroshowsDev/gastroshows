@@ -9,6 +9,7 @@ export type CommonStyles = {
   margin?: string;
   backgroundColor?: string;
   backgroundImage?: string;
+  backgroundVideo?: string;
   backgroundSize?: "cover" | "contain" | "auto" | "mirror";
   borderRadius?: string;
   textAlign?: "left" | "center" | "right";
@@ -45,6 +46,8 @@ export type CommonStyles = {
   borderBottom?: string;
   borderLeft?: string;
   borderRight?: string;
+  parallaxSpeed?: number;
+  backgroundParallax?: boolean;
 };
 
 
@@ -225,6 +228,7 @@ export type HeroContent = {
   bgPosition?: string;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
   styles?: CommonStyles;
 };
 
@@ -250,6 +254,7 @@ export type TextContent = {
   italic?: boolean;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
   columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
   styles?: CommonStyles;
 };
 
@@ -289,6 +294,7 @@ export type CtaContent = {
   bgPosition?: string;
   titleTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   columns?: ColumnData[]; // To allow adding elements
+  fullWidth?: boolean;
   styles?: CommonStyles;
 };
 
@@ -385,6 +391,7 @@ export type BlockData = {
 
 export const BLOCK_DEFAULTS: Record<string, any> = {
   SECTION: {
+    fullWidth: false,
     styles: { padding: "4rem 2rem" }
   },
   HEADER: {
@@ -413,7 +420,7 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
   BUTTON: { type: "BUTTON", text: "Clic Aquí", link: "#", variant: "primary", size: "md", styles: {} },
   TEXT: { type: "TEXT", body: "Escribe tu contenido aquí.", styles: {} },
   IMAGE: { type: "IMAGE", src: "", alt: "", styles: {} },
-  CALENDAR: { type: "CALENDAR", color: "#daa520", styles: {} },
+  CALENDAR: { type: "CALENDAR", color: "var(--gs-accent)", styles: {} },
   AVAILABILITY: { 
     type: "AVAILABILITY", 
     title: "Hay {total} plazas libres esta semana", 
@@ -425,9 +432,10 @@ export const BLOCK_DEFAULTS: Record<string, any> = {
     type: "CONTAINER", 
     content: { 
       columns: [{ width: "100%", elements: [] }],
+      fullWidth: false,
       styles: { padding: "2rem" }
     },
-    styles: {} 
+    styles: { marginTop: "2rem" } 
   },
   REVIEWS: { 
     type: "REVIEWS", 

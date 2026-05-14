@@ -25,7 +25,7 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
           borderRadius: "50%",
           background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
           border: "1px solid var(--color-admin-border)",
-          color: isDark ? "#efb810" : "var(--color-admin-text)",
+          color: isDark ? "var(--gs-accent)" : "var(--color-admin-text)",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
@@ -35,7 +35,7 @@ export function ThemeToggle({ variant = "public" }: { variant?: Variant }) {
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "scale(1.1)";
-          e.currentTarget.style.borderColor = "#efb810";
+          e.currentTarget.style.borderColor = "var(--gs-accent)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "scale(1)";

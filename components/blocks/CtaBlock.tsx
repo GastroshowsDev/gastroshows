@@ -75,10 +75,10 @@ export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, on
           position: "relative",
           zIndex: 1,
           width: "100%",
-          maxWidth: "1100px",
+          maxWidth: content.fullWidth ? "100%" : "1100px",
           margin: "0 auto",
           padding: "5rem 2rem",
-          textAlign: content.bgImage ? "left" : "center",
+          textAlign: (content.styles?.textAlign as any) || (content.bgImage ? "left" : "center"),
         }}
       >
         {content.eyebrow !== undefined && (
@@ -221,6 +221,7 @@ export function CtaBlock({ id: blockId, content, isEditing = false, onUpdate, on
             blockId={blockId}
             columns={content.columns || []}
             isEditing={isEditing}
+            fullWidth={content.fullWidth}
             onUpdate={(newCols) => handleUpdate("columns", newCols)}
             onSelectElement={onSelectElement}
             selectedElementPath={selectedElementPath}

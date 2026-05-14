@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 /**
  * GET /api/admin/redirects — List all redirects
  */
 export async function GET() {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const redirects = await prisma.redirect.findMany({
       orderBy: { createdAt: "desc" },
@@ -20,6 +24,9 @@ export async function GET() {
  * POST /api/admin/redirects — Create a new redirect
  */
 export async function POST(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const body = (await req.json()) as {
       fromPath: string;
@@ -54,6 +61,9 @@ export async function POST(req: Request) {
  * DELETE /api/admin/redirects — Delete a redirect
  */
 export async function DELETE(req: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const { id } = (await req.json()) as { id: string };
     if (!id) {

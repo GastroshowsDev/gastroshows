@@ -27,7 +27,10 @@ export type AnimationType =
   | "skew-reveal"
   | "letter-spacing"
   | "tilt-3d"
-  | "focus-in";
+  | "focus-in"
+  | "nebula"
+  | "picasso-reveal"
+  | "cosmic-drift";
 
 
 export function getAnimationStyles(type: AnimationType | string | undefined, active: boolean) {
@@ -203,12 +206,26 @@ export function getAnimationStyles(type: AnimationType | string | undefined, act
       };
 
 
-    case "shimmer":
+    case "nebula":
       return {
-        backgroundImage: active ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)" : "none",
-        backgroundSize: "200% 100%",
-        animation: active ? "gs-shimmer 2s infinite" : "none",
-        ...base
+        ...base,
+        animation: active ? "gs-nebula-rotate 20s linear infinite" : "none",
+        filter: active ? "hue-rotate(0deg) saturate(1.5)" : "none",
+      };
+
+    case "picasso-reveal":
+      return {
+        ...base,
+        clipPath: active ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" : "polygon(10% 25%, 90% 0%, 100% 85%, 0% 100%)",
+        transitionDuration: "1.5s",
+        transitionTimingFunction: "cubic-bezier(0.77, 0, 0.175, 1)",
+      };
+
+    case "cosmic-drift":
+      return {
+        ...base,
+        animation: active ? "gs-cosmic-drift 6s ease-in-out infinite" : "none",
+        perspective: "1000px",
       };
 
     default:
@@ -283,6 +300,15 @@ export const ANIMATION_KEYFRAMES = `
     77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); }
     88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
     100% { transform: none; }
+  }
+  @keyframes gs-cosmic-drift {
+    0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+    33% { transform: translateY(-15px) rotateX(2deg) rotateY(-2deg); }
+    66% { transform: translateY(10px) rotateX(-2deg) rotateY(2deg); }
+  }
+  @keyframes gs-nebula-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 `;
 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendMail } from "@/lib/mail";
+import { requireAdmin } from "@/lib/auth-helpers";
 
 const SIX_MONTHS_MS = 6 * 30 * 24 * 60 * 60 * 1000;
 
@@ -68,6 +69,9 @@ async function getCustomersBySegment(segment: string) {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return auth.response;
+
   try {
     const { subject, content, segment } = await request.json();
 

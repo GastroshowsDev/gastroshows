@@ -13,6 +13,8 @@ import { WidgetConfigPopup } from "../admin/WidgetConfigPopup";
 import { useState, useRef } from "react";
 import { ReviewsWidget } from "./atoms/ReviewsWidget";
 import { FormWidget } from "./atoms/FormWidget";
+import { LayoutHandles } from "../admin/LayoutHandles";
+import { getBlockBaseStyles } from "@/utils/blockStyles";
 
 type Props = {
   id: string;
@@ -79,14 +81,23 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
         );
       case "CONTAINER":
         return (
-          <SectionBlock 
-            id={id} 
-            content={element.content} 
-            isEditing={isEditing} 
-            onUpdate={(newContent) => onUpdate?.({ ...element, content: newContent })}
-            onSelectElement={(path) => onSelectElement?.(path)}
-            selectedElementPath={selectedElementPath}
-          />
+          <div className="layout-handle-container" style={getBlockBaseStyles(element.styles)}>
+            <SectionBlock 
+              id={id} 
+              content={element.content} 
+              isEditing={isEditing} 
+              onUpdate={(newContent) => onUpdate?.({ ...element, content: newContent })}
+              onSelectElement={(path) => onSelectElement?.(path)}
+              selectedElementPath={selectedElementPath}
+            />
+            {isEditing && (
+              <LayoutHandles 
+                styles={element.styles || {}} 
+                onUpdate={(newStyles) => onUpdate?.({ ...element, styles: { ...element.styles, ...newStyles } })} 
+                isEditing={isEditing} 
+              />
+            )}
+          </div>
         );
       case "IFRAME":
         return (
@@ -107,7 +118,7 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
 
 
   return (
-    <AnimatedWrapper animation={element.styles?.animation}>
+    <AnimatedWrapper animation={element.styles?.animation} parallaxSpeed={element.styles?.parallaxSpeed}>
       <div style={{ position: "relative" }}>
         {renderContent()}
         

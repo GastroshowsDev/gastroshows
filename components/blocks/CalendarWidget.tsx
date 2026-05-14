@@ -55,9 +55,8 @@ export function CalendarWidget({ color = "#daa520", styles = {} }: { color?: str
 
   return (
     <div style={{ 
-      background: "rgba(10,10,10,0.4)", 
-      backdropFilter: "blur(10px)",
-      border: "1px solid rgba(200,169,110,0.2)", 
+      background: "var(--gs-bg, #0a0a0a)", 
+      border: "1px solid rgba(200,169,110,0.3)", 
       borderRadius: "8px",
       padding: "2rem",
       width: "100%",
@@ -88,7 +87,7 @@ export function CalendarWidget({ color = "#daa520", styles = {} }: { color?: str
       />
 
       <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(200,169,110,0.1)", textAlign: "center" }}>
-        <p style={{ fontSize: "0.75rem", color: "rgba(245,240,232,0.6)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+        <p style={{ fontSize: "0.75rem", color: "var(--gs-text-muted)", lineHeight: 1.6, marginBottom: "1.5rem" }}>
           Selecciona una fecha disponible para iniciar tu reserva. <br/>
           De Miércoles a Sábado.
         </p>

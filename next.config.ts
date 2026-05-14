@@ -8,9 +8,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "pqzvohidkjnonkhitoro.supabase.co" },
     ],
   },
-  // Note: Request body size limit is enforced at middleware level in proxy.ts
+  // Note: Request body size limit is enforced at middleware level in middleware.ts
   // Next.js 16 handles body parsing automatically; use middleware for size validation
 };
 
 export default nextConfig;
- 

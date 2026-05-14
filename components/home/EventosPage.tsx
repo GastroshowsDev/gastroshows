@@ -150,7 +150,7 @@ export function EventosPage({ content }: Props) {
         <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", color: "var(--gs-muted)", textTransform: "uppercase" }}>
           {c(content, "footer.tagline")}
         </p>
-        <p style={{ fontSize: "0.68rem", color: "rgba(245,240,232,0.28)", marginTop: "0.5rem" }}>
+        <p style={{ fontSize: "0.68rem", color: "var(--gs-text-sub)", opacity: 0.4, marginTop: "0.5rem" }}>
           © {new Date().getFullYear()} {c(content, "footer.copyright")}
         </p>
       </footer>

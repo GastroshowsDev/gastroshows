@@ -55,7 +55,7 @@ export function VerticalResizeHandle({ onResize, onResizeEnd }: Props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: isResizing ? "rgba(135, 91, 247, 0.2)" : "transparent",
+        background: isResizing ? "var(--gs-accent-soft)" : "transparent",
         transition: "background 0.2s",
       }}
     >
@@ -63,7 +63,7 @@ export function VerticalResizeHandle({ onResize, onResizeEnd }: Props) {
         style={{ 
           width: "40px", 
           height: "4px", 
-          background: isResizing ? "#875BF7" : "rgba(135, 91, 247, 0.4)", 
+          background: isResizing ? "var(--gs-accent)" : "var(--gs-accent-border)", 
           borderRadius: "2px",
           boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
         }} 

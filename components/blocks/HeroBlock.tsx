@@ -25,7 +25,7 @@ const shouldHaveShadow = (text?: string) => {
   return SHADOW_PHRASES.some(phrase => lower.includes(phrase));
 };
 
-import { VerticalResizeHandle } from "../admin/VerticalResizeHandle";
+import { LayoutHandles } from "../admin/LayoutHandles";
 
 export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, onSelectElement, selectedElementPath }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -39,28 +39,10 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
     }
   };
 
-  const handleResize = (deltaY: number) => {
-    const currentHeight = (content as any).styles?.minHeight || (content as any).minHeight || "100dvh";
-    let numericValue = 800; // Default fallback
-    
-    if (typeof currentHeight === "string") {
-      const match = currentHeight.match(/^(\d+(?:\.\d+)?)(.*)$/);
-      if (match) {
-        numericValue = parseFloat(match[1]);
-        const unit = match[2] || "px";
-        if (unit === "dvh" || unit === "vh") numericValue = (numericValue / 100) * window.innerHeight;
-      }
-    } else if (typeof currentHeight === "number") {
-      numericValue = currentHeight;
-    }
-
-    const newValue = Math.max(200, numericValue + deltaY);
+  const handleUpdateStyles = (newStyles: any) => {
     onUpdate?.({
       ...content,
-      styles: {
-        ...content.styles,
-        minHeight: `${newValue}px`
-      }
+      styles: { ...content.styles, ...newStyles }
     });
   };
 
@@ -77,6 +59,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
 
   return (
     <section
+      className="layout-handle-container"
       style={{
         position: "relative",
         minHeight: (content as any).styles?.minHeight || (content as any).minHeight || "100dvh",
@@ -154,7 +137,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
       />
 
       {/* Content */}
-      <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", width: "100%", padding: "4rem 2rem" }}>
+      <div style={{ position: "relative", zIndex: 2, maxWidth: content.fullWidth ? "100%" : "1100px", width: "100%", padding: "4rem 2rem" }}>
         {/* ... content ... */}
         {(content.eyebrow || isEditing) && (
           <AnimatedWrapper animation={content.eyebrowAnim || "fade-in"}>
@@ -230,7 +213,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
                   dataField="titleAccent"
                   placeholder="Acento"
                   style={{ 
-                    color: "#daa520", 
+                    color: "var(--gs-accent)", 
                     fontStyle: "italic",
                     textShadow: (content.titleAccent || "").toLowerCase().includes("antes de que llegues") 
                       ? "none" 
@@ -320,6 +303,7 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
           blockId={blockId}
           columns={content.columns || []}
           isEditing={isEditing}
+          fullWidth={content.fullWidth}
           onUpdate={(newCols) => updateField("columns", newCols)}
           onSelectElement={onSelectElement}
           selectedElementPath={selectedElementPath}
@@ -327,7 +311,12 @@ export function HeroBlock({ id: blockId, content, isEditing = false, onUpdate, o
       </div>
 
       {isEditing && (
-        <VerticalResizeHandle onResize={handleResize} onResizeEnd={() => {}} />
+        <LayoutHandles 
+          styles={content.styles || {}} 
+          onUpdate={handleUpdateStyles} 
+          isEditing={isEditing} 
+          showMinHeight 
+        />
       )}
     </section>
   );
@@ -347,7 +336,7 @@ function HeroButton({
   const [hovered, setHovered] = useState(false);
 
   const bg = primary
-    ? hovered ? "#E8D5A8" : "#daa520"
+    ? hovered ? "var(--gs-accent-light)" : "var(--gs-accent)"
     : hovered ? "rgba(200,169,110,0.6)" : "rgba(200,169,110,0.4)";
 
   return (

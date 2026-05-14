@@ -196,7 +196,7 @@ function CobrarModal({
             Cobrar — {reservation.customer.name}
           </div>
           <div style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: 2 }}>
-            Pendiente: <strong style={{ color: "#D97706" }}>{pending.toFixed(2)}€</strong>
+            Pendiente: <strong style={{ color: "var(--gs-accent)" }}>{pending.toFixed(2)}€</strong>
           </div>
         </div>
 
@@ -386,7 +386,7 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
             <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", flexShrink: 0 }}>
               <span style={{
                 padding: "2px 8px", borderRadius: "12px", fontSize: "0.7rem", fontWeight: 600,
-                background: "var(--color-admin-accent-light)", color: "var(--color-admin-accent)",
+                background: "var(--gs-accent-light)", color: "var(--gs-accent)",
               }}>
                 {r.guests} pax
               </span>
@@ -405,7 +405,7 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
               </div>
               <div style={{ textAlign: "center" as const }}>
                 <div style={{ fontSize: "0.65rem", color: "var(--color-admin-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Pendiente</div>
-                <div style={{ fontWeight: 600, fontSize: "0.88rem", color: pending > 0 ? "#D97706" : "var(--color-admin-muted)" }}>
+                <div style={{ fontWeight: 600, fontSize: "0.88rem", color: pending > 0 ? "var(--gs-accent)" : "var(--color-admin-muted)" }}>
                   {pending > 0 ? `${pending.toFixed(0)}€` : "—"}
                 </div>
               </div>
@@ -420,7 +420,7 @@ export function SalaBoard({ initialItems }: { initialItems: LiveReservationRow[]
               />
               <ActionBtn
                 label={busyId === r.id ? "…" : "Check out"}
-                color="#875BF7"
+                color="var(--gs-accent)"
                 onClick={busyId === r.id ? undefined : () => void handleCheckout(r.id)}
               />
               <ActionBtn label="Editar" />

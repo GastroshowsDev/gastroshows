@@ -44,7 +44,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
   return (
     <div style={{ padding: "1.5rem" }}>
-      <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "1.5rem", textTransform: "uppercase", letterSpacing: "0.08em", borderBottom: "2px solid #875BF7", paddingBottom: "0.5rem" }}>
+      <h3 style={{ fontSize: "0.85rem", fontWeight: 700, color: "#111827", marginBottom: "1.5rem", textTransform: "uppercase", letterSpacing: "0.08em", borderBottom: "2px solid var(--gs-accent)", paddingBottom: "0.5rem" }}>
         {element ? `Elemento: ${element.type}` : `Bloque: ${type}`}
       </h3>
 
@@ -89,7 +89,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                 <label style={labelStyle}>Imagen</label>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <input value={element.src || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-                  <button onClick={() => openMedia((url) => updateElement({ src: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+                  <button onClick={() => openMedia((url) => updateElement({ src: url }))} style={{ padding: "0.5rem", background: "var(--gs-accent)", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
                 </div>
               </div>
               <div style={rowStyle}>
@@ -213,6 +213,25 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
 
             </select>
           </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Paralaje 3D (Profundidad)</label>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <input 
+                type="range" min="-1" max="1" step="0.1" 
+                value={element.styles?.parallaxSpeed || 0} 
+                onChange={(e) => updateStyles(element, { parallaxSpeed: parseFloat(e.target.value) })} 
+                style={{ flex: 1 }} 
+              />
+              <span style={{ fontSize: "0.7rem", color: "#6B7280", minWidth: "30px", textAlign: "right" }}>
+                {element.styles?.parallaxSpeed || 0}x
+              </span>
+            </div>
+            <p style={{ fontSize: "0.6rem", color: "#9CA3AF", marginTop: "4px" }}>
+              Positivo = Primer plano (rápido) / Negativo = Fondo (lento).
+            </p>
+          </div>
+
                {element.type === "CONTAINER" && (
             <>
               <div style={rowStyle}>
@@ -249,12 +268,38 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               </div>
 
               <div style={rowStyle}>
+                <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, cursor: "pointer" }}>
+                  <input 
+                    type="checkbox" 
+                    checked={!!element.content?.fullWidth} 
+                    onChange={(e) => updateElement({ content: { ...element.content, fullWidth: e.target.checked } })} 
+                  />
+                  Ocupar todo el ancho (Full Width)
+                </label>
+              </div>
+
+              <div style={rowStyle}>
                 <label style={labelStyle}>Imagen de Fondo</label>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <input value={element.content?.styles?.backgroundImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
                   <button onClick={() => openMedia((url) => {
                     updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundImage: url } } });
-                  })} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+                  })} style={{ padding: "0.5rem", background: "var(--gs-accent)", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+                </div>
+              </div>
+
+              <div style={rowStyle}>
+                <label style={labelStyle}>Video de Fondo (URL)</label>
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <input 
+                    value={element.content?.styles?.backgroundVideo || ""} 
+                    onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundVideo: e.target.value } } })} 
+                    style={{ ...inputStyle, marginBottom: 0, flex: 1 }} 
+                    placeholder="https://ejemplo.com/video.mp4"
+                  />
+                  <button onClick={() => openMedia((url) => {
+                    updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundVideo: url } } });
+                  })} style={{ padding: "0.5rem", background: "#4B5563", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>🎬</button>
                 </div>
               </div>
 
@@ -290,6 +335,17 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                   <option value="left">Izquierda</option>
                   <option value="right">Derecha</option>
                 </select>
+              </div>
+
+              <div style={rowStyle}>
+                <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, cursor: "pointer" }}>
+                  <input 
+                    type="checkbox" 
+                    checked={!!element.content?.styles?.backgroundParallax} 
+                    onChange={(e) => updateElement({ content: { ...element.content, styles: { ...element.content?.styles, backgroundParallax: e.target.checked } } })} 
+                  />
+                  Fondo Fijo (Efecto Paralaje)
+                </label>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
@@ -329,7 +385,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
       {/* CONTAINER PROPERTIES (Always accessible) */}
       {(type === "SECTION" || type === "HERO" || type === "CTA" || type === "TEXT") && (
         <div style={{ background: "#FFF", padding: "1.2rem", borderRadius: "10px", border: "1px solid #E5E7EB", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
-          <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#875BF7", textTransform: "uppercase", marginBottom: "1.2rem", letterSpacing: "0.05em" }}>Configuración del Contenedor</p>
+          <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--gs-accent)", textTransform: "uppercase", marginBottom: "1.2rem", letterSpacing: "0.05em" }}>Configuración del Contenedor</p>
           
           {(type === "SECTION" || type === "HERO" || type === "CTA" || type === "TEXT") && (
             <div style={rowStyle}>
@@ -378,13 +434,39 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           )}
 
           <div style={rowStyle}>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, cursor: "pointer" }}>
+              <input 
+                type="checkbox" 
+                checked={!!(content as any).fullWidth} 
+                onChange={(e) => update({ fullWidth: e.target.checked })} 
+              />
+              Ocupar todo el ancho (Full Width)
+            </label>
+          </div>
+
+          <div style={rowStyle}>
             <label style={labelStyle}>Imagen de Fondo</label>
             <div style={{ display: "flex", gap: "0.5rem" }}>
               <input value={(content as any).styles?.backgroundImage || (content as any).bgImage || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
               <button onClick={() => openMedia((url) => {
                 if (type === "SECTION") updateStyles(content, { backgroundImage: url });
                 else update({ bgImage: url });
-              })} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+              })} style={{ padding: "0.5rem", background: "var(--gs-accent)", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+            </div>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Video de Fondo (URL)</label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input 
+                value={(content as any).styles?.backgroundVideo || ""} 
+                onChange={(e) => updateStyles(content, { backgroundVideo: e.target.value })} 
+                style={{ ...inputStyle, marginBottom: 0, flex: 1 }} 
+                placeholder="https://ejemplo.com/video.mp4"
+              />
+              <button onClick={() => openMedia((url) => {
+                updateStyles(content, { backgroundVideo: url });
+              })} style={{ padding: "0.5rem", background: "#4B5563", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>🎬</button>
             </div>
           </div>
 
@@ -469,6 +551,17 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             </select>
           </div>
 
+          <div style={rowStyle}>
+            <label style={{ ...labelStyle, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 400, cursor: "pointer" }}>
+              <input 
+                type="checkbox" 
+                checked={!!(content as any).styles?.backgroundParallax} 
+                onChange={(e) => updateStyles(content, { backgroundParallax: e.target.checked })} 
+              />
+              Fondo Fijo (Efecto Paralaje)
+            </label>
+          </div>
+
           <div style={{ marginTop: "1.5rem", borderTop: "1px solid #E5E7EB", paddingTop: "1rem" }}>
             <p style={{ fontSize: "0.65rem", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase", marginBottom: "1rem" }}>Márgenes y Espaciado</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
@@ -539,7 +632,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
             <label style={labelStyle}>Imagen del Logo</label>
             <div style={{ display: "flex", gap: "0.5rem" }}>
               <input value={(content as any).logo || ""} readOnly style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-              <button onClick={() => openMedia((url) => update({ logo: url }))} style={{ padding: "0.5rem", background: "#875BF7", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
+              <button onClick={() => openMedia((url) => update({ logo: url }))} style={{ padding: "0.5rem", background: "var(--gs-accent)", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}>📷</button>
             </div>
           </div>
 
@@ -572,7 +665,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
                </button>
                <button 
                  onClick={() => setCreateModalFor("HEADER_LINK")}
-                 style={{ flex: 1, padding: "0.4rem", background: "#F0EBFE", border: "1px solid #875BF733", color: "#875BF7", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
+                 style={{ flex: 1, padding: "0.4rem", background: "var(--gs-accent-light)", border: "1px solid var(--gs-accent)", color: "var(--gs-accent)", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
                >
                  ✨ Crear Página
                </button>
@@ -675,7 +768,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
               </button>
               <button 
                 onClick={() => setCreateModalFor("FOOTER_COLUMN")}
-                style={{ flex: 1, padding: "0.4rem", background: "#F0EBFE", border: "1px solid #875BF733", color: "#875BF7", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
+                style={{ flex: 1, padding: "0.4rem", background: "var(--gs-accent-light)", border: "1px solid var(--gs-accent)", color: "var(--gs-accent)", borderRadius: "6px", fontSize: "0.7rem", fontWeight: 600, cursor: "pointer" }}
               >
                 ✨ Crear Página
               </button>
@@ -798,7 +891,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           <p style={labelStyle}>Color de Acento</p>
           <input 
             type="color" 
-            value={(content as StepsContent).accentColor || "#daa520"} 
+            value={(content as StepsContent).accentColor || "var(--gs-accent)"} 
             onChange={(e) => update({ accentColor: e.target.value })} 
             style={{ ...inputStyle, width: "40px" }} 
           />
@@ -811,7 +904,7 @@ export function BlockPropertiesPanel({ type, content, onChange, openMedia, eleme
           <p style={labelStyle}>Color de Botón Reserva</p>
           <input 
             type="color" 
-            value={(content as AvailabilityContent).buttonColor || "#daa520"} 
+            value={(content as AvailabilityContent).buttonColor || "var(--gs-accent)"} 
             onChange={(e) => update({ buttonColor: e.target.value })} 
             style={{ ...inputStyle, width: "40px" }} 
           />

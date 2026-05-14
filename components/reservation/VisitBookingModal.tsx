@@ -121,7 +121,7 @@ export function VisitBookingModal({ open, onClose }: Props) {
           <div style={{ padding: "3rem 2.5rem" }}>
             <div style={{ marginBottom: "2.5rem" }}>
                <p style={{ fontSize: "0.68rem", letterSpacing: "0.3em", textTransform: "uppercase", color: GOLD, marginBottom: "0.5rem" }}>Experiencia</p>
-               <h2 style={{ color: "#F5F0E8", fontSize: "2.2rem", fontFamily: "var(--font-cormorant)", fontWeight: 300, lineHeight: 1.1 }}>Reserva una Visita <br/><em style={{ color: GOLD }}>Exclusiva</em></h2>
+               <h2 style={{ color: "var(--gs-text)", fontSize: "2.2rem", fontFamily: "var(--font-cormorant)", fontWeight: 300, lineHeight: 1.1 }}>Reserva una Visita <br/><em style={{ color: GOLD }}>Exclusiva</em></h2>
             </div>
 
             <StepIndicator current={step} />
