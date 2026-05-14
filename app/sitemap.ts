@@ -19,9 +19,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${baseUrl}/menu-degustacion`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/regalo`,
       lastModified: currentDate,
       changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/restaurantes-michelin`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
       priority: 0.85,
     },
     {
