@@ -36,14 +36,14 @@ export default async function Home() {
   const reservation = await getReservationData();
 
   const faqs = [
-    { q: "¿Dónde está la ubicación secreta?", a: "Es un misterio hasta 2h antes. Recibirás 4 mensajes con pistas: 7 días, 3 días, 1 día, y 2 horas antes del evento." },
-    { q: "¿Qué incluye exactamente?", a: "Todo: 4 actos gastronómicos, maridaje completo (7 bebidas premium), petit fours, gin-tonic artesanal. Nada que pagar extra." },
-    { q: "¿Puedo ir con amigos o pareja?", a: "Claro. Máximo 12 personas/sesión. Reserva todas las plazas juntas e id como grupo." },
-    { q: "¿Tienen opciones vegetarianas?", a: "100%. Alergias, dietas especiales, preferencias: avísanos al reservar y el chef adapta el menú." },
-    { q: "¿Cuánto tiempo es en total?", a: "Exactamente 3 horas sin prisa. Sesiones mediodía (13-16h) o noche (20-23h)." },
-    { q: "¿Puedo cancelar?", a: "Sí, gratis hasta 7 días antes. 3-7 días: 50% cargo. <3 días: sin reembolso (vale como crédito)." },
-    { q: "¿Vale para regalar?", a: "Perfecto para regalar. Bonos disponibles. La sorpresa empieza en el primer email que recibe el afortunado." },
-    { q: "¿Cómo es el ambiente?", a: "Íntimo, sofisticado, lúdico. Max 12 personas, chef presente, conversación facilitada, sorpresas diseñadas." },
+    { question: "¿Dónde está la ubicación secreta?", answer: "Es un misterio hasta 2h antes. Recibirás 4 mensajes con pistas: 7 días, 3 días, 1 día, y 2 horas antes del evento." },
+    { question: "¿Qué incluye exactamente?", answer: "Todo: 4 actos gastronómicos, maridaje completo (7 bebidas premium), petit fours, gin-tonic artesanal. Nada que pagar extra." },
+    { question: "¿Puedo ir con amigos o pareja?", answer: "Claro. Máximo 12 personas/sesión. Reserva todas las plazas juntas e id como grupo." },
+    { question: "¿Tienen opciones vegetarianas?", answer: "100%. Alergias, dietas especiales, preferencias: avísanos al reservar y el chef adapta el menú." },
+    { question: "¿Cuánto tiempo es en total?", answer: "Exactamente 3 horas sin prisa. Sesiones mediodía (13-16h) o noche (20-23h)." },
+    { question: "¿Puedo cancelar?", answer: "Sí, gratis hasta 7 días antes. 3-7 días: 50% cargo. <3 días: sin reembolso (vale como crédito)." },
+    { question: "¿Vale para regalar?", answer: "Perfecto para regalar. Bonos disponibles. La sorpresa empieza en el primer email que recibe el afortunado." },
+    { question: "¿Cómo es el ambiente?", answer: "Íntimo, sofisticado, lúdico. Max 12 personas, chef presente, conversación facilitada, sorpresas diseñadas." },
   ];
 
   return (
