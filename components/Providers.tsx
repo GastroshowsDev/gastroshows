@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { PageActionsProvider } from "@/context/PageActionsContext";
 import { GlobalModals } from "./GlobalModals";
@@ -10,23 +9,12 @@ import { HomeButton } from "./HomeButton";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="clandestino"
-        themes={["clandestino", "revelado"]}
-        enableSystem={false}
-        disableTransitionOnChange
-        storageKey="gs-theme"
-        enableColorScheme={false}
-        forcedTheme={undefined}
-      >
-        <PageActionsProvider>
-          {children}
-          <GlobalModals />
-          <FloatingActions />
-          <HomeButton />
-        </PageActionsProvider>
-      </ThemeProvider>
+      <PageActionsProvider>
+        {children}
+        <GlobalModals />
+        <FloatingActions />
+        <HomeButton />
+      </PageActionsProvider>
     </SessionProvider>
   );
 }
