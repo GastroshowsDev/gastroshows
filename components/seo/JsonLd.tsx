@@ -208,6 +208,50 @@ export function menuSchema({
   };
 }
 
+export function recipeSchema({
+  name,
+  description,
+  image,
+  prepTime,
+  cookTime,
+  recipeYield,
+  ingredients,
+  instructions,
+  category,
+  cuisine,
+}: {
+  name: string;
+  description: string;
+  image?: string;
+  prepTime?: string;
+  cookTime?: string;
+  recipeYield?: string;
+  ingredients: string[];
+  instructions: string[];
+  category?: string;
+  cuisine?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name,
+    description,
+    ...(image ? { image } : {}),
+    author: { "@type": "Organization", name: "GastroShows" },
+    ...(prepTime ? { prepTime } : {}),
+    ...(cookTime ? { cookTime } : {}),
+    ...(recipeYield ? { recipeYield } : {}),
+    recipeIngredient: ingredients,
+    recipeInstructions: instructions.map((step, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      text: step,
+    })),
+    ...(category ? { recipeCategory: category } : {}),
+    ...(cuisine ? { recipeCuisine: cuisine } : {}),
+  };
+}
+
 export function productSchema({
   name,
   description,

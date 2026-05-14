@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "xavierpellicer.com" },
       { protocol: "https", hostname: "tabernanoroeste.com" },
       { protocol: "https", hostname: "slowandlowbcn.com" },
+      { protocol: "https", hostname: "www.mineralbcn.com" },
+      { protocol: "https", hostname: "mineralbcn.com" },
+      { protocol: "https", hostname: "www.cruixrestaurant.com" },
+      { protocol: "https", hostname: "cruixrestaurant.com" },
     ],
   },
 
@@ -24,17 +28,13 @@ const nextConfig: NextConfig = {
       { source: "/faq", destination: "/preguntas-frecuentes", permanent: true },
       { source: "/faq/", destination: "/preguntas-frecuentes", permanent: true },
 
-      // Critical SEO migrations from audit
-      { source: "/mejores-restaurantes-menu-degustacion-barcelona", destination: "/menu-degustacion", permanent: true },
-      { source: "/mejores-restaurantes-menu-degustacion-barcelona/", destination: "/menu-degustacion", permanent: true },
+      // Cena Clandestina canonical
       { source: "/cena-clandestina-5", destination: "/cena-clandestina", permanent: true },
       { source: "/cena-clandestina-5/", destination: "/cena-clandestina", permanent: true },
+      // Old regalo URLs → new canonical
       { source: "/regalo-experiencia-gastronomica", destination: "/regalo", permanent: true },
       { source: "/regalo-experiencia-gastronomica/", destination: "/regalo", permanent: true },
-      { source: "/los-mejores-menus-degustacion-para-regalar", destination: "/regalo", permanent: true },
-      { source: "/los-mejores-menus-degustacion-para-regalar/", destination: "/regalo", permanent: true },
-      { source: "/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia", destination: "/restaurantes-michelin", permanent: true },
-      { source: "/restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia/", destination: "/restaurantes-michelin", permanent: true },
+      // Old michelin URLs (only short version → main page; long URL is now its own SEO page)
       { source: "/restaurantes-con-estrella-michelin", destination: "/restaurantes-michelin", permanent: true },
       { source: "/restaurantes-con-estrella-michelin/", destination: "/restaurantes-michelin", permanent: true },
 
