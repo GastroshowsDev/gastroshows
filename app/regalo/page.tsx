@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, productSchema } from "@/components/seo/JsonLd";
 import { GiftButton } from "@/components/GiftButton";
+import { InteractiveCard } from "@/components/InteractiveCard";
+import { OccasionTag } from "@/components/OccasionTag";
 
 export const metadata: Metadata = {
   title: "Regala Cena Clandestina Barcelona · Bono Regalo Experiencia Gastronómica",
@@ -169,41 +171,7 @@ export default function Regalo() {
                 desc: "Bono regalo digital con diseño exclusivo, listo para enviar o imprimir. Personalizables para cualquier ocasión.",
               },
             ].map((item) => (
-              <div
-                key={item.title}
-                style={{
-                  padding: "2rem",
-                  border: "1px solid var(--gs-border)",
-                  background: "rgba(218,165,32,0.03)",
-                  borderRadius: "4px",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--gs-gold)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(218,165,32,0.08)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--gs-border)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(218,165,32,0.03)";
-                }}
-              >
-                <div style={{ fontSize: "2.2rem", marginBottom: "1rem" }}>{item.icon}</div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-cormorant), Georgia, serif",
-                    fontSize: "1.3rem",
-                    color: "var(--gs-text)",
-                    marginBottom: "0.8rem",
-                    fontWeight: 400,
-                  }}
-                >
-                  {item.title}
-                </h3>
-                <p style={{ color: "var(--gs-muted)", fontSize: "0.95rem", lineHeight: 1.7 }}>
-                  {item.desc}
-                </p>
-              </div>
+              <InteractiveCard key={item.title} {...item} />
             ))}
           </div>
         </section>
@@ -303,31 +271,7 @@ export default function Regalo() {
               "🎁 Sin ocasión especial",
               "✨ Solo porque sí",
             ].map((ocasion) => (
-              <div
-                key={ocasion}
-                style={{
-                  padding: "1.2rem 1.5rem",
-                  border: "1px solid var(--gs-border)",
-                  borderRadius: "4px",
-                  color: "var(--gs-muted)",
-                  fontSize: "0.95rem",
-                  textAlign: "center",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--gs-gold)";
-                  (e.currentTarget as HTMLElement).style.background = "rgba(218,165,32,0.08)";
-                  (e.currentTarget as HTMLElement).style.color = "var(--gs-gold)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "var(--gs-border)";
-                  (e.currentTarget as HTMLElement).style.background = "transparent";
-                  (e.currentTarget as HTMLElement).style.color = "var(--gs-muted)";
-                }}
-              >
-                {ocasion}
-              </div>
+              <OccasionTag key={ocasion} label={ocasion} />
             ))}
           </div>
         </section>
