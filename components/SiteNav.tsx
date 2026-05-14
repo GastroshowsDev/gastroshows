@@ -6,7 +6,13 @@ import { useState } from "react";
 import { usePageActions } from "@/context/PageActionsContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
-const navLinks = [
+type NavLink = {
+  href: string;
+  label: string;
+  submenu?: { href: string; label: string }[];
+};
+
+const navLinks: NavLink[] = [
   { href: "/cena-clandestina", label: "La Experiencia" },
   { href: "/grupos",           label: "Grupos" },
   { href: "/blog",             label: "Blog" },
