@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { InteractiveLink } from "@/components/InteractiveLink";
 
 export const metadata: Metadata = {
   title: "Preguntas Frecuentes · Cena Clandestina Barcelona",
@@ -236,7 +236,7 @@ export default function PreguntasFrecuentes() {
               flexWrap: "wrap",
             }}
           >
-            <Link
+            <InteractiveLink
               href="/contacto"
               style={{
                 padding: "1rem 2.5rem",
@@ -253,16 +253,16 @@ export default function PreguntasFrecuentes() {
                 borderRadius: "2px",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.opacity = "0.9";
+              hoverStyle={(e) => {
+                e.style.opacity = "0.9";
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.opacity = "1";
+              unhoverStyle={(e) => {
+                e.style.opacity = "1";
               }}
             >
               Contacta con Nosotros
-            </Link>
-            <Link
+            </InteractiveLink>
+            <InteractiveLink
               href="/cena-clandestina"
               style={{
                 padding: "1rem 2.5rem",
@@ -280,15 +280,15 @@ export default function PreguntasFrecuentes() {
                 borderRadius: "2px",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(218,165,32,0.1)";
+              hoverStyle={(e) => {
+                e.style.background = "rgba(218,165,32,0.1)";
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "transparent";
+              unhoverStyle={(e) => {
+                e.style.background = "transparent";
               }}
             >
               Ver Experiencia
-            </Link>
+            </InteractiveLink>
           </div>
         </section>
       </main>
