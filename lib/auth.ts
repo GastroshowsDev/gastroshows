@@ -68,16 +68,5 @@ export const authOptions: NextAuthOptions = {
     maxAge: 24 * 60 * 60, // 24 hours
     updateAge: 60 * 60, // Refresh every hour
   },
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax" as const, // "strict" bloqueaba cookies en Firefox/Brave o al llegar desde links externos
-        path: "/",
-      },
-    },
-  },
   secret: process.env.NEXTAUTH_SECRET,
 };

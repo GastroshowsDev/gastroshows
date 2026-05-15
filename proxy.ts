@@ -8,6 +8,8 @@ import { getToken } from "next-auth/jwt";
 export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
+  console.log(`[Middleware] Path: ${path} | Secret present: ${!!process.env.NEXTAUTH_SECRET}`);
+
   // 1. Skip system paths and public assets
   if (
     path.startsWith("/_next") ||
@@ -44,8 +46,8 @@ export default async function proxy(req: NextRequest) {
 
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     
-    // Not authenticated -> Redirect to login
     if (!token) {
+      console.log(`[Middleware] No token for path: ${path}. Redirecting to login.`);
       const url = new URL("/admin/login", req.url);
       // Don't add callbackUrl for API routes
       if (!path.startsWith("/api")) {
