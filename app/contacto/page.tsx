@@ -26,7 +26,7 @@ export default function Contacto() {
       <section
         style={{
           background: "linear-gradient(180deg, #050505 0%, var(--gs-bg) 100%)",
-          padding: "8rem 2rem 5rem",
+          padding: "0 2rem 5rem",
           textAlign: "center",
         }}
       >

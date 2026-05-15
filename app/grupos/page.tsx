@@ -36,7 +36,7 @@ export default function Grupos() {
       <section
         style={{
           background: "linear-gradient(180deg, #050505 0%, var(--gs-bg) 100%)",
-          padding: "8rem 2rem 6rem",
+          padding: "0 2rem 6rem",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",

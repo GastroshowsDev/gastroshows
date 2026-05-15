@@ -234,7 +234,7 @@ export default async function BlogPost({ params }: Props) {
       <section
         style={{
           background: "linear-gradient(180deg, #050505 0%, var(--gs-bg) 100%)",
-          padding: "8rem 2rem 4rem",
+          padding: "0 2rem 4rem",
         }}
       >
         <div style={{ maxWidth: "760px", margin: "0 auto" }}>

@@ -29,7 +29,7 @@ export default function CenaClandestina() {
       })} />
 
       {/* ── HERO: impacto + CTA primaria FUERTE ── */}
-      <section style={{ position: "relative", height: "100vh", overflow: "hidden" }}>
+      <section style={{ position: "relative", minHeight: "calc(100vh - 120px)", overflow: "hidden", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "2rem" }}>
         <Image
           src="/images/experiencia/ambiente.jpg"
           alt="Sala secreta GastroShows con candelabros dorados"
@@ -43,8 +43,8 @@ export default function CenaClandestina() {
           background: "linear-gradient(to bottom, rgba(5,5,5,0.3) 0%, transparent 40%, rgba(5,5,5,0.85) 100%)",
         }} />
         <div style={{
-          position: "absolute", bottom: "6rem", left: 0, right: 0,
-          textAlign: "center", padding: "0 2rem",
+          position: "relative",
+          textAlign: "center", padding: "0 2rem", zIndex: 10,
         }}>
           <p style={{ fontSize: "0.6rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "1.5rem" }}>
             Una experiencia única en Barcelona

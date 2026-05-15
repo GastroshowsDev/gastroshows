@@ -56,7 +56,7 @@ export default async function Home() {
       {/* ═══════════════════════════════════════════════════════ */}
       {/* HERO: Full-screen impact */}
       {/* ═══════════════════════════════════════════════════════ */}
-      <section style={{ position: "relative", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+      <section style={{ position: "relative", minHeight: "calc(100vh - 120px)", display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
         <Image
           src="https://images.unsplash.com/photo-1517315177153-612f65b43bd5?w=1920&h=1080&fit=crop"
           alt="Cena elegante en Barcelona - experiencia gastronómica"
@@ -68,7 +68,7 @@ export default async function Home() {
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.3) 40%, rgba(5,5,5,0.7) 100%)" }} />
 
         <div style={{ position: "relative", textAlign: "center", maxWidth: "900px", padding: "0 2rem" }}>
-          <p style={{ fontSize: "0.7rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "2rem", fontWeight: 700 }}>
+          <p style={{ fontSize: "0.7rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "2rem", fontWeight: 700, marginTop: "0" }}>
             🎭 Una Aventura Culinaria Diferente
           </p>
 

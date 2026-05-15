@@ -13,7 +13,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteNav />
-      <div style={{ paddingTop: "60px" }}>
+      <div style={{ paddingTop: "120px" }}>
         {children}
       </div>
       <Footer />
