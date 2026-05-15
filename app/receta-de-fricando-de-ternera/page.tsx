@@ -124,10 +124,13 @@ export default function FricandoRecetaPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&h=600&fit=crop"
-                alt="Auténtico fricandó de ternera con moixernons"
+                src="/images/receta-de-fricando-de-ternera/fricando-ternera-llata-cocinado.jpg"
+                alt="Auténtico fricandó de ternera con llata y moixernons — receta tradicional catalana"
                 className="w-full h-full object-cover"
-                loading="lazy"
+                width={600}
+                height={400}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">

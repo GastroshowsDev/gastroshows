@@ -43,7 +43,9 @@ export default function CenasPrivadasPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Qué es</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="Cena privada Barcelona" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/cenas-privadas-barcelona/hero-cena-privada-chef-barcelona.jpg"
+                alt="Cena privada Barcelona — chef profesional con menú degustación de 8-12 actos en espacio exclusivo"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Una cena <strong>diseñada en exclusiva</strong> para tu grupo, con chef privado y demostraciones en vivo durante la velada.</p>

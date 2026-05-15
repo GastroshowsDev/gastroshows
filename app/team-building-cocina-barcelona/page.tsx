@@ -44,6 +44,11 @@ export default function TeamBuildingCocinaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Team building cocina barcelona</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/team-building-cocina-barcelona/hero-team-building-cocina-barcelona.jpg"
+              alt="Team building cocina Barcelona — talleres de tapas, sushi, GastroChallenge y coctelería para empresas"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Los <strong>Team buildings de cocina en Barcelona más divertidos para empresa</strong>.</p>
         </header>
 

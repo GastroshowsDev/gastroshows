@@ -43,6 +43,11 @@ export default function RegalosComidaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Regalos con Comida</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/regalos-con-comida/hero-regalos-con-comida-gourmet.jpg"
+              alt="Regalos con comida gourmet — aceite premium, chocolate artesanal, salsas XO de Dabiz Muñoz y más"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Regalos con comida deliciosos y originales <strong>para cocinillas y amantes de la gastronomía</strong>. Productos gourmet seleccionados para regalar y sorprender.</p>
         </header>
 

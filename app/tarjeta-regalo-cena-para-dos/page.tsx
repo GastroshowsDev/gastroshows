@@ -98,10 +98,13 @@ export default function TarjetaRegaloDosPage() {
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/mesa-cena-clandestina.jpg"
-                alt="Tarjeta regalo cena para dos - GastroShows Barcelona"
+                src="/images/tarjeta-regalo-cena-para-dos/hero-tarjeta-regalo-cena-para-dos.jpg"
+                alt="Tarjeta regalo cena para dos Barcelona — experiencia gastronómica para parejas con menú degustación"
                 className="w-full h-full object-cover"
-                loading="lazy"
+                width={600}
+                height={400}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">

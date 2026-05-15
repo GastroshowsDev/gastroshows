@@ -45,6 +45,11 @@ export default function Michelin50ENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">6 Michelin-starred restaurants in Barcelona for less than 50€!</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/hero-michelin-restaurants-under-50e-barcelona.jpg"
+              alt="6 Michelin-starred restaurants in Barcelona with lunch menus under 50€ — Caelis, Hisop, ORIA, hofmann, xerta, Dos Palillos"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Haven't you heard yet that <strong>it is possible to enjoy the haute cuisine</strong> of Barcelona's great restaurants and still make ends meet?</p>
         </header>
 

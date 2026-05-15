@@ -69,8 +69,9 @@ export default function TallerCoctelesPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Qué es</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop"
-                alt="Taller de cócteles en Barcelona" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/taller-cocteles-barcelona/hero-taller-cocteles-barcelona-mixologia.jpg"
+                alt="Taller de cócteles en Barcelona — mixología profesional para grupos y empresas"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Un <strong>taller práctico de mixología</strong> guiado por un coctelero profesional donde aprenderás las técnicas básicas para preparar cócteles clásicos y de autor.</p>

@@ -44,6 +44,11 @@ export default function TastingMenusGiftENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">The best tasting menus for gift giving</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/the-best-tasting-menus-for-gift-giving/hero-tasting-menus-gift-giving.jpg"
+              alt="The best tasting menus for gift giving in Barcelona — clandestine dinner, Osmosis, Asagumo, El Goxo"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">If you share gastronomy, make it one of the best tasting menus to give as a gift. <strong>Barcelona restaurants</strong> propose tasting menus to enjoy inside or outside the home, maintaining top quality.</p>
         </header>
 

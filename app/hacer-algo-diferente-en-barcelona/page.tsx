@@ -37,7 +37,7 @@ const planes = [
     id: "coche-lujo",
     name: "Conducir un coche de lujo",
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=600&fit=crop",
+      "/images/hacer-algo-diferente-en-barcelona/coche-lujo-rentalcars-barcelona.jpg",
     paragraphs: [
       "Alquila un vehículo premium a través de plataformas como Rentalcars y vive la experiencia de conducir un coche de alta gama por las carreteras de Barcelona y su entorno.",
       "Encuentras coches de lujo a partir de **25€/día**, y un Mercedes Clase C está disponible alrededor de **53€**. Un plan diferente para sorprender a alguien especial.",
@@ -47,7 +47,7 @@ const planes = [
     id: "paraiso",
     name: "Una visita al paraíso",
     image:
-      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop",
+      "/images/hacer-algo-diferente-en-barcelona/jardin-alma-cocteles-barcelona.jpg",
     paragraphs: [
       "**El Jardín del Hotel Alma**, ubicado en la zona alta de Paseo de Gracia, es un oasis verde escondido en pleno centro. Un rincón ideal para una copa o cóctel.",
       "Los vinos y cócteles cuestan en torno a **5€**, con tapas para acompañar entre **3€ y 5€** más. Plan ideal para tardes tranquilas o cenas informales.",
@@ -57,7 +57,7 @@ const planes = [
     id: "michelin",
     name: "Restaurantes con estrella Michelín por menos de 50€",
     image:
-      "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&h=600&fit=crop",
+      "/images/hacer-algo-diferente-en-barcelona/michelin-cocina-japonesa-arroces.jpg",
     paragraphs: [
       "Disfrutar de la alta cocina en Barcelona <strong>no tiene por qué ser caro</strong>. Restaurantes con estrella Michelin como Caelis, Hisop, ORIA o xerta ofrecen menú mediodía por menos de 50€.",
       "Cocina catalana, japonesa, postres y arroces a un nivel excepcional. Una experiencia que no te puedes perder.",
@@ -71,7 +71,7 @@ const planes = [
     id: "taller-cocteles",
     name: "Taller de cócteles",
     image:
-      "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop",
+      "/images/hacer-algo-diferente-en-barcelona/taller-cocteles-bebidas-creativas.jpg",
     paragraphs: [
       "Aprende a preparar cócteles clásicos y de autor en un **taller mensual** guiado por mixólogos profesionales en Barcelona.",
       "Por **36€** incluye la formación, materiales y un maridaje de tapas. Plan perfecto para parejas, despedidas o cumpleaños diferentes.",
@@ -81,7 +81,7 @@ const planes = [
     id: "spa",
     name: "Spa relajante en la ciudad",
     image:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&h=600&fit=crop",
+      "/images/hacer-algo-diferente-en-barcelona/spa-relajante-barcelona-masaje.jpg",
     paragraphs: [
       "El **Metropolitan Gymnasium** ofrece instalaciones de spa con vistas a Plaza España. Un oasis de tranquilidad en plena ciudad.",
       "Por **35€** disfruta del **circuito de aguas + masaje de 30 minutos**. Ideal para desconectar tras una semana intensa o como regalo relajante.",
@@ -90,7 +90,7 @@ const planes = [
   {
     id: "cena-secreta",
     name: "Cena secreta en Barcelona",
-    image: "/images/experiencia/mesa-cena-clandestina.jpg",
+    image: "/images/hacer-algo-diferente-en-barcelona/hero-hacer-algo-diferente-barcelona.jpg",
     paragraphs: [
       "La **Cena Clandestina de GastroShows** es la experiencia gastronómica más original de Barcelona. Una velada secreta con menú degustación, maridaje de vinos y catas de gin premium.",
       "La ubicación se descubre con pistas días antes. No es solo una cena: es una historia que se vive. **El plan más diferente** que puedes hacer en Barcelona.",

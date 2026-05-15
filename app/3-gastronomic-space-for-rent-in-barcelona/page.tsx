@@ -36,6 +36,11 @@ export default function GastronomicSpaceENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Gastronomic space for rent in Barcelona</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/3-gastronomic-space-for-rent-in-barcelona/hero-gastronomic-space-rent-barcelona.jpeg"
+              alt="Gastronomic space for rent in Barcelona — 100m² private venue with TPB kitchen in Sarrià, from 95€/hour"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">The best <strong>gastronomic space rental in Barcelona</strong>: private, multipurpose venue with fully equipped TPB kitchen and two living rooms. <strong>From 95€/hour</strong>.</p>
         </header>
 

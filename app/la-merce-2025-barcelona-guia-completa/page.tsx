@@ -79,7 +79,9 @@ export default function MercePage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6 uppercase">GastroShows: un plan gastronómico secreto para la Mercè 2025</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="La Cena Clandestina durante La Mercè 2025" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/la-merce-2025-barcelona-guia-completa/hero-la-merce-2025-barcelona-gastroshows.jpg"
+                alt="La Cena Clandestina de GastroShows como plan gastronómico durante La Mercè 2025 Barcelona"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Si después de un día de fiesta quieres <strong>vivir una experiencia gastronómica única</strong>, La Cena Clandestina de GastroShows es la opción perfecta. Una ubicación secreta, menú degustación y un final de noche inolvidable.</p>

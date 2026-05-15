@@ -43,6 +43,11 @@ export default function RegalosParejaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Regalos Originales en Pareja</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/regalos-originales-en-pareja/hero-regalos-originales-en-pareja.jpg"
+              alt="Regalos originales en pareja para compartir momentos inolvidables juntos en Barcelona"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Regalos originales en pareja para compartir más momentos inolvidables juntos. <strong>Compartir es vivir</strong> y las mejores experiencias son las que se viven en compañía.</p>
         </header>
 

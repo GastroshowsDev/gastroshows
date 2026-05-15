@@ -45,6 +45,11 @@ export default function BestTastingMenuENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">The best restaurants with tasting menu Barcelona</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/the-best-restaurants-with-tasting-menu-in-barcelona/hero-tasting-menu-restaurants-barcelona.jpeg"
+              alt="The best restaurants with tasting menu in Barcelona — guide to top gastronomic experiences"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">It's no secret that gastronomy is in fashion. In recent years, cooking has experienced a surge in popularity thanks to social media.</p>
         </header>
 

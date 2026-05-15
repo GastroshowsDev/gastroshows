@@ -98,10 +98,13 @@ export default function TarjetaRegaloCenaPage() {
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/mesa-cena-clandestina.jpg"
-                alt="Tarjeta regalo cena Barcelona - Cena clandestina GastroShows"
+                src="/images/tarjeta-regalo-cena-barcelona/hero-tarjeta-regalo-cena-clandestina-barcelona.jpg"
+                alt="Tarjeta regalo cena Barcelona — Cena Clandestina GastroShows con menú degustación de 10-12 actos"
                 className="w-full h-full object-cover"
-                loading="lazy"
+                width={600}
+                height={400}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">

@@ -43,7 +43,9 @@ export default function TeamBuildingMasterchefPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Qué es</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/chef-preparando.jpg" alt="Team building masterchef Barcelona" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/team-building-masterchef/hero-team-building-masterchef-barcelona.jpg"
+                alt="Team Building Masterchef Barcelona — actividad gastronómica de cocina en equipo para empresas"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Los equipos preparan un <strong>menú completo siguiendo recetas guiadas por un chef</strong> dentro de un tiempo limitado, fomentando comunicación y colaboración.</p>

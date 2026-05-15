@@ -53,7 +53,9 @@ export default function CaballaMarinadaPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Receta de caballa</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=800&h=600&fit=crop" alt="Receta de caballa marinada con cítricos" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/receta-de-caballa-marinada/hero-caballa-marinada-citricos.jpg"
+                alt="Receta de caballa marinada con cítricos — técnica ancestral catalana paso a paso"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>El marinado con <strong>sal y azúcar</strong> es una técnica ancestral que potencia los sabores del pescado azul. La caballa, al ser un pescado graso, queda especialmente sabrosa con este tratamiento.</p>

@@ -44,7 +44,9 @@ export default function GiftCardENPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">Clandestine dinner gift card</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="Clandestine dinner gift card" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/gift-card/hero-gift-card-gastronomic-experience.jpg"
+                alt="Gastronomic experience gift card Barcelona — clandestine dinner with tasting menu, wine pairings and premium gin"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>The best gift for food lovers: a <strong>clandestine dinner experience</strong> in a secret Barcelona venue.</p>

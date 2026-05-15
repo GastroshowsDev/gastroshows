@@ -36,6 +36,11 @@ export default function SushiWorkshopENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">sushi workshop barcelona</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/sushi-workshop-barcelona/hero-sushi-workshop-barcelona.jpg"
+              alt="Sushi workshop Barcelona — fresh Japanese cuisine team-building activity from €80, makis and nigiris"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"><strong>SUSHI FRESH!</strong> Japanese cuisine in the <strong>freshest and most original sushi workshop</strong> in Barcelona.</p>
         </header>
 

@@ -92,10 +92,13 @@ export default function AlquilerEspacioPage() {
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/ambiente.jpg"
-                alt="Espacio gastronómico GastroShows en Sarrià-Sant Gervasi"
+                src="/images/alquiler-espacio-gastronomico-en-barcelona/hero-espacio-gastronomico-alquiler-barcelona-sarria.jpeg"
+                alt="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada"
                 className="w-full h-full object-cover"
-                loading="lazy"
+                width={600}
+                height={400}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">

@@ -44,6 +44,11 @@ export default function VealFricandoENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Veal fricandó recipe</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/veal-fricando-recipe/hero-veal-fricando-recipe-catalan.jpg"
+              alt="Authentic veal fricandó recipe — traditional Catalan stew with llata and moixernons step by step"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">The best veal fricandó recipe with all the tips and tricks to make it perfect, from how to buy the meat to the type of mushrooms you can use.</p>
         </header>
 

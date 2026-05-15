@@ -49,6 +49,11 @@ export default function CheapTapasENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Bars tapas barcelona cheap</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/cheap-tapas-bars-in-barcelona/hero-cheap-tapas-bars-barcelona.jpg"
+              alt="The 10 best cheap tapas bars in Barcelona — vermouth, montaditos and authentic local cuisine under 20€"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">In these <strong>10 tapas bars in Barcelona</strong> you will enjoy good tapas for less than 20€.</p>
         </header>
 

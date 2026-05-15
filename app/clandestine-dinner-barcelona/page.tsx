@@ -44,7 +44,9 @@ export default function ClandestineDinnerENPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">What is</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="The clandestine dinner Barcelona" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/clandestine-dinner-barcelona/hero-clandestine-dinner-barcelona.jpeg"
+                alt="The clandestine dinner Barcelona — secret venue with 10-12 course tasting menu and wine pairings"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>The clandestine dinner is a unique <strong>gastronomic experience</strong> taking place in a secret venue in Barcelona. The location is revealed through email clues, days before the event.</p>

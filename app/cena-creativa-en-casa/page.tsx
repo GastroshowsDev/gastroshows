@@ -43,7 +43,9 @@ export default function CenaCasaPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">cena degustación en casa y ahora con descuento!</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/plato-principal.jpg" alt="Cena degustación en casa GastroShows" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/cena-creativa-en-casa/hero-cena-degustacion-en-casa.jpg"
+                alt="Cena degustación en casa GastroShows — 7 platos gourmet a domicilio en toda la península"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p><strong>7 platos</strong> de alta cocina llegan a tu casa en una <strong>caja sorpresa con instrucciones de montaje</strong>. Lo único que necesitas hacer es emplatar y disfrutar.</p>

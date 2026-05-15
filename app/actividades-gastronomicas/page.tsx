@@ -46,6 +46,11 @@ export default function ActividadesGastronomicasPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">actividades gastronómicas</h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img src="/images/actividades-gastronomicas/hero-actividades-gastronomicas-grupos.jpg"
+              alt="Las mejores actividades gastronómicas para empresas y grupos en Barcelona — talleres, GastroChallenge y cenas clandestinas"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Las mejores <strong>actividades gastronómicas ideales para empresas y grupos</strong> en Barcelona.</p>
         </header>
 

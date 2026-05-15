@@ -44,7 +44,9 @@ export default function CenaClandestinaGruposPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">Qué es</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="La cena clandestina para grupos" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/cena-clandestina-de-barcelona-grupos/hero-cena-clandestina-grupos-barcelona.jpg"
+                alt="La Cena Clandestina de Barcelona para grupos — menú degustación de 10-12 actos con maridaje en espacio secreto"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Una <strong>cena clandestina con ubicación secreta</strong> que se descubre a través de pistas y enigmas. Una vez allí, **menú degustación de alta cocina con showcooking y maridaje**.</p>
@@ -70,9 +72,16 @@ export default function CenaClandestinaGruposPage() {
         <section id="imagenes" className="mb-12 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">imÁgenes de la cena clandestina</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {["mesa-cena-clandestina.jpg", "plato-principal.jpg", "ambiente.jpg", "plato-humo.jpg", "coctel-bienvenida.webp", "postre-bola-nieve.jpg"].map((img) => (
-              <div key={img} className="relative h-40 rounded-lg overflow-hidden shadow-md">
-                <img src={`/images/experiencia/${img}`} alt="Cena clandestina" className="w-full h-full object-cover" loading="lazy" />
+            {[
+              { src: "/images/cena-clandestina-de-barcelona-grupos/hero-cena-clandestina-grupos-barcelona.jpg", alt: "Mesa de la Cena Clandestina para grupos en Barcelona" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-experiencia.jpeg", alt: "Ambiente de la cena clandestina secreta para grupos" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-mesa.jpg", alt: "Mesa con menú degustación de la cena clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-degustacion.jpg", alt: "Plato de la cena clandestina con showcooking en vivo" },
+              { src: "/images/experiencia/plato-humo.jpg", alt: "Plato con humo en la cena clandestina" },
+              { src: "/images/experiencia/coctel-bienvenida.webp", alt: "Cóctel de bienvenida en la cena clandestina" },
+            ].map((img) => (
+              <div key={img.src} className="relative h-40 rounded-lg overflow-hidden shadow-md">
+                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" width={400} height={240} loading="lazy" />
               </div>
             ))}
           </div>
