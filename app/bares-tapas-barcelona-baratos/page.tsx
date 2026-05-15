@@ -140,7 +140,7 @@ const bares = [
     subtitle: "tapas andaluzas en Poblenou",
     url: "https://www.facebook.com/BaliusBar/",
     image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&h=600&fit=crop",
+      "/images/bares-tapas-baratos/bar-balius-poblenou-tapas-andaluzas.jpg",
     paragraphs: [
       "Un bar de tapas de Barcelona imprescindible es el **Balius**. Ideal para cualquier ocasión: una cerveza después del trabajo; un vermut de fin de semana o un cóctel de sábado por la noche.",
       "En la carta tienen tapas a precio económico de **estilo andaluz y castellanas**: **lomo de orza** (lomo escaldado y marinado con especias) y **atascaburras** (patata picada con bacalao, ajo, aceite y sal). Forman parte de su sello caracterizado por el **Slow Food** (producto de proximidad y ecológico garantizado) y unos precios económicos.",
@@ -235,6 +235,17 @@ export default function BaresTapasPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Bares tapas Barcelona baratos
           </h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img
+              src="/images/bares-tapas-baratos/hero-bares-tapas-barcelona-baratos.jpg"
+              alt="Los 10 mejores bares de tapas baratos de Barcelona por menos de 20€"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
         </header>
 
         <section className="mb-12 space-y-4 text-foreground/90 leading-relaxed text-lg">
@@ -288,8 +299,10 @@ export default function BaresTapasPage() {
               >
                 <img
                   src={b.image}
-                  alt={`${b.name} - ${b.subtitle}`}
+                  alt={`${b.name} Barcelona — ${b.subtitle}, tapas baratas por menos de 20€`}
                   className="w-full h-full object-cover"
+                  width={600}
+                  height={400}
                   loading="lazy"
                 />
               </div>

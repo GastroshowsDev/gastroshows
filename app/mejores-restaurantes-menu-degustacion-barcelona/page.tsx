@@ -149,6 +149,17 @@ export default function MejoresRestaurantesPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Los mejores restaurantes con menú degustación Barcelona
           </h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img
+              src="/images/mejores-restaurantes-menu-degustacion-barcelona/hero-menu-degustacion-barcelona.jpeg"
+              alt="Los mejores restaurantes con menú degustación de Barcelona — guía 2026"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
             Descubre los <strong>5 mejores restaurantes con menú degustación de Barcelona</strong>: desde la experiencia
             clandestina más original hasta la alta cocina vegetariana o el pescado más fresco. Guía actualizada con precios,
@@ -209,9 +220,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/mesa-cena-clandestina.jpg"
-                alt="La Cena Clandestina de GastroShows - Menú degustación experiencial Barcelona"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/gastroshows-cena-clandestina.jpg"
+                alt="GastroShows La Cena Clandestina Barcelona — menú degustación 4 actos en ubicación secreta"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -268,9 +281,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
               <img
-                src="https://xavierpellicer.com/_next/image?url=%2Fimages%2Fpellicer-con-verdura.jpg&w=3840&q=75"
-                alt="Xavier Pellicer con verduras ecológicas - Menú degustación Barcelona"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/xavier-pellicer-barcelona-menu-degustacion-eco.jpg"
+                alt="Restaurante Xavier Pellicer Barcelona — chef con verduras ecológicas de proximidad, menú degustación 65€"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -330,9 +345,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://tabernanoroeste.com/wp-content/uploads/2020/06/Slider-Taberna.jpg"
-                alt="Taberna Noroeste Barcelona - Productos gallegos y castellanos"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/taberna-noroeste-barcelona-producto-gallego.jpg"
+                alt="Taberna Noroeste Barcelona — productos gallegos y castellanos, menú degustación 7-8 platos por 70€"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -387,9 +404,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
               <img
-                src="https://www.cruixrestaurant.com/wp-content/uploads/2022/09/miguel-cruix.jpg"
-                alt="CRUIX restaurant Barcelona - Chef Miquel Pardo"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/cruix-barcelona-bib-gourmand-michelin.jpg"
+                alt="CRUIX Barcelona Chef Miquel Pardo — menú degustación 50€ Bib Gourmand Michelin Eixample"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -441,9 +460,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://www.mineralbcn.com/uploads/gallery/1204bf05-2683-46df-aacf-50d2be12ea8a.webp"
-                alt="Mineral Barcelona - Menú degustación con pescado fresco"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/mineral-barcelona-pescado-fresco-menu-degustacion.webp"
+                alt="Restaurante Mineral Barcelona — pescado fresco de lonja diaria, menú degustación 75€ en Barceloneta"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">

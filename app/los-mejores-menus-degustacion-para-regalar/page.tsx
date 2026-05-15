@@ -109,6 +109,17 @@ export default function MenusRegalarPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             LOS MEJORES MENÚS DEGUSTACIÓN PARA REGALAR
           </h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img
+              src="/images/menus-degustacion-regalar/hero-menus-degustacion-regalar.jpg"
+              alt="Los mejores menús degustación para regalar en Barcelona — delivery y experiencias"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
         </header>
 
         {/* INTRO */}
@@ -145,9 +156,11 @@ export default function MenusRegalarPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/mesa-cena-clandestina.jpg"
-                alt="La Cena Clandestina de GastroShows - Regala una experiencia gastronómica"
+                src="/images/menus-degustacion-regalar/gastroshows-cena-clandestina-regalo.jpg"
+                alt="Regala La Cena Clandestina de GastroShows — menú degustación 12 actos con maridaje, ubicación secreta Barcelona"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -260,9 +273,11 @@ export default function MenusRegalarPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
               <img
-                src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800&h=600&fit=crop"
-                alt="El GoXO Barcelona - Menú degustación de Dabiz Muñoz"
+                src="/images/menus-degustacion-regalar/el-goxo-costilla-dabiz-munoz.jpg"
+                alt="El GoXO costillar para tacos — menú degustación fusión rockera del chef Dabiz Muñoz"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">

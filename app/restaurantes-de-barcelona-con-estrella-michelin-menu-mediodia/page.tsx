@@ -175,6 +175,17 @@ export default function MichelinMediodiaPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             ¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!
           </h1>
+          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+            <img
+              src="/images/restaurantes-michelin-mediodia/hero-restaurantes-michelin-mediodia.jpg"
+              alt="6 restaurantes Michelín Barcelona con menú mediodía por menos de 50€"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
         </header>
 
         <section className="mb-12 space-y-4 text-foreground/90 leading-relaxed text-lg">
@@ -214,8 +225,10 @@ export default function MichelinMediodiaPage() {
               >
                 <img
                   src={r.image}
-                  alt={`${r.name} Barcelona - Restaurante Michelin menú mediodía`}
+                  alt={`${r.name} Barcelona — restaurante con estrella Michelín, menú mediodía por menos de 50€`}
                   className="w-full h-full object-cover"
+                  width={600}
+                  height={400}
                   loading="lazy"
                 />
               </div>
