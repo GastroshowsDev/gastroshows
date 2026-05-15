@@ -13,7 +13,7 @@ import { getToken } from "next-auth/jwt";
 
 // ── Auth logic for admin UI ──
 const authMiddleware = withAuth(
-  function proxy(req) {
+  function authWrapper(req) {
     const role = req.nextauth.token?.role ?? "LIVE";
     const { pathname } = req.nextUrl;
 
@@ -38,7 +38,7 @@ const authMiddleware = withAuth(
 );
 
 // ── Main Middleware Dispatcher ──
-export default async function proxy(request: NextRequest, event: NextFetchEvent) {
+export default async function mainMiddleware(request: NextRequest, event: NextFetchEvent) {
   const path = request.nextUrl.pathname;
 
   // 1. FAST SKIP: Ignore static files, internal paths and AUTH routes IMMEDIATELY

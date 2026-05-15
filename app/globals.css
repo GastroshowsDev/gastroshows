@@ -16,70 +16,8 @@
   --font-sans: var(--font-montserrat), system-ui, sans-serif;
 }
 
-/* ── Public site palette (dark default) ── */
+/* ── Dark theme (Permanent for Public Site) ── */
 :root {
-  --gs-bg: #0A0A0A;
-  --gs-bg2: #111111;
-  --gs-bg3: #0D0D0D;
-  --gs-text: #F5F0E8;
-  --gs-text-muted: rgba(245, 240, 232, 0.82);
-  --gs-text-sub: rgba(245, 240, 232, 0.75);
-  --gs-muted: #A8A49E;
-  --gs-gold: #daa520;
-  --gs-gold-hover: #E8D5A8;
-  --gs-border: rgba(200, 169, 110, 0.1);
-  --gs-border-hover: rgba(200, 169, 110, 0.3);
-  --gs-card-hover: rgba(200, 169, 110, 0.03);
-  --gs-gold-shadow: 0 0 13px rgba(0, 0, 0, 0.4);
-
-  --gs-accent: #daa520; /* Color Mostaza Maestro */
-  --gs-accent-light: #fef8e7;
-  --gs-accent-soft: rgba(218, 165, 32, 0.15);
-  --gs-accent-border: rgba(218, 165, 32, 0.3);
-
-  /* ── Admin panel palette (light default) ── */
-  --color-admin-bg: #F4F6FA;
-  --color-admin-surface: #FFFFFF;
-  --color-admin-border: #EAEEF4;
-  --color-admin-accent: var(--gs-accent);
-  --color-admin-accent-hover: #d4a30e;
-  --color-admin-accent-light: var(--gs-accent-light);
-  --color-admin-text: #1A1A2E;
-  --color-admin-muted: #6B7280;
-  --color-admin-sidebar: #FFFFFF;
-}
-
-/* ── Clandestino mode (public site) ── */
-:root.revelado {
-  --gs-bg: #FAF8F3;
-  --gs-bg2: #F1EFE9;
-  --gs-bg3: #EBE7DD;
-  --gs-text: #080705;
-  --gs-text-muted: #2A2824;
-  --gs-text-sub: #3C3830;
-  --gs-muted: #5D584F;
-  --gs-gold: #b8860b;
-  --gs-gold-hover: #916a08;
-  --gs-border: rgba(184, 134, 11, 0.35);
-  --gs-border-hover: rgba(184, 134, 11, 0.65);
-  --gs-card-hover: rgba(184, 134, 11, 0.08);
-  --gs-gold-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-  /* Admin stays light in light mode */
-  --color-admin-bg: #F4F6FA;
-  --color-admin-surface: #FFFFFF;
-  --color-admin-border: #EAEEF4;
-  --color-admin-accent: var(--gs-accent);
-  --color-admin-accent-hover: #d4a30e;
-  --color-admin-accent-light: var(--gs-accent-light);
-  --color-admin-text: #1A1A2E;
-  --color-admin-muted: #6B7280;
-  --color-admin-sidebar: #FFFFFF;
-}
-
-/* ── Dark mode (Clandestino) ── */
-:root.clandestino,
-.clandestino-forced {
   --gs-bg: #0A0A0A;
   --gs-bg2: #111111;
   --gs-bg3: #0D0D0D;
@@ -94,16 +32,37 @@
   --gs-card-hover: rgba(200, 169, 110, 0.03);
   --gs-gold-shadow: none;
 
-  /* Admin dark mode */
-  --color-admin-bg: #0F1117;
-  --color-admin-surface: #1A1D27;
-  --color-admin-border: #252836;
+  --gs-accent: #daa520;
+  --gs-accent-light: #fef8e7;
+  --gs-accent-soft: rgba(218, 165, 32, 0.15);
+  --gs-accent-border: rgba(218, 165, 32, 0.3);
+
+  /* Default Admin (Light mode as requested) */
+  --color-admin-bg: #F4F6FA;
+  --color-admin-surface: #FFFFFF;
+  --color-admin-border: #EAEEF4;
   --color-admin-accent: var(--gs-accent);
   --color-admin-accent-hover: #d4a30e;
   --color-admin-accent-light: var(--gs-accent-light);
-  --color-admin-text: #E8EAF0;
-  --color-admin-muted: #8B93A7;
-  --color-admin-sidebar: #141620;
+  --color-admin-text: #1A1A2E;
+  --color-admin-muted: #6B7280;
+  --color-admin-sidebar: #FFFFFF;
+}
+
+/* Force light mode in Admin regardless of system/other settings */
+.admin-theme {
+  --color-admin-bg: #F4F6FA;
+  --color-admin-surface: #FFFFFF;
+  --color-admin-border: #EAEEF4;
+  --color-admin-text: #1A1A2E;
+  --color-admin-muted: #6B7280;
+  --color-admin-sidebar: #FFFFFF;
+}
+
+.clandestino-forced {
+  /* Utility for legacy components explicitly requesting dark */
+  background: var(--gs-bg);
+  color: var(--gs-text);
 }
 
 /* ── Palette: Organic Elegance ── */

@@ -352,6 +352,7 @@ function ReservaModal({
   saving,
   isEdit,
   venues,
+  serverError,
 }: {
   title: string;
   form: ReservaForm;
@@ -361,6 +362,7 @@ function ReservaModal({
   saving: boolean;
   isEdit: boolean;
   venues: Array<{ id: string; name: string }>;
+  serverError?: string | null;
 }) {
   const total = form.pricePerPax * form.guests;
 
@@ -465,13 +467,20 @@ function ReservaModal({
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end", paddingTop: "0.5rem", borderTop: "1px solid var(--color-admin-border)" }}>
-            <button type="button" onClick={onClose} style={{ ...S.btn, background: "var(--color-admin-border)", color: "var(--color-admin-text)" }}>
-              Cancelar
-            </button>
-            <button type="submit" disabled={saving} style={{ ...S.btn, opacity: saving ? 0.7 : 1 }}>
-              {saving ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear reserva"}
-            </button>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid var(--color-admin-border)" }}>
+            {serverError && (
+              <p style={{ fontSize: "0.82rem", color: "#DC2626", background: "#FEE2E2", padding: "0.5rem 0.75rem", borderRadius: "6px", margin: 0 }}>
+                ⚠ {serverError}
+              </p>
+            )}
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
+              <button type="button" onClick={onClose} style={{ ...S.btn, background: "var(--color-admin-border)", color: "var(--color-admin-text)" }}>
+                Cancelar
+              </button>
+              <button type="submit" disabled={saving} style={{ ...S.btn, opacity: saving ? 0.7 : 1 }}>
+                {saving ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear reserva"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -520,6 +529,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   const [editId, setEditId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<ReservaForm>(FORM_DEFAULT);
   const [saving, setSaving] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   // Modal for forced venue selection
   const [modalReserva, setModalReserva] = useState<ReservaRow | null>(null);
@@ -748,6 +759,7 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
     e.preventDefault();
     if (creating) return;
     setCreating(true);
+    setCreateError(null);
     try {
       const res = await fetch("/api/admin/reservations", {
         method: "POST",
@@ -759,8 +771,12 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           date: new Date(createForm.date).toISOString(),
         }),
       });
-      const json = await res.json() as { ok: boolean; data?: ReservaRow };
-      if (json.ok && json.data) {
+      const json = await res.json() as { ok: boolean; data?: ReservaRow; error?: string };
+      if (!res.ok || !json.ok) {
+        setCreateError(json.error ?? `Error ${res.status}: no se pudo crear la reserva`);
+        return;
+      }
+      if (json.data) {
         const d = json.data;
         setReservas((rs) => [{
           id: d.id, type: d.type, status: d.status, guests: d.guests,
@@ -774,6 +790,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         setCreateOpen(false);
         setCreateForm(FORM_DEFAULT);
       }
+    } catch (err) {
+      setCreateError("Error de conexión. Inténtalo de nuevo.");
     } finally {
       setCreating(false);
     }
@@ -787,22 +805,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
   async function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     if (saving || !editId) return;
-
-    // Skip blocking modal for venue
-    /*
-    if (editForm.status === "CONFIRMED" && !editForm.venueName) {
-      const row = reservas.find(r => r.id === editId);
-      if (row) {
-        setModalReserva(row);
-        setModalPendingStatus("CONFIRMED");
-        setEditId(null); // Close edit modal
-      }
-      return;
-    }
-    */
-
-
     setSaving(true);
+    setEditError(null);
     try {
       const res = await fetch(`/api/admin/reservations/${editId}`, {
         method: "PATCH",
@@ -823,8 +827,12 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           status: editForm.status,
         }),
       });
-      const json = await res.json() as { ok: boolean; data?: ReservaRow };
-      if (json.ok && json.data) {
+      const json = await res.json() as { ok: boolean; data?: ReservaRow; error?: string };
+      if (!res.ok || !json.ok) {
+        setEditError(json.error ?? `Error ${res.status}: no se pudo guardar la reserva`);
+        return;
+      }
+      if (json.data) {
         const d = json.data;
         setReservas((rs) => rs.map((r) => r.id === editId ? {
           id: d.id, type: d.type, status: d.status, guests: d.guests,
@@ -837,6 +845,8 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
         } : r));
         setEditId(null);
       }
+    } catch (err) {
+      setEditError("Error de conexión. Inténtalo de nuevo.");
     } finally {
       setSaving(false);
     }
@@ -1139,10 +1149,11 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           form={createForm}
           setField={setCreateField}
           onSubmit={handleCreate}
-          onClose={() => setCreateOpen(false)}
+          onClose={() => { setCreateOpen(false); setCreateError(null); }}
           saving={creating}
           isEdit={false}
           venues={venues}
+          serverError={createError}
         />
       )}
 
@@ -1153,10 +1164,11 @@ export function ReservasTable({ reservas: initial, role = "ADMIN" }: { reservas:
           form={editForm}
           setField={setEditField}
           onSubmit={handleUpdate}
-          onClose={() => setEditId(null)}
+          onClose={() => { setEditId(null); setEditError(null); }}
           saving={saving}
           isEdit={true}
           venues={venues}
+          serverError={editError}
         />
       )}
 

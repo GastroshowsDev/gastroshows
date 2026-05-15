@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminTopBar } from "./AdminTopBar";
 
@@ -77,14 +78,15 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     };
   }, [isSidebarOpen, isInitialized]);
 
-  if (isAuthPage) return <>{children}</>;
+  if (isAuthPage) return <SessionProvider>{children}</SessionProvider>;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
-    <div className="admin-context" style={{ display: "flex", height: "100vh", overflow: "hidden", background: "var(--color-admin-bg)", color: "var(--color-admin-text)", position: "relative" }}>
+    <SessionProvider>
+    <div className="admin-context admin-theme" style={{ display: "flex", height: "100vh", overflow: "hidden", background: "var(--color-admin-bg)", color: "var(--color-admin-text)", position: "relative" }}>
       
       {/* Sidebar con Animación Slide + Fade */}
       <div className={`sidebar-container ${isSidebarOpen ? "open" : ""}`}>
@@ -151,5 +153,6 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         }
       `}</style>
     </div>
+    </SessionProvider>
   );
 }

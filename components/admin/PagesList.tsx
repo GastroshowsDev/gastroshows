@@ -9,7 +9,8 @@ type Page = {
   slug: string;
   published: boolean;
   updatedAt: string;
-  _count: { blocks: number };
+  type?: "dynamic" | "hardcoded";
+  _count?: { blocks: number };
 };
 
 import { CreatePageModal } from "./CreatePageModal";
@@ -26,9 +27,31 @@ export function PagesList() {
   async function fetchPages() {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/pages");
-      const json = await res.json();
-      if (json.ok) setPages(json.data);
+      // Fetch dynamic pages
+      const resBuilder = await fetch("/api/admin/pages");
+      const jsonBuilder = await resBuilder.json();
+      
+      // Fetch hardcoded pages
+      const resStatic = await fetch("/api/admin/web/discover");
+      const jsonStatic = await resStatic.json();
+
+      let builderPages: Page[] = [];
+      if (jsonBuilder.ok) {
+        builderPages = jsonBuilder.data.map((p: any) => ({ ...p, type: "dynamic" }));
+      }
+
+      let staticPages: Page[] = [];
+      if (jsonStatic.ok) {
+        staticPages = jsonStatic.data.map((p: any) => ({ ...p, type: "hardcoded" }));
+      }
+
+      // Combine and sort by type (Builder first) then updatedAt
+      const combined = [...builderPages, ...staticPages].sort((a, b) => {
+        if (a.type !== b.type) return a.type === "dynamic" ? -1 : 1;
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      });
+
+      setPages(combined);
     } finally {
       setLoading(false);
     }
@@ -229,8 +252,8 @@ export function PagesList() {
                   />
                 </th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Título</th>
+                <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Tipo</th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>URL (Slug)</th>
-                <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Bloques</th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Estado</th>
                 <th style={{ padding: "1rem 1.5rem", fontSize: "0.75rem", color: "#6B7280", textTransform: "uppercase" }}>Acciones</th>
               </tr>
@@ -256,9 +279,18 @@ export function PagesList() {
                     <div style={{ fontSize: "0.75rem", color: "#9CA3AF" }}>Actualizado: {new Date(page.updatedAt).toLocaleDateString()}</div>
                   </td>
                   <td style={{ padding: "1rem 1.5rem" }}>
+                    <span style={{
+                      padding: "4px 8px", borderRadius: "6px", fontSize: "0.65rem", fontWeight: 700,
+                      background: page.type === "dynamic" ? "var(--gs-accent-light)" : "#E0E7FF",
+                      color: page.type === "dynamic" ? "var(--gs-accent)" : "#4338CA",
+                      textTransform: "uppercase"
+                    }}>
+                      {page.type === "dynamic" ? "Builder" : "Código (SEO)"}
+                    </span>
+                  </td>
+                  <td style={{ padding: "1rem 1.5rem" }}>
                     <code style={{ background: "#F3F4F6", padding: "2px 6px", borderRadius: "4px" }}>/{page.slug}</code>
                   </td>
-                  <td style={{ padding: "1rem 1.5rem", color: "#4B5563" }}>{page._count.blocks} bloques</td>
                   <td style={{ padding: "1rem 1.5rem" }}>
                     <span style={{
                       padding: "4px 8px", borderRadius: "12px", fontSize: "0.7rem", fontWeight: 600,
@@ -270,14 +302,20 @@ export function PagesList() {
                   </td>
                   <td style={{ padding: "1rem 1.5rem" }}>
                     <div style={{ display: "flex", gap: "0.75rem" }}>
-                      <Link
-                        href={`/admin/web/pages/${page.id}/editor`}
-                        style={{ color: "var(--color-admin-accent)", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}
-                      >
-                        Editar
-                      </Link>
+                      {page.type === "dynamic" ? (
+                        <Link
+                          href={`/admin/web/pages/${page.id}/editor`}
+                          style={{ color: "var(--color-admin-accent)", textDecoration: "none", fontSize: "0.85rem", fontWeight: 600 }}
+                        >
+                          Editar
+                        </Link>
+                      ) : (
+                        <span style={{ color: "#9CA3AF", fontSize: "0.85rem", cursor: "default", fontStyle: "italic" }}>
+                          Archivo TSX
+                        </span>
+                      )}
                       <a
-                        href={page.slug === "home" ? "/" : `/${page.slug}`}
+                        href={page.slug === "" || page.slug === "home" ? "/" : `/${page.slug}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: "var(--color-admin-muted)", textDecoration: "none", fontSize: "0.85rem" }}

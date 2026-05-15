@@ -3,7 +3,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { DemoModeToggle } from "./DemoModeToggle";
 import { Menu, Globe } from "lucide-react";
 
@@ -142,7 +141,6 @@ export function AdminTopBar({ onMenuClick, isMenuOpen }: { onMenuClick?: () => v
         </a>
 
         <DemoModeToggle />
-        <ThemeToggle variant="admin" />
       </div>
 
       <style jsx global>{`

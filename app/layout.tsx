@@ -56,8 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import Script from "next/script";
-import { Footer } from "@/components/Footer";
-import { SiteNav } from "@/components/SiteNav";
+import { PublicShell } from "@/components/PublicShell";
 import { GoogleTagManager } from "@/components/tracking/GoogleTagManager";
 import { GoogleAnalytics } from "@/components/tracking/GoogleAnalytics";
 import { MetaPixel } from "@/components/tracking/MetaPixel";
@@ -79,19 +78,6 @@ export default async function RootLayout({
       <head>
         <SeoHead />
         <GoogleTagManager />
-        <script
-          id="theme-switcher"
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const theme = localStorage.getItem('gs-theme') || 'clandestino';
-                const html = document.documentElement;
-                html.classList.remove('clandestino', 'revelado');
-                html.classList.add(theme);
-              } catch (e) {}
-            `,
-          }}
-        />
       </head>
 
       <body className="min-h-full flex flex-col">
@@ -100,11 +86,9 @@ export default async function RootLayout({
         <TikTokPixel />
         <SeoBodyScripts />
         <Providers>
-          <SiteNav />
-          <div style={{ paddingTop: "60px" }}>
+          <PublicShell>
             {children}
-          </div>
-          <Footer />
+          </PublicShell>
         </Providers>
         <CookieConsent {...tracking} />
       </body>
