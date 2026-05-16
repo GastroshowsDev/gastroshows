@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -32,7 +32,8 @@ export default function TerrazasPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Las mejores terrazas de Barcelona", description: "6 terrazas imprescindibles de Barcelona.", publishedAt: "2023-05-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-terrazas-de-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Las mejores terrazas de Barcelona", description: "6 terrazas imprescindibles de Barcelona.", publishedAt: "2023-05-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-terrazas-de-barcelona",
+          image: "https://gastroshows.es/images/las-mejores-terrazas-de-barcelona/hero-mejores-terrazas-barcelona-jardin-alma.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">

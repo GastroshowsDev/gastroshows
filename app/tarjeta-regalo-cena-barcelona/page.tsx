@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -54,6 +54,7 @@ export default function TarjetaRegaloCenaPage() {
           publishedAt: "2022-04-20T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "tarjeta-regalo-cena-barcelona",
+          image: "https://gastroshows.es/images/tarjeta-regalo-cena-barcelona/hero-tarjeta-regalo-cena-clandestina-barcelona.jpg",
         })}
       />
       <JsonLd
@@ -96,10 +97,11 @@ export default function TarjetaRegaloCenaPage() {
             Qué es
           </h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
                 src="/images/tarjeta-regalo-cena-barcelona/hero-tarjeta-regalo-cena-clandestina-barcelona.jpg"
-                alt="Tarjeta regalo cena Barcelona — Cena Clandestina GastroShows con menú degustación de 10-12 actos"
+                alt="Tarjeta regalo cena Barcelona — Cena Clandestina GastroShows con menú degustación de 10-12 actos" title="Tarjeta regalo cena Barcelona — Cena Clandestina GastroShows con menú degustación de 10-12 actos"
                 className="w-full h-full object-cover"
                 width={600}
                 height={400}
@@ -107,6 +109,8 @@ export default function TarjetaRegaloCenaPage() {
                 fetchPriority="high"
               />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Tarjeta regalo cena Barcelona — Cena Clandestina GastroShows con menú degustación de 10-12 actos</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
                 La tarjeta regalo cena Barcelona de GastroShows es el acceso a una <strong>cena secreta combinada con

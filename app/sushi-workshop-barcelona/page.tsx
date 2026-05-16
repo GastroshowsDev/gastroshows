@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -23,7 +23,8 @@ export default function SushiWorkshopENPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Sushi workshop barcelona", description: "Fresh sushi workshop in Barcelona.", publishedAt: "2022-06-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "sushi-workshop-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Sushi workshop barcelona", description: "Fresh sushi workshop in Barcelona.", publishedAt: "2022-06-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "sushi-workshop-barcelona",
+          image: "https://gastroshows.es/images/sushi-workshop-barcelona/hero-sushi-workshop-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -36,11 +37,14 @@ export default function SushiWorkshopENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">sushi workshop barcelona</h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img src="/images/sushi-workshop-barcelona/hero-sushi-workshop-barcelona.jpg"
-              alt="Sushi workshop Barcelona — fresh Japanese cuisine team-building activity from €80, makis and nigiris"
+              alt="Sushi workshop Barcelona — fresh Japanese cuisine team-building activity from €80, makis and nigiris" title="Sushi workshop Barcelona — fresh Japanese cuisine team-building activity from €80, makis and nigiris"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Sushi workshop Barcelona — fresh Japanese cuisine team-building activity from €80, makis and nigiris</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"><strong>SUSHI FRESH!</strong> Japanese cuisine in the <strong>freshest and most original sushi workshop</strong> in Barcelona.</p>
         </header>
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -105,8 +105,7 @@ export default function MejoresRestaurantesPage() {
           publishedAt: "2021-03-15T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "mejores-restaurantes-menu-degustacion-barcelona",
-          image:
-            "https://gastroshows.es/wp-content/uploads/2021/03/restaurantes-menu-degustacion-Barcelona.jpeg",
+          image: "https://gastroshows.es/images/mejores-restaurantes-menu-degustacion-barcelona/hero-menu-degustacion-barcelona.jpeg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -149,10 +148,11 @@ export default function MejoresRestaurantesPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Los mejores restaurantes con menú degustación Barcelona
           </h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img
               src="/images/mejores-restaurantes-menu-degustacion-barcelona/hero-menu-degustacion-barcelona.jpeg"
-              alt="Los mejores restaurantes con menú degustación de Barcelona — guía 2026"
+              alt="Los mejores restaurantes con menú degustación de Barcelona — guía 2026" title="Los mejores restaurantes con menú degustación de Barcelona — guía 2026"
               className="w-full h-full object-cover"
               width={1200}
               height={500}
@@ -160,6 +160,8 @@ export default function MejoresRestaurantesPage() {
               fetchPriority="high"
             />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Los mejores restaurantes con menú degustación de Barcelona — guía 2026</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
             Descubre los <strong>5 mejores restaurantes con menú degustación de Barcelona</strong>: desde la experiencia
             clandestina más original hasta la alta cocina vegetariana o el pescado más fresco. Guía actualizada con precios,

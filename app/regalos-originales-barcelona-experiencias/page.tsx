@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -30,7 +30,8 @@ export default function RegalosOriginalesPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Regalos originales en Barcelona: experiencias que no se pueden envolver", description: "Regalos experienciales en Barcelona.", publishedAt: "2023-04-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-barcelona-experiencias" })} />
+      <JsonLd data={articleSchema({ title: "Regalos originales en Barcelona: experiencias que no se pueden envolver", description: "Regalos experienciales en Barcelona.", publishedAt: "2023-04-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-barcelona-experiencias",
+          image: "https://gastroshows.es/images/regalos-originales-barcelona-experiencias/hero-regalos-originales-experiencias-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">

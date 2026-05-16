@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema } from "@/components/seo/JsonLd";
@@ -30,7 +30,8 @@ export default function RegalosComidaPage() {
   return (
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
-      <JsonLd data={articleSchema({ title: "Regalos con comida", description: "Productos gourmet para regalar.", publishedAt: "2023-03-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-con-comida" })} />
+      <JsonLd data={articleSchema({ title: "Regalos con comida", description: "Productos gourmet para regalar.", publishedAt: "2023-03-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-con-comida",
+          image: "https://gastroshows.es/images/regalos-con-comida/hero-regalos-con-comida-gourmet.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -43,11 +44,14 @@ export default function RegalosComidaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Regalos con Comida</h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img src="/images/regalos-con-comida/hero-regalos-con-comida-gourmet.jpg"
-              alt="Regalos con comida gourmet — aceite premium, chocolate artesanal, salsas XO de Dabiz Muñoz y más"
+              alt="Regalos con comida gourmet — aceite premium, chocolate artesanal, salsas XO de Dabiz Muñoz y más" title="Regalos con comida gourmet — aceite premium, chocolate artesanal, salsas XO de Dabiz Muñoz y más"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Regalos con comida gourmet — aceite premium, chocolate artesanal, salsas XO de Dabiz Muñoz y más</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Regalos con comida deliciosos y originales <strong>para cocinillas y amantes de la gastronomía</strong>. Productos gourmet seleccionados para regalar y sorprender.</p>
         </header>
 

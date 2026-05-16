@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -120,6 +120,7 @@ export default function HacerAlgoDiferentePage() {
           publishedAt: "2022-08-12T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "hacer-algo-diferente-en-barcelona",
+          image: "https://gastroshows.es/images/hacer-algo-diferente-en-barcelona/hero-hacer-algo-diferente-barcelona.jpg",
         })}
       />
 

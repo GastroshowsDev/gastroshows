@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, recipeSchema } from "@/components/seo/JsonLd";
@@ -30,7 +30,8 @@ export default function VealFricandoENPage() {
   return (
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
-      <JsonLd data={articleSchema({ title: "Veal fricandó recipe", description: "Authentic Catalan veal fricandó recipe.", publishedAt: "2022-12-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "veal-fricando-recipe" })} />
+      <JsonLd data={articleSchema({ title: "Veal fricandó recipe", description: "Authentic Catalan veal fricandó recipe.", publishedAt: "2022-12-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "veal-fricando-recipe",
+          image: "https://gastroshows.es/images/veal-fricando-recipe/hero-veal-fricando-recipe-catalan.jpg", })} />
       <JsonLd data={recipeSchema({ name: "Authentic veal fricandó", description: "Traditional Catalan veal fricandó with llata and moixernons.", prepTime: "PT15M", cookTime: "PT1H30M", recipeYield: "4 servings", ingredients, instructions, category: "Main course", cuisine: "Catalan" })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
@@ -44,11 +45,14 @@ export default function VealFricandoENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Veal fricandó recipe</h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img src="/images/veal-fricando-recipe/hero-veal-fricando-recipe-catalan.jpg"
-              alt="Authentic veal fricandó recipe — traditional Catalan stew with llata and moixernons step by step"
+              alt="Authentic veal fricandó recipe — traditional Catalan stew with llata and moixernons step by step" title="Authentic veal fricandó recipe — traditional Catalan stew with llata and moixernons step by step"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Authentic veal fricandó recipe — traditional Catalan stew with llata and moixernons step by step</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">The best veal fricandó recipe with all the tips and tricks to make it perfect, from how to buy the meat to the type of mushrooms you can use.</p>
         </header>
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -54,6 +54,7 @@ export default function TarjetaRegaloDosPage() {
           publishedAt: "2022-04-25T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "tarjeta-regalo-cena-para-dos",
+          image: "https://gastroshows.es/images/tarjeta-regalo-cena-para-dos/hero-tarjeta-regalo-cena-para-dos.jpg",
         })}
       />
       <JsonLd
@@ -96,10 +97,11 @@ export default function TarjetaRegaloDosPage() {
             Qué es
           </h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
                 src="/images/tarjeta-regalo-cena-para-dos/hero-tarjeta-regalo-cena-para-dos.jpg"
-                alt="Tarjeta regalo cena para dos Barcelona — experiencia gastronómica para parejas con menú degustación"
+                alt="Tarjeta regalo cena para dos Barcelona — experiencia gastronómica para parejas con menú degustación" title="Tarjeta regalo cena para dos Barcelona — experiencia gastronómica para parejas con menú degustación"
                 className="w-full h-full object-cover"
                 width={600}
                 height={400}
@@ -107,6 +109,8 @@ export default function TarjetaRegaloDosPage() {
                 fetchPriority="high"
               />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Tarjeta regalo cena para dos Barcelona — experiencia gastronómica para parejas con menú degustación</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
                 Esta tarjeta regalo ofrece una <strong>experiencia original de cena que combina alta cocina con

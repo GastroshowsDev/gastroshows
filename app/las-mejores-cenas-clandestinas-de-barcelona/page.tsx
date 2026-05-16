@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -32,7 +32,8 @@ export default function CenasClandestinasPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Las mejores cenas clandestinas de Barcelona", description: "6 cenas clandestinas en Barcelona.", publishedAt: "2022-09-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-cenas-clandestinas-de-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Las mejores cenas clandestinas de Barcelona", description: "6 cenas clandestinas en Barcelona.", publishedAt: "2022-09-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-cenas-clandestinas-de-barcelona",
+          image: "https://gastroshows.es/images/las-mejores-cenas-clandestinas-de-barcelona/hero-cenas-clandestinas-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -31,7 +31,8 @@ export default function TastingMenusGiftENPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "The best tasting menus for gift giving", description: "Best gastronomic gifts in Barcelona.", publishedAt: "2022-10-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "the-best-tasting-menus-for-gift-giving" })} />
+      <JsonLd data={articleSchema({ title: "The best tasting menus for gift giving", description: "Best gastronomic gifts in Barcelona.", publishedAt: "2022-10-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "the-best-tasting-menus-for-gift-giving",
+          image: "https://gastroshows.es/images/the-best-tasting-menus-for-gift-giving/hero-tasting-menus-gift-giving.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -44,11 +45,14 @@ export default function TastingMenusGiftENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">The best tasting menus for gift giving</h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img src="/images/the-best-tasting-menus-for-gift-giving/hero-tasting-menus-gift-giving.jpg"
-              alt="The best tasting menus for gift giving in Barcelona — clandestine dinner, Osmosis, Asagumo, El Goxo"
+              alt="The best tasting menus for gift giving in Barcelona — clandestine dinner, Osmosis, Asagumo, El Goxo" title="The best tasting menus for gift giving in Barcelona — clandestine dinner, Osmosis, Asagumo, El Goxo"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">The best tasting menus for gift giving in Barcelona — clandestine dinner, Osmosis, Asagumo, El Goxo</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">If you share gastronomy, make it one of the best tasting menus to give as a gift. <strong>Barcelona restaurants</strong> propose tasting menus to enjoy inside or outside the home, maintaining top quality.</p>
         </header>
 

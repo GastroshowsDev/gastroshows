@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -83,6 +83,7 @@ export default function MenusRegalarPage() {
           publishedAt: "2021-09-15T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "los-mejores-menus-degustacion-para-regalar",
+          image: "https://gastroshows.es/images/menus-degustacion-regalar/hero-menus-degustacion-regalar.jpg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -109,10 +110,11 @@ export default function MenusRegalarPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             LOS MEJORES MENÚS DEGUSTACIÓN PARA REGALAR
           </h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img
               src="/images/menus-degustacion-regalar/hero-menus-degustacion-regalar.jpg"
-              alt="Los mejores menús degustación para regalar en Barcelona — delivery y experiencias"
+              alt="Los mejores menús degustación para regalar en Barcelona — delivery y experiencias" title="Los mejores menús degustación para regalar en Barcelona — delivery y experiencias"
               className="w-full h-full object-cover"
               width={1200}
               height={500}
@@ -120,6 +122,8 @@ export default function MenusRegalarPage() {
               fetchPriority="high"
             />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Los mejores menús degustación para regalar en Barcelona — delivery y experiencias</figcaption>
+          </figure>
         </header>
 
         {/* INTRO */}

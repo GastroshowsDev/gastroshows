@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -54,6 +54,7 @@ export default function AlquilerEspacioPage() {
           publishedAt: "2022-03-10T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "alquiler-espacio-gastronomico-en-barcelona",
+          image: "https://gastroshows.es/images/alquiler-espacio-gastronomico-en-barcelona/hero-espacio-gastronomico-alquiler-barcelona-sarria.jpeg",
         })}
       />
 
@@ -90,10 +91,11 @@ export default function AlquilerEspacioPage() {
             Ubicación y características
           </h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
                 src="/images/alquiler-espacio-gastronomico-en-barcelona/hero-espacio-gastronomico-alquiler-barcelona-sarria.jpeg"
-                alt="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada"
+                alt="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada" title="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada"
                 className="w-full h-full object-cover"
                 width={600}
                 height={400}
@@ -101,6 +103,8 @@ export default function AlquilerEspacioPage() {
                 fetchPriority="high"
               />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
                 Nuestro espacio se ubica en el <strong>distrito Sarrià-Sant Gervasi</strong>, zona alta de Barcelona,

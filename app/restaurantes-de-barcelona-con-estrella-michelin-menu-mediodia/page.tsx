@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -149,6 +149,7 @@ export default function MichelinMediodiaPage() {
           publishedAt: "2021-05-10T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "restaurantes-de-barcelona-con-estrella-michelin-menu-mediodia",
+          image: "https://gastroshows.es/images/restaurantes-michelin-mediodia/hero-restaurantes-michelin-mediodia.jpg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -175,10 +176,11 @@ export default function MichelinMediodiaPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             ¡6 restaurantes de Barcelona con estrella Michelín por menos de 50€!
           </h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img
               src="/images/restaurantes-michelin-mediodia/hero-restaurantes-michelin-mediodia.jpg"
-              alt="6 restaurantes Michelín Barcelona con menú mediodía por menos de 50€"
+              alt="6 restaurantes Michelín Barcelona con menú mediodía por menos de 50€" title="6 restaurantes Michelín Barcelona con menú mediodía por menos de 50€"
               className="w-full h-full object-cover"
               width={1200}
               height={500}
@@ -186,6 +188,8 @@ export default function MichelinMediodiaPage() {
               fetchPriority="high"
             />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">6 restaurantes Michelín Barcelona con menú mediodía por menos de 50€</figcaption>
+          </figure>
         </header>
 
         <section className="mb-12 space-y-4 text-foreground/90 leading-relaxed text-lg">

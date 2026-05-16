@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema } from "@/components/seo/JsonLd";
@@ -30,7 +30,8 @@ export default function RegalosParejaPage() {
   return (
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
-      <JsonLd data={articleSchema({ title: "Regalos Originales en Pareja", description: "Regalos para parejas.", publishedAt: "2023-02-05T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-en-pareja" })} />
+      <JsonLd data={articleSchema({ title: "Regalos Originales en Pareja", description: "Regalos para parejas.", publishedAt: "2023-02-05T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-en-pareja",
+          image: "https://gastroshows.es/images/regalos-originales-en-pareja/hero-regalos-originales-en-pareja.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -43,11 +44,14 @@ export default function RegalosParejaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Regalos Originales en Pareja</h1>
-          <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg mb-8">
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
             <img src="/images/regalos-originales-en-pareja/hero-regalos-originales-en-pareja.jpg"
-              alt="Regalos originales en pareja para compartir momentos inolvidables juntos en Barcelona"
+              alt="Regalos originales en pareja para compartir momentos inolvidables juntos en Barcelona" title="Regalos originales en pareja para compartir momentos inolvidables juntos en Barcelona"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Regalos originales en pareja para compartir momentos inolvidables juntos en Barcelona</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Regalos originales en pareja para compartir más momentos inolvidables juntos. <strong>Compartir es vivir</strong> y las mejores experiencias son las que se viven en compañía.</p>
         </header>
 
