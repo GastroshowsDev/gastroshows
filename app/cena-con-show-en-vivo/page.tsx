@@ -39,11 +39,12 @@ export default function CenaShowEnVivoPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight uppercase">Cena con show en vivo</h1>
           <figure className="mb-8">
             <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
-            <img src="/images/cena-con-show-en-vivo/hero-cena-con-show-en-vivo-barcelona.jpg"
-              alt="Cena con show en vivo en Barcelona — alta cocina con música, baile o magia a medida desde 60€" title="Cena con show en vivo en Barcelona — alta cocina con música, baile o magia a medida desde 60€"
+            <img src="/images/cena-con-show-en-vivo/chef-gastroshows-llamas-wok-fuego-cocina-espectaculo.jpg"
+              alt="Chef GastroShows con llamas en wok — espectáculo de fuego en cena con show en vivo Barcelona"
+              title="Chef GastroShows cocinando con llamas en directo — cena con show"
               className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
           </div>
-            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Cena con show en vivo en Barcelona — alta cocina con música, baile o magia a medida desde 60€</figcaption>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Chef GastroShows cocinando con llamas en directo durante una cena con show en vivo en Barcelona.</figcaption>
           </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Una cena de <strong>alta cocina que disfrutarás con el mejor show en vivo</strong> de música, baile o magia, ¡tú eliges!</p>
         </header>

@@ -706,6 +706,51 @@ export default function MejoresRestaurantesPage() {
           </div>
         </section>
 
+        {/* GALERIA GASTROSHOWS */}
+        <section id="galeria" className="mb-12 scroll-mt-20">
+          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">
+            Galería de platos de GastroShows
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/bola-nieve-postre-firma-gastroshows-cena-clandestina.jpg"
+                alt="Bola de nieve — postre firma de GastroShows en la Cena Clandestina Barcelona"
+                title="Postre bola de nieve, firma de GastroShows en La Cena Clandestina"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Postre firma: bola de nieve.</figcaption>
+            </figure>
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/arroz-cremoso-flores-vista-cenital-gastroshows.jpg"
+                alt="Arroz cremoso con flores comestibles — menú degustación GastroShows Barcelona"
+                title="Arroz cremoso con flores comestibles del menú degustación de GastroShows"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Arroz cremoso con flores comestibles.</figcaption>
+            </figure>
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/bunuelos-trufa-piedra-volcanica-cena-clandestina.jpg"
+                alt="Buñuelos con trufa rallada en piedra volcánica — aperitivo Cena Clandestina GastroShows"
+                title="Buñuelos con trufa sobre piedra volcánica"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Buñuelos con trufa.</figcaption>
+            </figure>
+          </div>
+        </section>
+
         {/* SUMMARY SECTION */}
         <section className="border-t border-border pt-8 mt-12">
           <h2 className="font-cormorant text-2xl font-light mb-6">

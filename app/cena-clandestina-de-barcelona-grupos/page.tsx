@@ -77,16 +77,21 @@ export default function CenaClandestinaGruposPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">imÁgenes de la cena clandestina</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
-              { src: "/images/cena-clandestina-de-barcelona-grupos/hero-cena-clandestina-grupos-barcelona.jpg", alt: "Mesa de la Cena Clandestina para grupos en Barcelona" },
-              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-experiencia.jpeg", alt: "Ambiente de la cena clandestina secreta para grupos" },
-              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-mesa.jpg", alt: "Mesa con menú degustación de la cena clandestina" },
-              { src: "/images/cena-clandestina-de-barcelona-grupos/cena-clandestina-grupos-degustacion.jpg", alt: "Plato de la cena clandestina con showcooking en vivo" },
-              { src: "/images/experiencia/plato-humo.jpg", alt: "Plato con humo en la cena clandestina" },
-              { src: "/images/experiencia/coctel-bienvenida.webp", alt: "Cóctel de bienvenida en la cena clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/comedor-mesa-larga-candelabros-velas-cena-grupos-clandestina.jpg", alt: "Comedor con mesa larga y candelabros dorados — Cena Clandestina para grupos en Barcelona" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/mesa-larga-cristaleria-candelabro-grupos-perspectiva.jpg", alt: "Perspectiva de la mesa larga con cristalería y candelabro dorado en la Cena Clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/mesa-larga-grupos-cristaleria-ambiente-pre-cena.jpg", alt: "Ambiente pre-cena con grupos llegando a la Cena Clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/copas-vino-cristal-tallado-mesa-cena-grupos-detalle.jpg", alt: "Detalle de copas de vino de cristal tallado en la Cena Clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/candelabro-dorado-vela-ambiente-cena-clandestina.jpg", alt: "Candelabro dorado con vela — ambiente Cena Clandestina Barcelona" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/mesa-cristaleria-servilleta-verde-cena-grupos.jpg", alt: "Mesa con cristalería y servilleta verde de la Cena Clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/bunuelo-trufa-piedra-volcanica-postre-cena-grupos.jpg", alt: "Buñuelo con trufa sobre piedra volcánica — postre Cena Clandestina" },
+              { src: "/images/cena-clandestina-de-barcelona-grupos/candelabro-blanco-vela-detalle-ambiente-cena-grupo.jpg", alt: "Candelabro blanco con vela — detalle ambiente Cena Clandestina" },
+              { src: "/images/experiencia/plato-humo.jpg", alt: "Plato con humo en la Cena Clandestina" },
             ].map((img) => (
-              <div key={img.src} className="relative h-40 rounded-lg overflow-hidden shadow-md">
-                <img src={img.src} alt={img.alt} className="w-full h-full object-cover" width={400} height={240} loading="lazy" />
-              </div>
+              <figure key={img.src} className="m-0">
+                <div className="relative h-40 rounded-lg overflow-hidden shadow-md">
+                  <img src={img.src} alt={img.alt} title={img.alt} className="w-full h-full object-cover" width={400} height={240} loading="lazy" />
+                </div>
+              </figure>
             ))}
           </div>
         </section>

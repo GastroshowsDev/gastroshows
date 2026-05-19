@@ -45,11 +45,12 @@ export default function TeamBuildingMasterchefPage() {
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <figure className="m-0">
               <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/team-building-masterchef/hero-team-building-masterchef-barcelona.jpg"
-                alt="Team Building Masterchef Barcelona — actividad gastronómica de cocina en equipo para empresas" title="Team Building Masterchef Barcelona — actividad gastronómica de cocina en equipo para empresas"
+              <img src="/images/team-building-masterchef/chef-marc-emplatado-showcooking-gastroshows.jpg"
+                alt="Chef Marc Grivé emplatando en directo — Team Building Masterchef GastroShows Barcelona"
+                title="Chef Marc Grivé en showcooking del Team Building Masterchef"
                 className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
-              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Team Building Masterchef Barcelona — actividad gastronómica de cocina en equipo para empresas</figcaption>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Chef Marc Grivé emplatando durante un Team Building Masterchef de GastroShows en Barcelona.</figcaption>
             </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Los equipos preparan un <strong>menú completo siguiendo recetas guiadas por un chef</strong> dentro de un tiempo limitado, fomentando comunicación y colaboración.</p>

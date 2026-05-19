@@ -94,8 +94,9 @@ export default function AlquilerEspacioPage() {
             <figure className="m-0">
               <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/alquiler-espacio-gastronomico-en-barcelona/hero-espacio-gastronomico-alquiler-barcelona-sarria.jpeg"
-                alt="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada" title="Alquiler espacio gastronómico Barcelona Sarrià-Sant Gervasi — 100m² con cocina TPB equipada"
+                src="/images/alquiler-espacio-gastronomico-en-barcelona/espacio-vacio-cocina-isla-iluminacion-eventos-sarria.jpg"
+                alt="Espacio gastronómico privado GastroShows Sarrià — cocina isla con iluminación cálida para eventos en Barcelona"
+                title="Espacio gastronómico GastroShows en Sarrià-Sant Gervasi"
                 className="w-full h-full object-cover"
                 width={600}
                 height={400}
