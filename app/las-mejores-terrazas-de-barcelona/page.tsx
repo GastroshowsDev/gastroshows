@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 const terrazas = [
   { id: "cafe-destiu", name: "CAFÉ D'ESTIU – Barrio Gótico", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop", body: ["Ubicada dentro del **Museo Marès** del Barrio Gótico, esta tranquila y bonita terraza ofrece opciones saludables en un entorno único.","**Combina el arte y la belleza de la arquitectura gótica** con un ambiente relajado. Un secreto bien guardado en pleno centro de Barcelona."] },
   { id: "torre-rosa", name: "TORRE ROSA – Sant Andreu", image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&h=600&fit=crop", body: ["Un **bar de cócteles que opera desde 1987** en una magnífica **casa indiana de principios de siglo XX**.","Su jardín cuenta con **enormes palmeras y grandes pinos** que crean un oasis verde en plena ciudad. Coctelería clásica con un toque colonial."] },
-  { id: "jardin-alma", name: "EL JARDÍN DEL ALMA – Eixample", image: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&h=600&fit=crop", body: ["El Hotel Alma cuenta con un **enorme jardín ideal para tomar una copa** en el corazón del Eixample.","La sensación es como **estar en un cuento de ensueño**: rincones verdes, mobiliario cuidado y una propuesta gastronómica de nivel."] },
+  { id: "jardin-alma", name: "EL JARDÍN DEL ALMA – Eixample", image: "/images/las-mejores-terrazas-de-barcelona/hero-mejores-terrazas-barcelona-jardin-alma.jpg", body: ["El Hotel Alma cuenta con un **enorme jardín ideal para tomar una copa** en el corazón del Eixample.","La sensación es como **estar en un cuento de ensueño**: rincones verdes, mobiliario cuidado y una propuesta gastronómica de nivel."] },
   { id: "caseta-migdia", name: "LA CASETA DEL MIGDIA – Montjuïc", image: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800&h=600&fit=crop", body: ["Encarna la filosofía **slow life** en lo alto de Montjuïc. Una de las **mejores vistas de la ciudad** desde una terraza al aire libre.","Ambiente bohemio, música chill y una opción ideal para ver el atardecer mientras tomas algo con amigos."] },
   { id: "terraza-olivia", name: "TERRAZA DEL OLIVIA – Ciutat Vella", image: "https://images.unsplash.com/photo-1551806235-e3b2da4e44b1?w=800&h=600&fit=crop", body: ["Ofrece **vistas del skyline de la ciudad** desde Ciutat Vella. Una escapada del movimiento urbano en plena zona céntrica.","Coctelería cuidada, pequeñas tapas gourmet y un ambiente sofisticado. Perfecta para una cita o tardes-noches especiales."] },
   { id: "terraza-neri", name: "TERRAZA DEL NERI – Ciutat Vella", image: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=800&h=600&fit=crop", body: ["Considerada **la más romántica de la ciudad**. Pequeña terraza escondida en el Hotel Neri, en pleno casco antiguo.","Sirve **cocina mediterránea de alto nivel** en un entorno íntimo y cuidado. La opción perfecta para impresionar en una primera cita o aniversario."] },
@@ -32,7 +32,8 @@ export default function TerrazasPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Las mejores terrazas de Barcelona", description: "6 terrazas imprescindibles de Barcelona.", publishedAt: "2023-05-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-terrazas-de-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Las mejores terrazas de Barcelona", description: "6 terrazas imprescindibles de Barcelona.", publishedAt: "2023-05-20T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "las-mejores-terrazas-de-barcelona",
+          image: "https://gastroshows.es/images/las-mejores-terrazas-de-barcelona/hero-mejores-terrazas-barcelona-jardin-alma.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">

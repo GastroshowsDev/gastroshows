@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 };
 
 const groups = [
-  { id: "parejas", name: "Para parejas que buscan sorprender", image: "/images/experiencia/mesa-cena-clandestina.jpg", gifts: ["Baños termales + cena", "Taller de cocina a dúo", "Paseo en velero al atardecer", "Cena clandestina para dos"] },
-  { id: "amigas", name: "Para amigas que se lo merecen todo", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop", gifts: ["Ruta gastronómica de mercados", "Cata de vinos naturales", "Clase de cerámica o coctelería", "Cena teatralizada secreta"] },
-  { id: "madres", name: "Para madres (y personas) inolvidables", image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&h=600&fit=crop", gifts: ["Experiencia gastronómica local", "Ritual de spa", "Taller de cocina catalana", "Comida en restaurante con encanto"] },
-  { id: "todo", name: "Para los que lo tienen todo", image: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&h=600&fit=crop", gifts: ["Cena secreta multisensorial", "Experiencia gastronómica de autor", "Eventos exclusivos", "Cenas con showcooking en directo"] },
+  { id: "parejas", name: "Para parejas que buscan sorprender", image: "/images/regalos-originales-barcelona-experiencias/regalo-cena-pareja-barcelona.jpg", gifts: ["Baños termales + cena", "Taller de cocina a dúo", "Paseo en velero al atardecer", "Cena clandestina para dos"] },
+  { id: "amigas", name: "Para amigas que se lo merecen todo", image: "/images/regalos-originales-barcelona-experiencias/regalo-experiencia-amigas-barcelona.jpg", gifts: ["Ruta gastronómica de mercados", "Cata de vinos naturales", "Clase de cerámica o coctelería", "Cena teatralizada secreta"] },
+  { id: "madres", name: "Para madres (y personas) inolvidables", image: "/images/regalos-originales-barcelona-experiencias/regalo-cena-secreta-grupos.jpg", gifts: ["Experiencia gastronómica local", "Ritual de spa", "Taller de cocina catalana", "Comida en restaurante con encanto"] },
+  { id: "todo", name: "Para los que lo tienen todo", image: "/images/regalos-originales-barcelona-experiencias/hero-regalos-originales-experiencias-barcelona.jpg", gifts: ["Cena secreta multisensorial", "Experiencia gastronómica de autor", "Eventos exclusivos", "Cenas con showcooking en directo"] },
 ];
 
 export default function RegalosOriginalesPage() {
@@ -30,7 +30,8 @@ export default function RegalosOriginalesPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Regalos originales en Barcelona: experiencias que no se pueden envolver", description: "Regalos experienciales en Barcelona.", publishedAt: "2023-04-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-barcelona-experiencias" })} />
+      <JsonLd data={articleSchema({ title: "Regalos originales en Barcelona: experiencias que no se pueden envolver", description: "Regalos experienciales en Barcelona.", publishedAt: "2023-04-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "regalos-originales-barcelona-experiencias",
+          image: "https://gastroshows.es/images/regalos-originales-barcelona-experiencias/hero-regalos-originales-experiencias-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -33,7 +33,8 @@ export default function HalloweenPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Los mejores planes para Halloween y Castanyada en Barcelona", description: "Halloween y Castanyada en Barcelona.", publishedAt: "2024-10-15T10:00:00+02:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "planes-para-halloween-castanyada-en-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Los mejores planes para Halloween y Castanyada en Barcelona", description: "Halloween y Castanyada en Barcelona.", publishedAt: "2024-10-15T10:00:00+02:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "planes-para-halloween-castanyada-en-barcelona",
+          image: "https://gastroshows.es/images/planes-para-halloween-castanyada-en-barcelona/hero-halloween-castanyada-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -46,6 +47,14 @@ export default function HalloweenPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Los mejores planes para halloween y la castanyada en Barcelona</h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img src="/images/planes-para-halloween-castanyada-en-barcelona/hero-halloween-castanyada-barcelona.jpg"
+              alt="Planes para Halloween y la Castanyada en Barcelona — terror inmersivo, panellets y tradición catalana" title="Planes para Halloween y la Castanyada en Barcelona — terror inmersivo, panellets y tradición catalana"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Planes para Halloween y la Castanyada en Barcelona — terror inmersivo, panellets y tradición catalana</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"><strong>Barcelona vive octubre entre el susto y la tradición</strong>. Te organizamos los planes por categoría: terror inmersivo, cultura, fiesta nocturna, tradición catalana, Día de Muertos y exploración urbana.</p>
         </header>
 

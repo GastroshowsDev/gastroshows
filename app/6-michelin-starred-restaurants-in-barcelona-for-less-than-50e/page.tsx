@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -32,7 +32,8 @@ export default function Michelin50ENPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "6 Michelin-starred restaurants in Barcelona for less than 50€", description: "Affordable Michelin restaurants in Barcelona.", publishedAt: "2022-05-12T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "6-michelin-starred-restaurants-in-barcelona-for-less-than-50e" })} />
+      <JsonLd data={articleSchema({ title: "6 Michelin-starred restaurants in Barcelona for less than 50€", description: "Affordable Michelin restaurants in Barcelona.", publishedAt: "2022-05-12T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "6-michelin-starred-restaurants-in-barcelona-for-less-than-50e",
+          image: "https://gastroshows.es/images/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/hero-michelin-restaurants-under-50e-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -45,6 +46,14 @@ export default function Michelin50ENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">6 Michelin-starred restaurants in Barcelona for less than 50€!</h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img src="/images/6-michelin-starred-restaurants-in-barcelona-for-less-than-50e/hero-michelin-restaurants-under-50e-barcelona.jpg"
+              alt="6 Michelin-starred restaurants in Barcelona with lunch menus under 50€ — Caelis, Hisop, ORIA, hofmann, xerta, Dos Palillos" title="6 Michelin-starred restaurants in Barcelona with lunch menus under 50€ — Caelis, Hisop, ORIA, hofmann, xerta, Dos Palillos"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">6 Michelin-starred restaurants in Barcelona with lunch menus under 50€ — Caelis, Hisop, ORIA, hofmann, xerta, Dos Palillos</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Haven't you heard yet that <strong>it is possible to enjoy the haute cuisine</strong> of Barcelona's great restaurants and still make ends meet?</p>
         </header>
 

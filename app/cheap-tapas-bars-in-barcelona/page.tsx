@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -36,7 +36,8 @@ export default function CheapTapasENPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Cheap tapas bars in Barcelona", description: "Top 10 cheap tapas bars in Barcelona.", publishedAt: "2022-06-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "cheap-tapas-bars-in-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Cheap tapas bars in Barcelona", description: "Top 10 cheap tapas bars in Barcelona.", publishedAt: "2022-06-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "cheap-tapas-bars-in-barcelona",
+          image: "https://gastroshows.es/images/cheap-tapas-bars-in-barcelona/hero-cheap-tapas-bars-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -49,6 +50,14 @@ export default function CheapTapasENPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Bars tapas barcelona cheap</h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img src="/images/cheap-tapas-bars-in-barcelona/hero-cheap-tapas-bars-barcelona.jpg"
+              alt="The 10 best cheap tapas bars in Barcelona — vermouth, montaditos and authentic local cuisine under 20€" title="The 10 best cheap tapas bars in Barcelona — vermouth, montaditos and authentic local cuisine under 20€"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">The 10 best cheap tapas bars in Barcelona — vermouth, montaditos and authentic local cuisine under 20€</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">In these <strong>10 tapas bars in Barcelona</strong> you will enjoy good tapas for less than 20€.</p>
         </header>
 

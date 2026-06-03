@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -73,6 +73,7 @@ export default function FricandoRecetaPage() {
           publishedAt: "2022-11-15T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "receta-de-fricando-de-ternera",
+          image: "https://gastroshows.es/images/receta-de-fricando-de-ternera/fricando-ternera-llata-cocinado.jpg",
         })}
       />
       <JsonLd
@@ -122,14 +123,20 @@ export default function FricandoRecetaPage() {
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&h=600&fit=crop"
-                alt="Auténtico fricandó de ternera con moixernons"
+                src="/images/receta-de-fricando-de-ternera/fricando-ternera-llata-cocinado.jpg"
+                alt="Auténtico fricandó de ternera con llata y moixernons — receta tradicional catalana" title="Auténtico fricandó de ternera con llata y moixernons — receta tradicional catalana"
                 className="w-full h-full object-cover"
-                loading="lazy"
+                width={600}
+                height={400}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Auténtico fricandó de ternera con llata y moixernons — receta tradicional catalana</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>
                 El fricandó es uno de los platos más emblemáticos de la cocina catalana. Una receta tradicional que

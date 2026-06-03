@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -140,7 +140,7 @@ const bares = [
     subtitle: "tapas andaluzas en Poblenou",
     url: "https://www.facebook.com/BaliusBar/",
     image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&h=600&fit=crop",
+      "/images/bares-tapas-baratos/bar-balius-poblenou-tapas-andaluzas.jpg",
     paragraphs: [
       "Un bar de tapas de Barcelona imprescindible es el **Balius**. Ideal para cualquier ocasión: una cerveza después del trabajo; un vermut de fin de semana o un cóctel de sábado por la noche.",
       "En la carta tienen tapas a precio económico de **estilo andaluz y castellanas**: **lomo de orza** (lomo escaldado y marinado con especias) y **atascaburras** (patata picada con bacalao, ajo, aceite y sal). Forman parte de su sello caracterizado por el **Slow Food** (producto de proximidad y ecológico garantizado) y unos precios económicos.",
@@ -211,6 +211,7 @@ export default function BaresTapasPage() {
           publishedAt: "2022-06-10T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "bares-tapas-barcelona-baratos",
+          image: "https://gastroshows.es/images/bares-tapas-baratos/hero-bares-tapas-barcelona-baratos.jpg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -235,6 +236,20 @@ export default function BaresTapasPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Bares tapas Barcelona baratos
           </h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img
+              src="/images/bares-tapas-baratos/hero-bares-tapas-barcelona-baratos.jpg"
+              alt="Los 10 mejores bares de tapas baratos de Barcelona por menos de 20€" title="Los 10 mejores bares de tapas baratos de Barcelona por menos de 20€"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Los 10 mejores bares de tapas baratos de Barcelona por menos de 20€</figcaption>
+          </figure>
         </header>
 
         <section className="mb-12 space-y-4 text-foreground/90 leading-relaxed text-lg">
@@ -288,8 +303,10 @@ export default function BaresTapasPage() {
               >
                 <img
                   src={b.image}
-                  alt={`${b.name} - ${b.subtitle}`}
+                  alt={`${b.name} Barcelona — ${b.subtitle}, tapas baratas por menos de 20€`}
                   className="w-full h-full object-cover"
+                  width={600}
+                  height={400}
                   loading="lazy"
                 />
               </div>

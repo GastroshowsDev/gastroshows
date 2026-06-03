@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -49,7 +49,7 @@ const venues = [
   {
     id: "gastroshows",
     name: "GastroShows: una cena secreta… con sabor gastronómico catalán",
-    image: "/images/experiencia/mesa-cena-clandestina.jpg",
+    image: "/images/cenas-espectaculo-secreta/gastroshows-cena-clandestina-secreta.jpg",
     paragraphs: [
       "Una **cena clandestina en un espacio oculto de Barcelona**. Cada noche es única, con un menú gastronómico creativo inspirado en la alta cocina catalana.",
       "**No hay carta. No hay dirección pública. Solo pistas.** Aquí no vienes solo a cenar, vienes a formar parte de una historia que se desarrolla a tu alrededor. La única cena clandestina con experiencia inmersiva de Barcelona.",
@@ -148,6 +148,7 @@ export default function CenasEspectaculoPage() {
           publishedAt: "2022-02-20T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "cenas-espectaculo-barcelona-secreta",
+          image: "https://gastroshows.es/images/cenas-espectaculo-secreta/hero-cenas-espectaculo-barcelona.jpg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -182,6 +183,20 @@ export default function CenasEspectaculoPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Las 6 mejores cenas con espectáculo en Barcelona (y una es secreta)
           </h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img
+              src="/images/cenas-espectaculo-secreta/hero-cenas-espectaculo-barcelona.jpg"
+              alt="Las 6 mejores cenas con espectáculo en Barcelona — flamenco, cabaret y la cena clandestina secreta" title="Las 6 mejores cenas con espectáculo en Barcelona — flamenco, cabaret y la cena clandestina secreta"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Las 6 mejores cenas con espectáculo en Barcelona — flamenco, cabaret y la cena clandestina secreta</figcaption>
+          </figure>
         </header>
 
         <section className="mb-12 space-y-4 text-foreground/90 leading-relaxed text-lg">

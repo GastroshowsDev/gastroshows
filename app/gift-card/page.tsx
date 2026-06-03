@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, productSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -23,7 +23,8 @@ export default function GiftCardENPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Gastronomic Experience Gift", description: "Gift card for gastronomic experience in Barcelona.", publishedAt: "2022-11-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "gift-card" })} />
+      <JsonLd data={articleSchema({ title: "Gastronomic Experience Gift", description: "Gift card for gastronomic experience in Barcelona.", publishedAt: "2022-11-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "gift-card",
+          image: "https://gastroshows.es/images/gift-card/hero-gift-card-gastronomic-experience.jpg", })} />
       <JsonLd data={productSchema({ name: "GastroShows Clandestine Dinner Gift Card", description: "Gift voucher for the GastroShows clandestine dinner. Valid 6 months.", price: 100 })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
@@ -43,9 +44,14 @@ export default function GiftCardENPage() {
         <section id="clandestine-gift" className="mb-12 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">Clandestine dinner gift card</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="Clandestine dinner gift card" className="w-full h-full object-cover" loading="lazy" />
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <img src="/images/gift-card/hero-gift-card-gastronomic-experience.jpg"
+                alt="Gastronomic experience gift card Barcelona — clandestine dinner with tasting menu, wine pairings and premium gin" title="Gastronomic experience gift card Barcelona — clandestine dinner with tasting menu, wine pairings and premium gin"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Gastronomic experience gift card Barcelona — clandestine dinner with tasting menu, wine pairings and premium gin</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>The best gift for food lovers: a <strong>clandestine dinner experience</strong> in a secret Barcelona venue.</p>
               <p><strong>Price:</strong> 90-110€ · <strong>Valid:</strong> 6 months · <strong>Available:</strong> Tuesday to Saturday</p>

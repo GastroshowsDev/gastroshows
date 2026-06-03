@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, eventSchema } from "@/components/seo/JsonLd";
@@ -22,7 +22,8 @@ export default function MercePage() {
   return (
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
-      <JsonLd data={articleSchema({ title: "La Mercè 2025 en Barcelona: guía completa", description: "Guía de la fiesta mayor de Barcelona.", publishedAt: "2025-09-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "la-merce-2025-barcelona-guia-completa" })} />
+      <JsonLd data={articleSchema({ title: "La Mercè 2025 en Barcelona: guía completa", description: "Guía de la fiesta mayor de Barcelona.", publishedAt: "2025-09-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "la-merce-2025-barcelona-guia-completa",
+          image: "https://gastroshows.es/images/la-merce-2025-barcelona-guia-completa/hero-la-merce-2025-barcelona-gastroshows.jpg", })} />
       <JsonLd data={eventSchema({ name: "La Mercè 2025 Barcelona", description: "Fiesta mayor de Barcelona del 23 al 28 de septiembre de 2025.", startDate: "2025-09-23T18:00:00+02:00", endDate: "2025-09-28T23:00:00+02:00", price: 0 })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
@@ -78,9 +79,14 @@ export default function MercePage() {
         <section id="gastroshows" className="mb-16 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6 uppercase">GastroShows: un plan gastronómico secreto para la Mercè 2025</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="La Cena Clandestina durante La Mercè 2025" className="w-full h-full object-cover" loading="lazy" />
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <img src="/images/la-merce-2025-barcelona-guia-completa/hero-la-merce-2025-barcelona-gastroshows.jpg"
+                alt="La Cena Clandestina de GastroShows como plan gastronómico durante La Mercè 2025 Barcelona" title="La Cena Clandestina de GastroShows como plan gastronómico durante La Mercè 2025 Barcelona"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">La Cena Clandestina de GastroShows como plan gastronómico durante La Mercè 2025 Barcelona</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Si después de un día de fiesta quieres <strong>vivir una experiencia gastronómica única</strong>, La Cena Clandestina de GastroShows es la opción perfecta. Una ubicación secreta, menú degustación y un final de noche inolvidable.</p>
               <Link href="/cena-clandestina" className="inline-block bg-gold text-black px-6 py-3 rounded font-cormorant text-base font-semibold hover:bg-gold/90 transition">Reservar Cena Clandestina</Link>

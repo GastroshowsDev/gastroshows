@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -23,7 +23,8 @@ export default function TalleresGastronomicosPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Talleres gastronómicos en Barcelona", description: "Catálogo de talleres gastronómicos.", publishedAt: "2022-08-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "talleres-gastronomicos" })} />
+      <JsonLd data={articleSchema({ title: "Talleres gastronómicos en Barcelona", description: "Catálogo de talleres gastronómicos.", publishedAt: "2022-08-10T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "talleres-gastronomicos",
+          image: "https://gastroshows.es/images/talleres-gastronomicos/hero-talleres-gastronomicos-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -36,6 +37,14 @@ export default function TalleresGastronomicosPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">talleres gastronómicos</h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img src="/images/talleres-gastronomicos/hero-talleres-gastronomicos-barcelona.jpg"
+              alt="Los mejores talleres gastronómicos en Barcelona — coctelería, cocina catalana, sushi y vinos" title="Los mejores talleres gastronómicos en Barcelona — coctelería, cocina catalana, sushi y vinos"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Los mejores talleres gastronómicos en Barcelona — coctelería, cocina catalana, sushi y vinos</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Los <strong>mejores talleres gastronómicos en Barcelona</strong>: experiencias formativas y divertidas para descubrir secretos de la cocina y la coctelería.</p>
         </header>
 
@@ -70,7 +79,9 @@ export default function TalleresGastronomicosPage() {
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">El taller de coctelería: Cocktail Factory</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop" alt="Cocktail Factory taller de coctelería" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/images/talleres-gastronomicos/taller-cocina-grupos-empresa.jpg"
+                alt="Cocktail Factory taller de coctelería para grupos — mixólogos profesionales en Barcelona"
+                className="w-full h-full object-cover" width={600} height={400} loading="lazy" />
             </div>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Los participantes se convierten en bartenders preparando cócteles <strong>como auténticos mixólogos profesionales</strong>. Una experiencia original de gastronomía en Barcelona.</p>

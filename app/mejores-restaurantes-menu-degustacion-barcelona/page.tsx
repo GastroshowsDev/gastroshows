@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import {
@@ -105,8 +105,7 @@ export default function MejoresRestaurantesPage() {
           publishedAt: "2021-03-15T10:00:00+01:00",
           modifiedAt: "2026-05-14T10:00:00+01:00",
           slug: "mejores-restaurantes-menu-degustacion-barcelona",
-          image:
-            "https://gastroshows.es/wp-content/uploads/2021/03/restaurantes-menu-degustacion-Barcelona.jpeg",
+          image: "https://gastroshows.es/images/mejores-restaurantes-menu-degustacion-barcelona/hero-menu-degustacion-barcelona.jpeg",
         })}
       />
       <JsonLd data={faqSchema(faqs)} />
@@ -149,6 +148,20 @@ export default function MejoresRestaurantesPage() {
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">
             Los mejores restaurantes con menú degustación Barcelona
           </h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img
+              src="/images/mejores-restaurantes-menu-degustacion-barcelona/hero-menu-degustacion-barcelona.jpeg"
+              alt="Los mejores restaurantes con menú degustación de Barcelona — guía 2026" title="Los mejores restaurantes con menú degustación de Barcelona — guía 2026"
+              className="w-full h-full object-cover"
+              width={1200}
+              height={500}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Los mejores restaurantes con menú degustación de Barcelona — guía 2026</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
             Descubre los <strong>5 mejores restaurantes con menú degustación de Barcelona</strong>: desde la experiencia
             clandestina más original hasta la alta cocina vegetariana o el pescado más fresco. Guía actualizada con precios,
@@ -209,9 +222,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/experiencia/mesa-cena-clandestina.jpg"
-                alt="La Cena Clandestina de GastroShows - Menú degustación experiencial Barcelona"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/gastroshows-cena-clandestina.jpg"
+                alt="GastroShows La Cena Clandestina Barcelona — menú degustación 4 actos en ubicación secreta"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -268,9 +283,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
               <img
-                src="https://xavierpellicer.com/_next/image?url=%2Fimages%2Fpellicer-con-verdura.jpg&w=3840&q=75"
-                alt="Xavier Pellicer con verduras ecológicas - Menú degustación Barcelona"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/xavier-pellicer-barcelona-menu-degustacion-eco.jpg"
+                alt="Restaurante Xavier Pellicer Barcelona — chef con verduras ecológicas de proximidad, menú degustación 65€"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -330,9 +347,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://tabernanoroeste.com/wp-content/uploads/2020/06/Slider-Taberna.jpg"
-                alt="Taberna Noroeste Barcelona - Productos gallegos y castellanos"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/taberna-noroeste-barcelona-producto-gallego.jpg"
+                alt="Taberna Noroeste Barcelona — productos gallegos y castellanos, menú degustación 7-8 platos por 70€"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -387,9 +406,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg order-2 md:order-1">
               <img
-                src="https://www.cruixrestaurant.com/wp-content/uploads/2022/09/miguel-cruix.jpg"
-                alt="CRUIX restaurant Barcelona - Chef Miquel Pardo"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/cruix-barcelona-bib-gourmand-michelin.jpg"
+                alt="CRUIX Barcelona Chef Miquel Pardo — menú degustación 50€ Bib Gourmand Michelin Eixample"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -441,9 +462,11 @@ export default function MejoresRestaurantesPage() {
           <div className="grid md:grid-cols-2 gap-8 mb-6 items-start">
             <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
               <img
-                src="https://www.mineralbcn.com/uploads/gallery/1204bf05-2683-46df-aacf-50d2be12ea8a.webp"
-                alt="Mineral Barcelona - Menú degustación con pescado fresco"
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/mineral-barcelona-pescado-fresco-menu-degustacion.webp"
+                alt="Restaurante Mineral Barcelona — pescado fresco de lonja diaria, menú degustación 75€ en Barceloneta"
                 className="w-full h-full object-cover"
+                width={600}
+                height={400}
                 loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -680,6 +703,51 @@ export default function MejoresRestaurantesPage() {
                 Explora todas las experiencias secretas de la ciudad
               </p>
             </Link>
+          </div>
+        </section>
+
+        {/* GALERIA GASTROSHOWS */}
+        <section id="galeria" className="mb-12 scroll-mt-20">
+          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">
+            Galería de platos de GastroShows
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/bola-nieve-postre-firma-gastroshows-cena-clandestina.jpg"
+                alt="Bola de nieve — postre firma de GastroShows en la Cena Clandestina Barcelona"
+                title="Postre bola de nieve, firma de GastroShows en La Cena Clandestina"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Postre firma: bola de nieve.</figcaption>
+            </figure>
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/arroz-cremoso-flores-vista-cenital-gastroshows.jpg"
+                alt="Arroz cremoso con flores comestibles — menú degustación GastroShows Barcelona"
+                title="Arroz cremoso con flores comestibles del menú degustación de GastroShows"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Arroz cremoso con flores comestibles.</figcaption>
+            </figure>
+            <figure className="m-0">
+              <img
+                src="/images/mejores-restaurantes-menu-degustacion-barcelona/bunuelos-trufa-piedra-volcanica-cena-clandestina.jpg"
+                alt="Buñuelos con trufa rallada en piedra volcánica — aperitivo Cena Clandestina GastroShows"
+                title="Buñuelos con trufa sobre piedra volcánica"
+                className="w-full h-48 object-cover rounded-lg shadow"
+                width={400}
+                height={300}
+                loading="lazy"
+              />
+              <figcaption className="text-xs text-muted-foreground text-center mt-1 italic">Buñuelos con trufa.</figcaption>
+            </figure>
           </div>
         </section>
 

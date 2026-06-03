@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -31,7 +31,8 @@ export default function TeamBuildingCocinaPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Team Building Cocina Barcelona", description: "Los team buildings de cocina más divertidos para empresa.", publishedAt: "2022-07-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "team-building-cocina-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "Team Building Cocina Barcelona", description: "Los team buildings de cocina más divertidos para empresa.", publishedAt: "2022-07-15T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "team-building-cocina-barcelona",
+          image: "https://gastroshows.es/images/team-building-cocina-barcelona/hero-team-building-cocina-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -44,6 +45,14 @@ export default function TeamBuildingCocinaPage() {
 
         <header className="mb-12 border-b border-border pb-8">
           <h1 className="font-cormorant text-4xl md:text-5xl font-light mb-6 text-center leading-tight">Team building cocina barcelona</h1>
+          <figure className="mb-8">
+            <div className="relative w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+            <img src="/images/team-building-cocina-barcelona/hero-team-building-cocina-barcelona.jpg"
+              alt="Team building cocina Barcelona — talleres de tapas, sushi, GastroChallenge y coctelería para empresas" title="Team building cocina Barcelona — talleres de tapas, sushi, GastroChallenge y coctelería para empresas"
+              className="w-full h-full object-cover" width={1200} height={500} loading="eager" fetchPriority="high" />
+          </div>
+            <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Team building cocina Barcelona — talleres de tapas, sushi, GastroChallenge y coctelería para empresas</figcaption>
+          </figure>
           <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">Los <strong>Team buildings de cocina en Barcelona más divertidos para empresa</strong>.</p>
         </header>
 

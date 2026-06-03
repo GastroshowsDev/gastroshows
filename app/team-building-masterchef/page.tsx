@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, restaurantSchema } from "@/components/seo/JsonLd";
@@ -23,7 +23,8 @@ export default function TeamBuildingMasterchefPage() {
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <JsonLd data={restaurantSchema()} />
-      <JsonLd data={articleSchema({ title: "Team Building Masterchef Barcelona", description: "Actividad gastronómica para empresas: cocina en equipo.", publishedAt: "2022-06-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "team-building-masterchef" })} />
+      <JsonLd data={articleSchema({ title: "Team Building Masterchef Barcelona", description: "Actividad gastronómica para empresas: cocina en equipo.", publishedAt: "2022-06-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "team-building-masterchef",
+          image: "https://gastroshows.es/images/team-building-masterchef/hero-team-building-masterchef-barcelona.jpg", })} />
 
       <article className="max-w-4xl mx-auto py-12 px-4 md:px-6">
         <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-6">
@@ -42,9 +43,15 @@ export default function TeamBuildingMasterchefPage() {
         <section id="que-es" className="mb-16 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Qué es</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/chef-preparando.jpg" alt="Team building masterchef Barcelona" className="w-full h-full object-cover" loading="lazy" />
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <img src="/images/team-building-masterchef/chef-marc-emplatado-showcooking-gastroshows.jpg"
+                alt="Chef Marc Grivé emplatando en directo — Team Building Masterchef GastroShows Barcelona"
+                title="Chef Marc Grivé en showcooking del Team Building Masterchef"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">Chef Marc Grivé emplatando durante un Team Building Masterchef de GastroShows en Barcelona.</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>Los equipos preparan un <strong>menú completo siguiendo recetas guiadas por un chef</strong> dentro de un tiempo limitado, fomentando comunicación y colaboración.</p>
               <p>Una actividad divertida y formativa que une al equipo en torno a la cocina.</p>

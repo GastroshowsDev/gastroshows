@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, articleSchema, eventSchema, productSchema } from "@/components/seo/JsonLd";
@@ -22,7 +22,8 @@ export default function ClandestineDinnerENPage() {
   return (
     <PageLayout>
       <JsonLd data={breadcrumbSchema(breadcrumbs)} />
-      <JsonLd data={articleSchema({ title: "The clandestine dinner of Barcelona", description: "Secret dining experience in Barcelona.", publishedAt: "2022-09-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "clandestine-dinner-barcelona" })} />
+      <JsonLd data={articleSchema({ title: "The clandestine dinner of Barcelona", description: "Secret dining experience in Barcelona.", publishedAt: "2022-09-01T10:00:00+01:00", modifiedAt: "2026-05-14T10:00:00+01:00", slug: "clandestine-dinner-barcelona",
+          image: "https://gastroshows.es/images/clandestine-dinner-barcelona/hero-clandestine-dinner-barcelona.jpeg", })} />
       <JsonLd data={eventSchema({ name: "The Clandestine Dinner Barcelona - GastroShows", description: "Secret location dinner with 10-12 course tasting menu and wine pairings.", price: 105 })} />
       <JsonLd data={productSchema({ name: "Clandestine Dinner Gift Voucher", description: "Gift voucher for the GastroShows clandestine dinner experience. Valid 6 months.", price: 105 })} />
 
@@ -43,9 +44,14 @@ export default function ClandestineDinnerENPage() {
         <section id="what-is" className="mb-16 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">What is</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-              <img src="/images/experiencia/mesa-cena-clandestina.jpg" alt="The clandestine dinner Barcelona" className="w-full h-full object-cover" loading="lazy" />
+            <figure className="m-0">
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+              <img src="/images/clandestine-dinner-barcelona/hero-clandestine-dinner-barcelona.jpeg"
+                alt="The clandestine dinner Barcelona — secret venue with 10-12 course tasting menu and wine pairings" title="The clandestine dinner Barcelona — secret venue with 10-12 course tasting menu and wine pairings"
+                className="w-full h-full object-cover" width={600} height={400} loading="eager" fetchPriority="high" />
             </div>
+              <figcaption className="text-sm text-muted-foreground text-center mt-2 italic">The clandestine dinner Barcelona — secret venue with 10-12 course tasting menu and wine pairings</figcaption>
+            </figure>
             <div className="space-y-4 text-foreground/90 leading-relaxed">
               <p>The clandestine dinner is a unique <strong>gastronomic experience</strong> taking place in a secret venue in Barcelona. The location is revealed through email clues, days before the event.</p>
               <p>Each evening is different, with a <strong>10-12 course tasting menu</strong> depending on the season.</p>
