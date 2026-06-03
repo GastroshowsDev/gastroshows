@@ -71,12 +71,14 @@ export function ElementRenderer({ id, element, isEditing = false, onUpdate, onSe
       case "AVAILABILITY":
         return (
           <AvailabilityWidget 
+            id={id}
             title={element.title || ""}
             subtitle={element.subtitle}
             buttonText={element.buttonText}
             buttonColor={element.buttonColor}
             styles={element.styles}
             isEditing={isEditing}
+            onUpdate={(newFields) => onUpdate?.({ ...element, ...newFields })}
           />
         );
       case "CONTAINER":

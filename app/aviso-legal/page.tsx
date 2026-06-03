@@ -1,11 +1,11 @@
-﻿"use client";
+"use client";
 
 import { PageLayout } from "@/components/PageLayout";
 
 export default function AvisoLegalPage() {
   return (
     <PageLayout>
-      <article style={{ maxWidth: "900px", margin: "0 auto", padding: "4rem 2rem", color: "rgba(245,240,232,0.85)" }}>
+      <article style={{ maxWidth: "900px", margin: "0 auto", padding: "120px 2rem 4rem", color: "rgba(245,240,232,0.85)" }}>
         <h1
           style={{
             fontSize: "clamp(2rem, 5vw, 3rem)",

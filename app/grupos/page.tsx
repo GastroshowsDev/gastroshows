@@ -25,18 +25,12 @@ export const metadata: Metadata = {
 export default function Grupos() {
   return (
     <PageLayout>
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Inicio", url: "https://gastroshows.es" },
-          { name: "Grupos y Eventos", url: "https://gastroshows.es/grupos" },
-        ])}
-      />
 
       {/* Hero */}
       <section
         style={{
           background: "linear-gradient(180deg, #050505 0%, var(--gs-bg) 100%)",
-          padding: "0 2rem 6rem",
+          padding: "120px 2rem 6rem",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
@@ -219,6 +213,13 @@ export default function Grupos() {
           Contactar Ahora
         </Link>
       </section>
+
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Inicio", url: "https://gastroshows.es" },
+          { name: "Grupos y Eventos", url: "https://gastroshows.es/grupos" },
+        ])}
+      />
     </PageLayout>
   );
 }

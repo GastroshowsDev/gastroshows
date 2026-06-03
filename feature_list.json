@@ -17,7 +17,7 @@
     "id": 3,
     "feature": "Optimización de Widgets (Disponibilidad)",
     "description": "Refactorizar el widget de disponibilidad para que use el nuevo sistema de IDs y sea 100% móvil entre contenedores.",
-    "status": "pending",
+    "status": "done",
     "priority": "high"
   },
   {

@@ -59,6 +59,7 @@ export function HeroSection({ onReservar, onRegalar, content }: Props) {
 
   return (
     <section
+      className="gs-hero"
       style={{
         position: "relative",
         height: "100dvh",

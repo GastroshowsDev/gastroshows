@@ -13,9 +13,9 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteNav />
-      <div style={{ paddingTop: "120px" }}>
+      <main id="main-content">
         {children}
-      </div>
+      </main>
       <Footer />
     </>
   );

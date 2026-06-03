@@ -49,13 +49,15 @@ export function DisponibilidadSection({
   title,
   subtitle,
   buttonText,
-  buttonColor
+  buttonColor,
+  isWidget = false
 }: { 
   onReservar?: () => void,
   title?: React.ReactNode,
   subtitle?: React.ReactNode,
   buttonText?: string,
-  buttonColor?: string
+  buttonColor?: string,
+  isWidget?: boolean
 }) {
   const [week, setWeek]       = useState<string | null>(null);
   const [data, setData]       = useState<ApiResponse | null>(null);
@@ -87,16 +89,19 @@ export function DisponibilidadSection({
   const soldOut = data && data.totalAvailable === 0;
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      style={{
+      style={isWidget ? {
+        padding: "1rem 0",
+        transition: "background 0.3s",
+      } : {
         padding: "5rem 2rem 6rem",
         background: "var(--gs-bg)",
         borderTop: "1px solid var(--gs-border)",
         transition: "background 0.3s",
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div style={{ maxWidth: isWidget ? "100%" : "1100px", margin: "0 auto" }}>
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1.5rem", marginBottom: "3rem" }}>
@@ -233,7 +238,7 @@ export function DisponibilidadSection({
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
