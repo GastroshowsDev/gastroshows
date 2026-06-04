@@ -1,7 +1,7 @@
 -- Migration: Add CustomerType enum and billing fields to Customer
 -- Run this manually in Supabase SQL editor
 
-CREATE TYPE "CustomerType" AS ENUM ('PARTICULAR', 'EMPRESA');
+CREATE TYPE "CustomerType" AS ENUM ('PARTICULAR', 'EMPRESA', 'AGENCIA');
 
 ALTER TABLE "Customer"
   ADD COLUMN IF NOT EXISTS "customerType"  "CustomerType" NOT NULL DEFAULT 'PARTICULAR',

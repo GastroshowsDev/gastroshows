@@ -22,6 +22,7 @@ const NAV: NavSection[] = [
       { label: "Regalos",       href: "/admin/regalos",      icon: "🎁" },
       { label: "Calendario",    href: "/admin/calendario",   icon: "🗓️" },
       { label: "Asignación",    href: "/admin/organizacion", icon: "🗺️" },
+      { label: "Oportunidades", href: "/admin/oportunidades", icon: "💼" },
       { label: "Contactos",     href: "/admin/contactos",    icon: "📇" },
       { label: "Estadísticas",  href: "/admin/estadisticas", icon: "📊", adminOnly: true },
     ],

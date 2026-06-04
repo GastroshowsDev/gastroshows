@@ -10,11 +10,13 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json() as {
       name?: string; email?: string; phone?: string;
-      customerType?: "PARTICULAR" | "EMPRESA";
+      customerType?: "PARTICULAR" | "EMPRESA" | "AGENCIA";
       cif?: string | null; billingStreet?: string | null; billingZip?: string | null; billingCity?: string | null;
       allergies?: string | null; comments?: string | null;
       previousVisit?: boolean; newsletter?: boolean; source?: string | null;
     };
+
+    const isBusinessType = body.customerType === "EMPRESA" || body.customerType === "AGENCIA";
 
     const customer = await prisma.customer.update({
       where: { id },
@@ -27,7 +29,7 @@ export async function PATCH(
         ...(body.billingStreet !== undefined && { billingStreet: body.billingStreet?.trim() || null }),
         ...(body.billingZip !== undefined && { billingZip: body.billingZip?.trim() || null }),
         ...(body.billingCity !== undefined && { billingCity: body.billingCity?.trim() || null }),
-        ...(body.allergies !== undefined && { allergies: body.allergies?.trim() || null }),
+        ...(body.allergies !== undefined && { allergies: isBusinessType ? null : (body.allergies?.trim() || null) }),
         ...(body.comments !== undefined && { comments: body.comments?.trim() || null }),
         ...(body.previousVisit !== undefined && { previousVisit: body.previousVisit }),
         ...(body.newsletter !== undefined && { newsletter: body.newsletter }),
@@ -46,7 +48,8 @@ export async function PATCH(
 
     return NextResponse.json({ ok: true, data: customer });
   } catch (err) {
-    console.error("[contacts/id] PATCH error:", err);
-    return NextResponse.json({ ok: false, error: "Error interno" }, { status: 500 });
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[contacts/id] PATCH error:", msg);
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }

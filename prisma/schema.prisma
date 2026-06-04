@@ -24,6 +24,7 @@ model Customer {
   createdAt     DateTime      @default(now())
   giftVouchers  GiftVoucher[] @relation("VoucherPurchaser")
   reservations  Reservation[]
+  opportunities Opportunity[]
 
   @@index([email])
   @@index([createdAt])
@@ -42,16 +43,18 @@ model Venue {
 }
 
 model Event {
-  id           String        @id @default(cuid())
-  date         DateTime
-  shift        Shift
-  venueId      String?
-  totalGuests  Int           @default(0)
-  status       EventStatus   @default(OPEN)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  venue        Venue?        @relation(fields: [venueId], references: [id])
-  reservations Reservation[]
+  id             String        @id @default(cuid())
+  date           DateTime
+  shift          Shift
+  venueId        String?
+  totalGuests    Int           @default(0)
+  status         EventStatus   @default(OPEN)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  venue          Venue?        @relation(fields: [venueId], references: [id])
+  opportunityId  String?       @unique
+  opportunity    Opportunity?
+  reservations   Reservation[]
 
   @@unique([date, shift])
   @@index([venueId])
@@ -163,6 +166,7 @@ model User {
   defaultVenue String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  opportunities Opportunity[]
 
   @@index([email])
 }
@@ -457,6 +461,42 @@ model AuditLog {
   @@index([table, createdAt])
 }
 
+model Opportunity {
+  id              String            @id @default(cuid())
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id])
+  eventId         String?           @unique
+  event           Event?            @relation(fields: [eventId], references: [id])
+
+  estimatedGuests Int
+  pricePerPerson  Decimal           @db.Decimal(10, 2)
+  totalEstimate   Decimal           @db.Decimal(10, 2)
+
+  status          OpportunityStatus @default(NEW)
+  expectedCloseAt DateTime?
+  priority        String            @default("media")
+
+  category        String?
+  source          String?
+
+  assignedTo      String?
+  assignedUser    User?             @relation(fields: [assignedTo], references: [id])
+  lastActivityAt  DateTime?
+  nextFollowUpAt  DateTime?
+  lostReason      String?
+
+  description     String?
+  internalNotes   String?
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([customerId])
+  @@index([status])
+  @@index([assignedTo])
+  @@index([expectedCloseAt])
+}
+
 enum UserRole {
   ADMIN
   LIVE
@@ -507,6 +547,7 @@ enum BackupStatus {
 enum CustomerType {
   PARTICULAR
   EMPRESA
+  AGENCIA
 }
 
 enum TableType {
@@ -531,4 +572,13 @@ enum PaymentStatus {
   PARTIAL
   COMPLETED
   GIFT
+}
+
+enum OpportunityStatus {
+  NEW
+  QUALIFIED
+  PROPOSAL
+  NEGOTIATION
+  WON
+  LOST
 }

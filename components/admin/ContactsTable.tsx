@@ -123,11 +123,11 @@ const S = {
   },
 };
 
-type VisitFilter = "all" | "recurrent" | "first" | "newsletter" | "empresa";
+type VisitFilter = "all" | "recurrent" | "first" | "newsletter" | "empresa" | "agencia";
 
 type ContactForm = {
   name: string; email: string; phone: string;
-  customerType: "PARTICULAR" | "EMPRESA";
+  customerType: "PARTICULAR" | "EMPRESA" | "AGENCIA";
   cif: string; billingStreet: string; billingZip: string; billingCity: string;
   allergies: string; comments: string;
   previousVisit: boolean; newsletter: boolean; source: string;
@@ -265,7 +265,7 @@ function ContactModal({
           {/* Tipo de contacto */}
           <p style={S.sectionTitle}>Tipo de contacto</p>
           <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1rem" }}>
-            {(["PARTICULAR", "EMPRESA"] as const).map((tipo) => (
+            {(["PARTICULAR", "EMPRESA", "AGENCIA"] as const).map((tipo) => (
               <label
                 key={tipo}
                 style={{
@@ -289,7 +289,7 @@ function ContactModal({
                   onChange={() => setField("customerType", tipo)}
                   style={{ display: "none" }}
                 />
-                {tipo === "PARTICULAR" ? "◉ Particular" : "◈ Empresa"}
+                {tipo === "PARTICULAR" ? "◉ Particular" : tipo === "EMPRESA" ? "◈ Empresa" : "★ Agencia"}
               </label>
             ))}
           </div>
@@ -315,8 +315,8 @@ function ContactModal({
             </div>
           </div>
 
-          {/* Datos de empresa (condicional) */}
-          {form.customerType === "EMPRESA" && (
+          {/* Datos fiscales (condicional) */}
+          {(form.customerType === "EMPRESA" || form.customerType === "AGENCIA") && (
             <>
               <p style={S.sectionTitle}>Datos fiscales</p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "0.75rem" }}>
@@ -342,11 +342,13 @@ function ContactModal({
 
           {/* Notas */}
           <p style={S.sectionTitle}>Notas</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
-            <div>
-              <label style={S.label}>Alergias</label>
-              <input style={S.input} value={form.allergies} onChange={(e) => setField("allergies", e.target.value)} />
-            </div>
+          <div style={{ display: "grid", gridTemplateColumns: form.customerType === "PARTICULAR" ? "1fr 1fr" : "1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+            {form.customerType === "PARTICULAR" && (
+              <div>
+                <label style={S.label}>Alergias</label>
+                <input style={S.input} value={form.allergies} onChange={(e) => setField("allergies", e.target.value)} />
+              </div>
+            )}
             <div>
               <label style={S.label}>Comentarios</label>
               <input style={S.input} value={form.comments} onChange={(e) => setField("comments", e.target.value)} />
@@ -405,12 +407,16 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
   const [editForm, setEditForm] = useState<ContactForm>(FORM_DEFAULT);
   const [saving, setSaving] = useState(false);
 
+  // Error
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const filtered = useMemo(() => {
     let list = contacts;
     if (visitFilter === "recurrent") list = list.filter((c) => c.reservaCount > 1 || c.previousVisit);
     if (visitFilter === "first") list = list.filter((c) => c.reservaCount <= 1 && !c.previousVisit);
     if (visitFilter === "newsletter") list = list.filter((c) => c.newsletter);
     if (visitFilter === "empresa") list = list.filter((c) => c.customerType === "EMPRESA");
+    if (visitFilter === "agencia") list = list.filter((c) => c.customerType === "AGENCIA");
     if (search) {
       const q = search.toLowerCase();
       list = list.filter(
@@ -465,13 +471,14 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
     e.preventDefault();
     if (creating) return;
     setCreating(true);
+    setErrorMsg(null);
     try {
       const res = await fetch("/api/admin/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(createForm),
       });
-      const json = await res.json() as { ok: boolean; data?: { id: string; name: string; email: string; phone: string; customerType: "PARTICULAR" | "EMPRESA"; cif: string | null; billingStreet: string | null; billingZip: string | null; billingCity: string | null; allergies: string | null; comments: string | null; previousVisit: boolean; newsletter: boolean; source: string | null; createdAt: string } };
+      const json = await res.json() as { ok: boolean; data?: { id: string; name: string; email: string; phone: string; customerType: "PARTICULAR" | "EMPRESA" | "AGENCIA"; cif: string | null; billingStreet: string | null; billingZip: string | null; billingCity: string | null; allergies: string | null; comments: string | null; previousVisit: boolean; newsletter: boolean; source: string | null; createdAt: string }; error?: string };
       if (json.ok && json.data) {
         const d = json.data;
         setContacts((cs) => [{
@@ -487,7 +494,11 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
         }, ...cs]);
         setCreateOpen(false);
         setCreateForm(FORM_DEFAULT);
+      } else {
+        setErrorMsg(json.error || "Error al crear contacto");
       }
+    } catch {
+      setErrorMsg("Error de red al crear contacto");
     } finally {
       setCreating(false);
     }
@@ -507,23 +518,33 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
     e.preventDefault();
     if (saving || !editId) return;
     setSaving(true);
+    setErrorMsg(null);
     try {
       const res = await fetch(`/api/admin/contacts/${editId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editForm),
       });
-      const json = await res.json() as { ok: boolean; data?: { name: string; phone: string; allergies: string | null; comments: string | null; previousVisit: boolean; newsletter: boolean; source: string | null } };
+      const json = await res.json() as { ok: boolean; data?: { name: string; phone: string; customerType?: string; allergies: string | null; comments: string | null; previousVisit: boolean; newsletter: boolean; source: string | null }; error?: string };
       if (json.ok && json.data) {
         const d = json.data;
         setContacts((cs) => cs.map((c) => c.id === editId ? {
-          ...c, name: d.name, phone: d.phone,
-          allergies: d.allergies ?? "", comments: d.comments ?? "",
-          previousVisit: d.previousVisit, newsletter: d.newsletter,
+          ...c,
+          name: d.name,
+          phone: d.phone,
+          allergies: d.allergies ?? "",
+          comments: d.comments ?? "",
+          previousVisit: d.previousVisit,
+          newsletter: d.newsletter,
           source: d.source ?? "",
+          customerType: (d.customerType as ContactForm["customerType"]) ?? c.customerType,
         } : c));
         setEditId(null);
+      } else {
+        setErrorMsg(json.error || "Error al guardar contacto");
       }
+    } catch {
+      setErrorMsg("Error de red al guardar contacto");
     } finally {
       setSaving(false);
     }
@@ -578,6 +599,7 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
           options={[
             { value: "all",       label: "Todos" },
             { value: "empresa",   label: "Empresa" },
+            { value: "agencia",   label: "Agencia" },
             { value: "recurrent", label: "Recurrentes" },
             { value: "first",     label: "Primera vez" },
             { value: "newsletter",label: "Newsletter" },
@@ -600,7 +622,32 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
           ↑ Importar XLSX
         </button>
         <button style={S.btn} onClick={() => setCreateOpen(true)}>+ Nuevo contacto</button>
+        <button
+          style={{ ...S.btn, background: "var(--color-admin-surface)", border: "2px solid var(--color-admin-accent)", color: "var(--color-admin-accent)" }}
+          onClick={() => window.open("/admin/oportunidades", "_self")}
+        >
+          💼 Ir a Oportunidades
+        </button>
       </div>
+
+      {/* ── Error message ── */}
+      {errorMsg && (
+        <div style={{
+          padding: "0.6rem 1.25rem",
+          background: "#FEE2E2",
+          color: "#DC2626",
+          fontSize: "0.82rem",
+          fontWeight: 500,
+          borderBottom: "1px solid #FECACA",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+        }}>
+          <span>⚠</span>
+          <span>{errorMsg}</span>
+          <button onClick={() => setErrorMsg(null)} style={{ marginLeft: "auto", background: "none", border: "none", color: "#DC2626", cursor: "pointer", fontSize: "1rem" }}>✕</button>
+        </div>
+      )}
 
       {/* ── Table ── */}
       <div style={S.tableWrap}>
@@ -715,6 +762,11 @@ export function ContactsTable({ contacts: initial }: { contacts: ContactRow[] })
                         {c.customerType === "EMPRESA" && (
                           <span style={{ display: "inline-block", padding: "2px 8px", borderRadius: 20, fontSize: "0.68rem", fontWeight: 700, background: "#FEF3C7", color: "#92400E" }}>
                             Empresa
+                          </span>
+                        )}
+                        {c.customerType === "AGENCIA" && (
+                          <span style={{ display: "inline-block", padding: "2px 8px", borderRadius: 20, fontSize: "0.68rem", fontWeight: 700, background: "#DBEAFE", color: "#1E40AF" }}>
+                            Agencia
                           </span>
                         )}
                         <span style={{ display: "inline-block", padding: "2px 8px", borderRadius: 20, fontSize: "0.7rem", fontWeight: 600, background: isRecurrent ? "#DCFCE7" : "#F0EBFE", color: isRecurrent ? "#16A34A" : "var(--color-admin-accent)" }}>

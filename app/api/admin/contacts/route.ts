@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json() as {
       name: string; email: string; phone: string;
-      customerType?: "PARTICULAR" | "EMPRESA";
+      customerType?: "PARTICULAR" | "EMPRESA" | "AGENCIA";
       cif?: string; billingStreet?: string; billingZip?: string; billingCity?: string;
       allergies?: string; comments?: string;
       previousVisit?: boolean; newsletter?: boolean; source?: string;
@@ -19,19 +19,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: "Nombre, email y teléfono son obligatorios" }, { status: 400 });
     }
 
-    const isEmpresa = body.customerType === "EMPRESA";
+    const isBusiness = body.customerType === "EMPRESA" || body.customerType === "AGENCIA";
 
     const customer = await prisma.customer.create({
       data: {
         name: body.name.trim(),
         email: body.email.trim().toLowerCase(),
         phone: body.phone.trim(),
-        customerType: isEmpresa ? "EMPRESA" : "PARTICULAR",
-        cif: isEmpresa ? (body.cif?.trim() || null) : null,
-        billingStreet: isEmpresa ? (body.billingStreet?.trim() || null) : null,
-        billingZip: isEmpresa ? (body.billingZip?.trim() || null) : null,
-        billingCity: isEmpresa ? (body.billingCity?.trim() || null) : null,
-        allergies: body.allergies?.trim() || null,
+        customerType: body.customerType ?? "PARTICULAR",
+        cif: isBusiness ? (body.cif?.trim() || null) : null,
+        billingStreet: isBusiness ? (body.billingStreet?.trim() || null) : null,
+        billingZip: isBusiness ? (body.billingZip?.trim() || null) : null,
+        billingCity: isBusiness ? (body.billingCity?.trim() || null) : null,
+        allergies: body.customerType === "PARTICULAR" ? (body.allergies?.trim() || null) : null,
         comments: body.comments?.trim() || null,
         previousVisit: body.previousVisit ?? false,
         newsletter: body.newsletter ?? false,
@@ -41,7 +41,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, data: customer }, { status: 201 });
   } catch (err) {
-    console.error("[contacts] POST error:", err);
-    return NextResponse.json({ ok: false, error: "Error interno" }, { status: 500 });
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[contacts] POST error:", msg);
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }
