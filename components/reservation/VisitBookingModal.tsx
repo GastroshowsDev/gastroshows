@@ -95,20 +95,23 @@ export function VisitBookingModal({ open, onClose }: Props) {
   }
 
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
+    <div role="presentation" style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
       <div onClick={handleClose} style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.85)", backdropFilter: "blur(12px)" }} />
-      
-      <div 
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="visit-modal-title"
         className="clandestino-forced"
-        style={{ 
-          position: "relative", width: "100%", maxWidth: "560px", background: "var(--gs-bg2)", border: "1px solid var(--gs-border)", 
+        style={{
+          position: "relative", width: "100%", maxWidth: "560px", background: "var(--gs-bg2)", border: "1px solid var(--gs-border)",
           borderRadius: "4px", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
           transition: "background 0.8s ease, border 0.8s ease",
           color: "var(--gs-text)"
         }}
       >
 
-        <button onClick={handleClose} style={{ position: "absolute", top: "1.5rem", right: "1.5rem", background: "none", border: "none", color: GOLD, fontSize: "1.8rem", cursor: "pointer", zIndex: 10 }}>×</button>
+        <button onClick={handleClose} aria-label="Cerrar modal de visita" style={{ position: "absolute", top: "1.5rem", right: "1.5rem", background: "none", border: "none", color: GOLD, fontSize: "1.8rem", cursor: "pointer", zIndex: 10 }}>×</button>
 
         {success ? (
           <div style={{ textAlign: "center", padding: "4rem 2rem" }}>
@@ -121,7 +124,7 @@ export function VisitBookingModal({ open, onClose }: Props) {
           <div style={{ padding: "3rem 2.5rem" }}>
             <div style={{ marginBottom: "2.5rem" }}>
                <p style={{ fontSize: "0.68rem", letterSpacing: "0.3em", textTransform: "uppercase", color: GOLD, marginBottom: "0.5rem" }}>Experiencia</p>
-               <h2 style={{ color: "var(--gs-text)", fontSize: "2.2rem", fontFamily: "var(--font-cormorant)", fontWeight: 300, lineHeight: 1.1 }}>Reserva una Visita <br/><em style={{ color: GOLD }}>Exclusiva</em></h2>
+               <h2 id="visit-modal-title" style={{ color: "var(--gs-text)", fontSize: "2.2rem", fontFamily: "var(--font-cormorant)", fontWeight: 300, lineHeight: 1.1 }}>Reserva una Visita <br/><em style={{ color: GOLD }}>Exclusiva</em></h2>
             </div>
 
             <StepIndicator current={step} />
@@ -141,10 +144,11 @@ export function VisitBookingModal({ open, onClose }: Props) {
                             const booked   = bookedTimes.includes(t);
                             const selected = form.time === t;
                             return (
-                              <div
+                              <button
                                 key={t}
                                 onClick={() => !booked && setForm({ ...form, time: t })}
-                                title={booked ? "Hora no disponible" : undefined}
+                                disabled={booked}
+                                title={booked ? "Hora no disponible" : `Seleccionar ${t}`}
                                 style={{
                                   padding: "0.75rem 0.5rem",
                                   textAlign: "center",
@@ -160,7 +164,7 @@ export function VisitBookingModal({ open, onClose }: Props) {
                                 }}
                               >
                                 {t}
-                              </div>
+                              </button>
                             );
                           })}
                         </div>

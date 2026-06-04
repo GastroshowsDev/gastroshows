@@ -136,8 +136,9 @@ export function FloatingActions() {
       
       {/* Promo Bubble (WA style) */}
       {showNotification && hasPromo && (
-        <div 
+        <button
           onClick={() => openReservation()}
+          aria-label="Ver oferta especial"
           style={{
             background: "#C8A96E", color: "#000", padding: isMobile ? "0.6rem 0.9rem" : "0.8rem 1.2rem",
             borderRadius: "18px 18px 4px 18px", fontSize: isMobile ? "0.75rem" : "0.82rem", fontWeight: 600,
@@ -151,7 +152,7 @@ export function FloatingActions() {
           <p style={{ margin: 0, lineHeight: 1.4 }}>
             ¡Hola! Tenemos una <strong style={{ textDecoration: "underline" }}>oferta especial</strong>. ✨
           </p>
-        </div>
+        </button>
       )}
 
       {/* Pill Container (Vertical on Mobile, Horizontal on Desktop) */}
@@ -174,6 +175,7 @@ export function FloatingActions() {
           {!isMobile && <Tooltip text="Regalar" visible={activeTooltip === "gift"} />}
           <button
             onClick={openGift}
+            aria-label="Regalar experiencia gastronómica"
             onMouseEnter={() => { setActiveTooltip("gift"); }}
             onMouseLeave={() => setActiveTooltip(null)}
             style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
@@ -195,6 +197,7 @@ export function FloatingActions() {
           {!isMobile && <Tooltip text="Reservar" visible={activeTooltip === "reserve"} />}
           <button
             onClick={() => openReservation()}
+            aria-label="Reservar mesa"
             onMouseEnter={() => { setActiveTooltip("reserve"); }}
             onMouseLeave={() => setActiveTooltip(null)}
             style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}
@@ -220,10 +223,11 @@ export function FloatingActions() {
         {/* 3. WhatsApp Icon */}
         <div style={{ position: "relative" }}>
           {!isMobile && <Tooltip text="Contacto" visible={activeTooltip === "wa"} />}
-          <a 
-            href="https://wa.me/34620269585" 
-            target="_blank" 
+          <a
+            href="https://wa.me/34620269585"
+            target="_blank"
             rel="noreferrer"
+            aria-label="Contactar por WhatsApp"
             onMouseEnter={() => { setActiveTooltip("wa"); }}
             onMouseLeave={() => setActiveTooltip(null)}
             style={{...btnStylePill, width: isMobile ? "42px" : "48px", height: isMobile ? "42px" : "48px", pointerEvents: isDragging ? "none" : "auto"}}

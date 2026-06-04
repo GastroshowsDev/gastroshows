@@ -154,10 +154,10 @@ fbq('init','${cfg.metaPixel}');fbq('track','PageView');`}
               }}>
                 Este sitio usa cookies
               </p>
-              <p style={{ fontSize: "0.73rem", color: "rgba(245,240,232,0.55)", lineHeight: 1.6 }}>
+              <p style={{ fontSize: "0.73rem", color: "rgba(245,240,232,0.85)", lineHeight: 1.6 }}>
                 Usamos cookies propias y de terceros para analizar el tráfico y mostrarte
                 publicidad relevante.{" "}
-                <a href="/privacidad#cookies" style={{ color: "rgba(200,169,110,0.7)", textDecoration: "none" }}>
+                <a href="/privacidad#cookies" style={{ color: "rgba(200,169,110,0.95)", textDecoration: "none" }}>
                   Más información
                 </a>
               </p>
@@ -229,7 +229,7 @@ fbq('init','${cfg.metaPixel}');fbq('track','PageView');`}
             borderRadius: "20px",
             padding: "0.35rem 0.85rem",
             fontSize: "0.65rem", letterSpacing: "0.08em", textTransform: "uppercase",
-            color: "rgba(200,169,110,0.6)", cursor: "pointer",
+            color: "rgba(200,169,110,0.95)", cursor: "pointer",
             backdropFilter: "blur(8px)",
           }}
         >

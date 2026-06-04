@@ -25,6 +25,8 @@ export function FAQAccordion({ items }: Props) {
         <div key={item.id}>
           <button
             onClick={() => toggleAccordion(item.id)}
+            aria-expanded={openId === item.id}
+            aria-controls={`faq-content-${item.id}`}
             style={{
               width: "100%",
               padding: "1.5rem",
@@ -65,6 +67,7 @@ export function FAQAccordion({ items }: Props) {
 
           {openId === item.id && (
             <div
+              id={`faq-content-${item.id}`}
               style={{
                 padding: "1.5rem",
                 background: "rgba(200,169,110,0.03)",

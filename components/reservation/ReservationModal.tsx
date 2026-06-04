@@ -287,6 +287,7 @@ export function ReservationModal({ open, onClose, initialDate }: Props) {
 
   return (
     <div
+      role="presentation"
       style={{
         position: "fixed",
         inset: 0,
@@ -304,6 +305,9 @@ export function ReservationModal({ open, onClose, initialDate }: Props) {
       }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reservation-modal-title"
         className="clandestino-forced"
         style={{
           background: DARK2,
@@ -330,6 +334,7 @@ export function ReservationModal({ open, onClose, initialDate }: Props) {
           <div>
             <div style={smallLabelStyle}>Reserva</div>
             <div
+              id="reservation-modal-title"
               style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
                 fontSize: "1.8rem",
@@ -340,7 +345,7 @@ export function ReservationModal({ open, onClose, initialDate }: Props) {
               Reservar mesa
             </div>
           </div>
-          <button onClick={handleClose} style={closeBtnStyle}>
+          <button onClick={handleClose} aria-label="Cerrar reserva modal" style={closeBtnStyle}>
             ✕
           </button>
         </div>

@@ -98,7 +98,7 @@ export function LanguageSwitcher() {
               padding: "0.2rem 0.3rem",
               fontFamily: "var(--font-montserrat)",
               textTransform: "uppercase",
-              opacity: code === currentLocale ? 1 : 0.6,
+              opacity: 1,
             }}
           >
             {label}

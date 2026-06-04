@@ -135,6 +135,7 @@ export function GiftModal({ open, onClose }: Props) {
 
   return (
     <div
+      role="presentation"
       style={{
         position: "fixed",
         inset: 0,
@@ -150,6 +151,9 @@ export function GiftModal({ open, onClose }: Props) {
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gift-modal-title"
         className="clandestino-forced"
         style={{
           background: DARK2,
@@ -173,9 +177,9 @@ export function GiftModal({ open, onClose }: Props) {
         }}>
           <div>
             <div style={smallLabel}>Vale regalo</div>
-            <div style={{ ...serifTitle, color: "var(--gs-text)" }}>Regalar la experiencia</div>
+            <div id="gift-modal-title" style={{ ...serifTitle, color: "var(--gs-text)" }}>Regalar la experiencia</div>
           </div>
-          <button onClick={handleClose} style={closeBtn}>✕</button>
+          <button onClick={handleClose} aria-label="Cerrar modal de regalo" style={closeBtn}>✕</button>
         </div>
 
         {/* Body */}
@@ -184,7 +188,7 @@ export function GiftModal({ open, onClose }: Props) {
             <SuccessScreen success={success} onClose={handleClose} />
           ) : (
             <>
-              <p style={{ fontSize: "0.85rem", color: "rgba(245,240,232,0.55)", lineHeight: 1.7, marginBottom: "2rem" }}>
+              <p style={{ fontSize: "0.85rem", color: "rgba(245,240,232,0.85)", lineHeight: 1.7, marginBottom: "2rem" }}>
                 El destinatario recibirá un enlace para elegir la fecha que prefiera. Vale válido 6 meses.
               </p>
 

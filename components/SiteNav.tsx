@@ -69,7 +69,7 @@ export function SiteNav() {
                     fontSize: "0.62rem",
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: isActive(href) || gruposOpen ? "var(--gs-gold)" : "rgba(245,240,232,0.5)",
+                    color: isActive(href) || gruposOpen ? "var(--gs-gold)" : "rgba(245,240,232,0.8)",
                     textDecoration: "none",
                     fontFamily: "var(--font-montserrat)",
                     fontWeight: 500,
@@ -85,7 +85,7 @@ export function SiteNav() {
                   fontSize: "0.62rem",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: isActive(href) ? "var(--gs-gold)" : "rgba(245,240,232,0.5)",
+                  color: isActive(href) ? "var(--gs-gold)" : "rgba(245,240,232,0.8)",
                   textDecoration: "none",
                   fontFamily: "var(--font-montserrat)",
                   fontWeight: 500,
@@ -120,7 +120,7 @@ export function SiteNav() {
                         fontSize: "0.58rem",
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
-                        color: isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.7)",
+                        color: isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.85)",
                         textDecoration: "none",
                         fontFamily: "var(--font-montserrat)",
                         fontWeight: 400,
@@ -133,7 +133,7 @@ export function SiteNav() {
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLElement).style.background = "transparent";
-                        (e.currentTarget as HTMLElement).style.color = isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.7)";
+                        (e.currentTarget as HTMLElement).style.color = isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.85)";
                       }}
                     >
                       {subLabel}
@@ -170,12 +170,17 @@ export function SiteNav() {
         </div>
 
         {/* Hamburger mobile */}
-        <button onClick={() => setOpen(!open)} className="nav-mobile" style={{
-          background: "transparent", border: "none",
-          color: "var(--gs-gold)", cursor: "pointer",
-          fontSize: "1.2rem", lineHeight: 1, padding: "0.5rem",
-          display: "none",
-        }}>
+        <button
+          onClick={() => setOpen(!open)}
+          className="nav-mobile"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          style={{
+            background: "transparent", border: "none",
+            color: "var(--gs-gold)", cursor: "pointer",
+            fontSize: "1.2rem", lineHeight: 1, padding: "0.5rem",
+            display: "none",
+          }}
+        >
           {open ? "✕" : "☰"}
         </button>
       </nav>
@@ -224,7 +229,7 @@ export function SiteNav() {
                         padding: "0.8rem 0 0.8rem 1.5rem",
                         fontSize: "0.85rem",
                         fontFamily: "var(--font-cormorant),Georgia,serif",
-                        color: isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.65)",
+                        color: isActive(subHref) ? "var(--gs-gold)" : "rgba(245,240,232,0.85)",
                         textDecoration: "none",
                         fontWeight: 300,
                         borderBottom: "1px solid rgba(200,169,110,0.05)",
