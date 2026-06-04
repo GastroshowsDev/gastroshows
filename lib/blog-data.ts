@@ -33,9 +33,15 @@ export const blogPosts: BlogPost[] = [
     content: `
 Barcelona se ha consolidado como una de las capitales gastronómicas de Europa. Con chefs de talla mundial, mercados icónicos como La Boqueria y una tradición culinaria mediterránea única, la ciudad ofrece algunas de las experiencias de menú degustación más emocionantes del continente.
 
+![Cena privada Barcelona GastroShows](/images/imagenesweb2026/cena-privada-barcelona-gastroshows.jpg)
+
 ## ¿Qué es un menú degustación?
 
-Un menú degustación es una secuencia de platos —generalmente entre 7 y 15— diseñada para mostrar la filosofía y técnica de un chef. Cada plato es una obra pequeña que cuenta una historia. A diferencia de una cena convencional, el menú degustación es un viaje completo.
+Un menú degustación es una secuencia de platos —generalmente entre 7 y 15— diseñada para mostrar la filosofía y técnica de un chef. Cada plato es una obra pequeña que cuenta una historia.
+
+> Un menú degustación es un viaje culinario. No es solo comida: es una experiencia diseñada para sorprenderte, emocionarte y llevarte a través de sabores, técnicas y emociones que un chef ha cuidadosamente orquestado.
+
+A diferencia de una cena convencional, el menú degustación es inmersivo. El chef controla cada elemento: el orden de los platos, las texturas, los sabores, incluso las temperaturas y los tiempos entre servicio y servicio.
 
 ## Los imprescindibles de Barcelona
 
@@ -43,13 +49,29 @@ Un menú degustación es una secuencia de platos —generalmente entre 7 y 15—
 
 Barcelona cuenta con varios restaurantes con estrella Michelin que ofrecen menús degustación de primer nivel. Estos lugares combinan técnica impecable, producto de temporada y una puesta en escena única.
 
+| Características de los Michelin
+Se seleccionan los mejores productos de temporada del mercado barcelonés
+Técnica de precisión adquirida a través de años de formación internacional
+Servicio de sala informado y atento, sin ser intrusivo
+Cada plato es un arte culinario perfectamente ejecutado
+Menú degustación como forma principal de vivir la propuesta del chef
+
+![Menú degustación platos gastronomía](/images/imagenesweb2026/menu-degustacion-platos-gastronomia.jpg)
+
 ### La alternativa clandestina: GastroShows
 
-Si buscas algo completamente diferente, GastroShows ha creado un fenómeno propio en Barcelona: la cena clandestina con ubicación secreta.
+Si buscas algo completamente diferente, GastroShows ha creado un fenómeno propio en Barcelona: **la cena clandestina con ubicación secreta**.
 
 La experiencia comienza días antes de sentarte a la mesa: recibes mensajes misteriosos que van revelando pistas sobre el lugar. Solo el día de la cena descubres la dirección exacta.
 
-El menú consta de 7 actos: cóctel de bienvenida, mesa del chef con 6-9 bocados, tres platos principales, dos postres y gin-tonic premium con petit fours. Todo ello con maridaje completo.
+![Mesa del chef bocados experiencia GastroShows](/images/imagenesweb2026/mesa-chef-bocados-experiencia-gastroshows.jpg)
+
+**El menú de 7 actos:**
+- Cóctel de bienvenida con sorpresas
+- Mesa del chef con 6-9 bocados
+- Tres platos principales
+- Dos postres de autor
+- Gin-tonic premium con petit fours
 
 **Lo que lo hace único:**
 - Ubicación secreta que cambia en cada sesión
@@ -57,18 +79,49 @@ El menú consta de 7 actos: cóctel de bienvenida, mesa del chef con 6-9 bocados
 - Número limitado de comensales para máxima exclusividad
 - Maridaje completo incluido (vinos, cava, licor, gin-tonic)
 
+> El misterio no es un gimmick: es parte integral de la experiencia. La anticipación activa tu paladar de forma que un restaurante convencional nunca podría.
+
+## Comparativa de precios y experiencias
+
+| Experiencias en Barcelona
+**Michelin One Star:** 150-200€ sin maridaje, +40-80€ con maridaje
+**Michelin Two Stars:** 200-300€ sin maridaje, +60-100€ con maridaje
+**GastroShows:** Desde 130€ con maridaje completo incluido. 15% descuento miércoles/jueves
+
 ## ¿Cuánto cuesta un menú degustación en Barcelona?
 
-Los precios varían enormemente según el establecimiento. Los restaurantes Michelin pueden superar los 200-300€ por persona sin maridaje. GastroShows ofrece una experiencia de alto nivel con maridaje incluido a un precio más accesible, con descuento del 15% los miércoles y jueves.
+Los precios varían enormemente según el establecimiento. Los restaurantes Michelin pueden superar los 200-300€ por persona sin maridaje.
+
+GastroShows ofrece **una experiencia de alto nivel con maridaje incluido a un precio más accesible**, con descuento del 15% los miércoles y jueves.
+
+![Maridaje vinos cócteles Barcelona](/images/imagenesweb2026/maridaje-vinos-cocteles-barcelona.webp)
 
 ## Consejos para elegir tu menú degustación
 
-1. **Consulta el número de platos**: entre 7 y 10 es lo habitual para una experiencia completa
-2. **Verifica si el maridaje está incluido**: suele añadir un 30-50% al precio
-3. **Reserva con antelación**: los mejores lugares tienen lista de espera
-4. **Informa de alergias**: siempre antes de reservar
+**1. Consulta el número de platos**
+Entre 7 y 10 es lo habitual para una experiencia completa. Menos de 6 puede sentirse incompleto; más de 15 puede resultar pesado.
 
-Barcelona tiene para todos los gustos y presupuestos. Desde la alta cocina más técnica hasta experiencias como GastroShows que reinventan el concepto de cena.
+**2. Verifica si el maridaje está incluido**
+Suele añadir un 30-50% al precio, pero completa significativamente la experiencia. No es un extra: es parte integral.
+
+**3. Reserva con antelación**
+Los mejores lugares tienen lista de espera. Para fines de semana, planifica con 4-6 semanas. Para días entre semana, 1-2 semanas es suficiente.
+
+**4. Informa de alergias e intolerancias**
+Siempre **antes de reservar**. Los chefs necesitan tiempo para adaptar menús.
+
+**5. Ten expectativas abiertas**
+El menú degustación es sorpresa. No esperes los platos que normalmente ordenas. Confía en el chef.
+
+![Cena exclusiva Barcelona GastroShows](/images/imagenesweb2026/cena-exclusiva-barcelona-gastroshows.jpg)
+
+## Conclusión
+
+Barcelona tiene para todos los gustos y presupuestos. Desde la alta cocina más técnica hasta experiencias como **GastroShows que reinventan completamente el concepto de cena**.
+
+Lo importante es que busques la experiencia que realmente deseas: ¿técnica de precisión? ¿Misterio y sorpresa? ¿Producto de proximidad? ¿Atmósfera exclusiva?
+
+Cada menú degustación en Barcelona cuenta una historia diferente. La pregunta es: ¿cuál es la historia que quieres vivir?
     `,
   },
   {

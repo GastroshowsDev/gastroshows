@@ -48,6 +48,120 @@ function renderContent(content: string) {
       continue;
     }
 
+    // Image syntax: ![alt](url)
+    if (line.startsWith("![") && line.includes("](")) {
+      const match = line.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+      if (match) {
+        const [, alt, src] = match;
+        elements.push(
+          <figure
+            key={i}
+            style={{
+              margin: "2.5rem 0",
+              padding: 0,
+              background: "transparent",
+              border: "none",
+              borderRadius: 0,
+            }}
+          >
+            <img
+              src={src}
+              alt={alt}
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: "2px",
+                marginBottom: 0,
+              }}
+            />
+          </figure>
+        );
+        i++;
+        continue;
+      }
+    }
+
+    // Callout/Highlight: > texto
+    if (line.startsWith("> ")) {
+      const calloutText = line.slice(2);
+      elements.push(
+        <div
+          key={i}
+          style={{
+            margin: "2rem 0",
+            padding: "1.5rem",
+            borderLeft: "4px solid var(--gs-gold)",
+            background: "rgba(218,165,32,0.08)",
+            borderRadius: "2px",
+          }}
+        >
+          <p
+            style={{
+              color: "var(--gs-text)",
+              fontSize: "0.95rem",
+              lineHeight: 1.7,
+              fontWeight: 500,
+              margin: 0,
+            }}
+          >
+            {calloutText}
+          </p>
+        </div>
+      );
+      i++;
+      continue;
+    }
+
+    // Card/Box: | titulo
+    if (line.startsWith("| ") && !line.includes("|", 2)) {
+      const cardTitle = line.slice(2);
+      const cardLines: string[] = [];
+      i++;
+      while (i < lines.length && lines[i].trim() && !lines[i].trim().startsWith("|")) {
+        cardLines.push(lines[i].trim());
+        i++;
+      }
+      elements.push(
+        <div
+          key={`card-${i}`}
+          style={{
+            margin: "2rem 0",
+            padding: "1.5rem",
+            border: "1px solid var(--gs-border)",
+            background: "rgba(218,165,32,0.02)",
+            borderRadius: "4px",
+          }}
+        >
+          <h4
+            style={{
+              color: "var(--gs-gold)",
+              fontSize: "0.95rem",
+              fontWeight: 600,
+              letterSpacing: "0.05em",
+              marginBottom: "1rem",
+              textTransform: "uppercase",
+            }}
+          >
+            {cardTitle}
+          </h4>
+          {cardLines.map((cardLine, j) => (
+            <p
+              key={j}
+              style={{
+                color: "var(--gs-muted)",
+                fontSize: "0.9rem",
+                lineHeight: 1.6,
+                marginBottom: j < cardLines.length - 1 ? "0.5rem" : 0,
+              }}
+            >
+              {cardLine}
+            </p>
+          ))}
+        </div>
+      );
+      continue;
+    }
+
     if (line.startsWith("## ")) {
       elements.push(
         <h2
