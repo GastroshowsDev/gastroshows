@@ -143,28 +143,38 @@ export default function TeamBuildingGastronomico() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
               gap: "2rem",
             }}
           >
             {[
               {
-                title: "Talleres de Cocina",
-                desc: "Taller de tapas, sushi, cócteles. Aprende, crea y disfruta en equipo. Ideal para grupos de 10-30 personas.",
-                link: "/team-building-cocina-barcelona",
+                title: "Taller de Tapas",
+                desc: "Crea las tapas más icónicas de Barcelona en equipo. Taller divertido de creación y degustación.",
+                link: "/team-building-cocina-barcelona#taller-tapas",
+              },
+              {
+                title: "Taller de Sushi",
+                desc: "Aprende cocina japonesa en esta experiencia fresca. Compite por descubrir los secretos milenarios del sushi.",
+                link: "/taller-de-sushi-barcelona",
+              },
+              {
+                title: "Taller de Coctelería",
+                desc: "Conviértete en bartender profesional. Prepara cócteles clásicos y de autor con mixólogo certificado.",
+                link: "/taller-cocteles-barcelona",
               },
               {
                 title: "GastroChallenge",
-                desc: "Competición culinaria de 50 minutos. Equipos en concurso, adrenalina y diversión. La actividad más intensa.",
+                desc: "Competición culinaria de 50 minutos. 3-2-1 ¡a cocinar! La actividad más adrenalínica de team building.",
                 link: "/team-building-cocina-barcelona#gastrochallenge",
               },
               {
-                title: "Eventos Privados de Grupo",
-                desc: "Experiencia clandestina completa para tu equipo. Espacio privado, menú degustación y magia. Desde 10-50 personas.",
+                title: "Evento Privado de Grupo",
+                desc: "Experiencia clandestina completa para tu equipo. Espacio privado, menú degustación y magia compartida.",
                 link: "/grupos",
               },
               {
-                title: "Actividades a Medida",
+                title: "Actividades Personalizadas",
                 desc: "¿Tu idea es diferente? Diseñamos la experiencia perfecta adaptada a tu equipo y objetivos.",
                 link: "/contacto",
               },
