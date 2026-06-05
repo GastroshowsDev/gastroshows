@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       "Organiza tu evento privado con la experiencia clandestina. Cenas de empresa, despedidas y celebraciones únicas en Barcelona.",
     url: "https://gastroshows.es/grupos",
     type: "website",
+    images: [{ url: "/images/web2026-optimizadas/og-grupos.jpg", width: 1200, height: 630 }],
   },
 };
 

@@ -5,7 +5,7 @@ import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, restaurantSchema, breadcrumbSchema, eventSchema, faqSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "GastroShows Barcelona · Cena Clandestina Experiencia Gastronómica Única 2025",
+  title: "GastroShows Barcelona · Cena Clandestina Experiencia Gastronómica Única 2026",
   description: "Cena clandestina en Barcelona: ubicación secreta, 4 actos, menú degustación, maridaje premium (7 bebidas), gin-tonic artesanal, 3h experiencia. Máximo 12 personas. Reserva ahora.",
   keywords: "cena clandestina barcelona, menu degustacion barcelona, restaurante secreto, experiencia gastronomica, sopar clandesti barcelona, tasting menu barcelona, cena privada barcelona, chef barcelona",
   authors: [{ name: "GastroShows" }],
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "GastroShows",
     title: "Cena Clandestina Barcelona · Menú Degustación Exclusivo",
     description: "Ubicación secreta, 4 actos, maridaje premium. Experiencia que comienza antes de llegar.",
-    images: [{ url: "https://images.unsplash.com/photo-1517315177153-612f65b43bd5?w=1200&h=630", width: 1200, height: 630, alt: "Cena clandestina" }],
+    images: [{ url: "/images/web2026-optimizadas/hero-homepage.jpg", width: 1200, height: 630, alt: "Cena clandestina elegante en Barcelona" }],
   },
 };
 

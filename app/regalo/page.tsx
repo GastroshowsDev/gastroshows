@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "Regala una Experiencia Gastronómica Única en Barcelona",
     description: "Cena clandestina, ubicación secreta, menú de 7 actos, maridaje premium. El regalo que nadie olvida.",
     type: "website",
-    images: [{ url: "https://gastroshows.es/og-regalo.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/web2026-optimizadas/og-regalo.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

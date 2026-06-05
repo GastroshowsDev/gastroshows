@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "Menú Degustación Barcelona · 7 Actos Exclusivos",
     description: "Experiencia culinaria de 7 actos con maridaje premium, chef experimentado y ambiente sofisticado.",
     type: "website",
-    images: [{ url: "https://gastroshows.es/og-menu.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/images/web2026-optimizadas/og-menu.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
