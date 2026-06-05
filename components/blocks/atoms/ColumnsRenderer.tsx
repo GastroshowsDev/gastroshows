@@ -152,7 +152,7 @@ function ColumnContainer({
         minHeight: isEditing ? "80px" : "auto",
         border: isEditing ? `1px dashed ${isOver ? "#875BF7" : "#333"}` : "none",
         borderRadius: "8px",
-        padding: isEditing ? "1rem" : "0",
+        padding: isEditing ? "1rem" : "0 0.5rem",
         background: isOver ? "rgba(135, 91, 247, 0.08)" : "transparent",
         transition: "all 0.2s",
         minWidth: 0,

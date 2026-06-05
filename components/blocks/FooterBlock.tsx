@@ -42,13 +42,13 @@ export function FooterBlock({ id, content, isEditing = false, onUpdate, onSelect
   });
 
   return (
-    <footer style={{ 
-      background: "#111827", 
-      color: "white", 
-      padding: styles.padding || "5rem 2rem 2rem 2rem",
-      borderTop: "1px solid rgba(255,255,255,0.05)"
+    <footer style={{
+      background: "var(--gs-bg2)",
+      color: "var(--gs-text)",
+      padding: styles.padding || "5rem 2rem 3rem 2rem",
+      borderTop: "1px solid var(--gs-border)"
     }}>
-      <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "1.5fr repeat(auto-fit, minmax(150px, 1fr))", gap: "4rem" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "1.5fr repeat(auto-fit, minmax(150px, 1fr))", gap: "5rem" }}>
         {/* Brand Column */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
           <div 
