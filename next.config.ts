@@ -34,6 +34,9 @@ const nextConfig: NextConfig = {
       // Cena Clandestina canonical
       { source: "/cena-clandestina-5", destination: "/cena-clandestina", permanent: true },
       { source: "/cena-clandestina-5/", destination: "/cena-clandestina", permanent: true },
+      // Gift Card canonical
+      { source: "/gift-card", destination: "/regalo", permanent: true },
+      { source: "/gift-card/", destination: "/regalo", permanent: true },
       // Old regalo URLs → new canonical
       { source: "/regalo-experiencia-gastronomica", destination: "/regalo", permanent: true },
       { source: "/regalo-experiencia-gastronomica/", destination: "/regalo", permanent: true },
