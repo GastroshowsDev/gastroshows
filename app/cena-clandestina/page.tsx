@@ -214,6 +214,11 @@ export default function CenaClandestina() {
             Cada acto es una creación pensada para sorprender. Cada plato cuenta una historia.
             Menú que cambia con las estaciones, técnicas de vanguardia y respeto por los ingredientes.
           </p>
+          <p style={{ color: "rgba(218,165,32,0.7)", fontSize: "0.85rem", marginBottom: "2rem" }}>
+            <Link href="/menu-degustacion" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Ver el menú degustación completo →
+            </Link>
+          </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {["Sesiones 13:00–16:00", "Sesiones 20:00–23:00", "Duración 3 horas", "Maridaje completo incluido"].map(d => (
               <div key={d} style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
@@ -342,6 +347,12 @@ export default function CenaClandestina() {
           <h2 style={{ fontFamily: "var(--font-cormorant),Georgia,serif", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 300, color: "#F5F0E8", textAlign: "center", marginBottom: "3rem" }}>
             Preguntas frecuentes
           </h2>
+          <p style={{ textAlign: "center", marginBottom: "3rem", color: "rgba(218,165,32,0.6)", fontSize: "0.9rem" }}>
+            ¿Buscas una experiencia privada para tu grupo?{' '}
+            <Link href="/grupos" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Descubre nuestras opciones para eventos.
+            </Link>
+          </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             {[
               {
@@ -394,6 +405,9 @@ export default function CenaClandestina() {
             <ReservarButton label="Reservar ahora" />
             <Link href="/regalo" style={{ border: "1px solid rgba(218,165,32,0.5)", color: "var(--gs-gold)", padding: "0.9rem 2.5rem", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none", cursor: "pointer" }}>
               Regalar experiencia
+            </Link>
+            <Link href="/preguntas-frecuentes" style={{ border: "1px solid rgba(218,165,32,0.3)", color: "rgba(218,165,32,0.7)", padding: "0.9rem 2.5rem", fontFamily: "var(--font-montserrat)", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none", cursor: "pointer" }}>
+              Ver más preguntas
             </Link>
           </div>
           <p style={{ color: "rgba(245,240,232,0.35)", fontSize: "0.8rem", letterSpacing: "0.05em" }}>

@@ -79,12 +79,17 @@ export default function Grupos() {
               fontSize: "1rem",
               color: "var(--gs-muted)",
               maxWidth: "520px",
-              margin: "0 auto 2.5rem",
+              margin: "0 auto 1.5rem",
               lineHeight: 1.8,
             }}
           >
             La experiencia clandestina para tu grupo. Desde 10 personas. Menú exclusivo,
             espacio privado y la misma magia de siempre.
+          </p>
+          <p style={{ color: "rgba(218,165,32,0.7)", fontSize: "0.85rem", marginBottom: "2.5rem" }}>
+            <Link href="/cena-clandestina" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Ver la experiencia individual →
+            </Link>
           </p>
           <Link
             href="/contacto"

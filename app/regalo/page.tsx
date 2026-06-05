@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, productSchema } from "@/components/seo/JsonLd";
 import { GiftButton } from "@/components/GiftButton";
@@ -127,11 +128,16 @@ export default function Regalo() {
               fontWeight: 300,
               color: "var(--gs-text)",
               textAlign: "center",
-              marginBottom: "3.5rem",
+              marginBottom: "1.5rem",
             }}
           >
             ¿Por qué GastroShows es el regalo perfecto?
           </h2>
+          <p style={{ textAlign: "center", marginBottom: "3.5rem", color: "rgba(218,165,32,0.7)", fontSize: "0.9rem" }}>
+            <Link href="/cena-clandestina" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Conoce la experiencia completa →
+            </Link>
+          </p>
           <div
             style={{
               display: "grid",
@@ -193,11 +199,16 @@ export default function Regalo() {
                 fontWeight: 300,
                 color: "var(--gs-text)",
                 textAlign: "center",
-                marginBottom: "3rem",
+                marginBottom: "1.5rem",
               }}
             >
               ¿Qué incluye el bono regalo?
             </h2>
+            <p style={{ textAlign: "center", marginBottom: "3rem", color: "rgba(218,165,32,0.6)", fontSize: "0.85rem" }}>
+              <Link href="/menu-degustacion" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+                Ver menú degustación detallado →
+              </Link>
+            </p>
             <div
               style={{
                 display: "grid",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, menuSchema } from "@/components/seo/JsonLd";
 import { ReservarButton } from "@/components/ReservarButton";
@@ -159,12 +160,17 @@ export default function MenuDegustacion() {
               fontSize: "clamp(2rem, 4vw, 3rem)",
               fontWeight: 300,
               color: "var(--gs-text)",
-              marginBottom: "2rem",
+              marginBottom: "1rem",
               textAlign: "center",
             }}
           >
             ¿Qué es un Menú Degustación?
           </h2>
+          <p style={{ textAlign: "center", marginBottom: "2rem", color: "rgba(218,165,32,0.6)", fontSize: "0.9rem" }}>
+            <Link href="/cena-clandestina" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Vive esta experiencia en nuestra cena clandestina →
+            </Link>
+          </p>
           <p
             style={{
               fontSize: "1.05rem",
@@ -492,6 +498,18 @@ export default function MenuDegustacion() {
           <p
             style={{
               marginTop: "2rem",
+              fontSize: "0.85rem",
+              color: "rgba(218,165,32,0.7)",
+              letterSpacing: "0.05em",
+            }}
+          >
+            <Link href="/blog" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              Aprende más sobre gastronomía en nuestro blog →
+            </Link>
+          </p>
+          <p
+            style={{
+              marginTop: "1.5rem",
               fontSize: "0.9rem",
               color: "var(--gs-muted)",
               letterSpacing: "0.05em",
