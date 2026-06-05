@@ -47,5 +47,12 @@
     "description": "Auditoría y corrección de contraste en todos los widgets y elementos para asegurar legibilidad en el modo claro.",
     "status": "done",
     "priority": "high"
+  },
+  {
+    "id": 8,
+    "feature": "Sistema Multiidioma (ES, CA, EN)",
+    "description": "Implementar next-intl para traducir toda la web al castellano, catalán e inglés. Incluye blog completo, UI y metadata.",
+    "status": "in_progress",
+    "priority": "high"
   }
 ]

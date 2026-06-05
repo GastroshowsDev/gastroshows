@@ -1,3 +1,5 @@
+import { blogTranslations } from './blog-translations';
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -10,10 +12,37 @@ export type BlogPost = {
   keywords: string[];
   seoTitle?: string;
   seoDesc?: string;
+  translations?: {
+    ca?: {
+      slug: string;
+      title: string;
+      excerpt: string;
+      category: string;
+      keywords: string[];
+      seoTitle?: string;
+      seoDesc?: string;
+      content: string;
+    };
+    en?: {
+      slug: string;
+      title: string;
+      excerpt: string;
+      category: string;
+      keywords: string[];
+      seoTitle?: string;
+      seoDesc?: string;
+      content: string;
+    };
+  };
 };
 
+const withTranslations = (slug: string, post: Omit<BlogPost, 'translations'>): BlogPost => ({
+  ...post,
+  translations: blogTranslations[slug],
+});
+
 export const blogPosts: BlogPost[] = [
-  {
+  withTranslations('mejores-restaurantes-menu-degustacion-barcelona', {
     slug: "mejores-restaurantes-menu-degustacion-barcelona",
     title: "Los Mejores Menús Degustación de Barcelona en 2025",
     seoTitle: "Mejores Menús Degustación Barcelona 2025 · Guía Completa",
@@ -123,8 +152,8 @@ Lo importante es que busques la experiencia que realmente deseas: ¿técnica de 
 
 Cada menú degustación en Barcelona cuenta una historia diferente. La pregunta es: ¿cuál es la historia que quieres vivir?
     `,
-  },
-  {
+  }),
+  withTranslations('cena-clandestina-barcelona-experiencia-unica', {
     slug: "cena-clandestina-barcelona-experiencia-unica",
     title: "Cena Clandestina en Barcelona: Todo lo que Debes Saber",
     seoTitle: "Cena Clandestina Barcelona 2025 · La Experiencia Más Misteriosa",
@@ -182,7 +211,7 @@ GastroShows es perfecta si:
 
 Puedes reservar directamente en gastroshows.es. Las plazas son limitadas y se agotan rápido, especialmente los fines de semana. Si buscas un día entre semana, los miércoles y jueves tienen un 15% de descuento.
     `,
-  },
+  }),
   {
     slug: "restaurantes-estrella-michelin-barcelona",
     title: "Restaurantes con Estrella Michelin en Barcelona: Guía 2025",
@@ -765,10 +794,32 @@ Barcelona's tasting menu scene is world-class. Whether you choose a Michelin-sta
   },
 ];
 
-export function getBlogPost(slug: string): BlogPost | undefined {
-  return blogPosts.find((p) => p.slug === slug);
+export function getBlogPost(slug: string, locale: 'es' | 'ca' | 'en' = 'es'): BlogPost | undefined {
+  const post = blogPosts.find((p) => p.slug === slug);
+  if (!post) return undefined;
+
+  if (locale === 'es') return post;
+  if (locale === 'ca' && post.translations?.ca) {
+    return { ...post, ...post.translations.ca };
+  }
+  if (locale === 'en' && post.translations?.en) {
+    return { ...post, ...post.translations.en };
+  }
+
+  return post;
 }
 
-export function getBlogsByCategory(category: string): BlogPost[] {
-  return blogPosts.filter((p) => p.category === category);
+export function getBlogsByCategory(category: string, locale: 'es' | 'ca' | 'en' = 'es'): BlogPost[] {
+  return blogPosts
+    .filter((p) => {
+      if (locale === 'es') return p.category === category;
+      if (locale === 'ca' && p.translations?.ca) return p.translations.ca.category === category;
+      if (locale === 'en' && p.translations?.en) return p.translations.en.category === category;
+      return p.category === category;
+    })
+    .map((p) => getBlogPost(p.slug, locale)!);
+}
+
+export function getAllBlogPosts(locale: 'es' | 'ca' | 'en' = 'es'): BlogPost[] {
+  return blogPosts.map((p) => getBlogPost(p.slug, locale)!);
 }

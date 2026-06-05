@@ -1,29 +1,86 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { PageLayout } from "@/components/PageLayout";
-import { blogPosts } from "@/lib/blog-data";
-import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Blog Gastronómico · GastroShows Barcelona",
-  description:
-    "Blog de gastronomía de GastroShows. Recetas catalanas, guías de restaurantes Barcelona, maridajes, experiencias gastronómicas y todo sobre la cena clandestina más famosa de la ciudad.",
-  keywords:
-    "blog gastronomia barcelona, recetas catalanas, guia restaurantes barcelona, menu degustacion, cena clandestina barcelona",
-  alternates: {
-    canonical: "https://gastroshows.es/blog",
+import Link from "next/link";
+import { useState, useMemo } from "react";
+import { PageLayout } from "@/components/PageLayout";
+import { blogPosts, getAllBlogPosts } from "@/lib/blog-data";
+import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
+import { useCurrentLocale } from "@/hooks/useCurrentLocale";
+
+const translations = {
+  es: {
+    location: "Gastronomía · Barcelona",
+    title: "Blog",
+    subtitle: "Recetas, guías, experiencias y todo lo que necesitas saber sobre la gastronomía barcelonesa.",
+    allCategories: "Todos",
+    readTime: "min",
+    readMore: "Leer →",
+    home: "Inicio",
+  },
+  ca: {
+    location: "Gastronomia · Barcelona",
+    title: "Blog",
+    subtitle: "Receptes, guies, experiències i tot el que necessites saber sobre la gastronomia barcelonesa.",
+    allCategories: "Tots",
+    readTime: "min",
+    readMore: "Llegir →",
+    home: "Inici",
+  },
+  en: {
+    location: "Gastronomy · Barcelona",
+    title: "Blog",
+    subtitle: "Recipes, guides, experiences and everything you need to know about Barcelona's gastronomy.",
+    allCategories: "All",
+    readTime: "min",
+    readMore: "Read →",
+    home: "Home",
   },
 };
 
-const categories = Array.from(new Set(blogPosts.map((p) => p.category)));
+const dateFormatOptions: Record<string, Intl.DateTimeFormatOptions> = {
+  es: { year: "numeric", month: "long", day: "numeric" },
+  ca: { year: "numeric", month: "long", day: "numeric" },
+  en: { year: "numeric", month: "long", day: "numeric" },
+};
+
+const dateLocale = {
+  es: "es-ES",
+  ca: "ca-ES",
+  en: "en-GB",
+};
 
 export default function Blog() {
+  const locale = useCurrentLocale();
+  const t = translations[locale];
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const postsInLocale = useMemo(() => getAllBlogPosts(locale), [locale]);
+  const categories = useMemo(
+    () => Array.from(new Set(postsInLocale.map((p) => p.category))),
+    [postsInLocale]
+  );
+
+  const filteredPosts =
+    selectedCategory === null
+      ? postsInLocale
+      : postsInLocale.filter((post) => post.category === selectedCategory);
+
+  const getBlogLink = (slug: string) => {
+    if (locale === "es") return `/blog/${slug}`;
+    return `/${locale}/blog/${slug}`;
+  };
+
+  const getBlogUrl = () => {
+    if (locale === "es") return "https://gastroshows.es/blog";
+    return `https://gastroshows.es/${locale}/blog`;
+  };
+
   return (
     <PageLayout>
       <JsonLd
         data={breadcrumbSchema([
-          { name: "Inicio", url: "https://gastroshows.es" },
-          { name: "Blog", url: "https://gastroshows.es/blog" },
+          { name: t.home, url: locale === "es" ? "https://gastroshows.es" : `https://gastroshows.es/${locale}` },
+          { name: "Blog", url: getBlogUrl() },
         ])}
       />
 
@@ -45,7 +102,7 @@ export default function Blog() {
               marginBottom: "1rem",
             }}
           >
-            Gastronomía · Barcelona
+            {t.location}
           </p>
           <h1
             style={{
@@ -57,11 +114,13 @@ export default function Blog() {
               lineHeight: 1.1,
             }}
           >
-            Blog{" "}
-            <em style={{ color: "var(--gs-gold)", fontStyle: "italic" }}>Gastronómico</em>
+            {t.title}{" "}
+            <em style={{ color: "var(--gs-gold)", fontStyle: "italic" }}>
+              {locale === "es" ? "Gastronómico" : locale === "ca" ? "Gastronòmic" : "Guide"}
+            </em>
           </h1>
           <p style={{ color: "var(--gs-muted)", fontSize: "1rem", lineHeight: 1.7 }}>
-            Recetas, guías, experiencias y todo lo que necesitas saber sobre la gastronomía barcelonesa.
+            {t.subtitle}
           </p>
         </div>
       </section>
@@ -85,36 +144,41 @@ export default function Blog() {
             justifyContent: "center",
           }}
         >
-          <Link
-            href="/blog"
+          <button
+            onClick={() => setSelectedCategory(null)}
             style={{
               padding: "0.4rem 1.2rem",
-              background: "var(--gs-gold)",
-              color: "#0A0A0A",
+              background: selectedCategory === null ? "var(--gs-gold)" : "transparent",
+              color: selectedCategory === null ? "#0A0A0A" : "var(--gs-muted)",
               fontSize: "0.7rem",
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              textDecoration: "none",
+              border: selectedCategory === null ? "none" : "1px solid var(--gs-border)",
+              cursor: "pointer",
               fontWeight: 600,
+              transition: "all 0.2s",
             }}
           >
-            Todos
-          </Link>
+            {t.allCategories}
+          </button>
           {categories.map((cat) => (
-            <span
+            <button
               key={cat}
+              onClick={() => setSelectedCategory(cat)}
               style={{
                 padding: "0.4rem 1.2rem",
-                border: "1px solid var(--gs-border)",
-                color: "var(--gs-muted)",
+                border: selectedCategory === cat ? "1px solid var(--gs-gold)" : "1px solid var(--gs-border)",
+                color: selectedCategory === cat ? "var(--gs-gold)" : "var(--gs-muted)",
                 fontSize: "0.7rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 cursor: "pointer",
+                background: "transparent",
+                transition: "all 0.2s",
               }}
             >
               {cat}
-            </span>
+            </button>
           ))}
         </div>
       </section>
@@ -128,10 +192,10 @@ export default function Blog() {
             gap: "2rem",
           }}
         >
-          {blogPosts.map((post) => (
+          {filteredPosts.map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={getBlogLink(post.slug)}
               style={{ textDecoration: "none" }}
             >
               <article
@@ -164,7 +228,7 @@ export default function Blog() {
                     {post.category}
                   </span>
                   <span style={{ fontSize: "0.7rem", color: "var(--gs-muted)" }}>
-                    {post.readTime} min
+                    {post.readTime} {t.readTime}
                   </span>
                 </div>
 
@@ -206,11 +270,7 @@ export default function Blog() {
                       opacity: 0.6,
                     }}
                   >
-                    {new Date(post.publishedAt).toLocaleDateString("es-ES", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {new Date(post.publishedAt).toLocaleDateString(dateLocale[locale], dateFormatOptions[locale])}
                   </span>
                   <span
                     style={{
@@ -220,7 +280,7 @@ export default function Blog() {
                       textTransform: "uppercase",
                     }}
                   >
-                    Leer →
+                    {t.readMore}
                   </span>
                 </div>
               </article>

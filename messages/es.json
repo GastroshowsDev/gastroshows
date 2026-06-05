@@ -1,111 +1,33 @@
-{
+﻿{
   "nav": {
-    "experience": "La Experiencia",
+    "home": "Inicio",
+    "experience": "Experiencia",
     "menu": "Menú",
-    "groups": "Grupos",
+    "gift": "Regalos",
     "blog": "Blog",
     "contact": "Contacto",
-    "reserve": "Reservar",
-    "gift": "Regalar"
+    "faq": "Preguntas Frecuentes"
   },
-  "home": {
-    "hero_tag": "GastroShows · Barcelona",
-    "hero_title": "Una cena que comienza antes de que llegues",
-    "hero_subtitle": "Cuatro mensajes, una ubicación secreta y el mejor menú degustación de Barcelona.",
-    "reserve": "Reservar",
-    "gift": "Regalar experiencia",
-    "discount_tag": "Oferta especial",
-    "discount_title": "15% de descuento los miércoles y jueves",
-    "discount_subtitle": "La misma experiencia completa, a un precio especial entre semana"
-  },
-  "menu_page": {
-    "tag": "GastroShows · Barcelona",
-    "title": "Menú Degustación",
-    "subtitle": "Siete actos culinarios en una ubicación secreta. Una experiencia gastronómica que comienza días antes de sentarte a la mesa.",
-    "reserve": "Reservar Ahora",
-    "gift": "Regalar Experiencia",
-    "acts_tag": "El menú",
-    "acts_title": "Los Siete Actos",
-    "pairing_tag": "Incluido en el menú",
-    "pairing_title": "Maridaje Completo",
-    "cta_title": "¿Listo para vivir la experiencia?",
-    "cta_subtitle": "Plazas limitadas. Cada sesión es única e irrepetible.",
-    "meta_title": "Menú Degustación Barcelona · 7 Actos · GastroShows",
-    "meta_desc": "El mejor menú degustación de Barcelona. 7 actos: cóctel, mesa del chef, 3 platos, 2 postres y gin-tonic con petit fours. Maridaje incluido."
-  },
-  "experience_page": {
-    "tag": "Una experiencia única en Barcelona",
-    "title": "Cena Clandestina Barcelona",
-    "subtitle": "Una cena que comienza antes de que llegues. Cuatro mensajes, cuatro pistas, una ubicación secreta que descubrirás tú solo.",
-    "how_tag": "El Ritual",
-    "how_title": "Cómo funciona la experiencia",
-    "meta_title": "Cena Clandestina Barcelona · Restaurante Secreto · GastroShows",
-    "meta_desc": "La cena clandestina más famosa de Barcelona. Ubicación secreta, menú de 7 actos y maridaje. Recibe 4 mensajes misteriosos. Reserva ahora."
-  },
-  "gift_page": {
-    "tag": "El regalo perfecto",
-    "title": "Regala una Experiencia Gastronómica en Barcelona",
-    "subtitle": "Un bono regalo para vivir la cena clandestina más especial de Barcelona.",
-    "cta": "Comprar Bono Regalo",
-    "meta_title": "Regalar Experiencia Gastronómica Barcelona · GastroShows",
-    "meta_desc": "Regala la cena clandestina de GastroShows en Barcelona. Bono regalo para menú degustación con maridaje completo. El regalo que no se olvida."
-  },
-  "groups_page": {
-    "tag": "Experiencias exclusivas",
-    "title": "Grupos y Eventos Privados en Barcelona",
-    "subtitle": "La experiencia clandestina para tu grupo. Desde 10 personas.",
-    "cta": "Consultar Disponibilidad",
-    "meta_title": "Eventos Privados y Grupos Barcelona · GastroShows",
-    "meta_desc": "Cenas privadas y eventos de grupo en Barcelona. Team buildings, despedidas, aniversarios de empresa. Menú degustación exclusivo desde 10 personas."
-  },
-  "faq_page": {
-    "tag": "Todo lo que necesitas saber",
-    "title": "Preguntas Frecuentes",
-    "subtitle": "Resolvemos todas las dudas sobre la cena clandestina más especial de Barcelona.",
-    "more_q": "¿Tienes más preguntas?",
-    "more_a": "Escríbenos y te respondemos en menos de 24 horas.",
-    "contact_cta": "Contactar",
-    "meta_title": "Preguntas Frecuentes · Cena Clandestina Barcelona · GastroShows",
-    "meta_desc": "Todas las respuestas sobre GastroShows: precio, ubicación, menú, alergias, cómo funciona y cómo reservar."
-  },
-  "contact_page": {
-    "tag": "Hablemos",
-    "title": "Contacto",
-    "subtitle": "¿Tienes preguntas? Escríbenos y te respondemos en menos de 24 horas.",
-    "meta_title": "Contacto · GastroShows Barcelona",
-    "meta_desc": "Contacta con GastroShows para reservas, grupos o preguntas sobre la cena clandestina."
-  },
-  "blog_page": {
-    "tag": "Gastronomía · Barcelona",
+  "blog": {
     "title": "Blog Gastronómico",
     "subtitle": "Recetas, guías, experiencias y todo lo que necesitas saber sobre la gastronomía barcelonesa.",
-    "read_more": "Leer →",
-    "all": "Todos",
-    "meta_title": "Blog Gastronómico · GastroShows Barcelona",
-    "meta_desc": "Blog de gastronomía de GastroShows. Recetas catalanas, guías de restaurantes, maridajes y la cena clandestina más famosa de Barcelona."
+    "allCategories": "Todos",
+    "readTime": "min",
+    "readMore": "Leer →",
+    "categories": {
+      "guide": "Guías Gastronómicas",
+      "recipe": "Recetas",
+      "experience": "Experiencias",
+      "wine": "Vinos",
+      "gift": "Regalos",
+      "en": "En inglés",
+      "gastronomy": "Gastronomía"
+    }
   },
-  "footer": {
-    "tagline": "Barcelona · Gastronomía · Misterio",
-    "experience_col": "Experiencia",
-    "info_col": "Información",
-    "legal_col": "Legal",
-    "clandestine": "Cena Clandestina",
-    "menu": "Menú Degustación",
-    "gift": "Regalar Experiencia",
-    "groups": "Grupos y Eventos",
-    "faq": "Preguntas Frecuentes",
-    "blog": "Blog Gastronómico",
-    "contact": "Contacto",
-    "reserve": "Reservar Mesa",
-    "legal": "Aviso Legal",
-    "privacy": "Privacidad",
-    "cookies": "Política de Cookies",
-    "copyright": "GastroShows Barcelona. Las mejores cenas clandestinas."
-  },
-  "discount_banner": {
-    "tag": "Oferta especial entre semana",
-    "title": "15% de descuento los miércoles y jueves",
-    "subtitle": "La misma experiencia completa. El mismo menú. El mismo misterio.",
-    "cta": "Ver disponibilidad"
+  "common": {
+    "location": "Gastronomía · Barcelona",
+    "back": "Volver",
+    "readArticle": "Leer artículo",
+    "discount": "15% descuento miércoles/jueves"
   }
 }
