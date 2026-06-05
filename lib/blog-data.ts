@@ -872,7 +872,7 @@ For GastroShows, booking is done directly through gastroshows.es. Wednesday and 
 
 Barcelona's tasting menu scene is world-class. Whether you choose a Michelin-starred experience or something more adventurous like GastroShows, you're guaranteed an unforgettable night.
     `,
-  }),
+  },
   withTranslations('mejores-restaurantes-cocina-tradicional-catalana-barcelona', {
     slug: "mejores-restaurantes-cocina-tradicional-catalana-barcelona",
     title: "Los Mejores Restaurantes de Cocina Tradicional Catalana en Barcelona",
@@ -949,19 +949,51 @@ Sus platos insignia —escalivada, esqueixada, fideuà— son interpretaciones a
 
 ### Casa Calders
 
-Cocina de huerta catalana, verduras de temporada, guisos lentamente elaborados. Respeto absoluto por el producto local.
+Cocina de huerta catalana, verduras de temporada, guisos lentamente elaborados. Respeto absoluto por el producto local y las técnicas tradicionales.
+
+**Especialidad:** Verduras de temporada, guisos lentos, pa amb tomàquet
+**Ubicación:** Plaça de Sant Felip Neri
 
 ### Can Preysler
 
-Cocina de producto, respeto por las técnicas tradicionales. Una de las casas más respetadas de la Barcelona tradicional.
+Cocina de producto, respeto por las técnicas tradicionales. Una de las casas más respetadas de la Barcelona tradicional, con más de 100 años sirviendo la mesa catalana.
+
+**Especialidad:** Fricandó, butifarra, calçots de temporada
+**Ubicación:** Avinyó, 37 - Barrio Gótico
 
 ### Els Pescadors
 
-Aunque es marisquería, es punto de referencia en productos del mar catalán. Sus arroces y suquets de peix son magistrales.
+Aunque es marisquería, es punto de referencia en productos del mar catalán. Sus arroces y suquets de peix son magistrales. La selección de pescado es incomparable.
+
+**Especialidad:** Arroces, suquet de peix, pescado a la sal
+**Ubicación:** Plaça de Prim, 1
 
 ### Caelis
 
 Fusión respetosa: cocina catalana tradicional con toques contemporáneos. El chef Rafa Peña reinterpreta los clásicos sin renegar de ellos.
+
+**Especialidad:** Fricandó de autor, escalivada contemporánea, arroces reinventados
+**Ubicación:** Passatge de Permanyer, 16
+
+## La tradición en la mesa: reglas no escritas
+
+La cocina tradicional catalana tiene protocolos no escritos que vale la pena conocer:
+
+### Los acompañamientos correctos
+- **Escalivada:** Solo aceite de oliva virgen extra y sal. Sin nada más.
+- **Esqueixada:** Aliño simple de cebolla, tomate, pimiento, anchoas
+- **Fricandó:** Acompañado de seta de cardo, nunca champiñón de cultivo
+- **Calcots:** Con salsa romesco o salsa de cebolla caramelizada
+
+### Los vinos de maridaje
+- **Penedès:** Blancos y tintos jóvenes, perfectos con vegetales
+- **Priorat:** Potentes, ideales con carnes guisadas
+- **Conca de Barberà:** Versátiles, excelentes con todo tipo de tradicional
+
+### El ritmo de la comida
+La cocina tradicional catalana **no es comida rápida**. Un guiso lento demanda un comensal lento. No hay prisa. Los mejores platos catalanes necesitan tiempo para revelar todos sus sabores.
+
+> "La escalivada no tiene prisa. El fricandó se hace lentamente. La butifarra se come sin reloj." — Dicho catalán
 
 ## La fórmula de la cocina catalana tradicional
 
