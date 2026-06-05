@@ -16,12 +16,15 @@ export function HeadingElement({ element, isEditing = false, onUpdate }: Props) 
   return (
     <Tag
       style={{
-        margin: styles.margin || "0 0 1.5rem 0",
+        margin: styles.margin || "0 0 2rem 0",
         padding: styles.padding || "0",
         color: styles.color || undefined,
         textAlign: styles.textAlign || "inherit",
         fontSize: styles.fontSize || undefined,
-        fontWeight: styles.fontWeight || undefined,
+        fontWeight: styles.fontWeight ?? 400,
+        fontFamily: "var(--font-serif)",
+        letterSpacing: "0.01em",
+        lineHeight: 1.3,
       }}
     >
       <InlineText

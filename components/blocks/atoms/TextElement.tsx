@@ -16,11 +16,13 @@ export function TextElement({ element, isEditing = false, onUpdate }: Props) {
   return (
     <Tag
       style={{
-        margin: styles.margin || "0 0 1rem 0",
+        margin: styles.margin || "0 0 1.5rem 0",
         padding: styles.padding || "0",
-        color: styles.color || undefined,
+        color: styles.color || "var(--gs-text-sub)",
         textAlign: styles.textAlign || "inherit",
-        fontSize: styles.fontSize || undefined,
+        fontSize: styles.fontSize || "1rem",
+        lineHeight: 1.8,
+        fontWeight: 300,
       }}
     >
       <InlineText

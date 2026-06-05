@@ -37,7 +37,7 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
   if (!content.images?.length) return null;
 
   return (
-    <section style={{ padding: "3rem 2rem", background: "var(--gs-bg)" }}>
+    <section style={{ padding: "4rem 2rem", background: "var(--gs-bg)" }}>
       <div
         ref={ref}
         style={{
@@ -45,7 +45,7 @@ export function GalleryBlock({ content, isEditing = false, onUpdate }: Props) {
           margin: "0 auto",
           display: "grid",
           gridTemplateColumns: `var(--gs-stack, repeat(${cols}, 1fr))`,
-          gap: "var(--gs-gap, 0.75rem)",
+          gap: "var(--gs-gap, 1.25rem)",
         } as React.CSSProperties}
       >
         {content.images.map((img, i) => (
