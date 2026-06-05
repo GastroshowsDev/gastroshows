@@ -61,12 +61,109 @@ export default function TeamBuildingCocinaPage() {
           <p className="text-foreground/90 leading-relaxed">Descubre <strong>los teambuildings cocina top</strong> que ofrecemos en GastroShows. Eventos divertidos, originales y adaptados a la cultura de cada empresa.</p>
         </section>
 
-        {actividades.map((a) => (
-          <section key={a.id} id={a.id} className="mb-12 scroll-mt-20">
-            <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">{a.name}</h2>
-            <p className="text-foreground/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: a.body.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") }} />
-          </section>
-        ))}
+        {actividades.map((a) => {
+          if (a.id === "gastrochallenge") {
+            return (
+              <section key={a.id} id={a.id} className="mb-16 scroll-mt-20">
+                <div className="space-y-8">
+                  <div className="text-center mb-12">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gold mb-3">La experiencia más adrenalínica</p>
+                    <h2 className="font-cormorant text-5xl font-light mb-4">GastroChallenge</h2>
+                    <p className="text-lg text-foreground/80 max-w-2xl mx-auto">50 minutos, 4 actos gastronómicos, equipos en competición. El formato Masterchef de los team buildings de cocina.</p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-8 mb-12">
+                    <div className="bg-gold/5 border border-gold/20 rounded-lg p-8">
+                      <h3 className="font-cormorant text-2xl font-light mb-4 text-gold">La Dinámica</h3>
+                      <ul className="space-y-3">
+                        <li className="flex gap-3"><span className="text-gold">•</span><span className="text-foreground/80"><strong>Equipos de 4-5 personas</strong> compiten por la victoria</span></li>
+                        <li className="flex gap-3"><span className="text-gold">•</span><span className="text-foreground/80"><strong>50 minutos en directo</strong> para elaborar 4 actos</span></li>
+                        <li className="flex gap-3"><span className="text-gold">•</span><span className="text-foreground/80"><strong>Chef instructor</strong> arbitraje y orienta sin resolver</span></li>
+                        <li className="flex gap-3"><span className="text-gold">•</span><span className="text-foreground/80"><strong>Presentación final</strong> estilo Masterchef ante el jurado</span></li>
+                        <li className="flex gap-3"><span className="text-gold">•</span><span className="text-foreground/80"><strong>Ganador(es)</strong> del GastroChallenge con premio sorpresa</span></li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-gold/5 border border-gold/20 rounded-lg p-8">
+                      <h3 className="font-cormorant text-2xl font-light mb-4 text-gold">Qué Se Prepara</h3>
+                      <p className="text-foreground/80 mb-4">Cada equipo elabora <strong>4 actos gastronómicos</strong> con ingredientes premium:</p>
+                      <ul className="space-y-2">
+                        <li className="flex gap-2"><span className="text-gold">✓</span><span className="text-foreground/80">Entrada elegante (5-7 min)</span></li>
+                        <li className="flex gap-2"><span className="text-gold">✓</span><span className="text-foreground/80">Primer plato técnico (8-10 min)</span></li>
+                        <li className="flex gap-2"><span className="text-gold">✓</span><span className="text-foreground/80">Segundo plato proteína (15-18 min)</span></li>
+                        <li className="flex gap-2"><span className="text-gold">✓</span><span className="text-foreground/80">Postre creativo (8-10 min)</span></li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-foreground/5 border border-foreground/10 rounded-lg p-8">
+                    <h3 className="font-cormorant text-2xl font-light mb-6 text-center">El Flujo del Evento</h3>
+                    <div className="grid md:grid-cols-4 gap-4">
+                      <div className="text-center">
+                        <div className="bg-gold/10 border-2 border-gold rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                          <span className="font-semibold text-gold text-lg">1</span>
+                        </div>
+                        <h4 className="font-semibold mb-2">Briefing</h4>
+                        <p className="text-xs text-foreground/70">Explicación de ingredientes y retos (5 min)</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="bg-gold/10 border-2 border-gold rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                          <span className="font-semibold text-gold text-lg">2</span>
+                        </div>
+                        <h4 className="font-semibold mb-2">¡A Cocinar!</h4>
+                        <p className="text-xs text-foreground/70">Competición en vivo 50 minutos (Main)</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="bg-gold/10 border-2 border-gold rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                          <span className="font-semibold text-gold text-lg">3</span>
+                        </div>
+                        <h4 className="font-semibold mb-2">Presentación</h4>
+                        <p className="text-xs text-foreground/70">Cada equipo presenta su menú (3 min c/u)</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="bg-gold/10 border-2 border-gold rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                          <span className="font-semibold text-gold text-lg">4</span>
+                        </div>
+                        <h4 className="font-semibold mb-2">Degustación</h4>
+                        <p className="text-xs text-foreground/70">Jurado prueba, vota y celebra ganadores</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="border-l-4 border-gold pl-6">
+                      <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-2">Capacidad</p>
+                      <p className="text-lg font-light">10-60 personas</p>
+                      <p className="text-sm text-foreground/60 mt-1">2-3 equipos en competencia directa</p>
+                    </div>
+                    <div className="border-l-4 border-gold pl-6">
+                      <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-2">Duración</p>
+                      <p className="text-lg font-light">2.5 - 3 horas</p>
+                      <p className="text-sm text-foreground/60 mt-1">Incluye setup, competición y degustación</p>
+                    </div>
+                    <div className="border-l-4 border-gold pl-6">
+                      <p className="text-xs uppercase tracking-widest text-gold font-semibold mb-2">Nivel de Energía</p>
+                      <p className="text-lg font-light">⚡⚡⚡⚡⚡</p>
+                      <p className="text-sm text-foreground/60 mt-1">Alta adrenalina y diversión garantizadas</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gold/8 border-2 border-gold/30 rounded-lg p-8 text-center">
+                    <h3 className="font-cormorant text-2xl font-light mb-4">¿Por qué GastroChallenge?</h3>
+                    <p className="text-foreground/80 mb-6 max-w-2xl mx-auto">Combina gastronomía, competición sana y adrenalina. Tu equipo trabaja bajo presión, se comunica intensamente y crea un recuerdo duradero. Perfecto para equipos que quieren conectar de verdad.</p>
+                    <Link href="/contacto" className="inline-block bg-gold text-black px-10 py-3 rounded font-semibold hover:bg-gold/90 transition">Reservar GastroChallenge</Link>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+          return (
+            <section key={a.id} id={a.id} className="mb-12 scroll-mt-20">
+              <h2 className="font-cormorant text-3xl font-light mt-8 mb-4">{a.name}</h2>
+              <p className="text-foreground/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: a.body.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") }} />
+            </section>
+          );
+        })}
 
         <section id="grupos-empresas" className="mb-12 scroll-mt-20">
           <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Taller de cócteles para grupos</h2>
