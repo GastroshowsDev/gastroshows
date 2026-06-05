@@ -894,13 +894,20 @@ export function getBlogsByCategory(category: string, locale: 'es' | 'ca' | 'en' 
   return blogPosts
     .filter((p) => {
       if (locale === 'es') return p.category === category;
+      // For CA/EN, only include posts that have translations
       if (locale === 'ca' && p.translations?.ca) return p.translations.ca.category === category;
       if (locale === 'en' && p.translations?.en) return p.translations.en.category === category;
-      return p.category === category;
+      return false;
     })
     .map((p) => getBlogPost(p.slug, locale)!);
 }
 
 export function getAllBlogPosts(locale: 'es' | 'ca' | 'en' = 'es'): BlogPost[] {
-  return blogPosts.map((p) => getBlogPost(p.slug, locale)!);
+  if (locale === 'es') {
+    return blogPosts.map((p) => getBlogPost(p.slug, locale)!);
+  }
+  // For CA/EN, only return posts that have translations
+  return blogPosts
+    .filter((p) => locale === 'ca' ? p.translations?.ca : p.translations?.en)
+    .map((p) => getBlogPost(p.slug, locale)!);
 }
