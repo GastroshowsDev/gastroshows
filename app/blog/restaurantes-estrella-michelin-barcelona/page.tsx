@@ -1,4 +1,20 @@
-﻿"use client";
+﻿import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Restaurantes Estrella Michelin Barcelona · Guía 2026",
+  description: "Guía completa de restaurantes con estrella Michelin en Barcelona 2026. Descubre los mejores restaurantes Michelin con ubicaciones, chefs y reservas.",
+  keywords: "michelin barcelona, restaurantes estrella michelin barcelona, restaurantes michelin bcn, chef barcelona",
+  robots: "index, follow",
+  alternates: { canonical: "https://gastroshows.es/blog/restaurantes-estrella-michelin-barcelona" },
+  openGraph: {
+    title: "Restaurantes Estrella Michelin Barcelona",
+    description: "Guía completa de restaurantes Michelin en Barcelona 2026",
+    type: "article",
+    url: "https://gastroshows.es/blog/restaurantes-estrella-michelin-barcelona",
+  },
+};
+
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";

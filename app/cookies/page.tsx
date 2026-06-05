@@ -1,7 +1,18 @@
-﻿"use client";
-
+﻿import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
 
+export const metadata: Metadata = {
+  title: "Política de Cookies · GastroShows Barcelona",
+  description: "Política de cookies de GastroShows. Información sobre los tipos de cookies que utilizamos y cómo gestionar tus preferencias.",
+  robots: "index, follow",
+  alternates: { canonical: "https://gastroshows.es/cookies" },
+  openGraph: {
+    title: "Política de Cookies GastroShows",
+    description: "Información sobre cookies y preferencias de privacidad",
+    type: "website",
+    url: "https://gastroshows.es/cookies",
+  },
+};
 
 export default function CookiesPage() {
   return (

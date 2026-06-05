@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -5,6 +6,12 @@ import { orderIdToReservationSuffix } from "@/lib/redsys";
 import { RetryIntentButton } from "@/components/reservation/RetryIntentButton";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Pago Fallido · GastroShows Barcelona",
+  description: "El pago no se ha podido procesar. Aquí puedes reintentar o contactar con soporte.",
+  robots: "noindex, nofollow",
+};
 
 async function getBooking(orderId: string) {
   // Try BookingIntent first (normal reservation flow)

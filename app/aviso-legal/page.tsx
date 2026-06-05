@@ -1,6 +1,18 @@
-"use client";
-
+import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
+
+export const metadata: Metadata = {
+  title: "Aviso Legal · GastroShows Barcelona",
+  description: "Aviso legal de GastroShows. Información sobre derechos de autor, términos de uso, responsabilidades y protección de datos.",
+  robots: "index, follow",
+  alternates: { canonical: "https://gastroshows.es/aviso-legal" },
+  openGraph: {
+    title: "Aviso Legal GastroShows",
+    description: "Aviso legal de GastroShows Barcelona",
+    type: "website",
+    url: "https://gastroshows.es/aviso-legal",
+  },
+};
 
 export default function AvisoLegalPage() {
   return (

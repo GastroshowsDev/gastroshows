@@ -1,4 +1,19 @@
-﻿"use client";
+﻿import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cena a Ciegas Barcelona · Experiencia Gastronómica sin Ver",
+  description: "Cena a ciegas en Barcelona: experiencia gastronómica única donde comes sin poder ver. Degustación sensorial con menú sorpresa y maridaje. Reserva ahora.",
+  robots: "index, follow",
+  alternates: { canonical: "https://gastroshows.es/blog/cena-a-ciegas-barcelona" },
+  openGraph: {
+    title: "Cena a Ciegas Barcelona",
+    description: "Experiencia gastronómica sensorial sin ver",
+    type: "article",
+    url: "https://gastroshows.es/blog/cena-a-ciegas-barcelona",
+  },
+};
+
+"use client";
 
 import { usePageActions } from "@/context/PageActionsContext";
 

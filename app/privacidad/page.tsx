@@ -1,7 +1,18 @@
-"use client";
-
+import type { Metadata } from "next";
 import { PageLayout } from "@/components/PageLayout";
 
+export const metadata: Metadata = {
+  title: "Política de Privacidad · GastroShows Barcelona",
+  description: "Política de privacidad de GastroShows. Información sobre cómo recopilamos, procesamos y protegemos tus datos personales.",
+  robots: "index, follow",
+  alternates: { canonical: "https://gastroshows.es/privacidad" },
+  openGraph: {
+    title: "Política de Privacidad GastroShows",
+    description: "Protección de datos personales en GastroShows",
+    type: "website",
+    url: "https://gastroshows.es/privacidad",
+  },
+};
 
 export default function PrivacidadPage() {
   return (

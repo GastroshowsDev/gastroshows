@@ -1,9 +1,16 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { orderIdToReservationSuffix } from "@/lib/redsys";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Confirmación de Reserva · GastroShows Barcelona",
+  description: "Tu reserva ha sido confirmada. Aquí encontrarás todos los detalles de tu cena clandestina en Barcelona.",
+  robots: "noindex, nofollow",
+};
 
 async function getBooking(orderId: string) {
   // Try BookingIntent first (normal reservation flow)
