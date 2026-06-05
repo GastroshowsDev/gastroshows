@@ -212,7 +212,7 @@ GastroShows es perfecta si:
 Puedes reservar directamente en gastroshows.es. Las plazas son limitadas y se agotan rápido, especialmente los fines de semana. Si buscas un día entre semana, los miércoles y jueves tienen un 15% de descuento.
     `,
   }),
-  {
+  withTranslations('restaurantes-estrella-michelin-barcelona', {
     slug: "restaurantes-estrella-michelin-barcelona",
     title: "Restaurantes con Estrella Michelin en Barcelona: Guía 2025",
     seoTitle: "Restaurantes Estrella Michelin Barcelona 2025 · Guía Completa",
@@ -308,8 +308,8 @@ Barcelona es potencia gastronómica mundial. Ya sea en las 3⭐ de Disfrutar y �
 
 Cada menú degustación cuenta una historia diferente. La pregunta es: **¿cuál es la historia que quieres vivir?**
     `,
-  },
-  {
+  }),
+  withTranslations('que-es-un-menu-degustacion', {
     slug: "que-es-un-menu-degustacion",
     title: "¿Qué es un Menú Degustación? Guía Completa para Principiantes",
     seoTitle: "Qué es un Menú Degustación · Todo lo que Necesitas Saber",
@@ -371,7 +371,7 @@ La mayoría de menús degustación se pagan al finalizar, aunque algunos requier
 4. **Pregunta al chef o al sommelier**: están ahí para explicarte cada plato y cada vino
 5. **Disfruta del ritmo**: no hay prisa, ese es el punto
     `,
-  },
+  }),
   {
     slug: "regalo-cena-romantica-barcelona",
     title: "El Mejor Regalo para una Cena Romántica en Barcelona",

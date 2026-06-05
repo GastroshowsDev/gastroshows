@@ -178,5 +178,27 @@ The difference isn't just in the food—which is excellent. It's that the experi
 
 You can book directly at gastroshows.es. Spots are limited and fill quickly, especially on weekends. For weekday dining, Wednesday and Thursday have a 15% discount.`
     }
+  },
+  'que-es-un-menu-degustacion': {
+    ca: {
+      slug: 'que-es-un-menu-degustacio',
+      title: '¿Què és un Menú Degustació? Guia Completa per a Principiants',
+      seoTitle: 'Què és un Menú Degustació · Tot el que Necessites Saber',
+      seoDesc: 'Primer cop en un menú degustació? T\'expliquem què és, com funciona, quins plats inclou, quant dura i què has d\'esperar.',
+      excerpt: '¿Primera vegada en un menú degustació? No et preocupis. T\'expliquem tot: què és, com funciona, què inclou el maridatge i com preparar-te per a treure\'n el màxim partit.',
+      category: 'Gastronomia',
+      keywords: ['que es un menu degustacio', 'menu degustacio', 'com funciona menu degustacio'],
+      content: 'Si mai has anat a un menú degustació, pot que et generi certa incertesa. ¿Quants plats són? ¿Quant dura? ¿Què passa si no m\'agrada quelcom? Aquesta guia respon totes les preguntes.'
+    },
+    en: {
+      slug: 'what-is-a-tasting-menu',
+      title: 'What is a Tasting Menu? Complete Guide for Beginners',
+      seoTitle: 'What is a Tasting Menu · Everything You Need to Know',
+      seoDesc: 'First time at a tasting menu? We explain what it is, how it works, what dishes are included, how long it lasts, and what to expect.',
+      excerpt: 'First time at a tasting menu? Don\'t worry. We explain everything: what it is, how it works, what the pairing includes, and how to prepare to get the most out of it.',
+      category: 'Gastronomy',
+      keywords: ['what is a tasting menu', 'tasting menu', 'how tasting menu works'],
+      content: 'If you\'ve never been to a tasting menu, it might generate some uncertainty. How many dishes? How long does it last? What if I don\'t like something? This guide answers all the questions.'
+    }
   }
 };
