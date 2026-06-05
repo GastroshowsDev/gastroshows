@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title,
     description,
     keywords: s.metaKeywords ?? undefined,
-    robots: s.robots || "index, follow",
+    robots: "noindex, nofollow",
     ...(s.canonicalUrl ? { alternates: { canonical: s.canonicalUrl } } : {}),
     ...(s.googleSiteVerification
       ? { verification: { google: s.googleSiteVerification, ...(s.bingSiteVerification ? { other: { "msvalidate.01": s.bingSiteVerification } } : {}) } }
