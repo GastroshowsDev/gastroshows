@@ -214,99 +214,180 @@ Puedes reservar directamente en gastroshows.es. Las plazas son limitadas y se ag
   }),
   withTranslations('restaurantes-estrella-michelin-barcelona', {
     slug: "restaurantes-estrella-michelin-barcelona",
-    title: "Restaurantes con Estrella Michelin en Barcelona: Guía 2025",
-    seoTitle: "Restaurantes Estrella Michelin Barcelona 2025 · Guía Completa",
+    title: "Restaurantes con Estrella Michelin en Barcelona: Guía 2026",
+    seoTitle: "Restaurantes Estrella Michelin Barcelona 2026 · Guía Completa",
     seoDesc:
-      "Guía actualizada de todos los restaurantes con estrella Michelin en Barcelona. Precios, menús degustación, reservas y alternativas gastronómicas de alto nivel más accesibles.",
+      "Guía actualizada 2026 de todos los restaurantes con estrella Michelin en Barcelona: 42 estrellas repartidas entre 29 restaurantes. Nuevos: Kamikaze, Scapar, Enigma, Mont Bar y Aleia con 2 estrellas.",
     excerpt:
-      "Barcelona alberga algunos de los mejores restaurantes con estrella Michelin de España. Te contamos todo sobre ellos y también sobre alternativas de alta gastronomía igualmente memorables.",
+      "Barcelona continúa siendo potencia gastronómica mundial con 42 estrellas Michelin. En 2026 entran 5 nuevos restaurantes. Te contamos todo sobre los 29 restaurantes estrellados.",
     category: "Guías Gastronómicas",
-    publishedAt: "2025-02-10",
-    readTime: 10,
+    publishedAt: "2026-01-10",
+    readTime: 12,
     keywords: [
       "restaurantes estrella michelin barcelona",
+      "michelin barcelona 2026",
       "restaurantes michelin barcelona",
-      "restaurantes con estrella michelin barcelona baratos",
-      "mejores restaurantes barcelona",
+      "mejores restaurantes barcelona michelin",
+      "kamikaze barcelona",
+      "enigma barcelona",
+      "mont bar barcelona",
     ],
     content: `
-Barcelona continúa a la cabeza de la vanguardia gastronómica internacional. La ciudad atesora **42 estrellas Michelin repartidas entre 29 restaurantes** en la Guía 2026. Un reconocimiento que demuestra la potencia culinaria de la capital catalana.
+Barcelona continúa estando a la cabeza de la vanguardia gastronómica internacional. **¡Y sigue creciendo!** Como lo demuestran las **42 estrellas Michelin que atesora la ciudad, repartidas entre 29 restaurantes** en la Guía vigente para 2026. Un reconocimiento que demuestra la potencia culinaria incuestionable de la capital catalana.
 
-![Gastronomía Michelin Barcelona](/images/blog/michelin-barcelona/gastronomia-michelin-barcelona.jpg)
+En la guía vigente para 2026 entran en el tablero de juego **con una estrella los restaurantes Kamikaze y Scapar**, en una apuesta de la guía francesa en reconocimiento de la visión del sudeste asiático más vanguardista que se hace desde Barcelona.
 
-> Barcelona es una potencia gastronómica mundial. Con 42 estrellas Michelin, es uno de los destinos culinarios más emocionantes de Europa donde conviven técnica impecable, producto de excelencia y creatividad sin límites.
+Pero este año la guía francesa ha sido muy generosa: **¡ganamos de golpe tres restaurantes con dos estrellas!** Enigma, Mont Bar y Aleia entran en la selecta habitación de las dos estrellas, la sala de espera del Olimpo de los triestrellados. Si queréis haceros un homenaje, estos restaurantes no os fallarán.
 
-## ⭐⭐⭐ Restaurantes con Tres Estrellas (4)
+## Time Out Market Barcelona
 
-### Àbac
-Jordi Cruz domina la técnica y el producto a la perfección. Cocina sofisticada, original y sorprendente. Único menú degustación de 14 platos y 4 postres que cambia por temporada. Comedor de ensueño con entrada a través de la cocina donde saludas al chef.
+El espacio gastronómico más emblemático de Barcelona. Time Out Market reúne la mejor comida y los cocineros de la ciudad bajo un mismo techo. Se encuentra en la terraza-mirador del Maremagnum, en un espacio de 5.250 metros cuadrados que alberga una cuidada selección de **8 cocinas, un restaurante de servicio completo y tres bares**. Entre las cocinas escogidas está la estrella Michelin de **Fran López** (Villa Retiro). La flexibilidad del Market permite probar algunos de los platos estrella de este chef sin tener que ceñirse al corsé de un menú degustación.
 
-### Cocina Hermanos Torres
-Los gemelos Torres transformaron un antiguo taller de neumáticos en un restaurante de 800 m². Cocina de "recuerdos" que parte de recetas familiares con productos de temporada del huerto. Filosofía que enamoró a inspectores Michelin y miles de comensales.
+## ⭐⭐⭐ Restaurantes con Tres Estrellas Michelin (4)
 
-### Disfrutar
-Tres ex Bulli categorizados como **el mejor restaurante del mundo**. Cocina "tecnoemocional" que sorprende en cada mordisco. Imaginación al poder con técnica extrema. Menú que muta cada temporada con mesa viva en el sótano.
+### 1. Àbac
+**Cocina creativa · Sarrià - Sant Gervasi**
 
-![Tres estrellas alta cocina](/images/blog/michelin-barcelona/tres-estrellas-alta-cocina.jpg)
+El mediático Jordi Cruz ofrece una cocina sofisticada, original y sorprendente en este restaurante triplestrellado. Lleva años arremangándose y domina la técnica y el producto a la perfección. Con un ojo puesto en la cocina internacional, pero siempre con un pie en la del Mediterráneo, ofrece un **único menú degustación de catorce platos y cuatro postres que cambia por temporada y gusto**. Más allá de los platos, la experiencia ABaC es global: comes en un comedor de ensueño y llegas a través de la cocina, donde habrás saludado al chef.
 
-### Lasarte
-La embajada de Martín Berasategui en Barcelona. Primer restaurante de la ciudad con 3 Michelin. Menú degustación que es "un placer que todo el mundo debería concederse una vez al año". Paolo Casagrande (ex Fat Duck) añade elegancia italiana.
+### 2. Cocina Hermanos Torres
+**Cocina creativa · Les Corts**
 
-## ⭐⭐ Restaurantes con Dos Estrellas (5)
+Que los hermanos Torres se hayan convertido en ultramediáticos no quiere decir que hayan abandonado ni un segundo la filosofía que enamoró mucha gente –incluyendo a los inspectores de la Guía Michelin que los han distinguido con tres estrellas– con aquel primer Dos Cielos. Cocina 'de recuerdos', que dicen los gemelos, que parte de las recetas familiares y se elabora con productos de temporada, del huerto, y técnicas contemporáneas. Su criatura en Barcelona, abierta en 2018, es un **imponente local de 800 m² en un antiguo taller de neumáticos**, donde manda la alta cocina y que demuestra esta pasión de los chefs por el huerto y el jardín.
 
-![Menú degustación dos estrellas](/images/blog/michelin-barcelona/menu-degustacion-michelin.jpg)
+### 3. Disfrutar
+**Cocina creativa · Esquerra de l'Eixample**
 
-| Aleia (NUEVO 2026)
-Hotel Casa Fuster, joya modernista. Proyecto de Pablo Airaudo (Fat Duck, Arzak) y Rafa de Bedoya. Raíces italianas + toque andaluz + influencias asiáticas. Degustación 11 pasos en el Olimpo gastronómico.
+Tres ex Bulli que no han parado de recibir premios y reconocimientos por su cocina "tecnoemocional" (está claro, de reminiscencias 'bullinianas') que ponen en práctica en el Eixample. Muchos se atreven a categorizarlo como **el mejor restaurante del mundo**. Y hacen méritos para serlo con su trabajo. La tercera Michelin, conseguida en el 2023, certifica a Barcelona como una potencia gastronómica mundial.
 
-| Cinc Sentits
-Menú degustación que cambia por temporada. Jordi Artal eleva productos conocidos con técnica. Tres comedores diferentes + mesa del chef. Segunda estrella 2020.
+Disfrutar es imaginación al poder y mucha técnica para sorprender al comensal en cada mordisco. Un reto constante que no para de mutar en cada temporada. No podemos destacar platos porque no acabaríamos, y porque los evolucionan en cada menú. Destacamos **la mesa viva que han instalado en el sótano del restaurante**.
 
-| Enigma
-Albert Adrià redefinió su proyecto. **33 pasos por 260€** que muta con estaciones. Vanguardia extrema + sutileza + sentido del humor. Interiorismo retrofuturista directo del legado ElBulli.
+### 4. Lasarte
+**Cocina creativa · Dreta de l'Eixample**
 
-| Enoteca
-Paco Pérez transporta el sabor del mar a alta cocina como pocos. También Mirabar (2⭐), restaurantes en Berlín y S'Agaró.
+La embajada de Martín Berasategui en el hotel Condes de Barcelona se ha convertido en uno de los restaurantes imprescindibles de Barcelona, Cataluña y España, donde el chef ofrece lo mejorcito de su creatividad. El menú degustación es un placer de esos que todo el mundo debería concederse una vez en la vida, o si se puede, una vez al año. Tanta excelencia les convirtió en el **primer restaurante de Barcelona en ostentar las tres estrellas Michelin**. Aparte de Berasategui, el responsable del día a día es el chef italiano Paolo Casagrande, capaz de añadir a la arrolladora personalidad del jefe una huella de altísima elegancia y creatividad.
 
-| Mont Bar (NUEVO 2026)
-Bar esquinero 30 m² con **alta cocina y técnica impecable**. 3-4 platillos o menú degustación 25 pasos. Producto fabuloso y recetas complicadísimas. "Bar más restaurante que existe".
+## ⭐⭐ Restaurantes con Dos Estrellas Michelin (5)
 
-## ⭐ Una Estrella (10+)
+### 1. Aleia ⭐ NUEVO 2026
+**Cocina creativa · Vila de Gràcia**
 
-Alkimia, Angle, Atempo, Caelis, COME (mexicana única), Dos Palillos (tapas asiáticas), Fishology, Hisop, Hofmann, Kamikaze (NUEVO 2026, japonesa-mediterránea).
+El hotel Casa Fuster, una joya modernista, tiene un restaurante gastronómico a la altura de las circunstancias (excepcionales. Es la obra paradigmática de Domènech i Muntaner, y en su momento, 1911, fue el edificio más caro de Barcelona). Aleia, dentro de un hotel cinco estrellas gran lujo, es un proyecto a cuatro manos de los chefs argentino **Pablo Airaudo** (Fat Duck, Arzak) y el jerezano **Rafa de Bedoya**, y muy ambicioso.
+
+La unión de las raíces italianas de Airaudo con el toque andaluz de Bedoya se unen para crear un estilo del todo personal, que acaba de cristalizar con las influencias asiáticas. Se hace patente en platos como el 'Chawanmushi' –natilla japonesa con huevo–, consomé ibérico y tártaro de calamar, y llega a la cima del talento combinatorio con platos ganadores, como **una croqueta de nuca de merluza con espinacas**. En definitiva, una degustación de once pasos con una estudiadísima puesta en escena y que termina con un intenso 'crescendo' de sabores de temporada.
+
+### 2. Cinc Sentits
+**Cocina creativa · Esquerra de l'Eixample**
+
+En este restaurante de cocina moderna catalana no encontraréis carta. El chef **Jordi Artal** considera que la mejor forma de degustar su cocina es a través del menú degustación, que cambia según temporada. En 2020 ganaron la segunda estrella Michelin, y entraron en el olimpo gastronómico de la ciudad. Con **tres comedores diferentes** (uno de ellos, la mesa del chef, donde comes junto a la cocina), y una zona de entrada compartida, donde se realizan las primeras tapas, el Cinc Sentits juega con técnicas para elevar productos conocidos que Artal sabe acompañar para disfrutar en boca.
+
+### 3. Enigma ⭐ NUEVO 2026
+**Cocina creativa · Sant Antoni**
+
+Reabierto en agosto de 2022, **Albert Adrià** redefinió su proyecto más personal por tercera vez. Enigma ha pasado de lo que llamaba 'fun dining' –maridaje de platillos creativos y coctelería con tardeo y baile – a la fórmula tradicional de lo que uno espera de un factótum de ElBulli: **un menú degustación de 33 pasos por 260 euros**, que irá cambiando a medida que lo hagan las estaciones.
+
+Claro que hablar de fórmula tradicional en un cocinero que mezcla la vanguardia creativa extrema con la sutileza y el sentido del humor, no sabemos si tiene demasiado sentido. Aquí son capaces de proezas alegóricas como **una tarrina de gelatina de consomé de perdiz, rellena de erizos de mar en escabeche**, acompañada por una ensalada césar en la que la escarola también lleva una vinagreta de erizo de mar. Todo aquí va dirigido a centrar la atención en los platos, incluyendo un **interiorismo retrofuturista que parece de 'Barbarella'**. Y lo cierto es que, con el permiso de Disfrutar, este es el restaurante del mundo más directamente conectado con la revolución que sucedió en Cala Montjoi.
+
+### 4. Enoteca
+**Marisco · La Barceloneta**
+
+El chef **Paco Pérez** consiguió dos Michelin por el Enoteca y también vio cómo su **Miramar de Llançà** conseguía la segunda estrella Michelin (¡ahora también tiene una en Berlín! Y otra en S'Agaró por Terra). Poca gente transporta el sabor del mar a la alta cocina como lo hace él: este exquisito cocinero, lacónico en palabras, habla con la imaginación y el oleaje del mar.
+
+### 5. Mont Bar ⭐ NUEVO 2026
+**Cocina creativa · Esquerra de l'Eixample**
+
+Mont Bar es un **bar esquinero, en el Eixample Izquierdo**. Formalmente, en Barcelona no se puede ser más bar que esto. Su propietario, **Ivan Castro**, con un 'background' familiar de hostelería en el Valle de Arán, consiguió que fuera una de las barras más codiciadas por los codos de buena comer de la ciudad. Elocuente como él solo, en un tuit define el alma del lugar:
+
+*"Comes platos de alta cocina y técnica en un bar de 30 m², con buena musiquita de fondo. Y si quieres salir a fumar, sales, y si quieres gritar, gritas. Esto es lo que le gusta a la gente".*
+
+Lo que diferencia el Mont de los 'gastrobares' -etiqueta de la cual abominan- es que, aparte de usar un producto fabuloso, se complican mucho -y subrayad mucho- la vida con las recetas. La carta son **unas 25 pasos que se pueden mirar descontextualizados**, o configurar con ellos un menú degustación alucinante. Y la carta ha dado un salto tan ambicioso, que por momentos tengo la sensación de que este es **el bar más restaurante que he visitado nunca**.
+
+## ⭐ Una Estrella Michelin (10+)
+
+### Alkimia
+**Cocina creativa · Sant Antoni**
+
+**Jordi Vilà** despliega, en la Fábrica Moritz, sus mejores armas: producto, tradición y creatividad. Una apuesta que se ha consolidado con éxito y una estrella Michelin después de años de trabajo en silencio. En el plato os encontraréis comidas reconocibles, pero no por eso, ni de largo, menos sorprendentes. Vilà juega con los ingredientes y las técnicas sin dejar la línea de la cocina catalana, por ejemplo en los chipirones rellenos de calabacín o el mar y montaña de ravioli de ternera y ostra a la brasa.
+
+### Angle
+**Cocina creativa · L'Antiga Esquerra de l'Eixample**
+
+Nació a caballo entre la informalidad del Ten's y la alta cuina del ABaC, pero Angle, del chef **Jordi Cruz** en el Hotel Cram, ha hecho camino propio y ya está casi a la altura del tres estrellas de la avenida del Tibidabo. Desde la pandèmia solo ofereix menú degustación, y la guia Michelin l'ha premiat amb dues estrelles. Aunque el mediático cocinero lo supervisa todo, el día a día de Angle lo llevan **Alberto Durà, Josep Rivera y Karen Escribano** (sommelier y directora del local, que trabaja con el chef desde 2008).
+
+### Atempo
+**Cocina creativa · Esquerra de l'Eixample**
+
+Atempo de **Jordi Cruz** tiene una historia curiosa: pasó sin demasiada pena ni gloria como restaurante del hotel The Mirror. Cruz lo cerró y lo trasladó al castillo de Sant Julià de Ramis, con unas vistas y emplazamiento impresionantes, un 'pack' que fue galardonado con la primera estrella Michelin en 2020.
+
+En 2021, en su traslado a Barcelona, Cruz supo mover la estrella sin que se rompa. Atempo ofrece un concepto en el que se fusiona el oficio de camarero con el de cocinero, y un suntuoso **menú degustación de tradición catalana con toques italianos y asiáticos**. De hecho, la carta consta solo de un menú degustación de 15 pasos donde la tradición nostrada toma toques franceses y exóticos.
+
+### Caelis
+**Cocina francesa · Dreta de l'Eixample**
+
+**Romain Fornell**, quien fue niño prodigio de la alta cocina en Barcelona, es la única estrella Michelin de un cocinero francés de Barcelona. Durante años en el hotel Palace, Fornell –propietario del restaurante– lo trasladó al Hotel Ohla, desde donde ha continuado la trayectoria de un restaurante que ostenta una estrella Michelin desde 2005. Aquí encontraréis una cocina llena de audacia pero con un espíritu clásico impecable, vehiculada en dos menús degustación.
+
+### COME
+**Cocina mexicana · Sant Antoni**
+
+**Paco Méndez**, que con Albert Adrià consiguió la única estrella Michelin mexicana de Cataluña con Hoja Santa, ha vuelto a conseguir la hazaña como propietario de COME (acrónimo de cocina mexicana). El proyecto ha mutado, pero la esencia es la misma: un encuentro entre la cocina mexicana, el producto mediterráneo y el legado de elBulli. El espíritu de alta gastronomía está ahí, pero Méndez ha flexibilizado la carta: puedes comer tres o cuatro platillos de maravillas 'mexiterráneas' con una botella de vino, o hacer un recorrido de festival por toda la carta.
+
+### Dos Palillos
+**Cocina creativa · El Raval**
+
+**Albert Raurich** –bulliniano de pro– demuestra que existe hermandad entre las tapas asiáticas y españolas, y un nivel de excelencia de producto y creatividad que le ha valido su primera estrella Michelin. Dos Palillos es una perfecta fusión entre bar Manolo y barra asiática de alta cocina, un lugar que no tiene mesas. Reflexión: parte de la estrella Michelin siempre premia el servicio, y que ellos la tengan todavía pone en más valor sus fenomenales tapas asiáticas.
+
+### Fishology
+**Cocina creativa · Esquerra de l'Eixample**
+
+Una propuesta diferente que ha cambiado la forma de entender y disfrutar del pescado en Barcelona. Fishology, abierto en 2021, juega con los límites de la imaginación para ofrecer algo nuevo. Creado por los italianos **Riccardo Radice y Giulia Gabriele**, examina y actualiza técnicas ancestrales utilizadas en la elaboración y conservación del pescado, priorizando conservas, salazones, maduraciones, escabeches y ahumados.
+
+### Hisop
+**Cocina creativa · Sant Gervasi - Galvany**
+
+El restaurante Hisop mezcla experiencia e innovación, con un altísimo nivel de talento y creatividad. Está especializado en cocina catalana contemporánea, utilizando productos de primera calidad para conseguir nuevos sabores, además de un toque original y sofisticado mediante la exquisita presentación de sus platos. A lo largo de su trayectoria ha sido premiado con una estrella Michelin en 2010.
+
+### Hofmann
+**Cocina creativa · Sarrià - Sant Gervasi**
+
+El sello de **Mey Hofmann** es señal de alta gastronomía de escuela con referentes catalanes y del uso de las técnicas más avanzadas. No en vano el restaurante que lleva el apellido de la añorada chef conserva una estrella Michelin desde 2004. Ofrece una carta llena de referentes de nuestra cocina tratados con finura, con platos como el capipota crujiente, espuma de atún, alcaparras y gribiche.
+
+### Kamikaze ⭐ NUEVO 2026
+**Fusión · Esquerra de l'Eixample**
+
+Cocina **japonesa-mediterránea de temporada con influencias del sudeste asiático y Corea**. Al frente de los fogones de la Kamikaze está **Enric Buendía**, que la fundó con Arístides Ribalta en 2023: eran compañeros en Disfrutar. Su base nipona es más bien de la era Meiji; de cuando el Japón de finales del XIX empezó a incorporar influencias occidentales en su gastronomía. Es decir, mayor presencia de carne, pan, rebozados y salsas contundentes como la 'tonkatsu', la 'hayashi' y el curri.
+
+Los piñones y la densidad de la salsa de fondo son muy de la abuela Carmeta, de cocina catalana tradicional, pero su dulzura y el cuajo de la soja nos recuerda que estamos en una taberna de intenciones asiáticas. El romesco asiático con langostinos de San Carlos de la Rápita es de lo mejor que hemos probado.
 
 ## 💰 El Precio de la Excelencia
 
-| Tarifa Michelin Barcelona
+| Tarifa Michelin Barcelona 2026
 **1 Estrella:** 80-150€ menú degustación
-**2 Estrellas:** 150-200€ menú degustación
-**3 Estrellas:** 200-300€ menú completo
+**2 Estrellas:** 150-250€ menú degustación
+**3 Estrellas:** 200-350€ menú completo
 Maridaje +30-50% adicional
-
-![Maridaje premium vinos](/images/blog/michelin-barcelona/maridaje-vinos-premium.jpg)
 
 > El maridaje no es un extra: es parte integral de la experiencia. Amplifica cada plato y suma un 30-50% al precio, pero vale cada euro.
 
 ## 🎭 La Alternativa: GastroShows
 
-Si buscas **alta gastronomía con maridaje incluido a precio accesible**, GastroShows ofrece cena clandestina con menú 7 actos y ubicación secreta. Técnica de alto nivel + elemento misterio. **Desde 130€ con maridaje completo**.
+Si buscas **alta gastronomía con maridaje incluido a precio accesible**, GastroShows ofrece cena clandestina con menú de 7 actos y ubicación secreta. Técnica de alto nivel + elemento misterio + maridaje completo. **Desde 130€ con todo incluido**.
 
 ## 📅 Cómo Reservar
 
 - Requieren **semanas o meses de antelación**
 - Fines de semana/festivos: planifica 2-3 meses
 - Algunos sistemas online; otros solo teléfono
-- 15% descuento miércoles/jueves en muchos (como GastroShows)
-
-![Experiencia gastronómica completa](/images/blog/michelin-barcelona/experiencia-michelin-completa.jpg)
+- Muchos restaurantes ofrecen 15% descuento miércoles/jueves
 
 ## Conclusión
 
-Barcelona es potencia gastronómica mundial. Ya sea en las 3⭐ de Disfrutar y Àbac, en las 2⭐ nuevas (Enigma, Aleia, Mont Bar), o en experiencias como GastroShows, la ciudad garantiza momentos inolvidables.
+Barcelona es potencia gastronómica mundial, confirmado ahora con 42 estrellas Michelin en 29 restaurantes. Ya sea en las 3⭐ de Disfrutar y Àbac, en las 2⭐ nuevas (Enigma, Aleia, Mont Bar), o en restaurantes de una estrella tan especiales como Kamikaze, la ciudad garantiza momentos inolvidables.
 
 **Lo importante:** elige la experiencia que realmente deseas. ¿Técnica de precisión? ¿Misterio? ¿Producto de proximidad? ¿Atmósfera exclusiva?
 
-Cada menú degustación cuenta una historia diferente. La pregunta es: **¿cuál es la historia que quieres vivir?**
+Cada menú degustación en Barcelona cuenta una historia diferente. La pregunta es: **¿cuál es la historia que quieres vivir?**
+
+**Y recordad que el territorio catalán está lleno de talento gastronómico estrellado. ¡Que aproveche!**
     `,
   }),
   withTranslations('que-es-un-menu-degustacion', {
