@@ -876,7 +876,19 @@ Barcelona's tasting menu scene is world-class. Whether you choose a Michelin-sta
 ];
 
 export function getBlogPost(slug: string, locale: 'es' | 'ca' | 'en' = 'es'): BlogPost | undefined {
-  const post = blogPosts.find((p) => p.slug === slug);
+  // Try to find by slug in current locale
+  let post = blogPosts.find((p) => {
+    if (locale === 'es') return p.slug === slug;
+    if (locale === 'ca' && p.translations?.ca) return p.translations.ca.slug === slug;
+    if (locale === 'en' && p.translations?.en) return p.translations.en.slug === slug;
+    return p.slug === slug;
+  });
+
+  // Fallback: search by original slug
+  if (!post) {
+    post = blogPosts.find((p) => p.slug === slug);
+  }
+
   if (!post) return undefined;
 
   if (locale === 'es') return post;
