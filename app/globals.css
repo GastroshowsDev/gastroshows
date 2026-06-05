@@ -5,8 +5,8 @@
   --color-gold: #daa520;
   --color-gold-light: #E8D5A8;
   --color-gold-dark: #9A7A45;
-  --color-gs-black: #0A0A0A;
-  --color-gs-dark: #111111;
+  --color-gs-black: #0F0F0F;
+  --color-gs-dark: #1A1A1A;
   --color-gs-dark2: #1A1A1A;
   --color-gs-dark3: #242424;
   --color-gs-mid: #444444;
@@ -18,24 +18,24 @@
 
 /* ── Dark theme (Permanent for Public Site) ── */
 :root {
-  --gs-bg: #0A0A0A;
-  --gs-bg2: #111111;
-  --gs-bg3: #0D0D0D;
+  --gs-bg: #0F0F0F;
+  --gs-bg2: #1A1A1A;
+  --gs-bg3: #141414;
   --gs-text: #F5F0E8;
-  --gs-text-muted: rgba(245, 240, 232, 0.82);
-  --gs-text-sub: rgba(245, 240, 232, 0.75);
-  --gs-muted: #A8A49E;
+  --gs-text-muted: rgba(245, 240, 232, 0.8);
+  --gs-text-sub: rgba(245, 240, 232, 0.7);
+  --gs-muted: #9E9A94;
   --gs-gold: #daa520;
   --gs-gold-hover: #E8D5A8;
-  --gs-border: rgba(200, 169, 110, 0.1);
-  --gs-border-hover: rgba(200, 169, 110, 0.3);
-  --gs-card-hover: rgba(200, 169, 110, 0.03);
+  --gs-border: rgba(218, 165, 32, 0.08);
+  --gs-border-hover: rgba(218, 165, 32, 0.25);
+  --gs-card-hover: rgba(218, 165, 32, 0.02);
   --gs-gold-shadow: none;
 
   --gs-accent: #daa520;
   --gs-accent-light: #fef8e7;
-  --gs-accent-soft: rgba(218, 165, 32, 0.15);
-  --gs-accent-border: rgba(218, 165, 32, 0.3);
+  --gs-accent-soft: rgba(218, 165, 32, 0.1);
+  --gs-accent-border: rgba(218, 165, 32, 0.25);
 
   /* Default Admin (Light mode as requested) */
   --color-admin-bg: #F4F6FA;
@@ -65,80 +65,7 @@
   color: var(--gs-text);
 }
 
-/* ── Palette: Organic Elegance ── */
-[data-palette="organic-elegance"] {
-  --gs-bg: #FDFBF7;
-  --gs-bg2: #F1F3EF;
-  --gs-bg3: #E8EAE6;
-  --gs-text: #1C1F1A;
-  --gs-accent: #D4A316;
-  --gs-accent-hover: #B8860B;
-  --gs-muted: #78866B;
-  --gs-border: rgba(120, 134, 107, 0.2);
-  --gs-surface: #FFFFFF;
-}
 
-/* ── Palette: Sunset Gastro ── */
-[data-palette="sunset-gastro"] {
-  --gs-bg: #FEFAF6;
-  --gs-bg2: #F9EFE7;
-  --gs-bg3: #F0E2D6;
-  --gs-text: #2D241E;
-  --gs-accent: #D35400;
-  --gs-accent-hover: #E67E22;
-  --gs-muted: #8E735B;
-  --gs-border: rgba(211, 84, 0, 0.15);
-  --gs-surface: #FFFFFF;
-}
-
-/* ── Palette: Oceanic Mist ── */
-[data-palette="oceanic-mist"] {
-  --gs-bg: #F4F7F9;
-  --gs-bg2: #EBF0F3;
-  --gs-bg3: #DEE5E9;
-  --gs-text: #1B262C;
-  --gs-accent: #0F4C75;
-  --gs-accent-hover: #3282B8;
-  --gs-muted: #5A7A8E;
-  --gs-border: rgba(15, 76, 117, 0.15);
-  --gs-surface: #FFFFFF;
-}
-
-/* ── Artistic & Spatial Effects (Picasso/Space) ── */
-.gs-glass-spatial {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  position: relative;
-  overflow: hidden;
-}
-
-.gs-glass-spatial::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(218, 165, 32, 0.05) 0%, transparent 70%);
-  animation: gs-nebula-rotate 20s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes gs-nebula-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.gs-picasso-mask {
-  clip-path: polygon(2% 5%, 95% 0%, 100% 92%, 5% 100%, 0% 45%);
-  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gs-picasso-mask:hover {
-  clip-path: polygon(0% 0%, 100% 5%, 92% 100%, 0% 95%, 5% 50%);
-}
 
 .gs-3d-lift {
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -160,9 +87,6 @@
   mask-position: 0 0;
 }
 
-.gs-cosmic-glow {
-  text-shadow: 0 0 10px rgba(218, 165, 32, 0.3), 0 0 20px rgba(218, 165, 32, 0.1);
-}
 
 *,
 *::before,
@@ -177,7 +101,7 @@ body {
   font-weight: 300;
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background 0.8s ease, color 0.8s ease;
+  transition: background 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* ── Image blur in Clandestino mode ── */
@@ -185,31 +109,31 @@ body {
   --img-brightness: 1;
 }
 
-img:not(.no-blur), 
+img:not(.no-blur),
 .gs-bg-image {
-  transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s ease;
+  transition: filter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
 }
 
 :root.clandestino img:not(.no-blur),
 :root.clandestino .gs-bg-image {
-  filter: blur(20px) grayscale(0.3) brightness(calc(0.65 * var(--img-brightness)));
-  opacity: 0.55;
+  filter: blur(18px) grayscale(0.25) brightness(calc(0.7 * var(--img-brightness)));
+  opacity: 0.6;
 }
 
 :root.revelado img,
 :root.revelado .gs-bg-image {
-  filter: blur(0) grayscale(0) brightness(calc(1.15 * var(--img-brightness))) contrast(1.05);
+  filter: blur(0) grayscale(0) brightness(calc(1.1 * var(--img-brightness))) contrast(1.02);
   opacity: 1;
 }
 
 
 /* ── UX Readability enhancement for Revelado mode ── */
-:root.revelado h1, 
-:root.revelado h2, 
+:root.revelado h1,
+:root.revelado h2,
 :root.revelado h3,
 :root.revelado p {
-  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
-  letter-spacing: -0.01em; 
+  text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  letter-spacing: -0.005em;
 }
 
 .shadow-revelado-dark {
@@ -217,7 +141,7 @@ img:not(.no-blur),
 }
 
 
-/* Noise texture overlay */
+/* Noise texture overlay - refined */
 body::before {
   content: '';
   position: fixed;
@@ -225,21 +149,21 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.4;
+  opacity: 0.2;
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
+  from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes letterReveal {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -255,11 +179,11 @@ body::before {
 
 @keyframes bounceLine {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(8px); }
+  50%       { transform: translateX(-50%) translateY(6px); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -269,7 +193,7 @@ body::before {
 }
 
 .shows-shimmer {
-  animation: letterReveal 0.7s 0.55s both, textShimmer 5s 1.8s linear infinite !important;
+  animation: letterReveal 0.5s 0.4s both, textShimmer 4s 1.2s linear infinite !important;
   background-size: 300% auto !important;
 }
 
@@ -295,11 +219,13 @@ body::before {
 }
 
 .page-title {
-  font-size: 3rem; /* Example size, adjust as needed */
-  font-weight: 700; /* Example weight, adjust as needed */
-  line-height: 1.2; /* Example line height, adjust as needed */
-  text-align: center; /* Example alignment, adjust as needed */
-  margin-bottom: 1rem; /* Example margin, adjust as needed */
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+  font-family: var(--font-serif);
 }
 
 /* Target the specific title to change it */
@@ -308,13 +234,13 @@ body::before {
 }
 
 /* ── Global Button Animations (Gastroshows Signature) ── */
-button, 
+button,
 .btn,
 a[role="button"] {
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, filter 0.3s ease !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, filter 0.3s ease !important;
   position: relative;
-  overflow: visible !important; /* Para permitir que la explosión se vea fuera */
-  border-radius: 8px; /* Redondeado suave por defecto, no forzado */
+  overflow: visible !important;
+  border-radius: 8px;
 }
 
 /* Escala por defecto (WEB): 5% + Elevación + Overlay */
@@ -363,8 +289,8 @@ button:active::after,
 }
 
 @keyframes gs-explosion {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.5); opacity: 0; }
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(2); opacity: 0; }
 }
 
 @keyframes gs-pulse {
