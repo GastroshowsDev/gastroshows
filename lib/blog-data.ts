@@ -201,39 +201,83 @@ Puedes reservar directamente en gastroshows.es. Las plazas son limitadas y se ag
       "mejores restaurantes barcelona",
     ],
     content: `
-Barcelona es una de las ciudades con mayor concentración de restaurantes con estrella Michelin de España. La guía roja ha reconocido año tras año la calidad excepcional de la cocina barcelonesa, que combina técnica contemporánea con el mejor producto mediterráneo.
+Barcelona continúa a la cabeza de la vanguardia gastronómica internacional. La ciudad atesora **42 estrellas Michelin repartidas entre 29 restaurantes** en la Guía 2026. Un reconocimiento que demuestra la potencia culinaria de la capital catalana.
 
-## El mapa Michelin de Barcelona
+![Gastronomía Michelin Barcelona](/images/blog/michelin-barcelona/gastronomia-michelin-barcelona.jpg)
 
-La ciudad y su área metropolitana acumulan estrellas repartidas entre restaurantes de cocina catalana de vanguardia, cocina creativa de autor y algunos de los espacios más exclusivos del país.
+> Barcelona es una potencia gastronómica mundial. Con 42 estrellas Michelin, es uno de los destinos culinarios más emocionantes de Europa donde conviven técnica impecable, producto de excelencia y creatividad sin límites.
 
-## ¿Qué esperar de un restaurante Michelin?
+## ⭐⭐⭐ Restaurantes con Tres Estrellas (4)
 
-Los restaurantes con estrella Michelin comparten ciertas características:
-- **Producto de primera calidad**: temporada, proximidad y excelencia
-- **Técnica impecable**: años de formación y precisión en la cocina
-- **Servicio de sala**: atento, informado, sin ser intrusivo
-- **Menú degustación**: la forma habitual de vivir la propuesta completa
+### Àbac
+Jordi Cruz domina la técnica y el producto a la perfección. Cocina sofisticada, original y sorprendente. Único menú degustación de 14 platos y 4 postres que cambia por temporada. Comedor de ensueño con entrada a través de la cocina donde saludas al chef.
 
-## El precio de la excelencia
+### Cocina Hermanos Torres
+Los gemelos Torres transformaron un antiguo taller de neumáticos en un restaurante de 800 m². Cocina de "recuerdos" que parte de recetas familiares con productos de temporada del huerto. Filosofía que enamoró a inspectores Michelin y miles de comensales.
 
-La realidad es que los restaurantes Michelin en Barcelona tienen precios que pueden superar los 200-300€ por persona cuando incluyes el maridaje. No es una experiencia para todos los días.
+### Disfrutar
+Tres ex Bulli categorizados como **el mejor restaurante del mundo**. Cocina "tecnoemocional" que sorprende en cada mordisco. Imaginación al poder con técnica extrema. Menú que muta cada temporada con mesa viva en el sótano.
 
-## Alternativas de alta gastronomía
+![Tres estrellas alta cocina](/images/blog/michelin-barcelona/tres-estrellas-alta-cocina.jpg)
 
-Si buscas una experiencia de menú degustación de primer nivel sin el precio de un Michelin, existen alternativas muy interesantes en Barcelona.
+### Lasarte
+La embajada de Martín Berasategui en Barcelona. Primer restaurante de la ciudad con 3 Michelin. Menú degustación que es "un placer que todo el mundo debería concederse una vez al año". Paolo Casagrande (ex Fat Duck) añade elegancia italiana.
 
-**GastroShows** es una de las más singulares: una cena clandestina en ubicación secreta con menú de 7 actos y maridaje completo incluido. La experiencia incluye además el elemento del misterio: recibes mensajes previos que revelan pistas sobre la ubicación.
+## ⭐⭐ Restaurantes con Dos Estrellas (5)
 
-Es alta gastronomía en un formato completamente diferente, con un precio más accesible y una experiencia que en los restaurantes Michelin convencionales es imposible de replicar.
+![Menú degustación dos estrellas](/images/blog/michelin-barcelona/menu-degustacion-michelin.jpg)
 
-## Cómo reservar un restaurante Michelin
+| Aleia (NUEVO 2026)
+Hotel Casa Fuster, joya modernista. Proyecto de Pablo Airaudo (Fat Duck, Arzak) y Rafa de Bedoya. Raíces italianas + toque andaluz + influencias asiáticas. Degustación 11 pasos en el Olimpo gastronómico.
 
-La mayoría requieren reserva con semanas o meses de antelación. Algunos tienen sistemas online, otros solo por teléfono. Para las fechas más populares (fines de semana, festivos), planifica con al menos 2-3 meses.
+| Cinc Sentits
+Menú degustación que cambia por temporada. Jordi Artal eleva productos conocidos con técnica. Tres comedores diferentes + mesa del chef. Segunda estrella 2020.
+
+| Enigma
+Albert Adrià redefinió su proyecto. **33 pasos por 260€** que muta con estaciones. Vanguardia extrema + sutileza + sentido del humor. Interiorismo retrofuturista directo del legado ElBulli.
+
+| Enoteca
+Paco Pérez transporta el sabor del mar a alta cocina como pocos. También Mirabar (2⭐), restaurantes en Berlín y S'Agaró.
+
+| Mont Bar (NUEVO 2026)
+Bar esquinero 30 m² con **alta cocina y técnica impecable**. 3-4 platillos o menú degustación 25 pasos. Producto fabuloso y recetas complicadísimas. "Bar más restaurante que existe".
+
+## ⭐ Una Estrella (10+)
+
+Alkimia, Angle, Atempo, Caelis, COME (mexicana única), Dos Palillos (tapas asiáticas), Fishology, Hisop, Hofmann, Kamikaze (NUEVO 2026, japonesa-mediterránea).
+
+## 💰 El Precio de la Excelencia
+
+| Tarifa Michelin Barcelona
+**1 Estrella:** 80-150€ menú degustación
+**2 Estrellas:** 150-200€ menú degustación
+**3 Estrellas:** 200-300€ menú completo
+Maridaje +30-50% adicional
+
+![Maridaje premium vinos](/images/blog/michelin-barcelona/maridaje-vinos-premium.jpg)
+
+> El maridaje no es un extra: es parte integral de la experiencia. Amplifica cada plato y suma un 30-50% al precio, pero vale cada euro.
+
+## 🎭 La Alternativa: GastroShows
+
+Si buscas **alta gastronomía con maridaje incluido a precio accesible**, GastroShows ofrece cena clandestina con menú 7 actos y ubicación secreta. Técnica de alto nivel + elemento misterio. **Desde 130€ con maridaje completo**.
+
+## 📅 Cómo Reservar
+
+- Requieren **semanas o meses de antelación**
+- Fines de semana/festivos: planifica 2-3 meses
+- Algunos sistemas online; otros solo teléfono
+- 15% descuento miércoles/jueves en muchos (como GastroShows)
+
+![Experiencia gastronómica completa](/images/blog/michelin-barcelona/experiencia-michelin-completa.jpg)
 
 ## Conclusión
 
-Barcelona ofrece algunas de las mejores experiencias gastronómicas de Europa. Tanto si optas por la alta cocina Michelin como por experiencias únicas como GastroShows, la ciudad garantiza momentos gastronómicos memorables.
+Barcelona es potencia gastronómica mundial. Ya sea en las 3⭐ de Disfrutar y Àbac, en las 2⭐ nuevas (Enigma, Aleia, Mont Bar), o en experiencias como GastroShows, la ciudad garantiza momentos inolvidables.
+
+**Lo importante:** elige la experiencia que realmente deseas. ¿Técnica de precisión? ¿Misterio? ¿Producto de proximidad? ¿Atmósfera exclusiva?
+
+Cada menú degustación cuenta una historia diferente. La pregunta es: **¿cuál es la historia que quieres vivir?**
     `,
   },
   {
