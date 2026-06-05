@@ -2,6 +2,8 @@ import { getCalendarData } from "@/lib/admin/calendar-utils";
 import { CalendarBoard } from "@/components/admin/CalendarBoard";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export type CalendarEvent = Awaited<ReturnType<typeof getCalendarData>>[number];
 
 export default async function CalendarioPage() {

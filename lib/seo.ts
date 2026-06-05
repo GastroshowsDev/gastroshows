@@ -55,11 +55,16 @@ const DEFAULTS: SeoSettingsData = {
 };
 
 export async function getSeoSettings(): Promise<SeoSettingsData> {
+  // Skip database query during build (no DB connection available)
+  if (process.env.NODE_ENV === "production" && !process.env.VERCEL_ENV) {
+    return DEFAULTS;
+  }
+
   try {
     // Adding a timeout to prevent site-wide hangs if DB is unresponsive
     const row = await Promise.race([
       prisma.seoSettings.findUnique({ where: { id: "default" } }),
-      new Promise<null>((resolve) => 
+      new Promise<null>((resolve) =>
         setTimeout(() => resolve(null), 5000)
       )
     ]);
