@@ -935,13 +935,33 @@ La botifarra —embutido típicamente catalán— servido con alubias blancas gu
 
 Barcelona tiene una tradición sólida de restaurantes que honran la cocina tradicional catalana, manteniéndola viva sin convertirla en un museo de fósiles culinarios.
 
-| Restaurantes de referencia
-**Casa Calders:** Cocina de huerta catalana, verduras de temporada, guisos lentamente elaborados
-**Can Preysler:** Cocina de producto, respeto por las técnicas tradicionales
-**Els Pescadors:** Aunque es marisquería, es punto de referencia en productos del mar catalán
-**Caelis:** Fusión respetosa: cocina catalana tradicional con toques contemporáneos
+### Can Culleretes (desde 1786)
 
-![Cocina catalana en el plato Barcelona](/images/imagenesweb2026/cocina-catalana-plato.jpg)
+El restaurante más antiguo de Barcelona en funcionamiento ininterrumpido. Situado en el corazón del Barrio Gótico, Can Culleretes es un monumento vivo de la cocina catalana.
+
+**Especialidad:** Escalivada, esqueixada, fideuà, trinxat
+**Ubicación:** Calle Quintana, 5 - Barrio Gótico
+**Bodega:** Excelente selección de vinos catalanes
+
+![Can Culleretes Barcelona — el restaurante más antiguo de Barcelona](https://culleretes.com/wp-content/uploads/2016/12/DSC0160MEDIAC-681x1024.jpg)
+
+Sus platos insignia —escalivada, esqueixada, fideuà— son interpretaciones auténticas de clásicos catalanes. El ambiente histórico, con mosaicos antiguos y decoración tradicional, transporta directamente a la Barcelona de otro siglo.
+
+### Casa Calders
+
+Cocina de huerta catalana, verduras de temporada, guisos lentamente elaborados. Respeto absoluto por el producto local.
+
+### Can Preysler
+
+Cocina de producto, respeto por las técnicas tradicionales. Una de las casas más respetadas de la Barcelona tradicional.
+
+### Els Pescadors
+
+Aunque es marisquería, es punto de referencia en productos del mar catalán. Sus arroces y suquets de peix son magistrales.
+
+### Caelis
+
+Fusión respetosa: cocina catalana tradicional con toques contemporáneos. El chef Rafa Peña reinterpreta los clásicos sin renegar de ellos.
 
 ## La fórmula de la cocina catalana tradicional
 
