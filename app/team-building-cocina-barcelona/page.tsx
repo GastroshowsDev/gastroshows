@@ -165,24 +165,24 @@ export default function TeamBuildingCocinaPage() {
           );
         })}
 
-        <section id="grupos-empresas" className="mb-12 scroll-mt-20">
-          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Taller de cócteles para grupos</h2>
-          <p className="text-foreground/90 leading-relaxed">Un <strong>taller práctico y dinámico</strong> ideal para empresas, despedidas y celebraciones. Aprende mixología guiado por profesionales.</p>
-        </section>
-
-        <section id="empresas" className="mb-12 scroll-mt-20">
-          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Actividades team building para empresas y grupos</h2>
-          <p className="text-foreground/90 leading-relaxed">Combinamos <strong>actividad gastronómica + espacio privado + servicio integral</strong>. Cocina abierta, salón privado y todo lo necesario para hacer de tu evento un éxito.</p>
-        </section>
-
-        <section id="divertidas" className="mb-12 scroll-mt-20">
-          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">Actividades divertidas para grupos</h2>
-          <p className="text-foreground/90 leading-relaxed">No solo team building corporativo. También organizamos actividades para <strong>despedidas de soltero/a, cumpleaños y celebraciones privadas</strong>. La gastronomía como excusa para pasarlo bien.</p>
-        </section>
-
-        <section id="medida" className="mb-12 scroll-mt-20">
-          <h2 className="font-cormorant text-3xl font-light mt-8 mb-6">También puedes pedirnos tu actividad</h2>
-          <p className="text-foreground/90 leading-relaxed">Si tienes una idea concreta o necesitas algo a medida, <strong>cuéntanos lo que buscas</strong> y diseñamos la actividad perfecta para tu grupo.</p>
+        <section id="barcelona-geo" className="mb-12 scroll-mt-20 bg-foreground/5 rounded-lg p-8 mt-16">
+          <h2 className="font-cormorant text-3xl font-light mb-6 text-center">Team Building Gastronómico en Barcelona</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-semibold text-gold mb-3">¿Por qué en Barcelona?</h3>
+              <p className="text-foreground/80 leading-relaxed mb-4">Barcelona es la capital mundial del team building gastronómico. Combinamos la excelencia culinaria catalana con espacios únicos y secretos para crear experiencias que tus equipos nunca olvidarán.</p>
+              <p className="text-foreground/80 leading-relaxed">Desde el Eixample hasta el Born, contamos con cocinas profesionales y salones privados en localizaciones estratégicas.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gold mb-3">Para empresas en Barcelona</h3>
+              <ul className="space-y-2 text-foreground/80">
+                <li className="flex gap-2"><span className="text-gold">✓</span> <span>Flexibilidad horaria para tu agenda</span></li>
+                <li className="flex gap-2"><span className="text-gold">✓</span> <span>Entrega y coordinación profesional</span></li>
+                <li className="flex gap-2"><span className="text-gold">✓</span> <span>Gastronomía premium con chef dedicado</span></li>
+                <li className="flex gap-2"><span className="text-gold">✓</span> <span>Experiencia probada con 100+ equipos</span></li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         <section className="bg-gold/8 border-2 border-gold/30 rounded-lg p-8 md:p-12 my-16 text-center">
@@ -191,19 +191,6 @@ export default function TeamBuildingCocinaPage() {
           <Link href="/contacto" className="inline-block bg-gold text-black px-10 py-4 rounded font-cormorant text-lg font-semibold hover:bg-gold/90 transition shadow-lg">Tu evento a medida</Link>
         </section>
 
-        <section className="bg-muted/40 rounded-lg p-8 my-12">
-          <h2 className="font-cormorant text-2xl font-light mb-8">Posts relacionados</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            <Link href="/team-building-masterchef" className="block p-5 rounded border border-border hover:border-gold hover:bg-gold/5 transition">
-              <p className="font-semibold text-gold mb-2">→ Team Building Masterchef</p>
-              <p className="text-sm text-muted-foreground">Cocina en equipo, formato competición.</p>
-            </Link>
-            <Link href="/talleres-gastronomicos" className="block p-5 rounded border border-border hover:border-gold hover:bg-gold/5 transition">
-              <p className="font-semibold text-gold mb-2">→ Talleres gastronómicos</p>
-              <p className="text-sm text-muted-foreground">Catálogo completo de talleres.</p>
-            </Link>
-          </div>
-        </section>
       </article>
     </PageLayout>
   );
