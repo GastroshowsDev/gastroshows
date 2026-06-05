@@ -872,7 +872,125 @@ For GastroShows, booking is done directly through gastroshows.es. Wednesday and 
 
 Barcelona's tasting menu scene is world-class. Whether you choose a Michelin-starred experience or something more adventurous like GastroShows, you're guaranteed an unforgettable night.
     `,
-  },
+  }),
+  withTranslations('mejores-restaurantes-cocina-tradicional-catalana-barcelona', {
+    slug: "mejores-restaurantes-cocina-tradicional-catalana-barcelona",
+    title: "Los Mejores Restaurantes de Cocina Tradicional Catalana en Barcelona",
+    seoTitle: "Cocina Tradicional Catalana Barcelona · Los Mejores Restaurantes 2026",
+    seoDesc:
+      "Descubre los mejores restaurantes de cocina tradicional catalana en Barcelona. Desde escalivada y esqueixada hasta fricandó y botifarra. Guía de auténtica gastronomía catalana.",
+    excerpt:
+      "La cocina tradicional catalana es patrimonio vivo. Barcelona alberga los mejores restaurantes donde probar escalivada, esqueixada, fricandó, butifarra y los grandes clásicos de la mesa catalana.",
+    category: "Guías Gastronómicas",
+    publishedAt: "2025-05-20",
+    readTime: 10,
+    keywords: [
+      "cocina tradicional catalana barcelona",
+      "restaurantes cocina catalana barcelona",
+      "escalivada barcelona",
+      "fricandó barcelona",
+      "esqueixada barcelona",
+      "mejores restaurantes tradicionales barcelona",
+    ],
+    content: `
+La cocina tradicional catalana es una de las más ricas y variadas de España. Basada en el producto local, la sencillez en la elaboración y el respeto a las técnicas ancestrales, la gastronomía catalana representa siglos de historia culinaria en cada plato.
+
+![Platos tradicionales cocina catalana Barcelona](/images/imagenesweb2026/platos-tradicionales-cocina-catalana.jpg)
+
+## Las raíces de la cocina catalana
+
+La cocina tradicional catalana se construyó sobre tres pilares fundamentales:
+
+### La tierra
+La huerta del Maresme y el Vallès ha proporcionado históricamente verduras de excelente calidad. Alcachofas, judías verdes, espinacas y tomates son protagonistas de muchos de los platos catalanes más emblemáticos.
+
+### El mar
+Barcelona, puerto medieval, tiene una relación ancestral con el mediterráneo. Las salazones, los pescados a la sal y las conservas en aceite forman parte de la tradición culinaria.
+
+### La ganadería
+Jamón de jabugo, butifarra, longaniza y embutidos locales reflejan la importancia histórica de la ganadería porcina en Cataluña.
+
+## Los clásicos imprescindibles
+
+### Escalivada
+La escalivada es posiblemente el plato más icónico de la cocina catalana tradicional. Verduras asadas al carbón —generalmente berenjena, cebolla y pimiento— aliñadas con aceite de oliva y sal.
+
+> La escalivada es simplicidad elevada a categoría de arte. Cuatro ingredientes, técnica perfecta y paciencia. Así es la cocina catalana en su esencia.
+
+![Escalivada tradicional Barcelona](/images/imagenesweb2026/escalivada-tradicional-barcelona.jpg)
+
+### Esqueixada
+Bacalao desmenuzado crudo, aliñado con cebolla, tomate, pimiento y aceite. Es el tapa perfecto de la costa catalana, especialmente en verano.
+
+### Fricandó
+Carne de vaca cocida lentamente con seta de cardo, verduras y caldo. Es un guiso de los más antiguos de la cocina medieval catalana, que aparece en recetarios del siglo XIV.
+
+### Calcots
+Disponibles solo en primavera (febrero a abril), estos puerros tiernos se asan al carbón y se comen pelados, con una salsa romesco o salsa de cebolla.
+
+### Botifarra con mongetes
+La botifarra —embutido típicamente catalán— servido con alubias blancas guisadas. Un clásico que combina proteína animal con legumbre.
+
+## Los mejores restaurantes de cocina tradicional catalana
+
+Barcelona tiene una tradición sólida de restaurantes que honran la cocina tradicional catalana, manteniéndola viva sin convertirla en un museo de fósiles culinarios.
+
+| Restaurantes de referencia
+**Casa Calders:** Cocina de huerta catalana, verduras de temporada, guisos lentamente elaborados
+**Can Preysler:** Cocina de producto, respeto por las técnicas tradicionales
+**Els Pescadors:** Aunque es marisquería, es punto de referencia en productos del mar catalán
+**Caelis:** Fusión respetosa: cocina catalana tradicional con toques contemporáneos
+
+![Cocina catalana en el plato Barcelona](/images/imagenesweb2026/cocina-catalana-plato.jpg)
+
+## La fórmula de la cocina catalana tradicional
+
+Si hay una fórmula es esta:
+
+1. **Producto de proximidad** — Lo mejor del Maresme, el Vallès y el Mar Mediterráneo
+2. **Técnicas ancestrales** — Guisos largos, asados al carbón, confits y conservas
+3. **Sencillez en la presentación** — Sin decoracionismo innecesario
+4. **Respeto por los ritmos naturales** — Los calcots en primavera, el jamón con melón en verano
+5. **Maridaje con vinos catalanes** — Penedès, Priorat, Conca de Barberà
+
+## De la tradición a la contemporaneidad
+
+La mejor cocina catalana actual no reniega de sus raíces. Los grandes chefs de Barcelona —Jordi Cruz en Àbac, los Hermanos Torres, Albert Adrià en Enigma— tienen un pie en la tradición y otro en la innovación.
+
+Respetan la escalivada, la esqueixada, el fricandó. Pero los reinterpretan con las técnicas de hoy.
+
+> La innovación sin raíces es efímero. La tradición sin evolución es fósil. Lo vivo de la cocina catalana está en la conversación entre ambas.
+
+## Consejos para disfrutar la cocina catalana
+
+**1. Come en temporada**
+Los calcots en primavera, el tomate en verano, las setas en otoño, el jamón en invierno. La cocina catalana es estacional.
+
+**2. Pide recomendaciones**
+Pregunta qué hacen bien en el restaurante. Cada casa tiene sus especialidades.
+
+**3. Acompaña con vino catalán**
+Un Penedès crianza con un fricandó, un blanco joven con esqueixada. Los vinos locales potencian los sabores.
+
+**4. Come lentamente**
+La cocina tradicional no es para prisa. Un guiso lento merece ser disfrutado lentamente.
+
+**5. Respeta los clásicos**
+No pidas que cambien una receta tradicional "porque sí". Los grandes cocineros respetan las fórmulas que han funcionado por siglos.
+
+![Maridaje cocina catalana vinos locales](/images/imagenesweb2026/maridaje-cocina-catalana.jpg)
+
+## Conclusión
+
+La cocina tradicional catalana no es un género agotado. Es vivo, dinámico, y en las manos correctas, tan emocionante como cualquier cocina vanguardista.
+
+Barcelona, que ha apostado por la alta cocina de precisión, nunca ha abandonado sus raíces en la mesa de comida sencilla, honesta, sabrosa. Y eso, en última instancia, es lo que hace que sea una capital gastronómica mundial: sabe brillar en todos los registros.
+
+Desde la escalivada más sencilla de una tasca del Gòtic hasta el fricandó perfectamente ejecutado en la cocina de un restaurante con Michelin, Barcelona mantiene viva la tradición mientras mira hacia el futuro.
+
+La pregunta no es: ¿seguirá existiendo la cocina tradicional catalana? La pregunta es: ¿cómo no vamos a defenderla todos?
+    `,
+  }),
 ];
 
 export function getBlogPost(slug: string, locale: 'es' | 'ca' | 'en' = 'es'): BlogPost | undefined {
