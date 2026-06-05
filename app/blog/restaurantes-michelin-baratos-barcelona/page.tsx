@@ -1,20 +1,4 @@
-﻿import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Michelin Baratos Barcelona · Restaurantes Michelin por Menos de 50€",
-  description: "Restaurantes con estrella Michelin en Barcelona por menos de 50€. Menú del mediodía barato en restaurantes Michelin. Gastronomía premium a buen precio.",
-  keywords: "michelin barato barcelona, restaurantes michelin baratos, menu mediodía michelin",
-  robots: "index, follow",
-  alternates: { canonical: "https://gastroshows.es/blog/restaurantes-michelin-baratos-barcelona" },
-  openGraph: {
-    title: "Michelin Barato Barcelona",
-    description: "Restaurantes Michelin por menos de 50€ en Barcelona",
-    type: "article",
-    url: "https://gastroshows.es/blog/restaurantes-michelin-baratos-barcelona",
-  },
-};
-
-"use client";
+﻿"use client";
 
 import { usePageActions } from "@/context/PageActionsContext";
 

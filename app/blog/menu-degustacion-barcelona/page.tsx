@@ -1,19 +1,4 @@
-﻿import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Menú Degustación Barcelona · Los Mejores Menús de Degustación",
-  description: "Los mejores menús de degustación en Barcelona. Experiencias gastronómicas de lujo con maridaje incluido. Descubre dónde comer el mejor menú degustación.",
-  robots: "index, follow",
-  alternates: { canonical: "https://gastroshows.es/blog/menu-degustacion-barcelona" },
-  openGraph: {
-    title: "Menú Degustación Barcelona",
-    description: "Los mejores menús de degustación gastronómicos",
-    type: "article",
-    url: "https://gastroshows.es/blog/menu-degustacion-barcelona",
-  },
-};
-
-"use client";
+﻿"use client";
 
 import { usePageActions } from "@/context/PageActionsContext";
 

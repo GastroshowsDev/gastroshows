@@ -1,10 +1,4 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Demo Pago · GastroShows Barcelona",
-  description: "Página de demostración de pago. Prueba el sistema de pago de GastroShows.",
-  robots: "noindex, nofollow",
-};
+"use client";
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";

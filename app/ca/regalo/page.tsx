@@ -1,18 +1,3 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Regala Cena Clandestina Barcelona · Bono Regalo Experiència Gastronòmica",
-  description: "Regala l'experiència més exclusiva de Barcelona: cena clandestina amb ubicació secreta, menú de degustació i maridatge premium. Bono de regal digital amb validesa 12 mesos.",
-  robots: "index, follow",
-  alternates: { canonical: "https://gastroshows.es/ca/regalo" },
-  openGraph: {
-    title: "Regala Experiència Gastronòmica Única",
-    description: "Cena clandestina a Barcelona amb ubicació secreta",
-    type: "website",
-    url: "https://gastroshows.es/ca/regalo",
-  },
-};
-
 "use client";
 
 import Link from "next/link";

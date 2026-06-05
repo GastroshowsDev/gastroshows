@@ -1,19 +1,4 @@
-﻿import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "La Clandestina Barcelona · Cena Secreta Gastronómica",
-  description: "La Clandestina Barcelona es la cena secreta más exclusiva. Ubicación misteriosa, 4 actos gastronómicos, maridaje premium. Experiencia única en Barcelona.",
-  robots: "index, follow",
-  alternates: { canonical: "https://gastroshows.es/blog/la-clandestina-barcelona" },
-  openGraph: {
-    title: "La Clandestina Barcelona",
-    description: "Cena secreta gastronómica con ubicación misteriosa",
-    type: "article",
-    url: "https://gastroshows.es/blog/la-clandestina-barcelona",
-  },
-};
-
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePageActions } from "@/context/PageActionsContext";
