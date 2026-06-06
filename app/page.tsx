@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { PageLayout } from "@/components/PageLayout";
+import { VideoHeroParallax } from "@/components/home/VideoHeroParallax";
 import { JsonLd, restaurantSchema, breadcrumbSchema, eventSchema, faqSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
@@ -54,102 +55,90 @@ export default async function Home() {
       <JsonLd data={faqSchema(faqs)} />
 
       {/* ═══════════════════════════════════════════════════════ */}
-      {/* HERO: Full-screen impact */}
+      {/* HERO: Full-screen video parallax */}
       {/* ═══════════════════════════════════════════════════════ */}
-      <section style={{ position: "relative", minHeight: "calc(100vh - 120px)", display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
-        <Image
-          src="https://images.unsplash.com/photo-1517315177153-612f65b43bd5?w=1920&h=1080&fit=crop"
-          alt="Cena elegante en Barcelona - experiencia gastronómica"
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: "cover" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.3) 40%, rgba(5,5,5,0.7) 100%)" }} />
+      <VideoHeroParallax videoSrc="/images/web2026-optimizadas/hero-parallax.mp4">
+        <p style={{ fontSize: "0.7rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "2rem", fontWeight: 700, marginTop: "0" }}>
+          🎭 Una Aventura Culinaria Diferente
+        </p>
 
-        <div style={{ position: "relative", textAlign: "center", maxWidth: "900px", padding: "0 2rem" }}>
-          <p style={{ fontSize: "0.7rem", letterSpacing: "0.5em", textTransform: "uppercase", color: "var(--gs-gold)", marginBottom: "2rem", fontWeight: 700, marginTop: "0" }}>
-            🎭 Una Aventura Culinaria Diferente
-          </p>
+        <h1 style={{
+          fontFamily: "var(--font-cormorant), Georgia, serif",
+          fontSize: "clamp(4rem, 12vw, 6.5rem)",
+          fontWeight: 300,
+          color: "#F5F0E8",
+          lineHeight: 1.1,
+          marginBottom: "1.5rem",
+          textShadow: "0 4px 20px rgba(0,0,0,0.8)",
+        }}>
+          Cena<br /><span style={{ color: "var(--gs-gold)" }}>Clandestina</span><br />Barcelona
+        </h1>
 
-          <h1 style={{
-            fontFamily: "var(--font-cormorant), Georgia, serif",
-            fontSize: "clamp(4rem, 12vw, 6.5rem)",
-            fontWeight: 300,
-            color: "#F5F0E8",
-            lineHeight: 1.1,
-            marginBottom: "1.5rem",
-            textShadow: "0 4px 20px rgba(0,0,0,0.8)",
-          }}>
-            Cena<br /><span style={{ color: "var(--gs-gold)" }}>Clandestina</span><br />Barcelona
-          </h1>
+        <p style={{
+          fontSize: "1.2rem",
+          color: "rgba(245,240,232,0.85)",
+          maxWidth: "600px",
+          margin: "0 auto 2.5rem",
+          lineHeight: 1.9,
+          textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+        }}>
+          Ubicación secreta. 4 actos gastronómicos. Maridaje premium. Una experiencia que comienza antes de que llegues.
+        </p>
 
-          <p style={{
-            fontSize: "1.2rem",
-            color: "rgba(245,240,232,0.85)",
-            maxWidth: "600px",
-            margin: "0 auto 2.5rem",
-            lineHeight: 1.9,
-            textShadow: "0 2px 10px rgba(0,0,0,0.6)",
-          }}>
-            Ubicación secreta. 4 actos gastronómicos. Maridaje premium. Una experiencia que comienza antes de que llegues.
-          </p>
-
-          <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2.5rem" }}>
-            <Link href="/cena-clandestina" style={{
-              background: "var(--gs-gold)",
-              color: "#0A0A0A",
-              padding: "1.2rem 4rem",
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              display: "inline-block",
-              boxShadow: "0 8px 32px rgba(218,165,32,0.3)",
-              transition: "all 0.3s ease",
-            }}
+        <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "2.5rem" }}>
+          <Link href="/cena-clandestina" style={{
+            background: "var(--gs-gold)",
+            color: "#0A0A0A",
+            padding: "1.2rem 4rem",
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            display: "inline-block",
+            boxShadow: "0 8px 32px rgba(218,165,32,0.3)",
+            transition: "all 0.3s ease",
+          }}
 >
-              📅 Reservar Experiencia
-            </Link>
+            📅 Reservar Experiencia
+          </Link>
 
-            <Link href="/regalo" style={{
-              border: "2px solid var(--gs-gold)",
-              background: "transparent",
-              color: "var(--gs-gold)",
-              padding: "1rem 3.5rem",
-              fontFamily: "var(--font-montserrat)",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "all 0.3s ease",
-            }}
+          <Link href="/regalo" style={{
+            border: "2px solid var(--gs-gold)",
+            background: "transparent",
+            color: "var(--gs-gold)",
+            padding: "1rem 3.5rem",
+            fontFamily: "var(--font-montserrat)",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            display: "inline-block",
+            transition: "all 0.3s ease",
+          }}
 >
-              🎁 Regalar Experiencia
-            </Link>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-            {[
-              { num: "145€", label: "Por persona" },
-              { num: "3h", label: "Experiencia" },
-              { num: "12", label: "Max. personas" },
-              { num: "7", label: "Bebidas incluidas" },
-            ].map((stat) => (
-              <div key={stat.label} style={{ textAlign: "center" }}>
-                <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.8rem", color: "var(--gs-gold)", marginBottom: "0.5rem", fontWeight: 300 }}>
-                  {stat.num}
-                </div>
-                <p style={{ color: "rgba(245,240,232,0.6)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>{stat.label}</p>
-              </div>
-            ))}
-          </div>
+            🎁 Regalar Experiencia
+          </Link>
         </div>
-      </section>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "2rem", maxWidth: "600px", margin: "0 auto" }}>
+          {[
+            { num: "145€", label: "Por persona" },
+            { num: "3h", label: "Experiencia" },
+            { num: "12", label: "Max. personas" },
+            { num: "7", label: "Bebidas incluidas" },
+          ].map((stat) => (
+            <div key={stat.label} style={{ textAlign: "center" }}>
+              <div style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.8rem", color: "var(--gs-gold)", marginBottom: "0.5rem", fontWeight: 300 }}>
+                {stat.num}
+              </div>
+              <p style={{ color: "rgba(245,240,232,0.6)", fontSize: "0.75rem", letterSpacing: "0.1em" }}>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </VideoHeroParallax>
 
       {/* ═══════════════════════════════════════════════════════ */}
       {/* VALUE PROP: ¿Por qué es diferente? */}
