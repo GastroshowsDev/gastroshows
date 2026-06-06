@@ -4,17 +4,18 @@ import { PageLayout } from "@/components/PageLayout";
 import { JsonLd, breadcrumbSchema, productSchema } from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Regala Experiencia Gastronómica Barcelona · Bono Regalo Cena Clandestina",
+  title: "Regalo experiencia gastronómica en Barcelona, vívela en Gastroshows ®",
   description:
-    "Regala la experiencia más exclusiva de Barcelona: cena clandestina con ubicación secreta, menú degustación de 7 actos y maridaje premium. Bono regalo digital con validez 12 meses.",
+    "Regalo experiencia gastronómica en Barcelona única y original donde se unen gastronomia, maridaje de vinos y muchas sorpresas. Una cena que vas a recordar!",
   keywords:
-    "regalar experiencia gastronomica barcelona, bono regalo cena, tarjeta regalo restaurante barcelona, regalo cena clandestina, experiencia regalo barcelona",
-  alternates: { canonical: "https://gastroshows.es/regalo-experiencia-gastronomica" },
+    "regalo experiencia gastronómica barcelona, bono regalo cena barcelona, tarjeta regalo restaurante, regalo cena clandestina, experiencia gastronómica regalo",
+  alternates: { canonical: "https://gastroshows.es/regalo-experiencia-gastronomica/" },
   openGraph: {
-    title: "Regala una Experiencia Gastronómica Única en Barcelona",
-    description: "Cena clandestina, ubicación secreta, menú de 7 actos, maridaje premium. El regalo que nadie olvida.",
-    type: "website",
-    images: [{ url: "/images/web2026-optimizadas/og-regalo.jpg", width: 1200, height: 630 }],
+    title: "GASTROSHOWS: Regala una experiencia gastrónomica unica",
+    description: "✅ regala una cena clandestina que une alta cocina, música y espectáculo. ¿No sabes qué hacer? Ven a nuestro show gastronómico en Barcelona ?",
+    type: "article",
+    url: "https://gastroshows.es/regalo-experiencia-gastronomica/",
+    images: [{ url: "https://gastroshows.es/wp-content/uploads/2019/03/HXVV5375-1.jpg", width: 1256, height: 802 }],
   },
 };
 
