@@ -19,21 +19,19 @@ export function VideoHeroParallax({ videoSrc, children }: VideoHeroParallaxProps
     if (!video || !container) return;
 
     // El vídeo está codificado con un keyframe por fotograma (-g 1),
-    // así que el seek por scroll es suave con un mapeo directo.
+    // así que el seek es suave. Para una fluidez total desacoplamos el
+    // tiempo del vídeo del scroll: el scroll fija un objetivo y un loop
+    // continuo interpola (lerp) el tiempo actual hacia ese objetivo.
+    let targetTime = 0;
+    let currentTime = 0;
     let rafId: number | null = null;
 
-    const render = () => {
-      rafId = null;
-
+    const computeTarget = () => {
       const containerHeight = container.clientHeight;
-      const scrollY = window.scrollY;
+      const progress = Math.max(0, Math.min(1, window.scrollY / containerHeight));
 
-      // Progreso del scroll dentro del hero (0 = arriba, 1 = abajo)
-      const progress = Math.max(0, Math.min(1, scrollY / containerHeight));
-
-      // El vídeo recorre toda su duración durante el scroll del hero
       if (video.duration > 0) {
-        video.currentTime = progress * video.duration;
+        targetTime = progress * video.duration;
       }
 
       // El contenido se desvanece en la segunda mitad del scroll
@@ -41,18 +39,43 @@ export function VideoHeroParallax({ videoSrc, children }: VideoHeroParallaxProps
       setContentOpacity(Math.max(0, opacity));
     };
 
+    const loop = () => {
+      // Interpolación suave hacia el objetivo (~0.06 por frame, más flotante)
+      currentTime += (targetTime - currentTime) * 0.06;
+
+      // Solo actualizar el vídeo si el cambio es perceptible
+      if (Math.abs(currentTime - video.currentTime) > 0.005) {
+        video.currentTime = currentTime;
+      }
+
+      // Detener el loop cuando ya estamos prácticamente en el objetivo
+      if (Math.abs(targetTime - currentTime) > 0.002) {
+        rafId = requestAnimationFrame(loop);
+      } else {
+        currentTime = targetTime;
+        rafId = null;
+      }
+    };
+
+    const startLoop = () => {
+      if (rafId === null) rafId = requestAnimationFrame(loop);
+    };
+
     const scrollHandler = () => {
-      if (rafId === null) rafId = requestAnimationFrame(render);
+      computeTarget();
+      startLoop();
     };
 
     window.addEventListener("scroll", scrollHandler, { passive: true });
     // Posicionar el frame inicial cuando el vídeo tenga metadatos
-    video.addEventListener("loadedmetadata", render);
-    render();
+    video.addEventListener("loadedmetadata", scrollHandler);
+    computeTarget();
+    currentTime = targetTime;
+    if (video.duration > 0) video.currentTime = currentTime;
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
-      video.removeEventListener("loadedmetadata", render);
+      video.removeEventListener("loadedmetadata", scrollHandler);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [videoSrc]);
@@ -67,6 +90,7 @@ export function VideoHeroParallax({ videoSrc, children }: VideoHeroParallaxProps
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
+        background: "#050505",
       }}
     >
       {/* Video Background */}
@@ -82,7 +106,7 @@ export function VideoHeroParallax({ videoSrc, children }: VideoHeroParallaxProps
           left: 0,
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          objectFit: "contain",
           objectPosition: "center",
           zIndex: 1,
         }}
