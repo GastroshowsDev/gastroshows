@@ -37,9 +37,6 @@ const nextConfig: NextConfig = {
       // Gift Card canonical
       { source: "/gift-card", destination: "/regalo", permanent: true },
       { source: "/gift-card/", destination: "/regalo", permanent: true },
-      // Old regalo URLs → new canonical
-      { source: "/regalo-experiencia-gastronomica", destination: "/regalo", permanent: true },
-      { source: "/regalo-experiencia-gastronomica/", destination: "/regalo", permanent: true },
       // Old michelin URLs (only short version → main page; long URL is now its own SEO page)
       { source: "/restaurantes-con-estrella-michelin", destination: "/restaurantes-michelin", permanent: true },
       { source: "/restaurantes-con-estrella-michelin/", destination: "/restaurantes-michelin", permanent: true },

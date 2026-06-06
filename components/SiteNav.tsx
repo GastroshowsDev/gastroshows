@@ -15,6 +15,7 @@ type NavLink = {
 const navLinks: NavLink[] = [
   { href: "/cena-clandestina", label: "La Experiencia" },
   { href: "/grupos",           label: "Grupos" },
+  { href: "/regalo-experiencia-gastronomica", label: "Regala" },
   { href: "/blog",             label: "Blog" },
   { href: "/contacto",         label: "Contacto" },
 ];
