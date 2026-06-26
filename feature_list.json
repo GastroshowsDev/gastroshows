@@ -54,5 +54,33 @@
     "description": "Implementar next-intl para traducir toda la web al castellano, catalán e inglés. Incluye blog completo, UI y metadata.",
     "status": "done",
     "priority": "high"
+  },
+  {
+    "id": 9,
+    "feature": "Sitemap dinámico y completo",
+    "description": "Pasar de 18 URLs estáticas a la cobertura real (rutas estáticas + blogPosts + grupos + páginas de BD) con lastModified reales y hreflang. Parte del Bloque 1 del roadmap pre-migración.",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 10,
+    "feature": "GEO/AEO en todas las páginas",
+    "description": "llms.txt en raíz, reglas de bots IA en robots.ts, bloques de respuesta AEO (40-80 palabras + tablas) y faqSchema en money pages (cena-clandestina, menu-degustacion, regalo, grupos, restaurantes-michelin).",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 11,
+    "feature": "hreflang coherente + blog server components",
+    "description": "Trío ES/CA/EN + x-default en head y sitemap. Blog (/blog, /ca/blog, /en/blog) convertido a server component con metadata. Corregido bug: páginas CA canonicalizaban a la versión ES.",
+    "status": "done",
+    "priority": "high"
+  },
+  {
+    "id": 12,
+    "feature": "Paridad y superioridad vs web antigua",
+    "description": "Interlinking reforzado (restaurantes-michelin tenía 0 enlaces internos). PENDIENTE: sustituir 6 referencias a Unsplash por imágenes propias, completar versiones EN/CA de más money pages, auditoría H1/meta vs WordPress.",
+    "status": "in_progress",
+    "priority": "medium"
   }
 ]

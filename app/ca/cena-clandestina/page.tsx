@@ -11,15 +11,21 @@ export const metadata: Metadata = {
   keywords:
     "cena clandestina barcelona, restaurante secreto barcelona, experiencia gastronomica barcelona, cena sorpresa barcelona, cena clandestina, sopar clandesti barcelona, cena a ciegas barcelona",
   alternates: {
-    canonical: "https://gastroshows.es/cena-clandestina",
+    canonical: "https://gastroshows.es/ca/cena-clandestina",
+    languages: {
+      es: "https://gastroshows.es/cena-clandestina",
+      ca: "https://gastroshows.es/ca/cena-clandestina",
+      en: "https://gastroshows.es/clandestine-dinner-barcelona",
+      "x-default": "https://gastroshows.es/cena-clandestina",
+    },
   },
   openGraph: {
     title: "Cena Clandestina Barcelona · GastroShows",
     description:
       "Una cena que comienza antes de que llegues. 4 mensajes misteriosos, una ubicación secreta y el mejor menú degustación de Barcelona.",
-    url: "https://gastroshows.es/cena-clandestina",
+    url: "https://gastroshows.es/ca/cena-clandestina",
     type: "website",
-    locale: "es_ES",
+    locale: "ca_ES",
   },
 };
 

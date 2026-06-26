@@ -11,14 +11,20 @@ export const metadata: Metadata = {
   keywords:
     "eventos privados barcelona, cenas empresa barcelona, team building gastronómico, despedidas soltera barcelona, cenas originales grupos barcelona, eventos gastronomicos barcelona",
   alternates: {
-    canonical: "https://gastroshows.es/grupos",
+    canonical: "https://gastroshows.es/ca/grupos",
+    languages: {
+      es: "https://gastroshows.es/grupos",
+      ca: "https://gastroshows.es/ca/grupos",
+      "x-default": "https://gastroshows.es/grupos",
+    },
   },
   openGraph: {
     title: "Eventos Privados y Grupos Barcelona · GastroShows",
     description:
       "Organiza tu evento privado con la experiencia clandestina. Cenas de empresa, despedidas y celebraciones únicas en Barcelona.",
-    url: "https://gastroshows.es/grupos",
+    url: "https://gastroshows.es/ca/grupos",
     type: "website",
+    locale: "ca_ES",
   },
 };
 

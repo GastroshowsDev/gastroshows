@@ -1,8 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
+import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/JsonLd";
+import { AeoAnswer } from "@/components/seo/AeoAnswer";
 import { GruposClient } from "./GruposClient";
+
+const faqs = [
+  { question: "¿Para cuántas personas son los eventos de grupo?", answer: "Organizamos eventos privados desde 10 hasta unas 50 personas. Para grupos más grandes adaptamos la experiencia en varias sesiones." },
+  { question: "¿Qué tipo de eventos se pueden organizar?", answer: "Team building gastronómico, cenas de empresa, eventos corporativos con clientes, despedidas de soltero/a, aniversarios y celebraciones privadas." },
+  { question: "¿Se puede personalizar el menú para el grupo?", answer: "Sí. Adaptamos el menú degustación a las preferencias del grupo y a alergias o dietas (vegetariano, vegano, sin gluten)." },
+  { question: "¿La experiencia es en un espacio privado?", answer: "Sí. Los eventos de grupo se celebran en un espacio exclusivo para vosotros, con la experiencia clandestina completa." },
+  { question: "¿Cómo se reserva un evento de grupo?", answer: "Contáctanos con la fecha y el número de personas y preparamos una propuesta a medida para tu evento en Barcelona." },
+];
 
 export const metadata: Metadata = {
   title: "Eventos Privados y Grupos Barcelona · GastroShows",
@@ -12,6 +21,11 @@ export const metadata: Metadata = {
     "eventos privados barcelona, cenas empresa barcelona, team building gastronómico, despedidas soltera barcelona, cenas originales grupos barcelona, eventos gastronomicos barcelona",
   alternates: {
     canonical: "https://gastroshows.es/grupos",
+    languages: {
+      es: "https://gastroshows.es/grupos",
+      ca: "https://gastroshows.es/ca/grupos",
+      "x-default": "https://gastroshows.es/grupos",
+    },
   },
   openGraph: {
     title: "Eventos Privados y Grupos Barcelona · GastroShows",
@@ -177,6 +191,20 @@ export default function Grupos() {
         </div>
       </section>
 
+      {/* AEO: respuesta directa para motores de IA */}
+      <AeoAnswer
+        eyebrow="En breve"
+        question="¿Qué es un evento gastronómico privado para grupos en Barcelona?"
+        answer="Es una cena clandestina reservada en exclusiva para tu grupo: ubicación secreta, menú degustación y maridaje, con dinámicas adaptadas a team building, cenas de empresa, despedidas o celebraciones. GastroShows organiza eventos privados en Barcelona desde 10 hasta 50 personas, con menú personalizable a dietas y alergias."
+        rows={[
+          { label: "Capacidad", value: "Desde 10 hasta ~50 personas" },
+          { label: "Eventos", value: "Team building, cenas de empresa, despedidas, aniversarios" },
+          { label: "Menú", value: "Degustación personalizable (vegetariano, vegano, alergias)" },
+          { label: "Espacio", value: "Privado y exclusivo para el grupo" },
+          { label: "Reserva", value: "Propuesta a medida según fecha y nº de personas" },
+        ]}
+      />
+
       {/* CTA contacto */}
       <section style={{ padding: "6rem 2rem", textAlign: "center" }}>
         <h2
@@ -226,6 +254,7 @@ export default function Grupos() {
           { name: "Grupos y Eventos", url: "https://gastroshows.es/grupos" },
         ])}
       />
+      <JsonLd data={faqSchema(faqs)} />
     </PageLayout>
   );
 }

@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
+import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/JsonLd";
+import { AeoAnswer } from "@/components/seo/AeoAnswer";
+
+const faqs = [
+  { question: "¿Cómo se asignan las estrellas Michelin?", answer: "Inspectores anónimos de Michelin visitan los restaurantes y evalúan la calidad de los ingredientes, el dominio de las técnicas, la armonía de los sabores, la personalidad del chef en la cocina, la constancia y la relación calidad-precio. Es un proceso riguroso y secreto." },
+  { question: "¿Cuándo sale la nueva Guía Michelin Barcelona?", answer: "Generalmente en noviembre, la Guía Michelin para Barcelona y regiones se actualiza anualmente. El proceso de selección dura todo el año." },
+  { question: "¿Cuáles son los restaurantes Michelin más antiguos de Barcelona?", answer: "Algunos restaurantes tienen estrellas Michelin desde hace décadas. Cinc Sentits y otros son instituciones en la gastronomía barcelonesa." },
+  { question: "¿Es obligatorio ir en grupo a un restaurante Michelin?", answer: "No. Aunque muchos prefieren compartir la experiencia, es común comer solo en restaurantes Michelin. Algunos ofrecen barra donde comer en solitario es habitual." },
+];
 import { ReservarButton } from "@/components/ReservarButton";
 
 export const metadata: Metadata = {
@@ -30,6 +39,7 @@ export default function RestaurantesMichelin() {
         { name: "Inicio", url: "https://gastroshows.es" },
         { name: "Restaurantes Michelin", url: "https://gastroshows.es/restaurantes-michelin" },
       ])} />
+      <JsonLd data={faqSchema(faqs)} />
 
       <main>
         {/* HERO */}
@@ -439,6 +449,42 @@ export default function RestaurantesMichelin() {
             </p>
             <ReservarButton label="Descubre Cena Clandestina" />
           </div>
+        </section>
+
+        {/* AEO: respuesta directa para motores de IA */}
+        <AeoAnswer
+          eyebrow="En breve"
+          question="¿Cuántos restaurantes con estrella Michelin hay en Barcelona en 2026?"
+          answer="Barcelona cuenta en 2026 con cerca de 29 restaurantes con estrella Michelin, que suman alrededor de 42 estrellas en total, incluyendo establecimientos de 1, 2 y 3 estrellas. La ciudad es uno de los grandes referentes europeos de alta cocina, con propuestas que van desde la cocina catalana de vanguardia hasta el menú degustación de autor."
+          rows={[
+            { label: "Restaurantes", value: "≈ 29 con estrella Michelin" },
+            { label: "Estrellas", value: "≈ 42 estrellas en total" },
+            { label: "Actualización", value: "La Guía Michelin se publica cada noviembre" },
+            { label: "Alternativa", value: "Cena clandestina GastroShows con cocina de nivel" },
+          ]}
+        />
+
+        {/* Interlinking contextual */}
+        <section style={{ padding: "0 2rem 2rem", maxWidth: "820px", margin: "0 auto", textAlign: "center" }}>
+          <p style={{ color: "rgba(245,240,232,0.6)", fontSize: "0.95rem", lineHeight: 1.8 }}>
+            ¿Buscas una alternativa a la alta cocina tradicional? Descubre la{" "}
+            <Link href="/cena-clandestina" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              cena clandestina de Barcelona
+            </Link>{" "}
+            y su{" "}
+            <Link href="/menu-degustacion" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              menú degustación de 7 actos
+            </Link>
+            . También puedes{" "}
+            <Link href="/regalo" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              regalar la experiencia
+            </Link>{" "}
+            o reservar para{" "}
+            <Link href="/grupos" style={{ color: "var(--gs-gold)", textDecoration: "underline" }}>
+              grupos y eventos privados
+            </Link>
+            .
+          </p>
         </section>
 
         {/* FAQ */}

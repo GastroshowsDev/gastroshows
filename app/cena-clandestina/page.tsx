@@ -2,8 +2,32 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, restaurantSchema, breadcrumbSchema, eventSchema } from "@/components/seo/JsonLd";
+import { JsonLd, restaurantSchema, breadcrumbSchema, eventSchema, faqSchema } from "@/components/seo/JsonLd";
+import { AeoAnswer } from "@/components/seo/AeoAnswer";
 import { ReservarButton } from "@/components/ReservarButton";
+
+const faqs = [
+  {
+    question: "¿Dónde está la ubicación exacta?",
+    answer: "Es un secreto hasta 2 horas antes de la cena. Recibirás 4 mensajes con pistas que te llevarán a descubrir la dirección.",
+  },
+  {
+    question: "¿Puedo llevar a alguien conmigo?",
+    answer: "Sí. Debes reservar todas las plazas que necesites juntos. Máximo 12 personas por sesión.",
+  },
+  {
+    question: "¿Qué pasa si tengo alergias?",
+    answer: "Comunícalo al reservar. Nuestro chef adaptará los platos sin perder la experiencia clandestina.",
+  },
+  {
+    question: "¿Hay estacionamiento?",
+    answer: "La ubicación secreta tiene acceso a estacionamiento. Detalles completos con tu confirmación.",
+  },
+  {
+    question: "¿Cuál es la política de cancelación?",
+    answer: "Cancelación gratis hasta 7 días antes. Después, se aplican cargos progresivos.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Cena Clandestina Barcelona · Menú Degustación en Ubicación Secreta",
@@ -11,7 +35,15 @@ export const metadata: Metadata = {
     "La cena clandestina más exclusiva de Barcelona: ubicación secreta, 4 actos gastronómicos únicos, gin-tonic de maceración propia y petit fours artesanales. Reserva tu experiencia ahora.",
   keywords:
     "cena clandestina barcelona, menú degustación barcelona, restaurante secreto barcelona, experiencia gastronomica barcelona, sopar clandesti barcelona, tasting menu barcelona, gin tonic premium barcelona",
-  alternates: { canonical: "https://gastroshows.es/cena-clandestina" },
+  alternates: {
+    canonical: "https://gastroshows.es/cena-clandestina",
+    languages: {
+      es: "https://gastroshows.es/cena-clandestina",
+      ca: "https://gastroshows.es/ca/cena-clandestina",
+      en: "https://gastroshows.es/clandestine-dinner-barcelona",
+      "x-default": "https://gastroshows.es/cena-clandestina",
+    },
+  },
 };
 
 export default function CenaClandestina() {
@@ -27,6 +59,7 @@ export default function CenaClandestina() {
         description: "Cena clandestina en ubicación secreta de Barcelona.",
         price: 145,
       })} />
+      <JsonLd data={faqSchema(faqs)} />
 
       {/* ── HERO: impacto + CTA primaria FUERTE ── */}
       <section style={{ position: "relative", minHeight: "calc(100vh - 120px)", overflow: "hidden", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "2rem" }}>
@@ -127,6 +160,22 @@ export default function CenaClandestina() {
           </div>
         </div>
       </section>
+
+      {/* ── AEO: respuesta directa para motores de IA ── */}
+      <AeoAnswer
+        eyebrow="Qué es"
+        question="¿Qué es una cena clandestina en Barcelona?"
+        answer="Una cena clandestina es una experiencia gastronómica en ubicación secreta: durante la semana previa recibes pistas por email que revelan, el día del evento, una dirección desconocida donde se sirve un menú degustación sorpresa de 4 actos con maridaje completo. GastroShows es el creador original de la cena clandestina en Barcelona, con sesiones desde 145€ por persona."
+        rows={[
+          { label: "Precio", value: "Desde 145€ por persona (maridaje incluido)" },
+          { label: "Duración", value: "Aproximadamente 3 horas" },
+          { label: "Menú", value: "Menú degustación de 4 actos + 7 bebidas" },
+          { label: "Capacidad", value: "Hasta 12 personas por sesión" },
+          { label: "Ubicación", value: "Secreta, revelada el día de la cena (Barcelona)" },
+          { label: "Sesiones", value: "Mediodía 13:00–16:00 · Noche 20:00–23:00" },
+          { label: "Dietas", value: "Adaptable a alergias, vegetariano y vegano" },
+        ]}
+      />
 
       {/* ── EL MENÚ: qué reciben ── */}
       <section style={{ background: "#050505", padding: "clamp(3rem, 5vw, 8rem) 2rem" }}>

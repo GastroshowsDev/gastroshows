@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   keywords: "menu degustacio barcelona, menú degustació barcelona, tasting menu barcelona",
   alternates: {
     canonical: "https://gastroshows.es/ca/menu-degustacion",
-    languages: { es: "https://gastroshows.es/menu-degustacion", ca: "https://gastroshows.es/ca/menu-degustacion", en: "https://gastroshows.es/en/tasting-menu" },
+    languages: { es: "https://gastroshows.es/menu-degustacion", ca: "https://gastroshows.es/ca/menu-degustacion", en: "https://gastroshows.es/en/tasting-menu", "x-default": "https://gastroshows.es/menu-degustacion" },
   },
 };
 

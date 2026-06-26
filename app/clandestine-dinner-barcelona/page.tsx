@@ -9,7 +9,15 @@ export const metadata: Metadata = {
   keywords: "clandestine dinner barcelona, secret dinner barcelona, tasting menu barcelona, gastroshows, mystery dinner",
   authors: [{ name: "GastroShows" }], creator: "GastroShows",
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  alternates: { canonical: "https://gastroshows.es/clandestine-dinner-barcelona/", languages: { es: "/cena-clandestina" } },
+  alternates: {
+    canonical: "https://gastroshows.es/clandestine-dinner-barcelona",
+    languages: {
+      es: "https://gastroshows.es/cena-clandestina",
+      ca: "https://gastroshows.es/ca/cena-clandestina",
+      en: "https://gastroshows.es/clandestine-dinner-barcelona",
+      "x-default": "https://gastroshows.es/cena-clandestina",
+    },
+  },
   openGraph: { type: "article", locale: "en_GB", url: "https://gastroshows.es/clandestine-dinner-barcelona/", siteName: "GastroShows", title: "The clandestine dinner of Barcelona", description: "Secret location, tasting menu and surprise experience." },
 };
 

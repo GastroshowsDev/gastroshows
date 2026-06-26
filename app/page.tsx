@@ -12,7 +12,15 @@ export const metadata: Metadata = {
   authors: [{ name: "GastroShows" }],
   creator: "GastroShows",
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  alternates: { canonical: "https://gastroshows.es/" },
+  alternates: {
+    canonical: "https://gastroshows.es/",
+    languages: {
+      es: "https://gastroshows.es/",
+      ca: "https://gastroshows.es/ca",
+      en: "https://gastroshows.es/en",
+      "x-default": "https://gastroshows.es/",
+    },
+  },
   openGraph: {
     type: "website",
     locale: "es_ES",

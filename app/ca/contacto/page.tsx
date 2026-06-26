@@ -7,8 +7,14 @@ export const metadata: Metadata = {
   title: "Contacto · GastroShows Barcelona",
   description:
     "Contacta con GastroShows para consultas sobre reservas, grupos, eventos privados o cualquier pregunta sobre la cena clandestina de Barcelona. Respondemos en menos de 24 horas.",
+  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   alternates: {
-    canonical: "https://gastroshows.es/contacto",
+    canonical: "https://gastroshows.es/ca/contacto",
+    languages: {
+      es: "https://gastroshows.es/contacto",
+      ca: "https://gastroshows.es/ca/contacto",
+      "x-default": "https://gastroshows.es/contacto",
+    },
   },
 };
 

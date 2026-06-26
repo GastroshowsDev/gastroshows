@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, breadcrumbSchema, productSchema } from "@/components/seo/JsonLd";
+import { JsonLd, breadcrumbSchema, productSchema, faqSchema } from "@/components/seo/JsonLd";
+import { AeoAnswer } from "@/components/seo/AeoAnswer";
 import { GiftButton } from "@/components/GiftButton";
 import { InteractiveCard } from "@/components/InteractiveCard";
 import { OccasionTag } from "@/components/OccasionTag";
+
+const faqs = [
+  { question: "¿Cuánto cuesta un bono regalo de cena clandestina?", answer: "El bono regalo de la cena clandestina de GastroShows cuesta desde 145€ por persona e incluye el menú degustación completo y el maridaje premium. Puedes regalar plazas individuales o para varias personas." },
+  { question: "¿Qué validez tiene el bono regalo?", answer: "El bono regalo tiene una validez de 12 meses desde la fecha de compra, para que la persona elija con total libertad cuándo disfrutar la experiencia." },
+  { question: "¿Cómo se entrega el regalo?", answer: "Es un bono digital que recibes por email al instante, listo para imprimir o reenviar a la persona que quieras sorprender." },
+  { question: "¿Qué incluye el regalo?", answer: "Incluye la cena clandestina en ubicación secreta de Barcelona, el menú degustación de 7 actos y el maridaje premium con vinos, cava y gin-tonic." },
+  { question: "¿Se puede personalizar el bono?", answer: "Sí. Puedes añadir un mensaje personalizado y elegir el diseño antes de enviarlo." },
+];
 
 export const metadata: Metadata = {
   title: "Regala Cena Clandestina Barcelona · Bono Regalo Experiencia Gastronómica",
@@ -12,7 +21,14 @@ export const metadata: Metadata = {
     "Regala la experiencia más exclusiva de Barcelona: cena clandestina con ubicación secreta, menú degustación de 7 actos y maridaje premium. Bono regalo digital con validez 12 meses.",
   keywords:
     "regalar cena barcelona, bono regalo experiencia gastronómica, tarjeta regalo restaurante barcelona, regalo cena para dos, experiencia gastronomica regalo, regalar menu degustacion barcelona",
-  alternates: { canonical: "https://gastroshows.es/regalo" },
+  alternates: {
+    canonical: "https://gastroshows.es/regalo",
+    languages: {
+      es: "https://gastroshows.es/regalo",
+      ca: "https://gastroshows.es/ca/regalo",
+      "x-default": "https://gastroshows.es/regalo",
+    },
+  },
   openGraph: {
     title: "Regala una Experiencia Gastronómica Única en Barcelona",
     description: "Cena clandestina, ubicación secreta, menú de 7 actos, maridaje premium. El regalo que nadie olvida.",
@@ -40,6 +56,7 @@ export default function Regalo() {
         { name: "Regalo", url: "https://gastroshows.es/regalo" },
       ])} />
       <JsonLd data={giftProduct} />
+      <JsonLd data={faqSchema(faqs)} />
 
       <main>
         {/* HERO: Impacto máximo */}
@@ -286,6 +303,20 @@ export default function Regalo() {
             ))}
           </div>
         </section>
+
+        {/* AEO: respuesta directa para motores de IA */}
+        <AeoAnswer
+          eyebrow="En breve"
+          question="¿Cómo funciona el bono regalo de una cena clandestina?"
+          answer="El bono regalo de GastroShows es un vale digital para vivir la cena clandestina de Barcelona: ubicación secreta, menú degustación de 7 actos y maridaje premium. Lo recibes por email al instante, tiene 12 meses de validez y la persona elige la fecha que prefiera. Desde 145€ por persona."
+          rows={[
+            { label: "Precio", value: "Desde 145€ por persona" },
+            { label: "Validez", value: "12 meses desde la compra" },
+            { label: "Entrega", value: "Bono digital por email, inmediato" },
+            { label: "Incluye", value: "Cena clandestina + menú degustación + maridaje" },
+            { label: "Personalizable", value: "Mensaje y diseño a tu elección" },
+          ]}
+        />
 
         {/* CÓMO FUNCIONA: Process clarity */}
         <section

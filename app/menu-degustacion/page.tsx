@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/PageLayout";
-import { JsonLd, breadcrumbSchema, menuSchema } from "@/components/seo/JsonLd";
+import { JsonLd, breadcrumbSchema, menuSchema, faqSchema } from "@/components/seo/JsonLd";
+import { AeoAnswer } from "@/components/seo/AeoAnswer";
+
+const faqs = [
+  { question: "¿Puedo ver el menú con antelación?", answer: "El menú es una sorpresa que se revela en el momento. Esto permite que el chef sorprenda a los comensales con creatividad." },
+  { question: "¿Qué pasa si soy vegetariano/vegano?", answer: "Adaptamos completamente el menú a tus necesidades dietéticas sin comprometer la calidad. Especifica al reservar." },
+  { question: "¿El precio incluye bebidas?", answer: "Sí, el maridaje está completamente incluido: vinos, cava, cócteles y gin-tonic premium." },
+  { question: "¿Hay opciones de maridaje sin alcohol?", answer: "Claro. Ofrecemos maridaje con jugos premium, infusiones y bebidas sin alcohol de igual calibre." },
+  { question: "¿Se pueden hacer fotos?", answer: "Las fotografías son bienvenidas para tu recuerdo. Hacemos fotos de grupo que enviamos después." },
+];
 import { ReservarButton } from "@/components/ReservarButton";
 
 export const metadata: Metadata = {
@@ -10,7 +19,15 @@ export const metadata: Metadata = {
     "Menú degustación de 7 actos culinarios en Barcelona: experiencia exclusiva con chef, maridaje de vinos premium, cava y gin-tonic artesanal. 145€ por persona, 3 horas inolvidables.",
   keywords:
     "menú degustación barcelona, tasting menu barcelona, menu degustacion españa, experiencia gastronomica barcelona, restaurante menu degustacion, maridaje vinos barcelona, chef barcelona",
-  alternates: { canonical: "https://gastroshows.es/menu-degustacion" },
+  alternates: {
+    canonical: "https://gastroshows.es/menu-degustacion",
+    languages: {
+      es: "https://gastroshows.es/menu-degustacion",
+      ca: "https://gastroshows.es/ca/menu-degustacion",
+      en: "https://gastroshows.es/en/tasting-menu",
+      "x-default": "https://gastroshows.es/menu-degustacion",
+    },
+  },
   openGraph: {
     title: "Menú Degustación Barcelona · 7 Actos Exclusivos",
     description: "Experiencia culinaria de 7 actos con maridaje premium, chef experimentado y ambiente sofisticado.",
@@ -89,6 +106,7 @@ export default function MenuDegustacion() {
         { name: "Menú Degustación", url: "https://gastroshows.es/menu-degustacion" },
       ])} />
       <JsonLd data={menuSchemaData} />
+      <JsonLd data={faqSchema(faqs)} />
 
       <main>
         {/* HERO: Impacto visual */}
@@ -396,6 +414,20 @@ export default function MenuDegustacion() {
             ))}
           </div>
         </section>
+
+        {/* AEO: respuesta directa para motores de IA */}
+        <AeoAnswer
+          eyebrow="Qué es"
+          question="¿Qué es un menú degustación en Barcelona?"
+          answer="Un menú degustación es una secuencia de varios platos pequeños diseñada por el chef para mostrar su creatividad y los mejores ingredientes de temporada. En GastroShows consta de 7 actos gastronómicos con maridaje completo incluido (vinos, cava, cócteles y gin-tonic premium), servidos en una experiencia única en Barcelona."
+          rows={[
+            { label: "Actos", value: "7 actos gastronómicos" },
+            { label: "Maridaje", value: "Incluido: vinos, cava, cócteles y gin-tonic premium" },
+            { label: "Sin alcohol", value: "Maridaje alternativo con zumos premium e infusiones" },
+            { label: "Dietas", value: "Adaptable a vegetariano, vegano y alergias" },
+            { label: "Ciudad", value: "Barcelona" },
+          ]}
+        />
 
         {/* FAQ: Preguntas comunes */}
         <section style={{ padding: "clamp(6rem, 10vw, 8rem) 2rem", maxWidth: "900px", margin: "0 auto" }}>
