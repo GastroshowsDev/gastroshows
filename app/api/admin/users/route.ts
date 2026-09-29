@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-helpers";
 import { validatePassword } from "@/lib/validators";
 import { apiErrorResponse } from "@/lib/api-errors";
+import { setUserPosPin } from "@/lib/pos-pin";
 
 export async function GET() {
   const auth = await requireAdmin();
@@ -11,9 +12,15 @@ export async function GET() {
 
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "asc" },
-    select: { id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true },
+    select: {
+      id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true,
+      employee: { select: { pin: true } },
+    },
   });
-  return NextResponse.json({ ok: true, data: users });
+  return NextResponse.json({
+    ok: true,
+    data: users.map((u) => ({ ...u, employee: undefined, posPin: u.employee?.pin ?? null })),
+  });
 }
 
 export async function POST(request: Request) {
@@ -21,7 +28,7 @@ export async function POST(request: Request) {
   if (!auth.ok) return auth.response;
 
   try {
-    const body = await request.json() as { name: string; email: string; password: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string };
+    const body = await request.json() as { name: string; email: string; password: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string; posPin?: string };
 
     if (!body.name?.trim() || !body.email?.trim() || !body.password) {
       return NextResponse.json(
@@ -49,7 +56,17 @@ export async function POST(request: Request) {
       },
       select: { id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true },
     });
-    return NextResponse.json({ ok: true, data: user }, { status: 201 });
+
+    let posPin: string | null = null;
+    try {
+      posPin = await setUserPosPin(user.id, user.name, body.posPin ?? null);
+    } catch (pinErr) {
+      return NextResponse.json(
+        { ok: false, code: "INVALID_PIN", error: pinErr instanceof Error ? pinErr.message : "PIN no válido" },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json({ ok: true, data: { ...user, posPin } }, { status: 201 });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : "";
     if (msg.includes("Unique constraint")) {

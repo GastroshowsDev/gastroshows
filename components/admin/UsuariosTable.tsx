@@ -14,8 +14,8 @@ const S = {
   modal: { background: "var(--color-admin-surface)", borderRadius: 10, padding: "1.5rem", width: "100%", maxWidth: 460, boxShadow: "0 20px 60px rgba(0,0,0,0.25)" },
 };
 
-type UserForm = { name: string; email: string; password: string; role: "ADMIN" | "LIVE"; defaultVenue: string };
-const FORM_DEFAULT: UserForm = { name: "", email: "", password: "", role: "LIVE", defaultVenue: "" };
+type UserForm = { name: string; email: string; password: string; role: "ADMIN" | "LIVE"; defaultVenue: string; posPin: string };
+const FORM_DEFAULT: UserForm = { name: "", email: "", password: "", role: "LIVE", defaultVenue: "", posPin: "" };
 
 function RoleBadge({ role }: { role: "ADMIN" | "LIVE" }) {
   return (
@@ -59,6 +59,14 @@ function UserModal({ title, form, setField, onSubmit, onClose, saving, isEdit, v
                 <option value="ADMIN">Admin — acceso total</option>
                 <option value="LIVE">Live — acceso limitado</option>
               </select>
+            </div>
+            <div>
+              <label style={S.label}>Código TPV (PIN)</label>
+              <input
+                style={{ ...S.input, fontFamily: "monospace" }} value={form.posPin}
+                maxLength={4} inputMode="numeric" placeholder="4 dígitos (vacío = sin código)"
+                onChange={(e) => setField("posPin", e.target.value.replace(/\D/g, "").slice(0, 4))}
+              />
             </div>
             <div style={{ gridColumn: "span 2" }}>
               <label style={S.label}>Local por defecto (Recepción)</label>
@@ -116,13 +124,17 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
 
   function openEdit(u: UserRow) {
     setEditId(u.id);
-    setEditForm({ name: u.name, email: u.email, password: "", role: u.role, defaultVenue: u.defaultVenue ?? "" });
+    setEditForm({ name: u.name, email: u.email, password: "", role: u.role, defaultVenue: u.defaultVenue ?? "", posPin: u.posPin ?? "" });
     setApiError(null);
   }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     if (creating) return;
+    if (createForm.posPin && createForm.posPin.length !== 4) {
+      setApiError("El código TPV debe tener 4 dígitos (o dejarse vacío)");
+      return;
+    }
     setCreating(true); setApiError(null);
     try {
       const res = await fetch("/api/admin/users", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(createForm) });
@@ -136,9 +148,13 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
   async function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     if (saving || !editId) return;
+    if (editForm.posPin && editForm.posPin.length !== 4) {
+      setApiError("El código TPV debe tener 4 dígitos (o dejarse vacío para quitarlo)");
+      return;
+    }
     setSaving(true); setApiError(null);
     try {
-      const body: Partial<UserForm> = { name: editForm.name, role: editForm.role, defaultVenue: editForm.defaultVenue };
+      const body: Partial<UserForm> = { name: editForm.name, role: editForm.role, defaultVenue: editForm.defaultVenue, posPin: editForm.posPin };
       if (editForm.password) body.password = editForm.password;
       const res = await fetch(`/api/admin/users/${editId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const json = await res.json() as { ok: boolean; data?: UserRow; error?: string };
@@ -167,13 +183,14 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
               <th style={S.th}>Nombre</th>
               <th style={S.th}>Email</th>
               <th style={S.th}>Rol</th>
+              <th style={S.th}>PIN TPV</th>
               <th style={S.th}>Creado</th>
               <th style={S.th}></th>
             </tr>
           </thead>
           <tbody>
             {users.length === 0 ? (
-              <tr><td colSpan={5} style={{ ...S.td, textAlign: "center", padding: "3rem", color: "var(--color-admin-muted)" }}>Sin usuarios. Crea el primero.</td></tr>
+              <tr><td colSpan={6} style={{ ...S.td, textAlign: "center", padding: "3rem", color: "var(--color-admin-muted)" }}>Sin usuarios. Crea el primero.</td></tr>
             ) : users.map((u) => (
               <tr key={u.id} onClick={() => openEdit(u)} style={{ cursor: "pointer" }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLTableRowElement).style.background = "var(--color-admin-bg)"; }}
@@ -189,6 +206,9 @@ export function UsuariosTable({ users: initial }: { users: UserRow[] }) {
                 </td>
                 <td style={{ ...S.td, color: "var(--color-admin-muted)" }}>{u.email}</td>
                 <td style={S.td}><RoleBadge role={u.role} /></td>
+                <td style={{ ...S.td, fontFamily: "monospace", fontWeight: 700, color: u.posPin ? "var(--color-admin-accent)" : "var(--color-admin-muted)" }}>
+                  {u.posPin ?? "—"}
+                </td>
                 <td style={{ ...S.td, color: "var(--color-admin-muted)", fontSize: "0.78rem" }}>
                   {new Date(u.createdAt).toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" })}
                 </td>

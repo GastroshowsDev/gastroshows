@@ -79,8 +79,15 @@
   {
     "id": 12,
     "feature": "Paridad y superioridad vs web antigua",
-    "description": "Interlinking reforzado (restaurantes-michelin tenía 0 enlaces internos). PENDIENTE: sustituir 6 referencias a Unsplash por imágenes propias, completar versiones EN/CA de más money pages, auditoría H1/meta vs WordPress.",
-    "status": "in_progress",
+    "description": "Interlinking reforzado (restaurantes-michelin tenía 0 enlaces internos). PENDIENTE: sustituir 6 referencias a Unsplash por imágenes propias, completar versiones EN/CA de más money pages, auditoría H1/meta vs WordPress. PAUSADA temporalmente por prioridad TPV (#13).",
+    "status": "pending",
     "priority": "medium"
+  },
+  {
+    "id": 13,
+    "feature": "TPV sala (Bertrand/Urgell) con catálogo y comandas por comensal",
+    "description": "Fase 1: schema (ProductCategory/Product, PosOrder/PosOrderLine, CashSession preparada, link Employee-User para PIN de sesión), migración SQL, CRUD de carta en /admin/configuracion/carta, PIN configurable en ficha de usuario (reutiliza PIN de empleado). Fase 2: pantalla TPV (login PIN, selector sala, tablero comensales por nombre desde reservas del día, reserva rápida para walk-ins, totales). Decisiones: carta común, PIN empleado, reserva rápida obligatoria.",
+    "status": "in_progress",
+    "priority": "high"
   }
 ]

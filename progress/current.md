@@ -1,3 +1,25 @@
+## Sesión Actual: TPV sala (feature #13)
+
+> Objetivo fase 1: base de datos + catálogo configurable + PIN de sesión en ficha de usuario.
+> Decisiones usuario: carta común a ambas salas, reutilizar PIN de empleado, reserva rápida obligatoria para walk-ins.
+> Nota: feature #12 (SEO) pausada temporalmente (pending) para respetar "una sola feature a la vez".
+
+### Plan fase 1
+- [x] Registrar feature #13 en `feature_list.json`
+- [x] Schema: `ProductCategory`, `Product`, `PosOrder`, `PosOrderLine`, `CashSession` (preparada, sin UI), `Employee.userId` ↔ `User` — `prisma validate` OK, cliente generado OK, sin errores nuevos en `tsc`
+- [x] Migración SQL manual `prisma/migrations/20260929014500_pos_base/migration.sql` — **APLICADA el 29-09 vía SQL directo por pooler** (el `migrate deploy` no llega por red desde aquí) + registrada en `_prisma_migrations` con checksum sha256. DDL aditivo, sin tocar datos. Empleado test "Test TPV" PIN 0000 creado (el 1234 lo usa Estela Diaz).
+- [x] CRUD carta `/admin/configuracion/carta` + APIs `/api/admin/pos/catalog` y `/api/admin/pos/products` (+ botón "Crear base")
+- [x] PIN en ficha usuario: `lib/pos-pin.ts`, `posPin` en crear/editar de `/admin/usuarios` (crea/vincula empleado, valida 4 dígitos y unicidad)
+- [x] TPV mobile-first `/admin/tpv` (entrada en sidebar): PIN de operario, tabs Bertrand/Urgell, comensales por nombre del servicio de hoy + buscador, reserva rápida, comanda con snapshot de precios, totales por comensal y por sala. APIs: `session`, `diners`, `orders`, `quick-reservation` (todas `requireStaff`)
+
+### Fase 2 (siguiente): pantalla TPV
+- Login con PIN, selector sala (venueId aísla datos), tablero comensales por nombre (reservas CONFIRMED/CHECKED_IN del evento del día), reserva rápida, totales por comensal.
+
+### Hotfix fuera de feature (crash en home)
+- `components/tracking/TikTokPixel.tsx`: el snippet tenía el loop de `instance` corrupto (`ttq[m]=setAndDefer(...)` sobrescribía los stubs con `undefined` → `ttq.page is not a function`). Corregido a la forma oficial (`ttq.setAndDefer(o,...)` sin asignación). Verificado en Node: el código viejo reproduce el TypeError exacto, el nuevo encola `page`/`track` bien. `MetaPixel.tsx` revisado, sin problema.
+
+---
+
 ## Sesión Actual: Roadmap "Web perfecta antes de migrar" (GEO/SEO)
 
 > Premisa: NO tocar el `noindex` global ni el DNS (migración la hace el usuario al final).

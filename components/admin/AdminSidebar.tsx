@@ -12,6 +12,7 @@ const NAV: NavSection[] = [
     title: "Principal",
     items: [
       { label: "Live", href: "/admin/live", icon: "📡" },
+      { label: "TPV", href: "/admin/tpv", icon: "🧾" },
     ],
   },
   {
@@ -39,6 +40,7 @@ const NAV: NavSection[] = [
   {
     title: "Configuración",
     items: [
+      { label: "Carta TPV", href: "/admin/configuracion/carta", icon: "🍽️", adminOnly: true },
       { label: "Promociones", href: "/admin/promociones", icon: "🎫" },
       { label: "Web",          href: "/admin/web",          icon: "🌐", adminOnly: true },
       { label: "Usuarios",    href: "/admin/usuarios",    icon: "👤", adminOnly: true },

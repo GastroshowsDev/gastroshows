@@ -6,7 +6,10 @@ export const dynamic = "force-dynamic";
 async function getUsers() {
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "asc" },
-    select: { id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true },
+    select: {
+      id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true,
+      employee: { select: { pin: true } },
+    },
   });
   return users.map((u) => ({
     id: u.id,
@@ -15,6 +18,7 @@ async function getUsers() {
     role: u.role as "ADMIN" | "LIVE",
     defaultVenue: u.defaultVenue ?? null,
     createdAt: u.createdAt.toISOString(),
+    posPin: u.employee?.pin ?? null,
   }));
 }
 

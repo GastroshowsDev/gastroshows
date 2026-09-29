@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-helpers";
+import { setUserPosPin } from "@/lib/pos-pin";
 
 export async function PATCH(
   request: Request,
@@ -12,7 +13,7 @@ export async function PATCH(
 
   try {
     const { id } = await params;
-    const body = await request.json() as { name?: string; email?: string; password?: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string };
+    const body = await request.json() as { name?: string; email?: string; password?: string; role?: "ADMIN" | "LIVE"; defaultVenue?: string; posPin?: string };
 
     const data: Record<string, unknown> = {};
     if (body.name) data.name = body.name.trim();
@@ -29,9 +30,25 @@ export async function PATCH(
     const user = await prisma.user.update({
       where: { id },
       data,
-      select: { id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true },
+      select: {
+        id: true, name: true, email: true, role: true, defaultVenue: true, createdAt: true,
+        employee: { select: { pin: true } },
+      },
     });
-    return NextResponse.json({ ok: true, data: user });
+
+    let posPin: string | null = user.employee?.pin ?? null;
+    if ("posPin" in body) {
+      try {
+        posPin = await setUserPosPin(id, user.name, body.posPin ?? null);
+      } catch (pinErr) {
+        return NextResponse.json(
+          { ok: false, error: pinErr instanceof Error ? pinErr.message : "PIN no válido" },
+          { status: 400 }
+        );
+      }
+    }
+    const { employee: _ignored, ...rest } = user;
+    return NextResponse.json({ ok: true, data: { ...rest, posPin } });
   } catch (err) {
     console.error("[users/id] PATCH error:", err);
     return NextResponse.json({ ok: false, error: "Error interno" }, { status: 500 });
