@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireStaff } from "@/lib/auth-helpers";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
 // POST /api/admin/pos/quick-reservation { name, guests, venueId, shift? }
-// Reserva rápida obligatoria para walk-ins/extras sin reserva previa (decisión feature #13).
-// Crea un Customer marcado como TPV (email técnico) + Reserva CONFIRMED con importe 0.
-// Si existe evento hoy de ese turno, se vincula; si no, se crea sin evento (visitDate de hoy).
 export async function POST(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   try {

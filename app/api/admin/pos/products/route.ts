@@ -1,18 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireStaff } from "@/lib/auth-helpers";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
-// POST /api/admin/pos/products { categoryId, name, price, description? }
+// POST /api/admin/pos/products
 export async function POST(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   try {
     const body = (await request.json()) as {
-      categoryId?: string; name?: string; price?: number; description?: string;
+      categoryId?: string; name?: string; price?: number; description?: string; imageUrl?: string;
     };
     const name = body.name?.trim();
     const price = Number(body.price);
@@ -29,6 +26,7 @@ export async function POST(request: Request) {
         name,
         price: price.toFixed(2),
         description: body.description?.trim() || null,
+        imageUrl: body.imageUrl || null,
         order: (max._max.order ?? -1) + 1,
       },
     });
@@ -39,18 +37,15 @@ export async function POST(request: Request) {
   }
 }
 
-// PUT /api/admin/pos/products { id, name?, price?, description?, active?, order?, categoryId? }
+// PUT /api/admin/pos/products
 export async function PUT(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   try {
     const body = (await request.json()) as {
       id?: string; name?: string; price?: number; description?: string | null;
-      active?: boolean; order?: number; categoryId?: string;
+      active?: boolean; order?: number; categoryId?: string; imageUrl?: string;
     };
     if (!body.id) {
       return NextResponse.json({ ok: false, error: "ID requerido" }, { status: 400 });
@@ -64,6 +59,7 @@ export async function PUT(request: Request) {
     if (typeof body.active === "boolean") data.active = body.active;
     if (typeof body.order === "number") data.order = body.order;
     if (typeof body.categoryId === "string" && body.categoryId) data.categoryId = body.categoryId;
+    if (body.imageUrl !== undefined) data.imageUrl = body.imageUrl || null;
     const product = await prisma.product.update({ where: { id: body.id }, data });
     return NextResponse.json({ ok: true, data: product });
   } catch (err) {
@@ -72,13 +68,10 @@ export async function PUT(request: Request) {
   }
 }
 
-// DELETE /api/admin/pos/products?id= → borrado real (el historial conserva snapshot)
+// DELETE /api/admin/pos/products?id=
 export async function DELETE(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");

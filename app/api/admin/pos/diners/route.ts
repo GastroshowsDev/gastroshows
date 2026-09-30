@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireStaff } from "@/lib/auth-helpers";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
 function todayRange(now: Date): { start: Date; end: Date } {
   const start = new Date(now);
@@ -10,11 +10,9 @@ function todayRange(now: Date): { start: Date; end: Date } {
   return { start, end };
 }
 
-// GET /api/admin/pos/diners?venueId= → comensales del servicio de hoy en esa sala:
-// reservas CONFIRMED/CHECKED_IN (por evento de hoy o visitDate de hoy) con sus
-// comandas del día y totales. La unidad es la reserva (titular), no la mesa.
+// GET /api/admin/pos/diners?venueId= → comensales del servicio de hoy en esa sala
 export async function GET(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   const { searchParams } = new URL(request.url);
@@ -51,11 +49,13 @@ export async function GET(request: Request) {
     });
 
     const diners = reservations.map((r) => {
-      const total = r.posOrders.reduce(
+      const tpvTotal = r.posOrders.reduce(
         (sum, o) => sum + o.lines.reduce((s, l) => s + Number(l.unitPrice) * l.qty, 0),
         0,
       );
       const openCount = r.posOrders.filter((o) => o.status === "OPEN").length;
+      const reservationTotal = Number(r.totalAmount);
+      const reservationPaid = Number(r.paidAmount);
       return {
         reservationId: r.id,
         name: r.customer.name,
@@ -65,7 +65,9 @@ export async function GET(request: Request) {
         visitTime: r.visitTime,
         event: r.event ? { id: r.event.id, shift: r.event.shift } : null,
         openOrders: openCount,
-        total,
+        total: tpvTotal,
+        reservationTotal,
+        reservationPaid,
       };
     });
 

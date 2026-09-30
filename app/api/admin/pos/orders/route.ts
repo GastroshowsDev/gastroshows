@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireStaff } from "@/lib/auth-helpers";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
 function todayRange(now: Date): { start: Date; end: Date } {
   const start = new Date(now);
@@ -12,9 +12,9 @@ function todayRange(now: Date): { start: Date; end: Date } {
 
 type IncomingLine = { productId?: string; productName?: string; unitPrice?: number; qty?: number };
 
-// GET /api/admin/pos/orders?venueId=&reservationId= → comandas del día (no canceladas)
+// GET /api/admin/pos/orders?venueId=&reservationId= → comandas del día
 export async function GET(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   const { searchParams } = new URL(request.url);
@@ -46,10 +46,9 @@ export async function GET(request: Request) {
   }
 }
 
-// POST /api/admin/pos/orders { venueId, reservationId?, dinerName, eventId?, openedById?, lines: [{productId, qty}] }
-// Los precios se leen del catálogo en servidor y se guardan como snapshot.
+// POST /api/admin/pos/orders → crear comanda
 export async function POST(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   try {
@@ -118,9 +117,9 @@ export async function POST(request: Request) {
   }
 }
 
-// PATCH /api/admin/pos/orders { orderId, addLines?: [{productId, qty}], status?: OPEN|CLOSED|CANCELLED }
+// PATCH /api/admin/pos/orders → añadir líneas o cambiar estado
 export async function PATCH(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   try {

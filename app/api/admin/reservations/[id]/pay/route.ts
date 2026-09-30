@@ -1,9 +1,23 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
 export async function POST(req: Request, { params }: RouteContext) {
+  // Accept either operator token or NextAuth session (for compatibility with Live panel)
+  const auth = await requirePosOperator(req);
+  // If no operator token, check session
+  if (!auth.ok) {
+    const { getServerSession } = await import("next-auth");
+    const { authOptions } = await import("@/lib/auth");
+    const session = await getServerSession(authOptions);
+    const role = (session?.user as { role?: string } | undefined)?.role;
+    if (!session || role !== "ADMIN" && role !== "LIVE") {
+      return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+    }
+  }
+
   try {
     const { id } = await params;
     const body = await req.json() as { method: "CASH" | "CARD"; amount: number };
@@ -15,7 +29,7 @@ export async function POST(req: Request, { params }: RouteContext) {
 
     const reservation = await prisma.reservation.findUnique({
       where: { id },
-      select: { id: true, paidAmount: true, totalAmount: true, status: true },
+      select: { id: true, paidAmount: true, totalAmount: true, status: true, venueId: true },
     });
     if (!reservation) {
       return NextResponse.json({ ok: false, error: "Reserva no encontrada" }, { status: 404 });

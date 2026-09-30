@@ -1,3 +1,34 @@
+## Pendiente: Sync live Turitop -> ERP + Credenciales Getloud (2026-09-30)
+
+> Objetivo usuario: todas las reservas que lleguen a Turitop se vuelquen como reservas del ERP.
+> Docs: https://developers.turitop.com (spec `turitop_api.yaml`, solo sandbox `https://app.turitopsandbox.com/v1` en spec; prod a confirmar `https://app.turitop.com/v1`).
+> Estado: investigación hecha, sin implementar. Feature #13 TPV sigue `in_progress` — no empezar código hasta cerrar/planificar (una sola feature a la vez).
+
+### Hallazgos Turitop
+- Auth OAuth2: `POST /authorization/grant {short_id, secret_key}` -> `access_token` 60min + `refresh_token` 60días. Token va en **body** `{access_token, data:{...}}`, atado a IP. `POST /authorization/refresh|renew|revoke`. Bearer API-Key no está en el YAML.
+- Webhooks (vía primaria, sin cuota): `POST /company/insertwebhooks {action: all|booking.insert|booking.update|booking.delete, end_point}` + `get/delete/testwebhooks {hash, booking_short_id}`. No hay evento checkin propio — llega como `booking.update` (`checked`, `date_enjoyed`).
+- Payload webhook no documentado en YAML — hay que capturar un `testwebhooks` real para fijar firma/headers/JSON.
+- Respaldo polling: `POST /booking/getbookings {filter: bookings_modified_from/_to, event_date_from/_to, product_short_id|multi_product_short_id, status|multi_status, checked_in, show_deleted, booking_limit/page}` + `pagination {has_more}`. Cuota por módulo consultable en `POST /consumption` (exento de throttle).
+- `Booking` clave: `short_id`, `product_short_id/name`, `date_event/date_booking/date_modified`, `client_data {name,email,phone,comments}`, `ticket_type_count[] {count, price_per_ticket}`, `total_price/currency`, `status [pending,confirmed,paid,cancelled...]`, `checked`, `gift_certificate`, `source widget|backoffice|API|OTA`.
+
+### Encaje ERP actual
+- `Reservation.turitopId @unique` ya existe (`prisma/schema.prisma:87`), `source TURITOP` ya usado en `lib/turitop-migrator.ts:121` y pintado en `components/admin/ReservasTable.tsx:1130`.
+- Flujo a reutilizar (`app/api/payments/callback/route.ts:72`): transacción `Customer.upsert/create` + `Reservation.create(CONFIRMED)` + `PaymentSplit` + `buildEmailQueueSchedule` + `triggerWorkflows(RESERVATION_CONFIRMED)`.
+- `Setting {key,value}` disponible como almacén temporal de credenciales (`prisma/schema.prisma:424`).
+
+### Plan propuesto (no iniciado)
+1. `lib/turitop-client.ts`: grant/refresh, `getbooking/getbookings`, mapper `Booking -> {Customer, Event(date+shift), Reservation(turitopId, source=TURITOP)}` idempotente por `turitopId`.
+2. `app/api/turitop/webhook/route.ts` público: `booking.insert/update/delete` -> upsert, `delete` -> `CANCELLED`, verifica origen si Turitop firma.
+3. Cron respaldo `getbookings` por `bookings_modified_from` + `Event.totalGuests` increment.
+4. Credenciales interinas en `Setting`/`env` (`TURITOP_SHORT_ID/SECRET_KEY`, `product_short_id -> venueId`).
+
+### Pendiente Getloud — Espacio Credenciales
+- Usuario tiene en Getloud un espacio `Credenciales` para APIs (whatsapp, meta, google, etc.) con posible campo `turitop`.
+- **Bloqueado hasta que dé acceso al código de Getloud.** Cuando lo dé: leer Store de Credenciales y migrar `TURITOP_*` de `Setting/env` a Getloud como fuente canónica.
+- No tocar Getloud por ahora.
+
+---
+
 ## Sesión Actual: TPV sala (feature #13)
 
 > Objetivo fase 1: base de datos + catálogo configurable + PIN de sesión en ficha de usuario.

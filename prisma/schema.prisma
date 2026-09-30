@@ -614,6 +614,7 @@ model Product {
   name        String
   description String?
   price       Decimal         @db.Decimal(10, 2)
+  imageUrl    String?
   active      Boolean         @default(true)
   order       Int             @default(0)
   createdAt   DateTime        @default(now())

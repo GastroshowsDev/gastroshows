@@ -4,19 +4,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // ─── Tipos ──────────────────────────────────────────────────────────
 type Venue = { id: string; name: string; capacity: number };
-type Operator = { id: string; name: string };
-type Product = { id: string; name: string; price: number; active: boolean };
+type Operator = { id: string; name: string; token: string };
+type Product = { id: string; name: string; price: number; imageUrl?: string | null; active: boolean };
 type Category = { id: string; name: string; products: Product[] };
 type Diner = {
   reservationId: string; name: string; guests: number; status: string;
   visitTime: string | null; openOrders: number; total: number;
+  reservationTotal: number; reservationPaid: number;
 };
 type OrderLine = { id: string; productName: string; unitPrice: number; qty: number };
 type Order = {
   id: string; status: string; reservationId: string | null;
   lines: OrderLine[]; openedBy: { name: string } | null;
 };
-type CartLine = { productId: string; name: string; price: number; qty: number };
 
 // ─── Helpers ────────────────────────────────────────────────────────
 const eur = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
@@ -24,7 +24,19 @@ const money = (n: number) => eur.format(n);
 const toNum = (v: unknown) => (typeof v === "number" ? v : Number(v) || 0);
 
 async function api<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
+  const headers: Record<string, string> = {};
+  const operatorRaw = sessionStorage.getItem(OP_KEY);
+  if (operatorRaw) {
+    try {
+      const op = JSON.parse(operatorRaw);
+      if (op.token) headers["Authorization"] = "Bearer " + op.token;
+    } catch { /* sin token */ }
+  }
+  const mergedInit: RequestInit = {
+    ...init,
+    headers: { ...(init?.headers || {}), ...headers },
+  };
+  const res = await fetch(url, mergedInit);
   const json = (await res.json()) as { ok: boolean; data?: T; error?: string };
   if (!json.ok) throw new Error(json.error ?? "Error de red");
   return json.data as T;
@@ -34,7 +46,7 @@ const OP_KEY = "tpv-operator";
 
 // ─── Estilos táctiles ───────────────────────────────────────────────
 const T = {
-  page: { maxWidth: 720, margin: "0 auto", minHeight: "100%", background: "var(--color-admin-bg)", paddingBottom: 110 } as const,
+  page: { maxWidth: 720, margin: "0 auto", minHeight: "100%", background: "var(--color-admin-bg)", paddingBottom: 30 } as const,
   pad: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 } as const,
   padBtn: {
     minHeight: 68, fontSize: "1.6rem", fontWeight: 700, borderRadius: 14,
@@ -55,8 +67,8 @@ const T = {
   }) as const,
   prod: {
     minHeight: 76, borderRadius: 12, border: "1px solid var(--color-admin-border)",
-    background: "var(--color-admin-surface)", cursor: "pointer", padding: "0.6rem",
-    display: "flex", flexDirection: "column" as const, alignItems: "flex-start", justifyContent: "center", gap: 2,
+    background: "var(--color-admin-surface)", cursor: "pointer", padding: 0,
+    display: "flex", flexDirection: "row" as const, alignItems: "center", gap: 0,
   } as const,
   catPill: (active: boolean) => ({
     flexShrink: 0, minHeight: 44, padding: "0 1rem", borderRadius: 999,
@@ -101,13 +113,13 @@ function PinScreen({ onOk }: { onOk: (op: Operator) => void }) {
     if (code.length !== 4 || busy) return;
     setBusy(true); setError("");
     try {
-      const emp = await api<{ id: string; name: string } | null>("/api/admin/pos/session", {
+      const emp = await api<{ id: string; name: string; token: string }>("/api/admin/pos/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pin: code }),
       });
       if (!emp) throw new Error("PIN no válido");
-      onOk({ id: emp.id, name: emp.name });
+      onOk({ id: emp.id, name: emp.name, token: emp.token });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error");
       setPin("");
@@ -162,15 +174,17 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [cart, setCart] = useState<CartLine[]>([]);
   const [catId, setCatId] = useState<string | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [quickOpen, setQuickOpen] = useState(false);
   const [qName, setQName] = useState("");
   const [qGuests, setQGuests] = useState(2);
   const [qShift, setQShift] = useState<"NIGHT" | "NOON">("NIGHT");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [cobrarId, setCobrarId] = useState<string | null>(null);
+  const [payTab, setPayTab] = useState<"CASH" | "CARD">("CARD");
+  const [cashInput, setCashInput] = useState("");
+  const [payError, setPayError] = useState("");
   const refreshTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -186,7 +200,7 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
   }
   function logout() {
     sessionStorage.removeItem(OP_KEY);
-    setOperator(null); setCart([]); setSelectedId(null); setOrders([]);
+    setOperator(null); setSelectedId(null); setOrders([]);
   }
 
   const loadCatalog = useCallback(async () => {
@@ -223,12 +237,11 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
   }, [operator, venueId, refresh, loadDiners]);
 
   useEffect(() => {
-    setSelectedId(null); setOrders([]); setCart([]); setQuery(""); setSheetOpen(false);
+    setSelectedId(null); setOrders([]); setQuery("");
   }, [venueId]);
 
   async function selectDiner(reservationId: string) {
     setSelectedId(reservationId);
-    setCart([]);
     try {
       const list = await api<Order[]>(
         `/api/admin/pos/orders?venueId=${encodeURIComponent(venueId)}&reservationId=${encodeURIComponent(reservationId)}`,
@@ -243,20 +256,35 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
   }
 
   function addToCart(p: Product) {
-    setCart((c) => {
-      const found = c.find((l) => l.productId === p.id);
-      if (found) return c.map((l) => l.productId === p.id ? { ...l, qty: Math.min(l.qty + 1, 99) } : l);
-      return [...c, { productId: p.id, name: p.name, price: p.price, qty: 1 }];
-    });
+    if (busy || !selected || !operator) return;
+    setBusy(true);
+    const payload = [{ productId: p.id, qty: 1 }];
+    const orderPromise = openOrder
+      ? api("/api/admin/pos/orders", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId: openOrder.id, addLines: payload }),
+        })
+      : api("/api/admin/pos/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            venueId, reservationId: selected.reservationId, dinerName: selected.name,
+            eventId: null, openedById: operator.id, lines: payload,
+          }),
+        });
+    orderPromise
+      .then(async () => {
+        await loadDiners(venueId);
+        await selectDiner(selected.reservationId);
+      })
+      .catch((e) => {
+        setError(e instanceof Error ? e.message : "Error al guardar");
+      })
+      .finally(() => {
+        setBusy(false);
+      });
   }
-  function cartQty(productId: string, delta: number) {
-    setCart((c) => c
-      .map((l) => l.productId === productId ? { ...l, qty: l.qty + delta } : l)
-      .filter((l) => l.qty > 0));
-  }
-
-  const cartTotal = useMemo(() => cart.reduce((s, l) => s + l.price * l.qty, 0), [cart]);
-  const cartCount = useMemo(() => cart.reduce((s, l) => s + l.qty, 0), [cart]);
   const selected = useMemo(() => diners.find((d) => d.reservationId === selectedId) ?? null, [diners, selectedId]);
   const openOrder = useMemo(() => orders.find((o) => o.status === "OPEN") ?? null, [orders]);
   const existingTotal = useMemo(
@@ -273,32 +301,58 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
     [catalog, catId],
   );
 
-  async function saveOrder() {
-    if (!selected || cart.length === 0 || busy || !operator) return;
-    setBusy(true); setError("");
+  const reservationPending = useMemo(() => {
+    if (!selected) return 0;
+    return Math.max(0, selected.reservationTotal - selected.reservationPaid);
+  }, [selected]);
+
+  const tpvOrdersTotal = useMemo(() => {
+    if (!selected) return 0;
+    return selected.total;
+  }, [selected]);
+
+  const combinedPending = reservationPending + tpvOrdersTotal;
+
+  function handleCashKey(val: string) {
+    setCashInput((prev) => {
+      if (val === "." && prev.includes(".")) return prev;
+      if (val === "." && prev === "") return "0.";
+      return prev + val;
+    });
+  }
+
+  const cashValid = payTab === "CASH" && cashInput && parseFloat(cashInput) >= combinedPending - 0.01;
+  const change = payTab === "CASH" ? (cashInput ? parseFloat(cashInput) : 0) - combinedPending : 0;
+
+  async function handlePay() {
+    if (!selected || busy || !operator) return;
+    setBusy(true); setPayError("");
+    const amount = combinedPending;
     try {
-      const payload = cart.map((l) => ({ productId: l.productId, qty: l.qty }));
-      if (openOrder) {
-        await api("/api/admin/pos/orders", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ orderId: openOrder.id, addLines: payload }),
-        });
-      } else {
-        await api("/api/admin/pos/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            venueId, reservationId: selected.reservationId, dinerName: selected.name,
-            eventId: null, openedById: operator.id, lines: payload,
-          }),
-        });
+      const res = await fetch(`/api/admin/reservations/${selected.reservationId}/pay`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + operator.token },
+        body: JSON.stringify({ method: payTab, amount }),
+      });
+      const json = await res.json() as { ok?: boolean; error?: string };
+      if (!json.ok) { setPayError(json.error ?? "Error"); return; }
+      // Close all open TPV orders for this reservation
+      for (const order of orders) {
+        if (order.status === "OPEN") {
+          try {
+            await fetch("/api/admin/pos/orders", {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json", Authorization: "Bearer " + operator.token },
+              body: JSON.stringify({ orderId: order.id, status: "CLOSED" }),
+            });
+          } catch { /* ignore */ }
+        }
       }
-      setCart([]); setSheetOpen(false);
+      setCobrarId(null); setCashInput("");
       await loadDiners(venueId);
       await selectDiner(selected.reservationId);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error al guardar");
+    } catch {
+      setPayError("Error de red");
     } finally {
       setBusy(false);
     }
@@ -406,7 +460,12 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
                 {d.guests} pax{d.visitTime ? ` · ${d.visitTime}` : ""}{d.openOrders > 0 ? ` · ${d.openOrders} abierta(s)` : ""}
               </span>
             </span>
-            <span style={{ fontWeight: 800, color: "var(--color-admin-text)" }}>{money(d.total)}</span>
+            <span style={{ fontWeight: 800, color: "var(--color-admin-text)" }}>{money(d.reservationTotal + d.total)}</span>
+            {d.reservationTotal + d.total > d.reservationPaid && (
+              <span style={{ fontSize: "0.7rem", color: "#F59E0B", fontWeight: 600 }}>
+                Pend: {money(d.reservationTotal + d.total - d.reservationPaid)}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -418,10 +477,32 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
             padding: "0.7rem 1rem", borderRadius: 12, background: "var(--color-admin-surface)",
             border: "1px solid var(--color-admin-border)", marginBottom: "0.6rem",
           }}>
-            <div style={{ fontWeight: 800, color: "var(--color-admin-text)" }}>{selected.name}</div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
+              <div>
+                <div style={{ fontWeight: 800, color: "var(--color-admin-text)" }}>{selected.name}</div>
+                <div style={{ fontSize: "0.8rem", color: "var(--color-admin-muted)" }}>
+                  Reserva: <strong style={{ color: "var(--color-admin-text)" }}>{money(selected.reservationTotal)}</strong>
+                  {selected.reservationTotal > selected.reservationPaid && (
+                    <span style={{ color: "#F59E0B" }}> (pend: {money(selected.reservationTotal - selected.reservationPaid)})</span>
+                  )}
+                </div>
+              </div>
+              {combinedPending > 0 && (
+                <button
+                  onClick={() => { setCobrarId(selected.reservationId); setPayError(""); setCashInput(""); setPayTab("CARD"); }}
+                  style={{
+                    padding: "0.4rem 0.8rem", borderRadius: 8, border: "none",
+                    background: "#16A34A", color: "#fff",
+                    fontSize: "0.8rem", fontWeight: 700, cursor: "pointer",
+                  }}
+                >
+                  Cobrar {money(combinedPending)}
+                </button>
+              )}
+            </div>
             <div style={{ fontSize: "0.8rem", color: "var(--color-admin-muted)" }}>
-              Acumulado hoy: <strong style={{ color: "var(--color-admin-text)" }}>{money(existingTotal)}</strong>
-              {openOrder ? " · comanda abierta" : " · sin comanda abierta"}
+              TPV hoy: <strong style={{ color: "var(--color-admin-text)" }}>{money(tpvOrdersTotal)}</strong>
+              {openOrder ? " · comanda abierta" : tpvOrdersTotal > 0 ? " · sin comanda abierta" : " · sin consumaciones TPV"}
             </div>
             {orders.length > 0 && (
               <div style={{ marginTop: "0.4rem", fontSize: "0.78rem", color: "var(--color-admin-muted)" }}>
@@ -450,58 +531,132 @@ export function TpvClient({ venues }: { venues: Venue[] }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
             {(activeCat?.products ?? []).map((p) => (
               <button key={p.id} style={T.prod} onClick={() => addToCart(p)}>
-                <span style={{ fontWeight: 700, fontSize: "0.85rem", color: "var(--color-admin-text)", lineHeight: 1.25 }}>{p.name}</span>
-                <span style={{ fontWeight: 800, fontSize: "0.95rem", color: "var(--color-admin-accent)" }}>{money(p.price)}</span>
+                <div style={{ flex: 1, padding: "0.6rem 0.75rem", display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
+                  <span style={{ fontWeight: 700, fontSize: "0.8rem", color: "var(--color-admin-text)", lineHeight: 1.25, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</span>
+                  <span style={{ fontWeight: 800, fontSize: "0.95rem", color: "var(--color-admin-accent)", marginTop: 2 }}>{money(p.price)}</span>
+                </div>
+                {p.imageUrl ? (
+                  <div style={{ width: 64, height: 64, flexShrink: 0, overflow: "hidden", borderLeft: "1px solid var(--color-admin-border)" }}>
+                    <img src={p.imageUrl} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                ) : (
+                  <div style={{ width: 64, height: 64, flexShrink: 0, borderLeft: "1px solid var(--color-admin-border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", background: "var(--color-admin-bg)" }}>
+                    🍽️
+                  </div>
+                )}
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {/* Barra inferior carrito */}
-      {selected && cart.length > 0 && !sheetOpen && (
-        <div style={{
-          position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 900,
-          padding: "0.6rem 0.8rem calc(0.6rem + env(safe-area-inset-bottom))",
-          background: "var(--color-admin-surface)", borderTop: "1px solid var(--color-admin-border)",
-        }}>
-          <div style={{ maxWidth: 720, margin: "0 auto" }}>
-            <button style={T.primary} onClick={() => setSheetOpen(true)}>
-              Ver comanda · {cartCount} artículo{cartCount !== 1 ? "s" : ""} · {money(cartTotal)}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Sheet carrito */}
-      {sheetOpen && (
-        <div style={T.overlay} onClick={() => setSheetOpen(false)}>
-          <div style={T.sheet} onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem" }}>
-              <h2 style={{ fontSize: "1rem", fontWeight: 800, color: "var(--color-admin-text)" }}>
-                {selected?.name} · {money(cartTotal)}
-              </h2>
-              <button onClick={() => setSheetOpen(false)} style={{ background: "none", border: "none", fontSize: "1.4rem", cursor: "pointer", color: "var(--color-admin-muted)", minWidth: 44, minHeight: 44 }}>✕</button>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: "1rem" }}>
-              {cart.map((l) => (
-                <div key={l.productId} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0.5rem 0.25rem", borderBottom: "1px solid var(--color-admin-border)" }}>
-                  <span style={{ flex: 1, fontSize: "0.9rem", color: "var(--color-admin-text)" }}>
-                    <strong>{l.name}</strong>
-                    <span style={{ color: "var(--color-admin-muted)" }}> · {money(l.price)}</span>
-                  </span>
-                  <button style={T.stepBtn} onClick={() => cartQty(l.productId, -1)} aria-label="Quitar">−</button>
-                  <span style={{ minWidth: 28, textAlign: "center", fontWeight: 800 }}>{l.qty}</span>
-                  <button style={T.stepBtn} onClick={() => cartQty(l.productId, 1)} aria-label="Añadir">+</button>
+      {/* Modal cobro */}
+      {cobrarId && (() => {
+        const res = diners.find((r) => r.reservationId === cobrarId);
+        if (!res) return null;
+        const tabBtn = (active: boolean): React.CSSProperties => ({
+          flex: 1, padding: "0.6rem",
+          background: active ? "var(--color-admin-accent)" : "transparent",
+          color: active ? "#fff" : "var(--color-admin-muted)",
+          border: "none", cursor: "pointer",
+          fontSize: "0.82rem", fontWeight: 600,
+          borderRadius: 6, transition: "all 0.15s",
+        });
+        return (
+          <div style={T.overlay} onClick={() => setCobrarId(null)}>
+            <div style={T.sheet} onClick={(e) => e.stopPropagation()}>
+              <div style={{ padding: "1rem 1.25rem 0.75rem", borderBottom: "1px solid var(--color-admin-border)" }}>
+                <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "var(--color-admin-text)" }}>
+                  Cobrar — {res.name}
                 </div>
-              ))}
+                <div style={{ fontSize: "0.78rem", color: "var(--color-admin-muted)", marginTop: 2 }}>
+                  Pendiente: <strong style={{ color: "var(--color-admin-accent)" }}>{combinedPending.toFixed(2)}€</strong>
+                </div>
+                <div style={{ fontSize: "0.72rem", color: "var(--color-admin-muted)", marginTop: 2 }}>
+                  Reserva: {money(res.reservationTotal)} · TPV: {money(res.total)}
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 4, padding: "0.75rem 1.25rem 0" }}>
+                <button style={tabBtn(payTab === "CASH")} onClick={() => setPayTab("CASH")}>Efectivo</button>
+                <button style={tabBtn(payTab === "CARD")} onClick={() => setPayTab("CARD")}>Tarjeta</button>
+              </div>
+              <div style={{ padding: "0.75rem 1.25rem 1.25rem" }}>
+                {payTab === "CASH" ? (
+                  <>
+                    <div style={{
+                      background: "var(--color-admin-bg)", borderRadius: 8,
+                      padding: "0.6rem 0.75rem", marginBottom: "0.75rem",
+                      display: "flex", justifyContent: "space-between", alignItems: "center",
+                    }}>
+                      <span style={{ fontSize: "0.72rem", color: "var(--color-admin-muted)" }}>Recibido</span>
+                      <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
+                        {cashInput || "0"}€
+                      </span>
+                    </div>
+                    {cashInput && (
+                      <div style={{
+                        textAlign: "right", fontSize: "0.8rem", marginBottom: "0.5rem",
+                        color: change >= 0 ? "#16A34A" : "#EF4444", fontWeight: 600,
+                      }}>
+                        {change >= 0 ? `Cambio: ${change.toFixed(2)}€` : `Faltan: ${Math.abs(change).toFixed(2)}€`}
+                      </div>
+                    )}
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6 }}>
+                      {["7","8","9","4","5","6","1","2","3",".",  "0","⌫"].map((k) => (
+                        <button
+                          key={k}
+                          onClick={() => handleCashKey(k)}
+                          style={{
+                            padding: "0.65rem", borderRadius: 8,
+                            border: "1px solid var(--color-admin-border)",
+                            background: k === "⌫" ? "var(--color-admin-bg)" : "var(--color-admin-surface)",
+                            color: "var(--color-admin-text)",
+                            fontSize: k === "⌫" ? "1rem" : "0.9rem", fontWeight: 600, cursor: "pointer",
+                          }}
+                        >{k}</button>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div style={{
+                    background: "var(--color-admin-bg)", borderRadius: 8,
+                    padding: "1rem", textAlign: "center", marginBottom: "0.75rem",
+                  }}>
+                    <div style={{ fontSize: "0.72rem", color: "var(--color-admin-muted)", marginBottom: 4 }}>
+                      Importe a cobrar
+                    </div>
+                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--color-admin-text)" }}>
+                      {combinedPending.toFixed(2)}€
+                    </div>
+                  </div>
+                )}
+                {payError && <p style={{ fontSize: "0.75rem", color: "#EF4444", marginBottom: "0.5rem" }}>{payError}</p>}
+                <div style={{ display: "flex", gap: 8, marginTop: "0.75rem" }}>
+                  <button
+                    onClick={() => setCobrarId(null)}
+                    style={{
+                      flex: 1, padding: "0.6rem",
+                      border: "1px solid var(--color-admin-border)", borderRadius: 8, background: "transparent",
+                      color: "var(--color-admin-muted)", fontSize: "0.82rem", cursor: "pointer",
+                    }}
+                  >Cancelar</button>
+                  <button
+                    onClick={() => void handlePay()}
+                    disabled={busy || (payTab === "CASH" && !cashValid)}
+                    style={{
+                      flex: 2, padding: "0.6rem", borderRadius: 8, border: "none",
+                      background: busy || (payTab === "CASH" && !cashValid) ? "var(--color-admin-border)" : "#16A34A",
+                      color: "#fff", fontSize: "0.82rem", fontWeight: 600, cursor: "pointer",
+                    }}
+                  >
+                    {busy ? "Procesando…" : "Aceptar"}
+                  </button>
+                </div>
+              </div>
             </div>
-            <button style={T.primary} disabled={busy} onClick={() => void saveOrder()}>
-              {busy ? "Guardando…" : `Guardar comanda · ${money(cartTotal)}`}
-            </button>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Modal reserva rápida */}
       {quickOpen && (

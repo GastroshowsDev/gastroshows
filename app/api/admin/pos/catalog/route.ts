@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireStaff } from "@/lib/auth-helpers";
+import { requirePosOperator } from "@/lib/tpv-auth";
 
 // GET /api/admin/pos/catalog?activeOnly=1 → categorías con productos
 export async function GET(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
 
   const { searchParams } = new URL(request.url);
@@ -25,11 +25,8 @@ export async function GET(request: Request) {
 
 // POST /api/admin/pos/catalog { name } → crear categoría
 export async function POST(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   try {
     const body = (await request.json()) as { name?: string };
@@ -54,11 +51,8 @@ export async function POST(request: Request) {
 
 // PATCH /api/admin/pos/catalog { id, name?, active?, order? }
 export async function PATCH(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   try {
     const body = (await request.json()) as { id?: string; name?: string; active?: boolean; order?: number };
@@ -79,11 +73,8 @@ export async function PATCH(request: Request) {
 
 // DELETE /api/admin/pos/catalog?id= → solo si no tiene productos
 export async function DELETE(request: Request) {
-  const auth = await requireStaff();
+  const auth = await requirePosOperator(request);
   if (!auth.ok) return auth.response;
-  if (auth.role !== "ADMIN") {
-    return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
-  }
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");

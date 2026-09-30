@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type Product = {
   id: string; categoryId: string; name: string; description: string | null;
-  price: number; active: boolean; order: number;
+  price: number; imageUrl: string | null; active: boolean; order: number;
 };
 type Category = { id: string; name: string; active: boolean; order: number; products: Product[] };
 
@@ -29,8 +29,8 @@ export function CartaManager() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [newCat, setNewCat] = useState("");
-  const [newProd, setNewProd] = useState<Record<string, { name: string; price: string }>>({});
-  const [editing, setEditing] = useState<Record<string, { name: string; price: string }>>({});
+  const [newProd, setNewProd] = useState<Record<string, { name: string; price: string; imageUrl: string }>>({});
+  const [editing, setEditing] = useState<Record<string, { name: string; price: string; imageUrl: string }>>({});
 
   async function load() {
     try {
@@ -73,9 +73,9 @@ export function CartaManager() {
     }
     await api("/api/admin/pos/products", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ categoryId: catId, name: f.name.trim(), price }),
+      body: JSON.stringify({ categoryId: catId, name: f.name.trim(), price, imageUrl: f.imageUrl?.trim() || null }),
     });
-    setNewProd((s) => ({ ...s, [catId]: { name: "", price: "" } }));
+    setNewProd((s) => ({ ...s, [catId]: { name: "", price: "", imageUrl: "" } }));
     await load();
   }
 
@@ -89,6 +89,7 @@ export function CartaManager() {
         id: p.id,
         ...(f.name.trim() ? { name: f.name.trim() } : {}),
         ...(Number.isFinite(price) && price > 0 ? { price } : {}),
+        ...(f.imageUrl !== undefined ? { imageUrl: f.imageUrl.trim() || null } : {}),
       }),
     });
     setEditing((s) => {
@@ -195,6 +196,23 @@ export function CartaManager() {
                         <span style={{ fontWeight: 700 }}>{Number(p.price).toFixed(2)} €</span>
                       )}
                     </td>
+                    <td style={{ padding: "0.5rem 0.25rem", minWidth: 180 }}>
+                      {ed ? (
+                        <input style={{ ...S.input, width: "100%" }} placeholder="URL de imagen" value={ed.imageUrl}
+                          onChange={(e) => setEditing((s) => ({ ...s, [p.id]: { ...ed, imageUrl: e.target.value } }))} />
+                      ) : (
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          {p.imageUrl ? (
+                            <img src={p.imageUrl} alt="" style={{ width: 40, height: 40, objectFit: "cover", borderRadius: 6 }} />
+                          ) : (
+                            <div style={{ width: 40, height: 40, borderRadius: 6, background: "var(--color-admin-border)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem" }}>🍽️</div>
+                          )}
+                          <span style={{ fontSize: "0.75rem", color: "var(--color-admin-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {p.imageUrl ? "Imagen cargada" : "Sin imagen"}
+                          </span>
+                        </div>
+                      )}
+                    </td>
                     <td style={{ padding: "0.5rem 0.25rem", textAlign: "right", whiteSpace: "nowrap" }}>
                       {ed ? (
                         <>
@@ -206,7 +224,7 @@ export function CartaManager() {
                       ) : (
                         <>
                           <button style={S.btn} onClick={() => setEditing((s) => ({
-                            ...s, [p.id]: { name: p.name, price: String(p.price) },
+                            ...s, [p.id]: { name: p.name, price: String(p.price), imageUrl: p.imageUrl ?? "" },
                           }))}>Editar</button>{" "}
                           <button style={S.btn} onClick={() => void toggleProduct(p)}>
                             {p.active ? "Ocultar" : "Mostrar"}
@@ -225,13 +243,18 @@ export function CartaManager() {
             <input
               style={{ ...S.input, flex: 2, minWidth: 140 }} placeholder="Nuevo producto"
               value={newProd[c.id]?.name ?? ""}
-              onChange={(e) => setNewProd((s) => ({ ...s, [c.id]: { name: e.target.value, price: s[c.id]?.price ?? "" } }))}
+              onChange={(e) => setNewProd((s) => ({ ...s, [c.id]: { name: e.target.value, price: s[c.id]?.price ?? "", imageUrl: s[c.id]?.imageUrl ?? "" } }))}
             />
             <input
               style={{ ...S.input, flex: 1, minWidth: 90 }} placeholder="Precio €" type="number" min="0" step="0.5"
               value={newProd[c.id]?.price ?? ""}
-              onChange={(e) => setNewProd((s) => ({ ...s, [c.id]: { name: s[c.id]?.name ?? "", price: e.target.value } }))}
+              onChange={(e) => setNewProd((s) => ({ ...s, [c.id]: { name: s[c.id]?.name ?? "", price: e.target.value, imageUrl: s[c.id]?.imageUrl ?? "" } }))}
               onKeyDown={(e) => { if (e.key === "Enter") void createProduct(c.id); }}
+            />
+            <input
+              style={{ ...S.input, flex: 2, minWidth: 180 }} placeholder="URL imagen (opcional)" type="url"
+              value={newProd[c.id]?.imageUrl ?? ""}
+              onChange={(e) => setNewProd((s) => ({ ...s, [c.id]: { name: s[c.id]?.name ?? "", price: s[c.id]?.price ?? "", imageUrl: e.target.value } }))}
             />
             <button style={S.btnPrimary} onClick={() => void createProduct(c.id)}>+ Añadir</button>
           </div>
